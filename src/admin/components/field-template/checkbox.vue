@@ -1,0 +1,18 @@
+<template>
+  <div class="panel-field">
+    <label class="contactum-label">{{ field.title }}</label>
+    <ul>
+      <li v-for="(option, key) in field.options">
+          <el-checkbox v-model="value" :label="key"> {{ option }} </el-checkbox>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import option_field from "../../mixin/option-field.js";
+export default {
+  name: "field_checkbox",
+  mixins: [option_field],
+};
+</script>
