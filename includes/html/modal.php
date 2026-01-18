@@ -161,7 +161,7 @@
   margin-bottom: 0;
   border: 0px;
   /* background: #7e3bd0; */
-  background: #409EFF;
+  background: #0076FF;
   padding: 13px;
   font-weight: normal;
   font-size: 13px;
@@ -201,7 +201,7 @@
   padding: 0;
   color: #fff;
   /* background: #7e3bd0; */
-  background: #409EFF;
+  background: #0076FF;
   outline: none;
   border: none;
 }
@@ -301,7 +301,7 @@
 }
 
 .btn-submit {
-    background: #409EFF;
+    background: #0076FF;
     /* background: #7e3bd0; */
     /* width: 200px; */
     padding: 10px 20px;

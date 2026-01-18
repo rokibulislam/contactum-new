@@ -115,7 +115,7 @@ export default{
     margin-top: 0;
     margin-bottom: 0;
     border: 0px;
-    background: #409EFF;
+    background: #0076FF;
     padding: 13px;
     font-weight: normal;
     font-size: 13px;
@@ -178,7 +178,7 @@ export default{
 
 
 .btn-submit {
-  background: #409EFF;
+  background: #0076FF;
   padding: 10px 20px;
   color: #fff;
   border: none;

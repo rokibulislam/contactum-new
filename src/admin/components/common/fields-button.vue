@@ -219,7 +219,7 @@ validator.msg,
 
 .panel-form-field-buttons li {
   display: inline-block;
-  width: 47%;
+  width: 31%;
   /* width: 125px; */
   margin-right: 10px;
   text-align: center;
@@ -240,7 +240,7 @@ validator.msg,
 
 ul.panel-form-field-buttons li:hover{
   /* background: #7e3bd0; */
-  background: #409EFF;
+  background: #0076FF;
   color: #fff;
 }
 

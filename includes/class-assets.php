@@ -366,7 +366,10 @@ class Assets {
             ],
             'contactum-intlTelInput' => [
                 'src' =>  CONTACTUM_ASSETS . '/libs/intl-tel-input/css/intlTelInput.min.css'
-            ]
+            ],
+            'contactum-font-awesome' => [
+                'src'  => CONTACTUM_ASSETS . '/css/font-awesome/css/font-awesome.min.css',
+            ],
         ];
 
         return apply_filters( 'contactum_frontend_styles', $styles );

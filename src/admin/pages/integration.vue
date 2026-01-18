@@ -7,15 +7,6 @@
 
     <el-row class="mb-3" :gutter="24" v-if="filteredAddons.length > 0">
 
-<!--      <el-col :span="12">-->
-<!--        <div class="ff_module_selectors">-->
-<!--          <el-radio-group class="contactum_radio_group" v-model="module_type">-->
-<!--            <el-radio-button label="all"> All </el-radio-button>-->
-<!--            <el-radio-button label="crm"> CRM & SASS Integrations </el-radio-button>-->
-<!--            <el-radio-button label="wp_core"> WP Core Modules </el-radio-button>-->
-<!--          </el-radio-group>-->
-<!--        </div>-->
-<!--      </el-col>-->
 
       <el-col :span="18">
       <div class="pull-right activate-deactivate-all" v-if="is_pro">
@@ -36,8 +27,15 @@
 
     <div class="integration-wrapper">
       <el-row :gutter="24">
-        <el-col :md="12" :lg="8" v-for="(integration, index ) in filteredAddons" :key="integration.id">
-          <div class="contactum_cad">
+        <el-col
+        :xs="24"
+        :sm="12"
+        :md="12"
+        :lg="8"
+        :xl="6" 
+        v-for="(integration, index ) in filteredAddons" :key="integration.id"
+        >
+          <div class="contactum_card">
             <div class="panel-body">
               <div class="panel-body-heading contactum_media_group">
                 <img class="icon" :src="integration.thumbnail" :alt="integration.name"  />
@@ -213,6 +211,26 @@ export default {
 
 <style scoped lang="scss">
 
+.modules_header {
+  margin-bottom: 24px;
+
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .text {
+    color: #6b7280;
+    max-width: 600px;
+  }
+}
+
+
+.contactum_mdoules_search {
+  max-width: 280px;
+  margin-left: auto;
+}
 
 .panel-footer-group {
   display: flex;
@@ -220,8 +238,15 @@ export default {
 }
 
 
-.contactum_cad {
-  min-height: 160px;
+.contactum_card {
+    background-color: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
+  
   img {
     height: 20px;
   }
@@ -232,6 +257,11 @@ export default {
     gap: 20px;
   }
 
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
 }
 
 .integration_page {
@@ -244,39 +274,36 @@ export default {
 
   .integration-wrapper {
     margin-top: 20px;
-    .panel {
-      background: #ffff;
-      border: 1px solid #e4e4e4;
-      border-radius: none;
+  }
+
+
+  .panel-body {
+    flex: 1;
+    padding: 20px;
+    margin-bottom: 24px;
+    &-heading {
       display: flex;
-      flex-direction: column;
-      .panel-body {
-        padding: 20px;
-        margin-bottom: 24px;
-        &-heading {
-          display: flex;
-          align-items: center;
-        }
-        &-title {
-          margin-left: 20px;
-        }
-        img {
-          max-width: 28px;
-          max-height: 28px;
-          object-fit: cover;
-          object-position: left;
-        }
-      }
-      .panel-footer {
-        border-top: 1px solid #e4e4e4;
-        margin-top: auto;
-        padding: 14px 20px;
-        &-group {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-      }
+      align-items: center;
+    }
+    &-title {
+      margin-left: 20px;
+    }
+    img {
+      max-width: 28px;
+      max-height: 28px;
+      object-fit: cover;
+      object-position: left;
+    }
+  }
+  
+  .panel-footer {
+    border-top: 1px solid #e4e4e4;
+    margin-top: auto;
+    padding: 14px 20px;
+    &-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 

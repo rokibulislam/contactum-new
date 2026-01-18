@@ -286,41 +286,50 @@ export default {
 <style lang="scss">
 
 .contactum_entries {
-    padding: 24px;
+  padding: 24px;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 .contactum_entries_head {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
 }
 
-.contactum_btn_group {
-    align-items: center;
-    display: inline-flex;
-    margin: -6px;
+.contactum_section_title {
+  color: var(--foreground);
+}
 
-    &>* {
-        padding: 6px;
-    }
+/* Button group */
+.contactum_btn_group {
+  align-items: center;
+  display: inline-flex;
+  margin: -6px;
+
+  & > * {
+    padding: 6px;
+  }
 }
 
 .contactum_entries_section_head {
   margin-bottom: 40px;
 }
 
+/* Pagination */
 .contactum_pagination {
   float: right;
-  background: #fff;
+  background: var(--card);
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(30, 31, 33, .08);
+  box-shadow: 0 1px 3px rgba(30, 31, 33, 0.08);
   display: inline-flex;
   font-weight: 500;
-  max-width: 100%;
   padding: 12px 20px;
   margin-top: 20px;
+  color: var(--foreground);
 }
+
 
 
 </style>

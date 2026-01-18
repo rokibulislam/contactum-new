@@ -104,6 +104,12 @@
               <ul v-if="settings"
                 :class="[ 'contactum-form', 'sortable-list', 'form-label-' + settings.label_position]"
               >
+
+            <li v-if="!form_fields.length" class="empty-state">
+              <h3>Start building your form</h3>
+              <p>Drag fields from the right panel to begin.</p>
+            </li>
+
                 <li
                   v-for="(field, index) in form_fields"
                   :key="index"
@@ -680,7 +686,7 @@ export default {
 // $primary-color: #007bff;
 // $secondary-color: #6c757d;
 $background-color: #fff;
-$button-background-color: #409eff;
+$button-background-color: #0076FF;
 $text-color: #000;
 $button-background-secondary-color: #dedede;
 $button-text-secondary-color: #545454;
@@ -692,24 +698,43 @@ $button-text-secondary-color: #545454;
         margin-bottom: 5px;
         background: $background-color;
         padding-top: 10px;
+
+        align-items: center;
+        border-bottom: 1px solid #e5e7eb;
+
         .contactum-nav {
             display: flex;
             flex: 1;
             .contactum-tabs {
                 flex: 1;
                 display: flex;
-                gap: 15px;
+                gap: 25px;
                 li a {
                   text-decoration: none;
                   color: $button-text-secondary-color;
                   font-size: 15px;
-                  font-weight: 500;
+                  font-weight: 600;
+                  padding: 8px 0;
+                  position: relative;
                 }
 
                 li a.nav-tab-active {
                   color: $button-background-color;
                 }
+
+
+              li a.nav-tab-active::after {
+                content: "";
+                position: absolute;
+                bottom: -12px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: #0076ff;
+              }
+
             }
+
             .nav-tab-wrapper {
                 padding-top: 0px !important;
             }
@@ -739,7 +764,6 @@ $button-text-secondary-color: #545454;
             padding: 8px 15px;
             cursor: pointer;
             font-size: 14px;
-            // background: #7e3bd0;
             background: $button-background-color;
             color: #fff;
             margin-right: 5px;
@@ -763,7 +787,7 @@ $button-text-secondary-color: #545454;
 }
 
 .field-panel {
-    flex-basis: 35%;
+    flex-basis: 40%;
     background: #f9f9f9;
     .forms-fields-tab {
         display: flex;
@@ -790,7 +814,7 @@ $button-text-secondary-color: #545454;
 }
 
 .form-field {
-  flex-basis: 65%;
+  flex-basis: 60%;
   margin-right: 15px;
   background: none;
   box-sizing: border-box;
@@ -828,6 +852,9 @@ form#contactum-form-builder {
               background: #000;
               top: 0;
               right: 0;
+              gap: 5px;
+               padding: 4px;
+
 
               button {
                 color: #fff;
@@ -904,6 +931,19 @@ ul.contactum-form  {
             }
         }
     }
+
+    li.field-items {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: #0076ff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      }
+    }
 }
 
 ul.contactum-form.form-label-above li .contactum-label {
@@ -937,7 +977,7 @@ ul.contactum-form.form-label-hidden li .contactum-label {
 
         span.form-id {
           // background: #7e3bd0;
-          background: #409EFF;
+          background: #0076FF;
           padding: 5px 10px;
           color: #fff;
           display: inline-block;
@@ -1006,5 +1046,16 @@ ul.contactum-form.form-label-right {
   background-color: transparent;
 }
 
+
+.empty-state {
+  height: 100%;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #64748b;
+}
 
 </style>

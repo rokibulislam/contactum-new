@@ -124,6 +124,10 @@ class Admin {
         }
 */      
 
+?>
+
+        <div class="contactum_page_view">
+<?php 
         if( empty( $route ) ) {
             include __DIR__ . '/html/menu.php';
         }
@@ -134,7 +138,13 @@ class Admin {
          </div>
 
 
+        </div>
+
      <style>
+
+        .contactum_page_view {
+            background: #F8F9FA;
+        }
 
          #contactum-admin-forms {
              padding-left: 24px;

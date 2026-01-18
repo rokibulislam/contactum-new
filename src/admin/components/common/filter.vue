@@ -2,9 +2,9 @@
   <div class="contactum_advanced_filter_wrap">
 
     <el-button @click="advancedFilter = !advancedFilter" :class="this.filter_date_range && 'ff_filter_selected'">
-      <span> Filter </span>
-      <i v-if="advancedFilter" class="ff-icon el-icon-circle-close"></i>
-      <i v-else class="ff-icon ff-icon-filter"></i>
+      <span> <i class="el-icon-s-operation"> </i> Filter </span>
+      <i v-if="advancedFilter" class="el-icon-circle-close"></i>
+      <i v-else class="ff-icon-filter"></i>
     </el-button>
 
     <div v-if="advancedFilter" class="contactum_advanced_search">

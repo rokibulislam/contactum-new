@@ -46,10 +46,9 @@
 
               <div class="row-actions">
 
-                  <span class="row-actions-item contactum_edit">
-                      <!-- <router-link :to="{ name: 'form-edit', params: { id: scope.row.id } }"> Edit</router-link> -->
+              <!--     <span class="row-actions-item contactum_edit">
                        <a :href="admin_url + '?page=contactum&route=builder#/forms/' + scope.row.id"> Edit </a>
-                  </span>
+                  </span> -->
 
 <!--                  <span class="row-actions-item contactum_edit">-->
 <!--                    <a :href="admin_url + '?page=contactum&route=settings&form_id='+ scope.row.id +'#/forms/settings/' + scope.row.id"> Settings </a>-->
@@ -59,6 +58,7 @@
 <!--                    <a :href="admin_url + '?page=contactum&route=notifications#/forms/notifications/' + scope.row.id"> Notifications </a>-->
 <!--                  </span>-->
 
+<!-- 
                   <span class="row-actions-item contactum_edit">
                     <a :href="admin_url + '?page=contactum&route=builder#/forms/entries/' + scope.row.id"> Entries </a>
                   </span>
@@ -75,6 +75,9 @@
                     <a href="#" @click.prevent="removeFormConfirmation(scope.row.id, scope.$index)"> Delete </a>
                   </span>
 
+-->
+
+ 
               </div>
 
             </template>
@@ -94,6 +97,53 @@
           </el-table-column>
           <el-table-column prop="data.post_date" label="Date"> </el-table-column>
           <el-table-column prop="entries" label="Entries"> </el-table-column>
+          
+          <el-table-column> 
+
+
+<template slot-scope="scope"> 
+<div class="row-actions">
+
+
+<el-dropdown trigger="click" size="mini">
+  <el-button>
+    <i class="el-icon-more"> </i>
+  </el-button>
+
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>
+      <a :href="`${admin_url}?page=contactum&route=builder#/forms/${scope.row.id}`">
+        <i class="el-icon-edit"></i> Edit
+      </a>
+    </el-dropdown-item>
+
+    <el-dropdown-item @click.native="removeFormConfirmation(scope.row.id, scope.$index)">
+      <i class="el-icon-delete"></i> Delete
+    </el-dropdown-item>
+
+    <el-dropdown-item>
+      <a :href="`${admin_url}?page=contactum&route=builder#/forms/entries/${scope.row.id}`">
+        Entries
+      </a>
+    </el-dropdown-item>
+
+    <el-dropdown-item @click.native="duplicateFormConfirmation(scope.row.id, scope.$index)">
+      Duplicate
+    </el-dropdown-item>
+
+    <el-dropdown-item @click.native="exportForm(scope.row.id)">
+      Export
+    </el-dropdown-item>
+  </el-dropdown-menu>
+</el-dropdown>
+
+</div>
+
+
+</template>
+
+          </el-table-column>
+
         </el-table>
       </div>
 
@@ -357,14 +407,10 @@ export default {
 
 <style scoped lang="scss">
 
-$border-radius: 8px;
-$base-color: #1E1F21;
-$border-color: #ececec;
-$white: #fff;
-
 .contactum_section_title {
-  margin-top: 16px;
-  margin-bottom: 24px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: var(--foreground);
 }
 
 .justify-end {
@@ -383,15 +429,15 @@ $white: #fff;
 }
 
 .contactum_shortcode_btn_thin {
-  background-color: #f2f2f2;
+  background-color: var(--secondary);
 }
 
 .contactum_shortcode_btn {
   align-items: center;
-  background-color: #ededed;
+  background-color: var(--muted);
   border: 0;
   border-radius: 6px;
-  color: #353537;
+  color: var(--muted-foreground);
   display: inline-flex;
   font-size: 12px;
   margin: 0;
@@ -401,8 +447,7 @@ $white: #fff;
 
 
 .contactum_pagination {
-  float: right;
-  background: #fff;
+  background: var(--card);
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(30, 31, 33, .08);
   display: inline-flex;
@@ -410,6 +455,7 @@ $white: #fff;
   max-width: 100%;
   padding: 12px 20px;
   margin-top: 20px;
+  color: var(--foreground);
 }
 
 
