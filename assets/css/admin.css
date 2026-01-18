@@ -1,3 +1,34 @@
+:root {
+  --background: #F8F9FA;
+  --foreground: #0E1629;
+
+  --card: #FFFFFF;
+  --card-foreground: #0E1629;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #0E1629;
+
+  --primary: #0076FF;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F2F4F6;
+  --secondary-foreground: #0E1629;
+
+  --muted: #F2F4F6;
+  --muted-foreground: #64748B;
+
+  --accent: #EFF6FF;
+  --accent-foreground: #0076FF;
+
+  --destructive: #EE4343;
+  --border: #E0E7EF;
+  --input: #E0E7EF;
+  --ring: #0076FF;
+  --success: #16A149;
+}
+
+
+
 .form-preview-stage .field-items.current-editing {
   background-color: rgba(255, 185, 0, 0.15);
 }
@@ -151,7 +182,7 @@ input [type='text'], input [type='number'] {
   border: 1px solid transparent;
   border-radius: 8px;
   padding: 10px 20px;
-  background: #409EFF;
+  background: var(--primary);
   color: #fff;
   display: inline-block;
   font-size: 14px;
@@ -213,8 +244,18 @@ input [type='text'], input [type='number'] {
 
 /*** element ui change **/
 
+
+.el-button--primary {
+    background-color: var(--primary) !important;
+}
+
+
 .el-button--danger {
   background-color: #DC2727  !important;
+}
+
+.el-table thead .cell {
+    color: hsl(var(--foreground)) !important;
 }
 
 .form-field-name_field .contactum-fields {
@@ -254,7 +295,7 @@ input [type='text'], input [type='number'] {
 
 
 .contactum_card {
-  background-color: #fff;
+  background-color: var(--card);
   border: 1px solid transparent;
   border-radius: 8px;
   box-shadow: 0 2px 3px 0 hsla(0,0%,51%,.1);
@@ -321,6 +362,90 @@ img{
 
 /***** Settings **********/
 
+
+/* Sidebar Container */
+
+.contactum_layout_section_sidebar {
+    background-color: #f6f7f7; /* Very light grey background */
+    border-right: 1px solid #dcdcde;
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.contactum_settings_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contactum_list_button_item.has_sub_menu > .contactum_list_button_link {
+    background-color: #e5edf5; /* Light blue-grey from screenshot */
+    color: #1d2327;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+/* Arrow Icon styling (matches the thin chevron) */
+
+.contactum_list_button_item.has_sub_menu > .contactum_list_button_link::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #787c82;
+    border-bottom: 2px solid #787c82;
+    transform: rotate(45deg);
+    margin-bottom: 4px;
+    transition: transform 0.2s ease;
+}
+
+
+.contactum_list_submenu {
+    display: block; /* Ensure it's visible */
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.contactum_list_submenu li a {
+    display: block;
+    padding: 12px 20px 12px 45px; /* Indented text */
+    font-size: 15px;
+    color: #646970; /* Muted grey for inactive items */
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contactum_list_submenu li a:hover {
+    color: #2271b1;
+    background-color: #f0f0f1;
+}
+
+/* 3. ACTIVE ITEM: Form Layout style */
+.contactum_list_submenu li.active a,
+.contactum_list_submenu li a.active {
+    background-color: #f0f7ff; /* Very light blue highlight */
+    color: #007cff;           /* Bright blue text */
+    font-weight: 500;
+}
+
+/* Utility: Hide submenu if collapsed (optional logic) */
+.contactum_list_button_item:not(.open) .contactum_list_submenu {
+    /* display: none; */ /* Uncomment if you want it to toggle */
+}
+
+.settings_content {
+    flex: 1;
+    padding: 20px 40px;
+    background-color: #f0f0f1;
+}
+
 .contactum_settings_wrap {
     display: flex;
     padding-top: 24px;
@@ -330,6 +455,15 @@ img{
     width: 280px;
 }
 
+.contactum_list_button_item.has_sub_menu.is-submenu {
+    color: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    margin-left: 0;
+}
+
+
+/*
 .settings_content {
     flex: 1;
 }
@@ -387,12 +521,12 @@ img{
 }
 
 .contactum_list_button_link.active {
-    background-color: #3a3a3a; /* dark gray */
+    background-color: #3a3a3a; 
     color: white;
 }
 
 .contactum_list_button_link.active:hover {
-    background-color: #0056b3; /* darker blue on hover */
+    background-color: #0056b3;
 }
 
 
@@ -404,7 +538,7 @@ img{
 
 .contactum_list_submenu li.active a {
     background-color: #efefef;
-    color: #1e1f21;
+    color: var(--foreground);
 }
 
 .contactum_list_submenu li a {
@@ -427,13 +561,11 @@ img{
 }
 
 
-/* Active submenu item */
 .contactum_list_submenu li a.active {
     background-color: #e0e0e0;
     color: #000;
 }
 
-/* Arrow icon for collapsible menus */
 .has_sub_menu > .contactum_list_button_link::after {
     content: "▾";
     font-size: 0.8rem;
@@ -448,7 +580,7 @@ li.contactum_list_button_item:not(:last-child) {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-
+*/
 
 
 /*** tab ***/
