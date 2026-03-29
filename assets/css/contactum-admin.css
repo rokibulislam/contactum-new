@@ -1,0 +1,389 @@
+/* src/styles/main.scss */
+.contactum-flex {
+  display: flex;
+}
+
+.contactum_pagination {
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(30, 31, 33, 0.08);
+  display: inline-flex;
+  font-weight: 500;
+  max-width: 100%;
+  padding: 12px 20px;
+  margin-top: 20px;
+  color: var(--foreground);
+}
+
+/*
+ .contactum_settings_wrap {
+    display: flex;
+    padding-top: 24px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.contactum_layout_section_sidebar {
+    background-color: #f6f7f7;
+    border-right: 1px solid #dcdcde;
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.contactum_settings_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contactum_list_button_item.has_sub_menu > .contactum_list_button_link {
+    background-color: #e5edf5;
+    color: #1d2327;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.contactum_list_button_item.has_sub_menu > .contactum_list_button_link::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #787c82;
+    border-bottom: 2px solid #787c82;
+    transform: rotate(45deg);
+    margin-bottom: 4px;
+    transition: transform 0.2s ease;
+}
+
+
+.contactum_list_submenu {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.contactum_list_submenu li a {
+    display: block;
+    padding: 12px 20px 12px 45px;
+    font-size: 15px;
+    color: #646970;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contactum_list_submenu li a:hover {
+    color: #2271b1;
+    background-color: #f0f0f1;
+}
+
+.contactum_list_submenu li.active a,
+.contactum_list_submenu li a.active {
+    background-color: #f0f7ff;
+    color: #007cff;
+    font-weight: 500;
+}
+
+.settings_content {
+    flex: 1;
+    padding: 20px 40px;
+    background-color: #f0f0f1;
+}
+
+.contactum_settings_sidebar_wrap {
+    width: 280px;
+}
+
+.contactum_list_button_item.has_sub_menu.is-submenu {
+    color: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    margin-left: 0;
+}
+
+*/
+.contactum-settings {
+  display: flex;
+  padding-top: 24px;
+  margin: 0 30px;
+}
+.contactum-settings__sidebar-wrap {
+  position: relative;
+  width: 280px;
+}
+.contactum-settings__sidebar {
+  width: 240px;
+  background-color: #f6f7f7;
+  border-right: 1px solid #dcdcde;
+  flex-shrink: 0;
+}
+.contactum-settings__sidebar-toggle {
+  position: absolute;
+  top: 12px;
+  right: -14px;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.contactum-settings__sidebar-toggle:hover {
+  background-color: #f0f0f1;
+}
+.contactum-settings__content {
+  flex: 1;
+  padding: 20px 40px;
+  background-color: #f0f0f1;
+}
+.contactum-settings__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.contactum-settings__menu-item a {
+  display: block;
+  padding: 12px 20px 12px 45px;
+  font-size: 15px;
+  color: #646970;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.contactum-settings__menu-item--has-submenu > .contactum-settings__menu-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #e5edf5;
+  color: #1d2327;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.contactum-settings__menu-item--has-submenu > .contactum-settings__menu-link::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #787c82;
+  border-bottom: 2px solid #787c82;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.contactum-settings__menu-item--has-submenu > .contactum-settings__menu-link:hover {
+  background-color: #dae5f1;
+}
+.contactum-settings__menu-item--has-submenu.contactum-settings__menu-item--active > .contactum-settings__menu-link::after {
+  transform: rotate(-135deg);
+}
+.contactum-settings__menu-link {
+  color: inherit;
+  text-decoration: none;
+}
+.contactum-settings__submenu {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+.contactum-settings__submenu-item--active > .contactum-settings__submenu-link {
+  background-color: #f0f7ff;
+  color: #007cff;
+  font-weight: 500;
+}
+.contactum-settings__submenu-link {
+  display: block;
+  padding: 12px 20px 12px 45px;
+  font-size: 15px;
+  color: #646970;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.contactum-settings__submenu-link:hover {
+  background-color: #f0f0f1;
+  color: #2271b1;
+}
+.contactum-settings--collapsed .contactum-settings__sidebar {
+  width: 60px;
+}
+.contactum-settings--collapsed .contactum-settings__submenu,
+.contactum-settings--collapsed .contactum-settings__menu-link span {
+  display: none;
+}
+
+.conditional_list {
+  margin-top: 5px;
+}
+
+.conditional {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 20px;
+}
+
+.conditional-btn {
+  padding: 8px 15px;
+  width: 50px !important;
+}
+
+.conditional-action-btn {
+  display: flex;
+  align-items: center;
+}
+
+.el-button--primary {
+  background-color: var(--primary) !important;
+}
+
+.el-button--danger {
+  background-color: #DC2727 !important;
+}
+
+.el-table thead .cell {
+  color: hsl(var(--foreground)) !important;
+}
+
+.el-table .el-table__cell {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 12px 0;
+  position: relative;
+  text-align: left;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.el-icon-circle-plus-outline {
+  font-size: 24px;
+  color: #5cb85c;
+  cursor: pointer;
+}
+.el-icon-circle-plus-outline:hover {
+  color: #449d44;
+}
+
+.el-icon-remove-outline {
+  color: #d9534f;
+  font-size: 20px;
+  cursor: pointer;
+}
+.el-icon-remove-outline :hover {
+  color: #c9302c;
+}
+
+.contactum_table {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(30, 31, 33, 0.08);
+  padding: 10px 24px;
+}
+
+.contactum_table .cell strong {
+  color: #1e1f21;
+  font-weight: 500;
+}
+
+.contactum-table-container thead {
+  color: #1e1f21;
+}
+
+.contactum_table .el-table__row td:first-child {
+  vertical-align: top;
+}
+
+.contactum_table .el-table__empty-block, .ff_table table {
+  width: 100% !important;
+}
+
+.contactum_table .el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell, .ff_table .el-table__body tr.el-table__row--striped td.el-table__cell, .ff_table .el-table__body tr.hover-row > td.el-table__cell, .ff_table th.el-table__cell, .ff_table tr {
+  background-color: transparent !important;
+}
+
+.contactum_table .el-table--border:after, .ff_table .el-table--group:after, .ff_table .el-table:before {
+  display: none;
+}
+
+.contactum_table thead {
+  color: #1e1f21;
+}
+
+.contactum_table thead .el-table__cell, .ff_table thead th {
+  padding-bottom: 8px;
+  padding-top: 0;
+}
+
+.contactum_table .cell, .ff_table th.el-table__cell > .cell {
+  font-weight: 600;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.contactum_table .sort-caret {
+  border-width: 4px;
+}
+
+.contactum_table .sort-caret.ascending {
+  top: 7px;
+}
+
+.contactum_table .sort-caret.descending {
+  bottom: 8px;
+}
+
+.contactum_table .cell strong {
+  color: #1e1f21;
+  font-weight: 500;
+}
+
+.contactum_table td.el-table__cell, .ff_table th.el-table__cell.is-leaf {
+  border-bottom-color: #ececec;
+}
+
+.contactum_table tbody tr:last-child td.el-table__cell, .ff_table tbody tr:last-child th.el-table__cell.is-leaf {
+  border-bottom-width: 0;
+}
+
+.contactum_table tbody .cell {
+  font-weight: 400;
+}
+
+.contactum_card {
+  background-color: var(--card);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 2px 3px 0 rgba(130, 130, 130, 0.1);
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.contactum_card_head {
+  border-bottom: 1px solid #ececec;
+  margin-bottom: 26px;
+  padding-bottom: 16px;
+}
+
+.contactum_card_head .title {
+  color: #1e1f21 !important;
+  margin: 0;
+}
+
+.contactum_card_head .text {
+  margin-top: 10px;
+}
+
+.contactum_card .text {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/*# sourceMappingURL=contactum-admin.css.map*/

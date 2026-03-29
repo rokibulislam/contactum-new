@@ -683,12 +683,8 @@ export default {
 
 <style scoped lang="scss">
 
-// $primary-color: #007bff;
-// $secondary-color: #6c757d;
 $background-color: #fff;
-$button-background-color: #0076FF;
-$text-color: #000;
-$button-background-secondary-color: #dedede;
+$button-background-secondary-color: #545454;
 $button-text-secondary-color: #545454;
 
 .builder {
@@ -719,7 +715,7 @@ $button-text-secondary-color: #545454;
                 }
 
                 li a.nav-tab-active {
-                  color: $button-background-color;
+                  color: var(--primary);
                 }
 
 
@@ -730,7 +726,7 @@ $button-text-secondary-color: #545454;
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: #0076ff;
+                background: var(--primary);
               }
 
             }
@@ -764,7 +760,7 @@ $button-text-secondary-color: #545454;
             padding: 8px 15px;
             cursor: pointer;
             font-size: 14px;
-            background: $button-background-color;
+            background: var(--primary);
             color: #fff;
             margin-right: 5px;
             outline: none;
@@ -774,7 +770,7 @@ $button-text-secondary-color: #545454;
         }
 
         button:hover {
-            background: $button-background-color;
+            background: var(--primary);
         }
 
         a {
@@ -808,7 +804,7 @@ $button-text-secondary-color: #545454;
         }
 
         button.active {
-            border-bottom: 2px solid $button-background-color;
+            border-bottom: 2px solid var(--primary);
         }
     }
 }
@@ -848,7 +844,6 @@ form#contactum-form-builder {
               justify-content: center;
               align-items: center;
               -webkit-box-align: center;
-              background: #f9f9f9;
               background: #000;
               top: 0;
               right: 0;
@@ -866,7 +861,7 @@ form#contactum-form-builder {
               }
 
               button:hover {
-                background: $button-background-color;
+                background: var(--primary);
               }
             }
         }
@@ -889,12 +884,10 @@ form#contactum-form-builder {
       border: 1px solid transparent;
       border-radius: 8px;
       padding: 10px 20px;
-      background: $button-background-color;
+      background: var(--primary);
       color: #fff;
       display: inline-block;
       border: none;
-      color: #fff;
-      // min-width: 120px;
       margin-top: 30px;
       font-size: 14px;
       font-weight: 400;
@@ -940,7 +933,7 @@ ul.contactum-form  {
       transition: all 0.2s ease;
       
       &:hover {
-        border-color: #0076ff;
+        border-color: var(--primary);
         box-shadow: 0 10px 25px rgba(0,0,0,0.06);
       }
     }
@@ -977,7 +970,7 @@ ul.contactum-form.form-label-hidden li .contactum-label {
 
         span.form-id {
           // background: #7e3bd0;
-          background: #0076FF;
+          background: var(--primary);
           padding: 5px 10px;
           color: #fff;
           display: inline-block;
@@ -1019,7 +1012,7 @@ ul.contactum-form.form-label-right {
 
 .btn-copy {
     background: #dedede;
-    color: #545454;
+    color: $button-background-secondary-color;
     overflow: hidden;
     opacity: 1;
     border: none;
@@ -1041,7 +1034,6 @@ ul.contactum-form.form-label-right {
 
 
 .forms-sidbar-tab-content {
-  padding: 20px;
   box-sizing: border-box;
   background-color: transparent;
 }
@@ -1049,13 +1041,12 @@ ul.contactum-form.form-label-right {
 
 .empty-state {
   height: 100%;
-  border: 2px dashed #cbd5e1;
+  border: 2px dashed $button-background-secondary-color;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: #64748b;
 }
 
 </style>

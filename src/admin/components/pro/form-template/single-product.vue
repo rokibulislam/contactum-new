@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <template v-if="field.price.is_flexible">
       <div class="contactum-single-product-price-warp">
         <input type="text" :value="field.price.min ? field.price.min : 0">
@@ -38,6 +37,6 @@
 import form_field from "../../../mixin/form-field.js";
 export default {
   name: "form_single_product",
-  mixins: [form_field],
+  mixins: [form_field]
 };
 </script>

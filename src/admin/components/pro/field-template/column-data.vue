@@ -82,8 +82,8 @@ export default {
 
     add_option: function () {
       let length = this.options.length + 1;
-      let label = `Grid-${length}`;
-      let value = `Grid-${length}`;
+      let label = `Column-${length}`;
+      let value = `Column-${length}`;
 
       this.options.push({
         label: label,
@@ -92,8 +92,8 @@ export default {
 
       this.$store.dispatch("update_editing_form_field", {
         id: this.editfield.id,
-        // property: this.field.name,
-        property: "grid_columns",
+        property: this.field.name,
+        // property: "grid_columns",
         value: this.options,
       });
 
@@ -104,8 +104,8 @@ export default {
 
       this.$store.dispatch("update_editing_form_field", {
         id: this.editfield.id,
-        property: "grid_columns",
-        // property: this.field.name,
+        // property: "grid_columns",
+        property: this.field.name,
         value: this.options,
       });
     },
@@ -121,8 +121,8 @@ export default {
       handler: function (new_option) {
         this.$store.dispatch("update_editing_form_field", {
           id: this.editfield.id,
-          property: "grid_rows",
-          // property: this.field.name,
+         // property: "grid_rows",
+          property: this.field.name,
           value: new_option,
         });
       },

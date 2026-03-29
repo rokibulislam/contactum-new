@@ -8,11 +8,23 @@
 
         <div class="address-field-option" v-for="(innerfield, i) in inner_fields" :key="i">
 
-            <i class="el-icon-circle-plus-outline" @click.prevent="add_field"></i>         
-        <i class="el-icon-remove-outline" @click="delete_field(i)"></i>
+            <div class="repeat-field-option-header">
+                <div class="repeat-repeater-title"> Column {{ i + 1 }} </div>
+                <div class="repeat-repeater-action">
+                    <i @click="toggleRepeatFieldInputs" class="el-icon-caret-bottom"></i>
+                    <el-tooltip content="Add Column" placement="top">
+                        <i class="el-icon-circle-plus-outline" @click.prevent="add_field"></i>
+                    </el-tooltip>
+                    <el-tooltip content="Remove Column" placement="top">       
+                        <i class="el-icon-remove-outline"
+                          :class="{ disabled: inner_fields.length === 1 }"
+                          @click="inner_fields.length > 1 && delete_field(i)"></i>
+                    </el-tooltip>
+                </div>
+            </div>
 
 
-            <div class="repeat-field-option__settings address-input-fields" >
+            <div class="address-field-option__settings address-input-fields" >
                 
                 <div class="panel-field">
                     <label class="contactum-label"> Field Type </label>
@@ -31,12 +43,12 @@
                     <el-input v-model="innerfield.field_properties.placeholder"> </el-input>
                 </div>
 
-                <div v-if="fields == 'form_dropdown_field'" class="panel-field">
+                <div v-if="innerfield.fields == 'form_dropdown_field'" class="panel-field">
                     <label class="contactum-label"> Options </label>
                     <field_option_data :editfield="innerfield.field_properties" :field="innerfield" />
                 </div>
                 
-                <div v-if="fields == 'form_text_field' || fields == 'form_number_field' || fields == 'form_email_address' " class="panel-field">
+                <div v-if="innerfield.fields == 'form_text_field' || innerfield.fields == 'form_number_field' || innerfield.fields == 'form_email_address' " class="panel-field">
                     <label class="contactum-label"> Default </label>
                     <el-input v-model="innerfield.field_properties.default"> </el-input>
                 </div>
@@ -159,6 +171,20 @@ export default {
         }
     },
     methods: {
+
+        toggleRepeatFieldInputs() {
+            const e = window.event;
+            if (!e) return;
+
+            const $option = jQuery(e.target).closest('.address-field-option');
+   
+            if (!$option.children('.address-field-option__settings').hasClass('is-open')) {
+                $option.children('.address-field-option__settings').addClass('is-open');
+            } else {
+                $option.children('.address-field-option__settings').removeClass('is-open');
+            }
+        },
+
         add_field: function() {
 
             if( this.inner_fields.length > 0 ) {
@@ -209,9 +235,11 @@ export default {
     }
 
     .address-input-fields {
-      background: #797979;
-      padding: 10px;
-      color: #fff;
+        background: #ffffff;
+        padding: 16px;
+        border-radius: 8px;
+        color: #313131;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .panel-child-field {
@@ -235,9 +263,12 @@ export default {
 
 
     .address-field-option {
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      width: 100%
+        margin-bottom: 10px;
+        width: 100%;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fafafa;
     }
 
     .address-field-option .el-icon-caret-top,.address-field-option>.el-icon-caret-bottom {
@@ -267,10 +298,46 @@ export default {
       width: 10px
     }
 
-    .address-field-option__settings.is-open {
+    .is-open {
+        display: block !important;
+    }
+
+    .address-field-option__settings  {
       background: #f2f2f2;
       border-radius: 6px;
-      padding: 15px
+      padding: 15px;
+      display: none;
+      color: #313131;
     }
+
+
+    .repeat-field-option-header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .repeat-repeater-title {
+        font-weight: 600;
+        font-size: 15px;
+        color: #111827;
+    }
+
+    .disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .repeat-repeater-action i {
+        cursor: pointer;
+        font-size: 18px;
+        margin-left: 8px;
+        color: #6b7280;
+    }
+
+    .repeat-repeater-action i:hover {
+        color: #2563eb;
+    }
+
 
 </style>

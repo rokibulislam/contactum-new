@@ -56,7 +56,9 @@ export default {
   computed: {},
   created: function() {},
   watch: {
-    paypal: function(value) {},
+    paypal: function(value) {
+      
+    },
     stripe: function(value) {},
     card_image: function(value) {},
     stripe_label: function(value) {},

@@ -180,6 +180,7 @@ class Field_Address extends  Contactum_Field {
             'enable_g_map'  => false,
             'save_coordinates' => false,
             'address_desc'  => '',
+            'autocomplete_provider' => '',
             'address'       => array(
                 'street_address'    => array(
                     'checked'       => 'checked',

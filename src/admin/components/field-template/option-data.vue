@@ -9,19 +9,22 @@
         <li>
           <el-checkbox v-model="editfield.sync_value"> {{ "Sync values" }} </el-checkbox>
         </li>
+        <li>
+          <el-checkbox v-model="editfield.calc_value"> {{ "Calc values" }} </el-checkbox>
+        </li>
         <li v-if="editfield.image">
             <el-checkbox v-model="editfield.photo_value"> {{ "Photo" }} </el-checkbox>
         </li>
       </ul>
     </div>
 
-    <ul :class="['field-options', 'option-field-swapper']">
+    <ul :class="['option-manager__list', 'option-field-swapper']">
       <li
         v-for="(option, index) in options"
         :key="index"
-        class="option-field-option"
+        class="option-manager__row"
       >
-        <div class="selector">
+        <div class="option-manager__selector">
           <input
             v-if="field.is_multiple"
             type="checkbox"
@@ -37,20 +40,21 @@
           />
         </div>
 
-        <div class="sort-handler">
-          <i class="fa fa-bars"></i>
+        <div class="option-manager__handle">
+          <i class="el-icon-s-fold"></i>
         </div>
 
         <div v-if="editfield.photo_value == true ">
-          <div class="ff_photo_card">
-            <div class="wpf_photo_holder">
+          <div class="option-manager__photo-card">
+            <div>
               <img
                 style="max-width: 100%"
                 v-if="option.photo"
                 :src="option.photo"
                 width="50px"
+                class="option-manager__image"
               />
-              <div class="photo_widget_btn">
+              <div class="option-manager__photo-actions">
                 <i class="el-icon-upload" @click="initUploader(option)"> </i>
                 <i class="el-icon-delete" v-if="option.photo" @click="option.photo = ''"> </i>
               </div>
@@ -66,13 +70,18 @@
           <el-input type="text" v-model="option.value"> </el-input>
         </div>
 
+        <div v-if="editfield.calc_value" class="option_value">
+          <el-input type="text" v-model="option.calc_value"> </el-input>
+        </div>
+
+          <i class="el-icon-circle-plus-outline" @click.prevent="add_option"></i>
           <i class="el-icon-remove-outline"  v-if="options.length > 1" @click="delete_option(index)"></i>
 
       </li>
     </ul>
-    <div class="option-actions">
-      <i class="el-icon-circle-plus-outline" @click.prevent="add_option"></i>
-       <el-button @click="initBulkEdit()" class="option-btn  bulkedit"> Bulk Edit </el-button>
+
+    <div class="option-manager__footer">
+       <el-button @click="initBulkEdit()" class="bulkedit"> Bulk Edit </el-button>
       <el-button
         type="danger"
         v-if="!field.is_multiple && selected.length > 0"
@@ -82,10 +91,34 @@
       </el-button>
     </div>
 
-    <el-dialog :visible.sync="bulkEditVisible" >
-      <el-input type="textarea" v-model="value_key_pair_text"> {{ value_key_pair_text }} </el-input>
-      <el-button @click="bulkEditVisible = false">Cancel</el-button>
-      <el-button type="primary" @click="confirmBulkEdit()">Confirm</el-button>
+    <el-dialog :visible.sync="bulkEditVisible" custom-class="bulk-edit-dialog">
+
+      <div slot="dialog-header">
+          <h4 class="mb-2"> Edit your options </h4>
+          <p> Please provide the value as LABEL:VALUE as each line or select from predefined data sets </p>
+      </div>
+
+      <div class="dialog-body">
+        <div class="data-set-tags mb-4">
+        <el-tag 
+          v-for="(options, optionGroup) in editor_options" 
+          :key="optionGroup"
+          :class="['set-tag', { 'is-active': options === activeClass }]"
+          @click="setOptions(options)"
+          effect="plain">
+          {{ optionGroup }}
+        </el-tag>
+      </div>
+
+        <el-input type="textarea" v-model="value_key_pair_text"> {{ value_key_pair_text }} </el-input>
+      
+      </div>
+      
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="bulkEditVisible = false" class="btn-cancel">Cancel</el-button>
+        <el-button type="primary" @click="confirmBulkEdit()" class="btn-confirm">Confirm</el-button>
+      </span>
+
     </el-dialog>
   </div>
 </template>
@@ -102,6 +135,7 @@ export default {
       selected: [],
       bulkEditVisible: false,
       value_key_pair_text: "",
+      editor_options: JSON.parse(window.contactum.bulk_options_json),
     };
   },
   computed: {
@@ -125,6 +159,10 @@ export default {
       this.bulkEditVisible = true;
     },
 
+    setOptions(options) {
+        this.value_key_pair_text = options.join('\n');
+    },
+
     confirmBulkEdit() {
       let lines = this.value_key_pair_text.split("\n");
       let values = [];
@@ -140,6 +178,7 @@ export default {
           values.push({
             label: label,
             value: value,
+            photo: "",
           });
         }
       });
@@ -158,19 +197,30 @@ export default {
     },
 
     add_option: function () {
-      let length = this.options.length + 1;
-      let label = `Option-${length}`;
-      let value = `option-${length}`;
+      
+      const numbers = this.options
+      .map(opt => {
+        const match = opt.label.match(/Option-(\d+)/);
+        return match ? parseInt(match[1]) : 0;
+      });
+
+      const nextNumber = numbers.length ? Math.max(...numbers) + 1 : 1;
+
+      const label = `Option-${nextNumber}`;
+      const value = `option-${nextNumber}`;
+
       this.options.push({
         label: label,
         value: value,
         photo: "",
       });
+      
       this.$store.dispatch("update_editing_form_field", {
         id: this.editfield.id,
         property: "options",
         value: this.options,
       });
+
     },
 
 
@@ -186,18 +236,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .field-option-actions {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
 }
 
-.option-field-option i {
+.option-manager__row i {
   align-items: center;
 }
 
-.field-options {
+.option-manager__list {
   margin-bottom: 5px;
   margin-top: 15px;
+  max-height: 300px;
+    overflow-y: auto;
   & li {
     display: flex;
     justify-content: flex-start;
@@ -209,42 +267,47 @@ export default {
   }
 }
 
-.option-field-option {
-  display: flex;
+
+.option-manager__row {
+  display: grid;
+  grid-template-columns: 30px 24px auto 1fr 1fr 32px;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
 }
 
-.option-actions {
-  margin-top: 15px;
+
+.option-manager__footer {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+
 
   & button {
     padding: 6px 10px;
   }
 }
 
-.option-field-swapper .sort-handler {
+.option-field-swapper .option-manager__handle {
   width: 22px;
   cursor: grab;
   color: #888;
 }
 
-
-.ff_photo_card {
-  width: 80px;
-  height: 60px;
-  position: relative;
-  border: 1px solid #ccc;
+.option-manager__photo-card {
+  width: 64px;
+  height: 48px;
+  border: 1px dashed #cbd5e1;
   border-radius: 6px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #f8fafc;
+  position: relative;
 
   & img {
     width: 100%;
@@ -253,10 +316,10 @@ export default {
   }
 }
 
-.photo_widget_btn {
+.option-manager__photo-actions {
   position: absolute;
-  bottom: 4px;
-  left: 4px;
+    bottom: 25%;
+    left: 25%;
   display: flex;
   gap: 4px;
 
@@ -274,29 +337,93 @@ export default {
   }
 }
 
-  .el-icon-circle-plus-outline {
-    font-size: 24px;
-    color: #5cb85c;
-    cursor: pointer;
+.photo_widget_btn {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
 
-    &:hover {
-      color: #449d44;
-    }
-  }
+.option-manager__photo-card:hover .photo_widget_btn {
+  opacity: 1;
+}
+
+
 
 .el-icon-remove-outline {
-  color: #d9534f;
-  font-size: 20px;
-  cursor: pointer;
+  opacity: 0.4;
+  transition: 0.2s;
+}
 
-  & :hover {
-    color: #c9302c;
+.option-manager__row:hover .el-icon-remove-outline {
+  opacity: 1;
+}
+
+
+.option-manager__selector input[type="checkbox"],
+.option-manager__selector input[type="radio"] {
+  transform: scale(1.2);
+}
+
+.option-manager__handle {
+  cursor: grab;
+  color: #9ca3af;
+
+  &:hover {
+    color: #2563eb;
   }
 }
 
-.selector input[type="checkbox"],
-.selector input[type="radio"] {
-  transform: scale(1.2);
+
+
+.bulk-edit-dialog {
+  border-radius: 8px; // Rounded corners
+
+  .data-set-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    .set-tag {
+      background-color: #f0f2f5;
+      border: none;
+      color: #606266;
+      border-radius: 20px; // Pill shape
+      padding: 6px 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      
+      &.is-active, &:hover {
+        background-color: #4086f4; // Brand blue
+        color: #ffffff;
+      }
+    }
+  }
+
+  .dialog-body {
+    padding: 10px 25px; // Standard spacing
+  }
+
+  .dialog-footer {
+    margin-top: 10px;
+    padding: 20px 25px 25px;
+    text-align: left; // Aligns buttons to the left as seen in your image
+  }
+
+  .btn-cancel {
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #606266;
+  }
+
+  .btn-confirm {
+    background-color: #3b82f6; // High-contrast blue
+    border-color: #3b82f6;
+    border-radius: 4px;
+    font-weight: 500;
+    padding: 10px 25px;
+  }
 }
 
 </style>

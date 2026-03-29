@@ -320,3 +320,16 @@ ul.contactum-form.form-label-right li div.contactum-fields {
     border-color: #007bff;
     font-weight: bold;
 }
+
+
+
+
+
+
+
+
+
+.checkbox_grid_column, .checkbox_grid_row {
+    display: flex;
+    gap: 10px;
+}

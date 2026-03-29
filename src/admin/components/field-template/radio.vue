@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasvalidate(field)">
-    <label class="contactum-label">{{ field.title }} required </label>
+    <label class="contactum-label">{{ field.title }}  </label>
     <ul class="list-inline">
       <li v-for="(option, key) in field.options">
         <el-radio :label="key" v-model="value"> {{ option }} </el-radio>
@@ -40,3 +40,19 @@ export default {
   }
 };
 </script>
+
+
+<style>
+
+.el-radio-button__inner {
+    border-radius: 20px !important;
+    border: 1px solid #dcdfe6 !important;
+    box-shadow: none !important;
+    padding: 8px 20px;
+  }
+
+  .list-inline li {
+    margin-right: 30px;
+  }
+  
+</style>

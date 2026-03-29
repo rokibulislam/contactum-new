@@ -1,11 +1,11 @@
 <template>
 <div>
-  <div v-if="settings.settings && settings.settings.hide_on_valid && integration.status" class="contactum_cad">
-      <div class="contactum_cad_head">
+  <div v-if="settings.settings && settings.settings.hide_on_valid && integration.status" class="contactum_card">
+      <div class="contactum_card_head">
         <h5 class="title">{{ settings.title }}</h5>
         <p class="text" v-html="settings.description"></p>
       </div>
-      <div class="contactum_cad_body">
+      <div class="contactum_card_body">
         <div class="el-alert el-alert--success is-light contactum_state_box">
           <div class="mb-4 contactum_icon_btn mx-auto success">
             <i class="el-icon el-icon-check"></i>
@@ -24,13 +24,13 @@
     <div v-else >
         <el-form label-position="top">
           <el-skeleton :loading="loading" animated :rows="10" :class="loading ? '' : ''">
-          <div class="contactum_cad">
-            <div class="contactum_cad_head">
+          <div class="contactum_card">
+            <div class="contactum_card_head">
               <h2 class="title"> {{ settings.title }} </h2>
               <p class="text" v-html="settings.description">  </p>
             </div>
 
-              <div class="contactum_cad_body">
+              <div class="contactum_card_body">
 
                   <el-form-item class="ff-form-item" v-for="(field,fieldKey) in (settings.settings && settings.settings.fields ? settings.settings.fields : [])" :key="fieldKey">
 
@@ -195,8 +195,7 @@ export default {
   background-color: #1a7efb;
   border-radius: 50%;
   color: #fff;
-  display: flex
-;
+  display: flex;
   font-size: 28px;
   height: 58px;
   justify-content: center;

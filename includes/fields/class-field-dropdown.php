@@ -30,12 +30,17 @@ class Field_Dropdown extends Contactum_Field {
                 >
                     <?php
                         if ( !empty( $field_settings['first'] ) ) { ?>
-                        <option value=""> <?php echo esc_attr( $field_settings['first'] ); ?> </option>
+                        <option  value=""> <?php echo esc_attr( $field_settings['first'] ); ?> </option>
                     <?php }
                         if ( $field_settings['options'] && count( $field_settings['options'] ) > 0 ) {
                             foreach ( $field_settings['options'] as $value => $option ) {
                                $current_select = selected( $selected, $option['value'], false );
-                               printf('<option value="%s" %s> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ), esc_attr( $option['value'] ) );
+                               if( isset($field_settings['calc_value']) && $field_settings['calc_value'] == true ) {
+                                printf('<option value="%s" %s  data-calc_value="%s"> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ),  esc_attr( $option['calc_value'] ), esc_attr( $option['value'] ) );
+                               } else {
+                                printf('<option value="%s" %s> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ), esc_attr( $option['value'] ) );
+
+                               }
                             }
                         }
                     ?>
@@ -68,22 +73,23 @@ class Field_Dropdown extends Contactum_Field {
         $props    = [
             'selected' => '',
             'image' => false,
+            'calc_value' => false,
             'options'  => [
                 [
                     'label' => 'option',
                     'value' => 'option',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-2',
-                    'value' => 'option-2'
+                    'value' => 'option-2',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-3',
-                    'value' => 'option-3'
+                    'value' => 'option-3',
+                    'calc_value' => 0,
                 ]
-                // 'Option' => __( 'Option', 'contactum' ),
-                // 'Option-2' => __( 'Option-2', 'contactum' ),
-                // 'Option-3' => __( 'Option-3', 'contactum' )
             ],
             'first'    => __( '— Select —', 'contactum' ),
         ];

@@ -1,19 +1,11 @@
 <template>
+  
   <div class="integration_page">
+
     <div class="modules_header mb-5">
         <h4 class="title mb-2"> Contactum Forms Modules </h4>
         <p class="text"> Here is the list of all Contactum Forms modules. You can enable or disable the modules based on your need </p>
     </div>
-
-<!--    <el-row class="mb-3" :gutter="24">-->
-
-<!--        <el-col :span="6">-->
-<!--              <div class="contactum_mdoules_search">-->
-<!--                  <el-input placeholder="Search Modules" v-model="search" class="el-input-gray-light" prefix-icon="el-icon-search"></el-input>-->
-<!--              </div>-->
-<!--        </el-col>-->
-
-<!--    </el-row>-->
 
     <div class="integration-wrapper">
       <el-row :gutter="24">
@@ -41,6 +33,15 @@
                       @click.prevent="openDialog(integration)"
                       v-if="integration.formenable"
                     >  <i class="el-icon-setting"></i> </a>
+
+                        <el-button
+      v-if="integration.formenable"
+      size="mini"
+      type="text"
+      @click.prevent="openDialog(integration)"
+    >
+      <i class="el-icon-setting"></i> Settings
+    </el-button>
                 </div>
               </div>
             </div>
@@ -246,6 +247,18 @@ export default {
 
 <style scoped lang="scss">
 
+.modules_header {
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #303133;
+  }
+
+  .text {
+    font-size: 14px;
+    color: #909399;
+  }
+}
 
 .integraion-field {
   position: relative;
@@ -267,6 +280,16 @@ export default {
     border-radius: none;
     display: flex;
     flex-direction: column;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+     &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-color: #dcdfe6;
+    }
+
+
     .panel-body {
       padding: 20px;
       margin-bottom: 24px;
@@ -293,7 +316,22 @@ export default {
         align-items: center;
         justify-content: space-between;
       }
+
+      button {
+        font-weight: 500;
+      }
     }
   }
 }
+
+
+.pro-badge {
+  background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+}
+
 </style>

@@ -21,42 +21,6 @@
       ></i>
       {{ field_settings[field].title }}
     </li>
-<!--    -->
-<!--    <li-->
-<!--        v-if="is_failed_to_validate(field)"-->
-<!--        v-for="(field, index) in fields"-->
-<!--        @click="alert_invalidate_msg(field)"-->
-<!--        class="panel-button button-faded"-->
-<!--        :key="index"-->
-<!--        :data-form-field="field"-->
-<!--        data-source="panel"-->
-<!--    >-->
-<!--      <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--      {{ field_settings[field].title}}-->
-<!--    </li>-->
-
-<!--  <li-->
-<!--      v-if="!is_pro_feature(field) && !is_failed_to_validate(field)"-->
-<!--      v-for="(field, index) in fields"-->
-<!--      @click="add_field(field)"-->
-<!--      class="panel-button"-->
-<!--      :key="index"-->
-<!--      :data-form-field="field"-->
-<!--      data-source="panel"-->
-<!--  >-->
-<!--    <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--    {{ field_settings[field].title}} </li>-->
-<!--  <li-->
-<!--      v-if="is_pro_feature(field)"-->
-<!--      v-for="(field, index) in fields"-->
-<!--      @click="alert_pro_feature(field)"-->
-<!--      class="panel-button button-faded"-->
-<!--      :key="index"-->
-<!--      :data-form-field="field"-->
-<!--  >-->
-<!--    <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--    {{ field_settings[field].title}}-->
-<!--  </li>-->
   </ul>
 
     <ProFeature
@@ -240,7 +204,7 @@ validator.msg,
 
 ul.panel-form-field-buttons li:hover{
   /* background: #7e3bd0; */
-  background: #0076FF;
+  background: var(--primary);
   color: #fff;
 }
 

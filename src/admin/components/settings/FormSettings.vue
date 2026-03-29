@@ -1,5 +1,5 @@
 <template>
-  <div class="contactum_cad"> </div>
+  <div class="contactum_card"> </div>
 </template>
 
  <script>

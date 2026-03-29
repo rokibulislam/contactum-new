@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="field-settings-wrapper">
 
     <div v-if=" editfield_id == 0" class="options-fileds-section text-center">
         <p>
@@ -8,28 +8,30 @@
     </div>
       <div class="panel-field" v-else>
 
+
         <div name="slide-fade" class="panel-field-group panel-header">
-            <h2 @click="toggleBasic" >Basic Options
-                <i :class="[show_basic_settings ?  'el-icon-arrow-up' : 'el-icon-arrow-down']"> </i>
+            <h2 @click="toggleBasic" class="group-header" >Basic Options
+                <i :class="[show_basic_settings ?  'el-icon-arrow-up' : 'el-icon-arrow-down', 'toggle-icon' ]"> </i>
             </h2>
           <transition name="slide-fade">
-            <ul v-if="show_basic_settings">
-              <li v-for="(field,index) in basic_settings" :key="index">
+            <div v-if="show_basic_settings" class="group-content">
+              <div v-for="(field,index) in basic_settings" :key="index" class="field-control-item">
                 <component :is="'field_' + field.type " :field="field" :editfield="editfield"></component>
-              </li>
-            </ul>
+              </div>
+            </div>
           </transition>
         </div>
         <div name="slide-fade" class="panel-field-group panel-header">
-          <h2  @click="toggleAdvanced"> Advance Options
+          <h2  @click="toggleAdvanced" class="group-header"> Advance Options
             <i :class="[show_basic_settings ? 'el-icon-arrow-up' : 'el-icon-arrow-down' ]"> </i>
           </h2>
           <transition name="slide-fade">
-            <ul v-if="show_advanced_settings">
-              <li v-for="(field,index) in advanced_settings" :key="index">
+            <div v-if="show_advanced_settings" class="group-content">
+              <div v-for="(field,index) in advanced_settings" :key="index" class="field-control-item">
+
                 <component :is="'field_' + field.type " :field="field" :editfield="editfield"></component>
-              </li>
-            </ul>
+              </div>
+            </div>
           </transition>
         </div>
       </div>
@@ -74,6 +76,8 @@ import field_coupon from '../pro/field-template/coupon.vue'
 import field_subscription from '../pro/field-template/subscription.vue'
 import field_plan from '../pro/field-template/plan.vue'
 
+import field_calculation_options from '../field-template/calculation_options.vue'
+
 export default {
   name: "field_options",
   components: {
@@ -109,7 +113,8 @@ export default {
     field_column_data,
     field_coupon,
     field_subscription,
-    field_plan
+    field_plan,
+    field_calculation_options
   },
 
   data: function data() {
@@ -190,35 +195,89 @@ export default {
 
 <style lang="scss">
 
-.panel-field {
-    margin-bottom: 10px;
-    position: relative;
-    ul {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+
+.field-settings-wrapper {
+  padding-top: 20px;
 }
+
+.field-control-item {
+  margin-bottom: 20px;
+
+  .contactum-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #303133;
+  }
+}
+
+.panel-field {
+    margin-bottom: 14px;
+    position: relative;
+}
+
 
 .panel-field-group {
   background: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;  
+  
+  & h2 {
+    margin: 0;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #f9fafc;
+    border-bottom: 1px solid #ebeef5;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #f0f2f5;
+    }
+
+    i {
+      font-size: 14px;
+      color: #909399;
+      transition: transform 0.2s ease;
+      float: right;
+    }
+  }
+
+  .group-content {
+    padding: 15px;
+  }
+
 }
 
-.panel-field-group h2 i {
-    float: right;
+
+/* Loader */
+.options-fileds-section {
+  padding: 30px 0;
 }
 
-
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all 0.3s ease;
+/* Animation */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: max-height 0.3s ease, opacity 0.2s ease;
 }
-.slide-fade-enter-from, .slide-fade-leave-to {
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
 }
-.slide-fade-enter-to, .slide-fade-leave-from {
-  max-height: 500px; // adjust according to your content
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+  max-height: 600px;
   opacity: 1;
+}
+
+
+.toggle-icon {
+  transition: transform 0.25s ease;
 }
 
 </style>

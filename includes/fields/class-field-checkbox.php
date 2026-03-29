@@ -34,13 +34,25 @@ class Field_Checkbox extends Contactum_Field {
                     if ( $field_settings['options'] && count( $field_settings['options'] ) > 0 ) {
                         foreach ( $field_settings['options'] as $value => $option ) { ?>
                             <label>
-                        <?php    
-                            printf( '<input name="%s[]" class="%s" type="checkbox" value="%s" %s/>',
-                                esc_attr( $field_settings['name'] ),
-                                esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
-                                esc_attr( $option['value'] ),
-                                in_array( $option['value'], $selected ) ? ' checked="checked"' : '',
-                            );
+                        <?php   
+                        
+                            if( isset($field_settings['calc_value']) && $field_settings['calc_value'] == true ) {
+                                printf( '<input name="%s[]" class="%s" type="checkbox" value="%s" %s data-calc_value="%s"/>',
+                                    esc_attr( $field_settings['name'] ),
+                                    esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
+                                    esc_attr( $option['value'] ),
+                                    in_array( $option['value'], $selected ) ? ' checked="checked"' : '',
+                                    esc_attr( $option['calc_value'] )
+                                );
+                            } else {
+
+                                printf( '<input name="%s[]" class="%s" type="checkbox" value="%s" %s %s/>',
+                                    esc_attr( $field_settings['name'] ),
+                                    esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
+                                    esc_attr( $option['value'] ),
+                                    in_array( $option['value'], $selected ) ? ' checked="checked"' : '',
+                                );
+                            }
 
                                 if( $option['photo'] != "" ) {
                                   printf( '<img src="%s"  width="50px"/>',
@@ -102,6 +114,7 @@ class Field_Checkbox extends Contactum_Field {
 
         $props    = [
             'selected' => [],
+            'calc_value' => false,
             // 'inline'   => 'no',
             'layout'   => 'default',
             'image' => true,
@@ -110,20 +123,20 @@ class Field_Checkbox extends Contactum_Field {
                     'label' => 'option',
                     'value' => 'option',
                     'photo' => '',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-2',
                     'value' => 'option-2',
                     'photo' => '',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-3',
                     'value' => 'option-3',
                     'photo' => '',
+                    'calc_value' => 0,
                 ]
-                // 'Option' => __( 'Option', 'contactum' ),
-                // 'Option-2' => __( 'Option-2', 'contactum' ),
-                // 'Option-3' => __( 'Option-3', 'contactum' )
             ],
         ];
 

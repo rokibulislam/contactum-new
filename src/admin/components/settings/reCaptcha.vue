@@ -2,14 +2,14 @@
   <div>
     <el-form label-position="top">
       <div class="contactum_card">
-          <div class="contactum_cad_head">
+          <div class="contactum_card_head">
             <h2 class="title"> Google reCAPTCHA Settings </h2>
             <p class="text"> Contactum integrates with reCAPTCHA, a free service that protects your website from spam and abuse. Please note,
             these settings are required only if you decide to use the reCAPTCHA field. Read more about reCAPTCHA.  <a href="http://www.google.com/recaptcha/" target="_blank">Read more about reCAPTCHA</a> </p>
             <p class="text"><b>Please generate API key and API secret using reCAPTCHA</b></p>
           </div>
 
-        <div class="contactum_cad_body">
+        <div class="contactum_card_body">
               <!--Site key-->
               <el-form-item class="ff-form-item">
                 <template slot="label">

@@ -16,7 +16,7 @@
                                       Once you've saved the downloaded file, you can use the Import tool to import the forms.
                                     </p>
                                 </div>
-                                <i class="ff-icon ff-icon-info-filled text-primary"></i>
+                                <i class="text-primary"></i>
                             </el-tooltip>
                         </template>
                         <el-select class="contactum_input_width" v-model="selected" multiple>
@@ -96,32 +96,6 @@ export default {
           location.href = contactum.ajaxurl + '?' + jQuery.param(data);
         }
       },
-
-      /*
-      exportForms() {
-        if (this.selected.length) {
-          jQuery.post(
-              contactum.ajaxurl,
-              {
-                action: "contactum_export_forms",
-                export_type: 'selected',
-                selected_forms: this.selected
-              },
-              (response, textStatus, xhr) => {
-                
-              })
-        }
-      }
-      */
     }
 };
 </script>
-
-
-<style scoped lang="scss">
-
-.contactum_input_width {
-    width: 420px;
-}
-
-</style>

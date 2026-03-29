@@ -5,6 +5,7 @@ class Frontend {
 
     public function __construct() {
         add_shortcode( 'contactum', [ $this, 'render' ] );
+        add_action( 'contactum_form_fields_top', array( $this, 'prepare_form_calculation' ), 10, 2 );
     }
 
     public function show_error( $message, $type = 'info' ) {
@@ -73,6 +74,9 @@ class Frontend {
          id="<?php // echo esc_attr($modal_id); ?>contactum_form_<?php echo esc_attr( $form->id ); ?>" >
             <ul class="contactum-form form-label-<?php echo esc_attr( $form_settings['label_position'] ); ?>">
                <?php
+
+                    do_action( 'contactum_form_fields_top', $form, $form_fields );
+
                     contactum()->fields->render_fields( $form_fields, $form->id, $atts );
                     if( contactum()->fields->hassubmit_fields( $form_fields, $form->id, $atts ) ) {
 
@@ -106,35 +110,24 @@ class Frontend {
     public function addCustomCssJs( $form ) {
         $form_fields = $form->getFields();
         $form_settings = $form->getSettings();
-       // $this->addcss( $form->id, $form_settings['custom_css'] );
-       // $this->addjs( $form->id, $form_settings['custom_js']);
+    //    $this->addcss( $form->id, $form_settings['custom_css'] );
+       $this->addjs( $form->id,$form, $form_settings['custom_js']);
 
         contactum()->assets->addcss($form->id, $form_settings['custom_css']);
         contactum()->assets->addJs($form->id, $form_settings['custom_js']);
     }
 
-    public function addjs( $formId, $customJS ) {
-
-            $script = "if ( typeof contactum_conditional_items === 'undefined' ) {
-                    window.contactum_conditional_items = [];
-                }
-                if ( typeof contactum_plupload_items === 'undefined' ) {
-                    window.contactum_plupload_items = [];
-                }
-                if ( typeof contactum_map_items === 'undefined' ) {
-                    window.contactum_map_items = [];
-                }
-            ";
-
-            wp_add_inline_script( 'contactum-frontend', $script );
-
+    public function addjs( $formId, $form, $customJS ) {
 
         if (trim($customJS)) {
-           //  add_action('wp_footer', function () use ( $formId, $customJS) {
+            add_action('wp_footer', function () use ( $formId, $customJS) {
 
            $inline_script = "
            jQuery(document.body).on('contactum_init_" . esc_js($formId) . "', function(event, data) {
                 var form = jQuery(data[0]);
+                console.log(\"hello calculate \");
+                var formId = ".  esc_attr($formId) ."
+                calculation($, $theForm);
            });
            ";
             wp_add_inline_script('contactum-frontend', $inline_script);
@@ -144,7 +137,40 @@ class Frontend {
                 ?>
 
                 <?php
-            // }, 100);
+            }, 100);
         }
+    }
+
+
+    public function prepare_form_calculation( $form, $form_fields ) {
+
+        $calculation_vars = array(); 
+        $field_names = array();
+
+        foreach ( $form_fields as $field ) {
+
+            if( isset( $field['name'] ) ) {
+                $field_names[] = $field['name'];
+                $temp = $field['name'];
+            }
+
+            if ( isset( $field['enable_calculation'] ) && ! $field['formula_field'] ) {
+                continue;
+            }
+
+            if ( isset( $field['formula_field'] ) && !empty( $field['formula_field'] ) ) {
+                $calculation_vars['formulas']["$temp"] = str_replace( '%', '*.01', $field['formula_field']);
+            }
+        }
+
+        // print_r($calculation_vars);
+        // exit;
+
+        $calculation_vars = apply_filters( 'contactum_calculation_variables', $calculation_vars );
+
+        wp_localize_script( 'contactum-frontend', 'contactumCalculationObj', array(
+            // 'form_fields'        => $field_names,
+            'calculation_vars'   => $calculation_vars,
+        ) );
     }
 }

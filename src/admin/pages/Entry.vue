@@ -3,16 +3,16 @@
     <el-row :gutter="20">
         <el-col :span="16">
 
-          <div class="contactum_cad">
+          <div class="contactum_card">
 
-            <div class="contactum_cad_head">
+            <div class="contactum_card_head">
               <div class="entry_info_box_header">
                 <div class="entry_info_box_title">Entry Details</div>
               </div>
             </div>
 
 
-            <div class="contactum_cad_body">
+            <div class="contactum_card_body">
               <table class="form-table">
                 <tr
                     v-for="(field, index) in fields"
@@ -39,8 +39,8 @@
 
 
     <el-col :span="8">
-      <div class="contactum_cad">
-        <div class="contactum_cad_head">
+      <div class="contactum_card">
+        <div class="contactum_card_head">
           <div class="entry_info_box_header">
             <div class="entry_info_box_title">Submission Info</div>
             <div>
@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="contactum_cad_body">
+        <div class="contactum_card_body">
             <div id="contactum-forms-entry-details">
               <div class="inside">
                 <ul class="contactum-forms-entry-details-meta contactum_list_border_bottom">
@@ -184,19 +184,6 @@ export default{
   padding: 8px 0;
   color: #6b7280;
   font-weight: 500;
-}
-
-.contactum_cad {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;         // more inner spacing
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-.contactum_cad_head {
-  border-bottom: 1px solid #ececec;
-  margin-bottom: 26px;
-  padding-bottom: 12px;
 }
 
 

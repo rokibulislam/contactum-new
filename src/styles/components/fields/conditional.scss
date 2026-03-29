@@ -1,0 +1,21 @@
+.conditional_list {
+    margin-top: 5px;
+}
+
+.conditional {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.conditional-btn {
+  padding: 8px 15px;
+  width: 50px !important;
+}
+
+
+.conditional-action-btn {
+    display: flex;
+    align-items: center;
+}

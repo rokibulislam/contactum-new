@@ -44,3 +44,69 @@ export const handleSidebarActiveLink = ($link, init = false, firstLoad = false) 
         $link.siblings().find('.contactum_list_submenu').slideUp();
     }
 }
+
+
+
+
+export const handleSidebarSettingsActiveLink = (
+  $link,
+  init = false,
+  firstLoad = false
+) => {
+  const ACTIVE = 'contactum-settings__menu-item--active';
+  const HAS_SUB = 'contactum-settings__menu-item--has-submenu';
+  const OPEN = 'contactum-settings__menu-item--open';
+  const SUBMENU = '.contactum-settings__submenu';
+
+  // 1. Activate current item, deactivate siblings
+  $link
+    .addClass(ACTIVE)
+    .siblings()
+    .removeClass(`${ACTIVE} ${OPEN}`);
+
+  // 2. Toggle submenu if current item has submenu
+  if ($link.hasClass(HAS_SUB)) {
+    const $submenu = $link.children(SUBMENU);
+
+    if (firstLoad) {
+      $submenu.show();
+      $link.addClass(OPEN);
+    } else {
+      $link.toggleClass(OPEN);
+      $submenu.slideToggle();
+    }
+  }
+
+  // 3. Activate first submenu item (if exists)
+  const $firstSubItem = $link.find(`${SUBMENU} > li:first`);
+  if ($firstSubItem.length) {
+    $firstSubItem
+      .addClass(ACTIVE)
+      .siblings()
+      .removeClass(ACTIVE);
+  }
+
+  // 4. Init mode: ensure parent submenu opens
+  if (init) {
+    const $parent = $link.closest(`.${HAS_SUB}`);
+
+    if ($parent.length) {
+      const $parentSubmenu = $parent.children(SUBMENU);
+
+      if (firstLoad) {
+        $parent.addClass(`${ACTIVE} ${OPEN}`);
+        $parentSubmenu.show();
+      } else {
+        $parent.addClass(`${ACTIVE} ${OPEN}`);
+        $parentSubmenu.slideToggle();
+      }
+    }
+  }
+
+  // 5. Close other open submenus
+  $link
+    .siblings(`.${HAS_SUB}`)
+    .removeClass(OPEN)
+    .children(SUBMENU)
+    .slideUp();
+};

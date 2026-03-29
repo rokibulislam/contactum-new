@@ -104,8 +104,8 @@ export default {
 
           this.$store.dispatch("update_editing_form_field", {
             id: this.editfield.id,
-            property: "grid_rows",
-            // property: this.field.name,
+            // property: "grid_rows",
+            property: this.field.name,
             value: this.options,
           });
         },
@@ -121,8 +121,8 @@ export default {
         handler: function (new_option) {
           this.$store.dispatch("update_editing_form_field", {
             id: this.editfield.id,
-            property: "grid_rows",
-            // property: this.field.name,
+            // property: "grid_rows",
+            property: this.field.name,
             value: new_option,
           });
         },

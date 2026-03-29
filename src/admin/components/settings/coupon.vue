@@ -1,5 +1,5 @@
 <template>
-  <div class="contactum_cad">
+  <div class="contactum_card">
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <h3>Available Coupons  </h3>

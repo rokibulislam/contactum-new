@@ -1,0 +1,76 @@
+.contactum_table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(30,31,33,.08);
+    padding: 10px 24px
+}
+
+.contactum_table .cell strong {
+    color: #1e1f21;
+    font-weight: 500
+}
+
+.contactum-table-container thead {
+    color: #1e1f21
+}
+
+
+.contactum_table .el-table__row td:first-child {
+    vertical-align: top
+}
+
+.contactum_table .el-table__empty-block,.ff_table table {
+    width: 100%!important
+}
+
+.contactum_table .el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell,.ff_table .el-table__body tr.el-table__row--striped td.el-table__cell,.ff_table .el-table__body tr.hover-row>td.el-table__cell,.ff_table th.el-table__cell,.ff_table tr {
+    background-color: transparent!important
+}
+
+.contactum_table .el-table--border:after,.ff_table .el-table--group:after,.ff_table .el-table:before {
+    display: none
+}
+
+.contactum_table thead {
+    color: #1e1f21
+}
+
+.contactum_table thead .el-table__cell,.ff_table thead th {
+    padding-bottom: 8px;
+    padding-top: 0
+}
+
+.contactum_table .cell,.ff_table th.el-table__cell>.cell {
+    font-weight: 600;
+    padding-left: 0;
+    padding-right: 0
+}
+
+.contactum_table .sort-caret {
+    border-width: 4px
+}
+
+.contactum_table .sort-caret.ascending {
+    top: 7px
+}
+
+.contactum_table .sort-caret.descending {
+    bottom: 8px
+}
+
+.contactum_table .cell strong {
+    color: #1e1f21;
+    font-weight: 500
+}
+
+.contactum_table td.el-table__cell,.ff_table th.el-table__cell.is-leaf {
+    border-bottom-color: #ececec
+}
+
+.contactum_table tbody tr:last-child td.el-table__cell,.ff_table tbody tr:last-child th.el-table__cell.is-leaf {
+    border-bottom-width: 0
+}
+
+.contactum_table tbody .cell {
+    font-weight: 400
+}

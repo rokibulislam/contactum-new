@@ -256,10 +256,6 @@ export default {
   margin-top: 15px;
 }
 
- table {
-    box-shadow: 2px 1px 10px 2px #d9d9da;
-}
-
 .notification-field label {
     display: block;
     margin-bottom: 5px;

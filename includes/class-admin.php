@@ -188,86 +188,98 @@ class Admin {
     public function settings_page() {
         include __DIR__ . '/html/menu.php';
         ?>
-        <div class="contactum_settings_wrap">
-          <div class="contactum_settings_sidebar_wrap">
-            <span class="contactum_sidebar_toggle" title="Toggle Setting"> <i class="ff-icon ff-icon-arrow-right"></i></span>
-            <div class="contactum_settings_sidebar contactum_layout_section_sidebar">
-              <ul class="contactum_settings_list contactum_list_button">
 
 
-              <!--
 
-                <li class="contactum_list_button_item has_sub_menu ">
-                  <a class="contactum_list_button_link" href="#">General</a>
-                  <ul class="contactum_list_submenu" >
-                    <li><a class="contactum-page-scroll" data-component="settings" data-section-id="#settings" data-hash="settings" href="#">Layout</a></li>
-                  </ul>
+<div class="contactum-settings">
+
+  <div class="contactum-settings__sidebar-wrap">
+    <aside class="contactum-settings__sidebar contactum_layout_section_sidebar">
+      <ul class="contactum-settings__menu">
+
+        <!-- Security -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <a class="contactum-settings__menu-link" href="#">Security</a>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="google_recaptcha"
+                href="<?php echo admin_url('admin.php?page=contactum-settings#google_recaptcha'); ?>"
+                data-component="reCaptcha"
+                data-settings_key="google_recaptcha"
+              >
+                Google reCAPTCHA
+              </a>
+            </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="hcaptcha"
+                href="<?php echo admin_url('admin.php?page=contactum-settings#hcaptcha'); ?>"
+                data-component="hCaptcha"
+                data-settings_key="hcaptcha"
+              >
+                hCaptcha
+              </a>
+            </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="turnstile"
+                href="<?php echo admin_url('admin.php?page=contactum-settings#turnstile'); ?>"
+                data-component="turnstile"
+                data-settings_key="turnstile"
+              >
+                Turnstile
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <?php
+        $integrations = contactum()->integrations->get_integration_js_settings();
+        if ( ! empty( $integrations ) ) { ?>
+
+          <!-- Integrations -->
+          <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+            <a class="contactum-settings__menu-link" href="#">Configure Integrations</a>
+
+            <ul class="contactum-settings__submenu">
+              <?php foreach ( $integrations as $integration ) {
+                $section = $integration['sections'];
+                $url = admin_url( 'admin.php?page=contactum-settings#' . $section['id'] );
+              ?>
+                <li class="contactum-settings__menu-item">
+                  <a
+                    data-hash="<?php echo esc_attr( $section['id'] ); ?>"
+                    href="<?php echo esc_url( $url ); ?>"
+                    data-component="<?php echo esc_attr( $section['component'] ); ?>"
+                    data-settings_key="<?php echo esc_attr( $section['id'] ); ?>"
+                  >
+                    <?php echo esc_html( $section['name'] ); ?>
+                  </a>
                 </li>
+              <?php } ?>
+            </ul>
+          </li>
 
-                <li class="contactum_list_button_item has_sub_menu ">
-                  <a class="contactum_list_button_link" href="#">Payment</a>
-                  <ul class="contactum_list_submenu" >
-                    <li><a class="contactum-page-scroll" data-component="PaymentSettings" data-section-id="#PaymentSettings" data-hash="PaymentSettings" href="#PaymentSettings">Settings</a></li>
-                    <li><a class="contactum-page-scroll" data-component="coupon" data-section-id="#coupon" data-hash="coupon" href="#coupon">Coupon</a></li>
-                  
-                </ul>
-                </li>
-              -->
+        <?php } ?>
 
-                <li class="contactum_list_button_item has_sub_menu">
-                  <a class="contactum_list_button_link" href="#"> Security </a>
-                  <ul class="contactum_list_submenu">
-                  <li class="contactum_list_button_item">
-                      <a data-hash="google_recaptcha" 
-                      href="<?php echo admin_url('admin.php?page=contactum-settings#google_recaptcha'); ?>" 
-                      data-component="reCaptcha"
-                       data-settings_key="google_recaptcha">Google reCAPTCHA</a>
-                  </li>
-                  <li class="contactum_list_button_item">
-                      <a data-hash="hcaptcha" href="<?php echo admin_url('admin.php?page=contactum-settings#hcaptcha'); ?>" 
-                      data-component="hCaptcha"
-                      data-settings_key="hcaptcha">hCaptcha</a>
-                  </li>
-                  <li class="contactum_list_button_item">
-                      <a data-hash="turnstile" href="<?php echo admin_url('admin.php?page=contactum-settings#turnstile'); ?>" 
-                      data-component="turnstile" data-settings_key="turnstile">turnstile</a>
-                  </li>
-                  </ul>
-                </li>
+      </ul>
+    </aside>
+  </div>
 
-              <?php
-                  $integrations = contactum()->integrations->get_integration_js_settings();
-                  if( !empty( $integrations ) ) { ?>
+  <!-- Content -->
+  <div class="contactum-settings__content">
+    <div id="contactum-admin-settings">
+      <router-view></router-view>
+    </div>
+  </div>
 
-                <li class="contactum_list_button_item has_sub_menu">
-                  <a class="contactum_list_button_link" href="#"> Configure Integrations </a>
-                  <ul class="contactum_list_submenu has_sub_menu">
-                      <?php
-                      foreach( $integrations as  $integration ) {
-                          $section = $integration['sections'];
-                          $url = admin_url("admin.php?page=contactum-settings#". $section['id'] );
-                      ?>
-                        <li class="contactum_list_button_item">
-                            <a data-hash="<?php echo  $section['id']; ?>"
-                            href="<?php echo  $url; ?>"
-                            data-component="<?php echo $section['component']; ?>" data-settings_key="<?php echo  $section['id']; ?>"><?php echo $section['name'] ; ?></a>
-                        </li>
-                      <?php } ?>
-                   </ul>
-                </li>
+</div>
 
-                <?php  } ?>
-              </ul>
-            </div>
-          </div>
 
-           <div class="settings_content">
-               <div id="contactum-admin-settings">
-                     <router-view></router-view>
-               </div>
-            </div>
-
-        </div>
 
         <?php
     }
@@ -289,6 +301,7 @@ class Admin {
         wp_enqueue_script( 'contactum-entries' );
 
         wp_enqueue_style('contactum-admin');
+        wp_enqueue_style('contactum-admin-extra');
 
         wp_localize_script( 'contactum-entries', 'contactum', [
             'forms'   => contactum()->forms->all(),
@@ -304,6 +317,7 @@ class Admin {
         wp_enqueue_script( 'contactum-tools' );
 
         wp_enqueue_style('contactum-admin');
+        wp_enqueue_style('contactum-admin-extra');
 
         wp_localize_script( 'contactum-tools', 'contactum', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -317,6 +331,7 @@ class Admin {
         wp_register_script( 'contactum-settings', CONTACTUM_ASSETS . '/js/settings.js', ['jquery'], CONTACTUM_VERSION, true );
         wp_enqueue_script( 'contactum-settings' );
 
+
         wp_localize_script( 'contactum-settings', 'contactum', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
@@ -325,6 +340,8 @@ class Admin {
         ] );
 
         wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style('contactum-admin-extra');
+
     }
 
     public function load_form_scripts() {
@@ -347,5 +364,6 @@ class Admin {
         ] );
 
         wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style('contactum-admin-extra');
     }
 }

@@ -446,18 +446,6 @@ export default {
 }
 
 
-.contactum_pagination {
-  background: var(--card);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(30, 31, 33, .08);
-  display: inline-flex;
-  font-weight: 500;
-  max-width: 100%;
-  padding: 12px 20px;
-  margin-top: 20px;
-  color: var(--foreground);
-}
-
 
 .contactum_table {
     .el-table__row:hover {

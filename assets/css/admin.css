@@ -69,33 +69,6 @@
   margin-right: 5px;
 }
 
-.option-btn {
-  color: #fff;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  margin-top: 5px;
-  display: inline-block;
-  border: 1px solid transparent;
-  cursor: pointer;
-  margin-right: 5px;
-  border-radius: 8px;
-}
-
-.option-actions {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.option-add {
-    background: black;
-    margin-right: 5px;
-}
-
-.option-remove {
-    background: red;
-}
-
 .panel-field-btn-group button {
     flex-basis: 33%;
     color: #fff;
@@ -113,6 +86,7 @@
     margin-bottom: 5px;
     margin-top: 10px;
 }
+
 .selectize-element-group {
     display: none;
 }
@@ -133,43 +107,10 @@
     cursor: pointer;
     font-size: 14px;
     padding: 12px 20px;
-    color: #1a7efb;
+    color: var(--primary);
     font-weight: 600;
 }
 
-.conditional_list {
-    margin-top: 5px;
-}
-
-.conditional {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    gap: 20px;
-}
-
-.conditional-btn {
-  padding: 8px 15px;
-  width: 50px !important;
-}
-
-
-.conditional-action-btn {
-    display: flex;
-    align-items: center;
-}
-
-.el-icon-circle-plus-outline {
-    font-size: 24px;
-    color: #5cb85c;
-    cursor: pointer;
-}
-
-.el-icon-remove-outline {
-    color: #d9534f;
-    font-size: 20px;
-    cursor: pointer;
-}
 
 
 input [type='text'], input [type='number'] {
@@ -212,14 +153,15 @@ input [type='text'], input [type='number'] {
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  color: #1a7efb !important;
+  color: var(--primary) !important;
   text-decoration: none;
 }
 
 .contactum-label {
-  margin-bottom: 10px !important;
+  margin-bottom: 15px !important;
   display: block;
-    font-weight: 500;
+  font-weight: 600;
+  line-height: 14px;
 }
 
 
@@ -244,19 +186,6 @@ input [type='text'], input [type='number'] {
 
 /*** element ui change **/
 
-
-.el-button--primary {
-    background-color: var(--primary) !important;
-}
-
-
-.el-button--danger {
-  background-color: #DC2727  !important;
-}
-
-.el-table thead .cell {
-    color: hsl(var(--foreground)) !important;
-}
 
 .form-field-name_field .contactum-fields {
   display: flex;
@@ -293,16 +222,6 @@ input [type='text'], input [type='number'] {
 }
 
 
-
-.contactum_card {
-  background-color: var(--card);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  box-shadow: 0 2px 3px 0 hsla(0,0%,51%,.1);
-  padding: 24px;
-  margin-bottom: 30px;
-}
-
 .my-swal-icon {
     width: 40px !important;
     height: 40px !important;
@@ -338,322 +257,9 @@ img{
 
 
 
-.contactum_cad {
-    background-color: #fff;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    box-shadow: 0 2px 3px 0 hsla(0, 0%, 51%, .1);
-    padding: 24px;
-    margin-bottom: 30px;
-}
-
-.el-table .el-table__cell {
-    box-sizing: border-box;
-    min-width: 0;
-    padding: 12px 0;
-    position: relative;
-    text-align: left;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-}
-
-
-
-
-/***** Settings **********/
-
-
-/* Sidebar Container */
-
-.contactum_layout_section_sidebar {
-    background-color: #f6f7f7; /* Very light grey background */
-    border-right: 1px solid #dcdcde;
-    width: 240px;
-    flex-shrink: 0;
-}
-
-.contactum_settings_list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.contactum_list_button_item.has_sub_menu > .contactum_list_button_link {
-    background-color: #e5edf5; /* Light blue-grey from screenshot */
-    color: #1d2327;
-    padding: 16px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-}
-
-/* Arrow Icon styling (matches the thin chevron) */
-
-.contactum_list_button_item.has_sub_menu > .contactum_list_button_link::after {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid #787c82;
-    border-bottom: 2px solid #787c82;
-    transform: rotate(45deg);
-    margin-bottom: 4px;
-    transition: transform 0.2s ease;
-}
-
-
-.contactum_list_submenu {
-    display: block; /* Ensure it's visible */
-    list-style: none;
-    margin: 0;
-    padding: 8px 0;
-}
-
-.contactum_list_submenu li a {
-    display: block;
-    padding: 12px 20px 12px 45px; /* Indented text */
-    font-size: 15px;
-    color: #646970; /* Muted grey for inactive items */
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.contactum_list_submenu li a:hover {
-    color: #2271b1;
-    background-color: #f0f0f1;
-}
-
-/* 3. ACTIVE ITEM: Form Layout style */
-.contactum_list_submenu li.active a,
-.contactum_list_submenu li a.active {
-    background-color: #f0f7ff; /* Very light blue highlight */
-    color: #007cff;           /* Bright blue text */
-    font-weight: 500;
-}
-
-/* Utility: Hide submenu if collapsed (optional logic) */
-.contactum_list_button_item:not(.open) .contactum_list_submenu {
-    /* display: none; */ /* Uncomment if you want it to toggle */
-}
-
-.settings_content {
-    flex: 1;
-    padding: 20px 40px;
-    background-color: #f0f0f1;
-}
-
-.contactum_settings_wrap {
-    display: flex;
-    padding-top: 24px;
-}
-
-.contactum_settings_sidebar_wrap {
-    width: 280px;
-}
-
-.contactum_list_button_item.has_sub_menu.is-submenu {
-    color: inherit;
-    font-style: inherit;
-    font-weight: inherit;
-    margin-left: 0;
-}
-
-
-/*
-.settings_content {
-    flex: 1;
-}
-
-.contactum_layout_section_sidebar {
-    background-color: #fff;
-    box-shadow: 0 1px 3px rgba(30, 31, 33, .05);
-    flex-shrink: 0;
-    vertical-align: top;
-    width: 230px;
-}
-
-.contactum_settings_list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
-}
-.contactum_list_button_item {
-    border-bottom: 1px solid #eee;
-}
-
-.contactum_list_button_item:not(:last-child) {
-    margin-bottom: 4px;
-}
-
-.contactum_list_button_item.has_sub_menu.is-submenu {
-    color: inherit;
-    font-style: inherit;
-    font-weight: inherit;
-    margin-left: 0;
-}
-
-.contactum_list_button_item.active .contactum_list_button_link {
-    background-color: #4b4c4d !important;
-    color: #fff !important;
-}
-
-.contactum_list_button_link {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    cursor: pointer;
-    background-color: transparent;
-    transition: background 0.2s ease;
-    border: none;
-}
-
-.contactum_list_button_link:hover {
-    background-color: #f5f5f5;
-}
-
-.contactum_list_button_link.active {
-    background-color: #3a3a3a; 
-    color: white;
-}
-
-.contactum_list_button_link.active:hover {
-    background-color: #0056b3;
-}
-
-
-.contactum_list_submenu {
-    display: none;
-    list-style: none;
-    margin-top: 10px;
-}
-
-.contactum_list_submenu li.active a {
-    background-color: #efefef;
-    color: var(--foreground);
-}
-
-.contactum_list_submenu li a {
-    border-radius: 6px;
-    color: #606266;
-    display: block;
-    font-size: 15px;
-    margin-left: 15px;
-    max-width: 197px;
-    overflow: hidden;
-    padding: 10px;
-    text-overflow: ellipsis;
-    transition: .2s;
-    white-space: nowrap;
-    text-decoration: none;
-}
-
-.has_sub_menu:hover > .contactum_list_submenu {
-    display: block;
-}
-
-
-.contactum_list_submenu li a.active {
-    background-color: #e0e0e0;
-    color: #000;
-}
-
-.has_sub_menu > .contactum_list_button_link::after {
-    content: "▾";
-    font-size: 0.8rem;
-    transition: transform 0.3s ease;
-}
-
-.has_sub_menu.open > .contactum_list_button_link::after {
-    transform: rotate(180deg);
-}
-
-li.contactum_list_button_item:not(:last-child) {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-*/
 
 
 /*** tab ***/
-
-.contactum_table {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(30,31,33,.08);
-    padding: 10px 24px
-}
-
-
-.contactum_table .el-table__row td:first-child {
-    vertical-align: top
-}
-
-.contactum_table .el-table__empty-block,.ff_table table {
-    width: 100%!important
-}
-
-.contactum_table .el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell,.ff_table .el-table__body tr.el-table__row--striped td.el-table__cell,.ff_table .el-table__body tr.hover-row>td.el-table__cell,.ff_table th.el-table__cell,.ff_table tr {
-    background-color: transparent!important
-}
-
-.contactum_table .el-table--border:after,.ff_table .el-table--group:after,.ff_table .el-table:before {
-    display: none
-}
-
-.contactum_table thead {
-    color: #1e1f21
-}
-
-.contactum_table thead .el-table__cell,.ff_table thead th {
-    padding-bottom: 8px;
-    padding-top: 0
-}
-
-.contactum_table .cell,.ff_table th.el-table__cell>.cell {
-    font-weight: 600;
-    padding-left: 0;
-    padding-right: 0
-}
-
-.contactum_table .sort-caret {
-    border-width: 4px
-}
-
-.contactum_table .sort-caret.ascending {
-    top: 7px
-}
-
-.contactum_table .sort-caret.descending {
-    bottom: 8px
-}
-
-.contactum_table .cell strong {
-    color: #1e1f21;
-    font-weight: 500
-}
-
-.contactum_table td.el-table__cell,.ff_table th.el-table__cell.is-leaf {
-    border-bottom-color: #ececec
-}
-
-.contactum_table tbody tr:last-child td.el-table__cell,.ff_table tbody tr:last-child th.el-table__cell.is-leaf {
-    border-bottom-width: 0
-}
-
-.contactum_table tbody .cell {
-    font-weight: 400
-}
-
-
 
 .file-input {
     background: #fff;
@@ -664,65 +270,22 @@ li.contactum_list_button_item:not(:last-child) {
     padding: 5px !important;
 }
 
-
 #contactum-admin-entries {
     margin-top: 20px;
 }
-
-
-
-
-
-
-
-.contactum_cad_head {
-    border-bottom: 1px solid #ececec;
-    margin-bottom: 26px;
-    padding-bottom: 16px;
-}
-
-.contactum_cad_head .title {
-    color: #1e1f21 !important;
-    margin: 0;
-}
-
-
-.contactum_cad_head .text {
-    margin-top: 10px;
-}
-
-.contactum_cad .text {
-    font-size: 15px;
-    line-height: 1.6;
-}
-
 
 .mx-auto {
     margin-left: auto;
     margin-right: auto;
 }
 
-
-
-.contactum_table .cell strong {
-    color: #1e1f21;
-    font-weight: 500
-}
-
-.contactum-table-container thead {
-    color: #1e1f21
-}
-
-
 html {
     scroll-behavior: smooth;
 }
 
-
 .settings_content {
     scroll-behavior: smooth;
 }
-
 
 .skeleton {
     animation: skeleton-loading 2s linear infinite alternate;
@@ -740,4 +303,26 @@ html {
 
 .search-field > .el-input__inner {
     padding-left: 32px !important;
+}
+
+
+/* Input appearance */
+.panel-field .el-input__inner {
+  height: 34px;
+  font-size: 13px;
+  border-radius: 4px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus state */
+.panel-field .el-input__inner:focus {
+  border-color: #409eff;
+  box-shadow: 0 0 0 1px rgba(64, 158, 255, 0.15);
+}
+
+/* Optional: required indicator */
+.contactum-label.required::after {
+  content: " *";
+  color: #f56c6c;
+  font-weight: 500;
 }

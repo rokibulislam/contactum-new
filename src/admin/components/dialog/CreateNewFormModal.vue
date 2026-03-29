@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="visibility" :before-close="cancelNewForm">
+  <el-dialog :visible.sync="visibility" :before-close="cancelNewForm" custom-class="template-dialog" width="75%">
 
     <template slot="title">
       
@@ -83,6 +83,10 @@ export default{
 
 <style scoped lang="scss">
 
+.el-dialog {
+  width: 75%  !important;
+}
+
 .el-dialog__header_group {
   display: flex;
   align-items: center;
@@ -115,7 +119,7 @@ export default{
     margin-top: 0;
     margin-bottom: 0;
     border: 0px;
-    background: #0076FF;
+    background: var(--primary);
     padding: 13px;
     font-weight: normal;
     font-size: 13px;

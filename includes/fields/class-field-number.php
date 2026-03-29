@@ -18,6 +18,7 @@ class Field_Number extends  Contactum_Field {
 
         <?php
                 $this->print_label( $field_settings );
+                if( isset($field_settings['enable_calculation']) && $field_settings['enable_calculation'] == 1 ) { 
                 printf('<div class="contactum-fields"> <input
                         id="%s"
                         type="number"
@@ -31,6 +32,7 @@ class Field_Number extends  Contactum_Field {
                         size="%s"
                         data-required="%s"
                         data-type="text"
+                        data-calculation="true"
                     /> </div>',
                     esc_attr( $field_settings['name'] ) . '_' . esc_attr( $form_id ),
                     esc_attr( $field_settings['name'] ).'_'. esc_attr( $form_id ),
@@ -42,7 +44,38 @@ class Field_Number extends  Contactum_Field {
                     esc_attr( $value ),
                     esc_attr( $field_settings['size'] ),
                     esc_attr( $field_settings['required'] ),
+                    esc_attr( $value )
                 );
+
+            } else {
+                
+                printf('<div class="contactum-fields"> <input
+                        id="%s"
+                        type="number"
+                        class="contactum-el-form-control %s"
+                        min="%s"
+                        max="%s"
+                        step="%s"
+                        name="%s"
+                        placeholder="%s"
+                        value="%s"
+                        size="%s"
+                        data-required="%s"
+                        data-type="text"
+                        data-calculation="false"
+                    /> </div>',
+                    esc_attr( $field_settings['name'] ) . '_' . esc_attr( $form_id ),
+                    esc_attr( $field_settings['name'] ).'_'. esc_attr( $form_id ),
+                    esc_attr($field_settings['min_value_field']),
+                    $field_settings['max_value_field'] == 0 ? '' : esc_attr($field_settings['max_value_field']),
+                    esc_attr( $field_settings['step_text_field'] ),
+                    esc_attr( $field_settings['name'] ),
+                    esc_attr( $field_settings['placeholder'] ),
+                    esc_attr( $value ),
+                    esc_attr( $field_settings['size'] ),
+                    esc_attr( $field_settings['required'] ),
+                ); 
+            }
 
                 $this->help_text( $field_settings );
             ?>
@@ -98,7 +131,31 @@ class Field_Number extends  Contactum_Field {
             // ),
         );
 
-        return array_merge( $default_options, $settings );
+
+        $calculation_options = [
+            [
+                'name'          => 'enable_calculation',
+                'title'         => __( 'Enable Calculation', 'contactum-pro' ),
+                'type'          => 'checkbox',
+                'is_single_opt' => true,
+                'options'       => array(
+                    'true'   => __( 'Enable Calculation', 'contactum-pro' )
+                ),
+                'default'       => '',
+                'section'       => 'advanced',
+                'priority'      => 24,
+                'help_text'     => __( 'Select this option to enable calculation in this field.', 'contactum-pro' ),
+            ],
+            [
+                'name'          => 'calculation_options',
+                'title'         => __( 'Calculation Options', 'contactum-pro' ),
+                'type'          => 'calculation_options',
+                'section'       => 'advanced',
+                'priority'      => 24,
+            ]
+        ];
+
+        return array_merge( $default_options, $settings, $calculation_options );
     }
 
     public function get_field_props() {
@@ -108,6 +165,8 @@ class Field_Number extends  Contactum_Field {
             'step_text_field'   => '0',
             'min_value_field'   => '0',
             'max_value_field'   => '0',
+            'enable_calculation' => false,
+            'formula_field' => ''
             // 'duplicate'         => '',
         );
 
