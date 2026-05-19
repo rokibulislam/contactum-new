@@ -16,16 +16,35 @@ import {
     RadioGroup,
     RadioButton,
     Input,
-    Button
-}  from 'element-ui';
+    Button,
+    Select,
+    Option,
+    Form,
+    FormItem,
+    Skeleton,
+    SkeletonItem,
+    Notification,
+    Loading,
+    Tooltip,
+} from 'element-ui';
 
-Vue.use(Switch)
-Vue.use(Row)
-Vue.use(Col)
-Vue.use(RadioGroup)
-Vue.use(RadioButton)
-Vue.use(Input)
-Vue.use(Button)
+Vue.use(Switch);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(RadioGroup);
+Vue.use(RadioButton);
+Vue.use(Input);
+Vue.use(Button);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Skeleton);
+Vue.use(SkeletonItem);
+Vue.use(Loading);
+Vue.use(Tooltip);
+
+Vue.prototype.$notify = Notification;
 import integration  from "./pages/integration.vue";
 
 let app = new Vue({

@@ -1768,30 +1768,257 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* global jQuery */
+const $ = window.jQuery;
+const cpm = window.contactum || {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Payment",
+  name: 'Payment',
 
   data() {
     return {
       payments: [],
       loading: false,
-      selectedFormId: '',
-      selectedPaymentStatuses: '',
-      selectedPaymentMethods: '',
-      selectedPaymentTypes: ''
+      stats: {
+        total_revenue: 0,
+        total: 0,
+        completed: 0,
+        pending: 0,
+        failed: 0,
+        refunded: 0
+      },
+      availableForms: [],
+      formsLoading: false,
+      filterForm: '',
+      filterStatus: '',
+      filterGateway: '',
+      page: 1,
+      perPage: 20,
+      total: 0,
+      totalPages: 0
     };
   },
 
-  computed: {},
-
   mounted() {
+    this.loadForms();
+    this.fetchStats();
     this.fetchPayments();
   },
 
   methods: {
-    fetchPayments() {},
+    loadForms() {
+      this.formsLoading = true;
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_get_forms',
+        _ajax_nonce: cpm.nonce
+      }, res => {
+        this.formsLoading = false;
 
-    handleSelectionChange() {}
+        if (res.success) {
+          this.availableForms = Object.values(res.data.forms || {});
+        }
+      });
+    },
+
+    fetchStats() {
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_get_payment_stats',
+        nonce: cpm.nonce
+      }, res => {
+        if (res.success) this.stats = res.data;
+      });
+    },
+
+    fetchPayments() {
+      this.loading = true;
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_get_payments',
+        nonce: cpm.nonce,
+        page: this.page,
+        per_page: this.perPage,
+        form_id: this.filterForm,
+        status: this.filterStatus,
+        gateway: this.filterGateway
+      }, res => {
+        this.loading = false;
+
+        if (res.success) {
+          this.payments = res.data.payments;
+          this.total = res.data.total;
+          this.totalPages = res.data.pages;
+        }
+      });
+    },
+
+    onFilterChange() {
+      this.page = 1;
+      this.fetchPayments();
+    },
+
+    clearFilters() {
+      this.filterForm = '';
+      this.filterStatus = '';
+      this.filterGateway = '';
+      this.page = 1;
+      this.fetchPayments();
+    },
+
+    confirmDelete(row) {
+      const label = row.transaction_id ? '#' + row.transaction_id : 'ID-' + row.id;
+      this.$confirm(`Delete payment <strong>${label}</strong>? This cannot be undone.`, 'Delete Payment', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        dangerouslyUseHTMLString: true,
+        confirmButtonClass: 'el-button--danger'
+      }).then(() => {
+        $.post(cpm.ajaxurl, {
+          action: 'contactum_delete_payment',
+          nonce: cpm.nonce,
+          id: row.id
+        }, res => {
+          if (res.success) {
+            this.$message.success('Payment deleted');
+            this.fetchPayments();
+            this.fetchStats();
+          } else {
+            this.$message.error(res.data && res.data.message || 'Failed to delete payment');
+          }
+        });
+      }).catch(() => {});
+    },
+
+    formatAmount(val) {
+      return parseFloat(val || 0).toFixed(2);
+    },
+
+    formatDate(val) {
+      if (!val) return '—';
+      return new Date(val).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    },
+
+    capitalize(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
   }
 });
@@ -3602,7 +3829,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.contactum_filter_wrapper[data-v-23880812] {\n  margin-bottom: 20px;\n  overflow: hidden;\n  width: 100%;\n}\n.contactum_form_group_label[data-v-23880812] {\n  color: #1e1f21;\n  display: block;\n  font-size: 14px;\n  font-weight: 500;\n  margin-bottom: 8px;\n}\n\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Page ────────────────────────────────────────────── */\n.cpm-page[data-v-23880812] {\n  padding: 24px 28px;\n  max-width: 1200px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.cpm-header[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.cpm-header__icon[data-v-23880812] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-header__icon .dashicons[data-v-23880812] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.cpm-header__title[data-v-23880812] {\n  margin: 0 0 2px;\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1.2;\n}\n.cpm-header__sub[data-v-23880812] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Stats ───────────────────────────────────────────── */\n.cpm-stats[data-v-23880812] {\n  display: flex;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.cpm-stat[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-left: 3px solid #e5e7eb;\n  border-radius: 10px;\n  padding: 14px 18px;\n  flex: 1;\n  min-width: 130px;\n}\n.cpm-stat .dashicons[data-v-23880812] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #9ca3af;\n  flex-shrink: 0;\n}\n.cpm-stat__val[data-v-23880812] {\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1;\n}\n.cpm-stat__lbl[data-v-23880812] {\n  font-size: 12px;\n  color: #6b7280;\n  margin-top: 3px;\n}\n.cpm-stat--blue[data-v-23880812]  { border-left-color: #3b82f6;\n}\n.cpm-stat--blue  .dashicons[data-v-23880812] { color: #3b82f6;\n}\n.cpm-stat--green[data-v-23880812] { border-left-color: #22c55e;\n}\n.cpm-stat--green .dashicons[data-v-23880812] { color: #22c55e;\n}\n.cpm-stat--amber[data-v-23880812] { border-left-color: #f59e0b;\n}\n.cpm-stat--amber .dashicons[data-v-23880812] { color: #f59e0b;\n}\n.cpm-stat--red[data-v-23880812]   { border-left-color: #ef4444;\n}\n.cpm-stat--red   .dashicons[data-v-23880812] { color: #ef4444;\n}\n\n/* ── Toolbar ─────────────────────────────────────────── */\n.cpm-toolbar[data-v-23880812] {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 16px;\n  flex-wrap: wrap;\n}\n.cpm-toolbar__sel[data-v-23880812] { width: 180px;\n}\n\n/* ── Table wrap ──────────────────────────────────────── */\n.cpm-table-wrap[data-v-23880812] {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 10px;\n  overflow: hidden;\n}\n.cpm-table[data-v-23880812] { width: 100%;\n}\n\n/* ── Cells ───────────────────────────────────────────── */\n.cpm-txn[data-v-23880812] {\n  font-size: 12px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f3f4f6;\n  color: #374151;\n  padding: 2px 7px;\n  border-radius: 4px;\n}\n.cpm-form-name[data-v-23880812] {\n  font-weight: 500;\n  color: #374151;\n}\n.cpm-amount[data-v-23880812] {\n  font-size: 14px;\n  color: #111827;\n}\n\n/* Gateway badges */\n.cpm-gw[data-v-23880812] {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 2px 8px;\n  border-radius: 4px;\n  text-transform: capitalize;\n  background: #f3f4f6;\n  color: #6b7280;\n}\n.cpm-gw--stripe[data-v-23880812]   { background: #ede9fe; color: #7c3aed;\n}\n.cpm-gw--paypal[data-v-23880812]   { background: #fef9c3; color: #854d0e;\n}\n.cpm-gw--razorpay[data-v-23880812] { background: #dbeafe; color: #1d4ed8;\n}\n.cpm-gw--mollie[data-v-23880812]   { background: #fce7f3; color: #9d174d;\n}\n.cpm-gw--square[data-v-23880812]   { background: #dcfce7; color: #166534;\n}\n\n/* Status pills */\n.cpm-status[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 3px 9px;\n  border-radius: 20px;\n  text-transform: capitalize;\n}\n.cpm-status[data-v-23880812]::before {\n  content: '';\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n}\n.cpm-status--completed[data-v-23880812] { background: #dcfce7; color: #16a34a;\n}\n.cpm-status--pending[data-v-23880812]   { background: #fef3c7; color: #d97706;\n}\n.cpm-status--failed[data-v-23880812]    { background: #fee2e2; color: #dc2626;\n}\n.cpm-status--refunded[data-v-23880812]  { background: #e0e7ff; color: #4338ca;\n}\n.cpm-status--unknown[data-v-23880812]   { background: #f3f4f6; color: #6b7280;\n}\n.cpm-date[data-v-23880812] {\n  font-size: 12.5px;\n  color: #6b7280;\n}\n\n/* Delete button */\n.cpm-del[data-v-23880812] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  color: #d1d5db;\n  transition: color .15s;\n  line-height: 1;\n}\n.cpm-del[data-v-23880812]:hover { color: #ef4444;\n}\n.cpm-del .dashicons[data-v-23880812] { font-size: 16px; width: 16px; height: 16px;\n}\n\n/* ── Empty state ─────────────────────────────────────── */\n.cpm-empty[data-v-23880812] {\n  text-align: center;\n  padding: 56px 24px;\n}\n.cpm-empty__icon[data-v-23880812] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n}\n.cpm-empty__title[data-v-23880812] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.cpm-empty__sub[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n}\n.cpm-btn-clear[data-v-23880812] {\n  background: none;\n  border: 1px solid #d1d5db;\n  border-radius: 6px;\n  padding: 7px 16px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n  transition: border-color .15s, color .15s;\n}\n.cpm-btn-clear[data-v-23880812]:hover {\n  border-color: #3b82f6;\n  color: #3b82f6;\n}\n\n/* ── Pagination ──────────────────────────────────────── */\n.cpm-pagination[data-v-23880812] {\n  margin-top: 16px;\n  display: flex;\n  justify-content: flex-end;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -74424,260 +74651,470 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "contactum_payments_wrapper" }, [
-    _c("h2", [_vm._v(" Transactions ")]),
+  return _c("div", { staticClass: "cpm-page" }, [
+    _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "contactum-entries-content" }, [
-      _c("div", { staticClass: "contactum_filter_wrapper payment_filters" }, [
-        _c(
-          "div",
-          {
-            staticClass: "el-row",
-            staticStyle: { "margin-left": "-10px", "margin-right": "-10px" }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "el-col-8 el-col-lg-5",
-                staticStyle: { "padding-left": "10px", "padding-right": "10px" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "contactum_form_group" },
-                  [
-                    _c("label", { staticClass: "contactum_form_group_label" }, [
-                      _vm._v("Form")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-select",
-                      {
-                        staticClass: "contactum-input-s1",
-                        attrs: { clearable: "", placeholder: "Select Form" },
-                        on: {
-                          change: function($event) {
-                            return _vm.fetchPayments()
-                          }
-                        },
-                        model: {
-                          value: _vm.selectedFormId,
-                          callback: function($$v) {
-                            _vm.selectedFormId = $$v
-                          },
-                          expression: "selectedFormId"
-                        }
-                      },
-                      _vm._l(_vm.available_forms, function(item) {
-                        return _c("el-option", {
-                          key: item.form_id,
-                          attrs: { label: item.title, value: item.form_id }
-                        })
-                      }),
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "el-col-8 el-col-lg-5",
-                staticStyle: { "padding-left": "10px", "padding-right": "10px" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "contactum_form_group" },
-                  [
-                    _c("label", { staticClass: "contactum_form_group_label" }, [
-                      _vm._v("Status")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-select",
-                      {
-                        staticClass: "contactum-input-s1",
-                        attrs: { clearable: "", placeholder: "Select Status" },
-                        on: {
-                          change: function($event) {
-                            return _vm.fetchPayments()
-                          }
-                        },
-                        model: {
-                          value: _vm.selectedPaymentStatuses,
-                          callback: function($$v) {
-                            _vm.selectedPaymentStatuses = $$v
-                          },
-                          expression: "selectedPaymentStatuses"
-                        }
-                      },
-                      _vm._l(_vm.available_statuses, function(item) {
-                        return _c("el-option", {
-                          key: item,
-                          attrs: { label: item, value: item }
-                        })
-                      }),
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "el-col-8 el-col-lg-5",
-                staticStyle: { "padding-left": "10px", "padding-right": "10px" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "contactum_form_group" },
-                  [
-                    _c("label", { staticClass: "contactum_form_group_label" }, [
-                      _vm._v("Payment Methods")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-select",
-                      {
-                        staticClass: "contactum-input-s1",
-                        attrs: { clearable: "", placeholder: "Select Method" },
-                        on: {
-                          change: function($event) {
-                            return _vm.fetchPayments()
-                          }
-                        },
-                        model: {
-                          value: _vm.selectedPaymentMethods,
-                          callback: function($$v) {
-                            _vm.selectedPaymentMethods = $$v
-                          },
-                          expression: "selectedPaymentMethods"
-                        }
-                      },
-                      _vm._l(_vm.available_methods, function(item) {
-                        return _c("el-option", {
-                          key: item.key,
-                          attrs: { label: item.value, value: item.key }
-                        })
-                      }),
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "el-col-8 el-col-lg-5",
-                staticStyle: { "padding-left": "10px", "padding-right": "10px" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "contactum_form_group" },
-                  [
-                    _c("label", { staticClass: "contactum_form_group_label" }, [
-                      _vm._v("Payment Types")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-select",
-                      {
-                        staticClass: "ff-input-s1",
-                        attrs: { clearable: "", placeholder: "Select Type" },
-                        on: {
-                          change: function($event) {
-                            return _vm.fetchPayments()
-                          }
-                        },
-                        model: {
-                          value: _vm.selectedPaymentTypes,
-                          callback: function($$v) {
-                            _vm.selectedPaymentTypes = $$v
-                          },
-                          expression: "selectedPaymentTypes"
-                        }
-                      },
-                      _vm._l(_vm.available_payment_types, function(item) {
-                        return _c("el-option", {
-                          key: item.key,
-                          attrs: { label: item.value, value: item.key }
-                        })
-                      }),
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]
-            )
-          ]
-        )
+    _c("div", { staticClass: "cpm-stats" }, [
+      _c("div", { staticClass: "cpm-stat cpm-stat--blue" }, [
+        _c("span", { staticClass: "dashicons dashicons-chart-line" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "cpm-stat__body" }, [
+          _c("div", { staticClass: "cpm-stat__val" }, [
+            _vm._v("$" + _vm._s(_vm.formatAmount(_vm.stats.total_revenue)))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cpm-stat__lbl" }, [_vm._v("Total Revenue")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cpm-stat" }, [
+        _c("span", { staticClass: "dashicons dashicons-list-view" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "cpm-stat__body" }, [
+          _c("div", { staticClass: "cpm-stat__val" }, [
+            _vm._v(_vm._s(_vm.stats.total))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cpm-stat__lbl" }, [_vm._v("All Payments")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cpm-stat cpm-stat--green" }, [
+        _c("span", { staticClass: "dashicons dashicons-yes-alt" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "cpm-stat__body" }, [
+          _c("div", { staticClass: "cpm-stat__val" }, [
+            _vm._v(_vm._s(_vm.stats.completed))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cpm-stat__lbl" }, [_vm._v("Completed")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cpm-stat cpm-stat--amber" }, [
+        _c("span", { staticClass: "dashicons dashicons-clock" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "cpm-stat__body" }, [
+          _c("div", { staticClass: "cpm-stat__val" }, [
+            _vm._v(_vm._s(_vm.stats.pending))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cpm-stat__lbl" }, [_vm._v("Pending")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cpm-stat cpm-stat--red" }, [
+        _c("span", { staticClass: "dashicons dashicons-dismiss" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "cpm-stat__body" }, [
+          _c("div", { staticClass: "cpm-stat__val" }, [
+            _vm._v(_vm._s(_vm.stats.failed))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cpm-stat__lbl" }, [_vm._v("Failed")])
+        ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "payment_details" }, [
-      _c(
-        "div",
-        { staticClass: "contactum_table" },
-        [
-          _c(
-            "el-table",
-            {
-              staticClass: "ff_payment_table",
-              attrs: {
-                stripe: true,
-                "row-class-name": _vm.tableRowClassName,
-                data: _vm.payments
-              },
-              on: { "selection-change": _vm.handleSelectionChange }
+    _c(
+      "div",
+      { staticClass: "cpm-toolbar" },
+      [
+        _c(
+          "el-select",
+          {
+            staticClass: "cpm-toolbar__sel",
+            attrs: {
+              clearable: "",
+              placeholder: "All Forms",
+              size: "small",
+              loading: _vm.formsLoading
             },
-            [
-              _c("el-table-column", {
-                attrs: { width: "120", label: "Submission ID" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { width: "200", label: "Form", prop: "title" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", { attrs: { width: "100", label: "Type" } }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "Customer", prop: "payer_name" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { width: "160", label: "Amount" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { width: "180", label: "Status" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", { attrs: { width: "180", label: "Time" } })
-            ],
-            1
-          )
+            on: { change: _vm.onFilterChange },
+            model: {
+              value: _vm.filterForm,
+              callback: function($$v) {
+                _vm.filterForm = $$v
+              },
+              expression: "filterForm"
+            }
+          },
+          _vm._l(_vm.availableForms, function(f) {
+            return _c("el-option", {
+              key: f.id,
+              attrs: { label: f.name, value: f.id }
+            })
+          }),
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-select",
+          {
+            staticClass: "cpm-toolbar__sel",
+            attrs: {
+              clearable: "",
+              placeholder: "All Statuses",
+              size: "small"
+            },
+            on: { change: _vm.onFilterChange },
+            model: {
+              value: _vm.filterStatus,
+              callback: function($$v) {
+                _vm.filterStatus = $$v
+              },
+              expression: "filterStatus"
+            }
+          },
+          [
+            _c("el-option", {
+              attrs: { label: "Completed", value: "completed" }
+            }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "Pending", value: "pending" } }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "Failed", value: "failed" } }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "Refunded", value: "refunded" } })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-select",
+          {
+            staticClass: "cpm-toolbar__sel",
+            attrs: {
+              clearable: "",
+              placeholder: "All Gateways",
+              size: "small"
+            },
+            on: { change: _vm.onFilterChange },
+            model: {
+              value: _vm.filterGateway,
+              callback: function($$v) {
+                _vm.filterGateway = $$v
+              },
+              expression: "filterGateway"
+            }
+          },
+          [
+            _c("el-option", { attrs: { label: "Stripe", value: "stripe" } }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "PayPal", value: "paypal" } }),
+            _vm._v(" "),
+            _c("el-option", {
+              attrs: { label: "Razorpay", value: "razorpay" }
+            }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "Mollie", value: "mollie" } }),
+            _vm._v(" "),
+            _c("el-option", { attrs: { label: "Square", value: "square" } })
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "loading",
+            rawName: "v-loading",
+            value: _vm.loading,
+            expression: "loading"
+          }
         ],
-        1
-      )
-    ])
+        staticClass: "cpm-table-wrap"
+      },
+      [
+        _c(
+          "el-table",
+          {
+            staticClass: "cpm-table",
+            attrs: { data: _vm.payments, stripe: true }
+          },
+          [
+            _c("el-table-column", {
+              attrs: { label: "Transaction", width: "160" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c("span", { staticClass: "cpm-txn" }, [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(
+                              row.transaction_id
+                                ? "#" + row.transaction_id
+                                : "ID-" + row.id
+                            ) +
+                            "\n          "
+                        )
+                      ])
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Form", "min-width": "160" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c("span", { staticClass: "cpm-form-name" }, [
+                        _vm._v(_vm._s(row.form_title || "—"))
+                      ])
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Customer", "min-width": "130" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(row.customer_name || "Guest") +
+                          "\n        "
+                      )
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Gateway", width: "110" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      row.gateway
+                        ? _c(
+                            "span",
+                            {
+                              staticClass: "cpm-gw",
+                              class: "cpm-gw--" + row.gateway.toLowerCase()
+                            },
+                            [_vm._v(_vm._s(_vm.capitalize(row.gateway)))]
+                          )
+                        : _c("span", { staticClass: "cpm-gw cpm-gw--other" }, [
+                            _vm._v("—")
+                          ])
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Amount", width: "110" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c("strong", { staticClass: "cpm-amount" }, [
+                        _vm._v("$" + _vm._s(_vm.formatAmount(row.total)))
+                      ])
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Status", width: "120" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "cpm-status",
+                          class: "cpm-status--" + (row.status || "unknown")
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.capitalize(row.status || "unknown")) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "Date", width: "150" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c("span", { staticClass: "cpm-date" }, [
+                        _vm._v(_vm._s(_vm.formatDate(row.created_at)))
+                      ])
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { width: "60", align: "center" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var row = ref.row
+                    return [
+                      _c(
+                        "el-tooltip",
+                        { attrs: { content: "Delete", placement: "top" } },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "cpm-del",
+                              on: {
+                                click: function($event) {
+                                  return _vm.confirmDelete(row)
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                staticClass: "dashicons dashicons-trash"
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        !_vm.loading && _vm.payments.length === 0
+          ? _c("div", { staticClass: "cpm-empty" }, [
+              _c("span", {
+                staticClass: "dashicons dashicons-money-alt cpm-empty__icon"
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "cpm-empty__title" }, [
+                _vm._v("No payments found")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "cpm-empty__sub" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(
+                      _vm.filterForm || _vm.filterStatus || _vm.filterGateway
+                        ? "No payments match the current filters."
+                        : "Payment records will appear here once customers complete transactions."
+                    ) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _vm.filterForm || _vm.filterStatus || _vm.filterGateway
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "cpm-btn-clear",
+                      on: { click: _vm.clearFilters }
+                    },
+                    [_vm._v("Clear Filters")]
+                  )
+                : _vm._e()
+            ])
+          : _vm._e()
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm.totalPages > 1
+      ? _c(
+          "div",
+          { staticClass: "cpm-pagination" },
+          [
+            _c("el-pagination", {
+              attrs: {
+                background: "",
+                layout: "prev, pager, next, ->, total",
+                total: _vm.total,
+                "page-size": _vm.perPage,
+                "current-page": _vm.page
+              },
+              on: {
+                "update:currentPage": function($event) {
+                  _vm.page = $event
+                },
+                "update:current-page": function($event) {
+                  _vm.page = $event
+                },
+                "current-change": _vm.fetchPayments
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cpm-header" }, [
+      _c("div", { staticClass: "cpm-header__icon" }, [
+        _c("span", { staticClass: "dashicons dashicons-money-alt" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cpm-header__text" }, [
+        _c("h2", { staticClass: "cpm-header__title" }, [
+          _vm._v("Payment Transactions")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "cpm-header__sub" }, [
+          _vm._v("Track and manage all customer payments")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -86958,9 +87395,14 @@ vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Radio);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Table);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.TableColumn);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Tooltip);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Loading);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.DatePicker);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Skeleton);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.SkeletonItem);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$message = element_ui__WEBPACK_IMPORTED_MODULE_4__.Message;
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$confirm = element_ui__WEBPACK_IMPORTED_MODULE_4__.MessageBox.confirm;
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$msgbox = element_ui__WEBPACK_IMPORTED_MODULE_4__.MessageBox;
 
 let app = new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
   el: '#contactum-admin-payment-entries',

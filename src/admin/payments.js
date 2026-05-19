@@ -24,7 +24,9 @@ import {
     Pagination,
     Loading,
     Message,
+    MessageBox,
     Notification,
+    Tooltip,
     DatePicker,
     Skeleton,
     SkeletonItem
@@ -45,9 +47,15 @@ Vue.use(RadioButton);
 Vue.use(Radio);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Tooltip);
+Vue.use(Loading);
 Vue.use(DatePicker);
 Vue.use(Skeleton);
 Vue.use(SkeletonItem);
+
+Vue.prototype.$message  = Message;
+Vue.prototype.$confirm  = MessageBox.confirm;
+Vue.prototype.$msgbox   = MessageBox;
 
 import Payment from './pages/Payment.vue'
 

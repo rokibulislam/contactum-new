@@ -1759,35 +1759,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "integration",
+  name: 'integration',
 
   data() {
     return {
       search: '',
-      module_type: "",
       integrations: [],
-      admin_url: contactum.admin_url,
+      admin_url: window.contactum.admin_url,
       is_pro: window.contactum.is_pro
     };
   },
 
   computed: {
     filteredAddons() {
-      let addons = this.integrations;
-
-      if (this.search) {
-        const lowerSearch = this.search.toLowerCase();
-        return Object.entries(addons).filter(([key, value]) => value.name.toLowerCase().includes(lowerSearch)).map(([key, value]) => ({
-          path: key,
-          ...value
-        }));
-      }
-
-      return Object.entries(addons).map(([key, value]) => ({
+      const entries = Object.entries(this.integrations).map(([key, val]) => ({
         path: key,
-        ...value
+        ...val
       }));
+      if (!this.search) return entries;
+      const q = this.search.toLowerCase();
+      return entries.filter(i => i.name.toLowerCase().includes(q));
+    },
+
+    activeCount() {
+      return this.filteredAddons.filter(i => i.enable).length;
     }
 
   },
@@ -1802,80 +1845,54 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     goToPro() {
-      window.open("https://wpcontactum.com/", "_blank");
+      window.open('https://wpcontactum.com/', '_blank');
     },
 
     getIntegration() {
-      var self = this;
-      let data = {
-        action: 'contactum_get_modules',
-        nonce: contactum.nonce
-      };
       jQuery.ajax({
-        url: contactum.ajaxurl,
+        url: window.contactum.ajaxurl,
         type: 'GET',
-        data: data,
-        success: function (response) {
-          self.integrations = response.data.all;
+        data: {
+          action: 'contactum_get_modules',
+          nonce: window.contactum.nonce
+        },
+        success: res => {
+          if (res.success) this.integrations = res.data.all;
         }
       });
     },
 
     toggleState(integration, value, index) {
-      var self = this;
-      let data = {
-        action: 'contactum_toggle_modules',
-        module: integration['path'],
-        nonce: contactum.nonce
-      };
-
-      if (value == '1') {
-        data.type = 'activate';
-      } else {
-        data.type = 'deactivate';
-      }
-
       jQuery.ajax({
-        url: contactum.ajaxurl,
+        url: window.contactum.ajaxurl,
         type: 'POST',
-        data: data,
-        success: function (response) {
-          if (response.success) {
-            let state = response.data;
-            self.integrations[integration['path']].enable = state === 'Activated' ? 1 : 0;
-          }
+        data: {
+          action: 'contactum_toggle_modules',
+          module: integration.path,
+          nonce: window.contactum.nonce,
+          type: value ? 'activate' : 'deactivate'
         },
-        complete: function () {}
-      });
-    },
-
-    toggleModule: function (module, state) {
-      if (state === 'activate') {
-        var data = {
-          action: 'contactum_toggle_all_modules',
-          type: 'activate',
-          nonce: contactum.nonce
-        };
-      } else {
-        var data = {
-          action: 'contactum_toggle_all_modules',
-          type: 'deactivate',
-          nonce: contactum.nonce
-        };
-      }
-
-      jQuery.ajax({
-        url: contactum.ajaxurl,
-        type: 'POST',
-        data: data,
-        success: function (response) {},
-        complete: function (response) {
-          window.location.reload(true);
+        success: res => {
+          if (res.success) {
+            const isActive = res.data === 'Activated' ? 1 : 0;
+            this.$set(this.integrations[integration.path], 'enable', isActive);
+          }
         }
       });
     },
 
-    saveStatus(integration) {}
+    toggleModule(module, state) {
+      jQuery.ajax({
+        url: window.contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_toggle_all_modules',
+          type: state,
+          nonce: window.contactum.nonce
+        },
+        complete: () => window.location.reload(true)
+      });
+    }
 
   }
 });
@@ -3686,7 +3703,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, ".modules_header[data-v-dc2aba00] {\n  margin-bottom: 24px;\n}\n.modules_header .title[data-v-dc2aba00] {\n  font-size: 20px;\n  font-weight: 600;\n  color: var(--foreground);\n}\n.modules_header .text[data-v-dc2aba00] {\n  color: #6b7280;\n  max-width: 600px;\n}\n.contactum_mdoules_search[data-v-dc2aba00] {\n  max-width: 280px;\n  margin-left: auto;\n}\n.panel-footer-group[data-v-dc2aba00] {\n  display: flex;\n  justify-content: space-between;\n}\n.contactum_card[data-v-dc2aba00] {\n  background-color: var(--card);\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  display: flex;\n  flex-direction: column;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n  justify-content: space-between;\n}\n.contactum_card img[data-v-dc2aba00] {\n  height: 20px;\n}\n.contactum_card .contactum_media_group[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n}\n.contactum_card[data-v-dc2aba00]:hover {\n  transform: translateY(-4px);\n  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);\n}\n.integration_page[data-v-dc2aba00] {\n  padding: 20px;\n}\n.integration_page .el-col[data-v-dc2aba00] {\n  margin-bottom: 30px;\n}\n.integration-wrapper[data-v-dc2aba00] {\n  margin-top: 20px;\n}\n.panel-body[data-v-dc2aba00] {\n  flex: 1;\n  padding: 20px;\n  margin-bottom: 24px;\n}\n.panel-body-heading[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n}\n.panel-body-title[data-v-dc2aba00] {\n  margin-left: 20px;\n}\n.panel-body img[data-v-dc2aba00] {\n  max-width: 28px;\n  max-height: 28px;\n  object-fit: cover;\n  object-position: left;\n}\n.panel-footer[data-v-dc2aba00] {\n  border-top: 1px solid #e4e4e4;\n  margin-top: auto;\n  padding: 14px 20px;\n}\n.panel-footer-group[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n/* ── Page ────────────────────────────────────────────── */\n.int-page[data-v-dc2aba00] {\n  padding: 24px 28px;\n  max-width: 1200px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.int-header[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 24px;\n  flex-wrap: wrap;\n}\n.int-header__left[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.int-header__icon[data-v-dc2aba00] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.int-header__icon .dashicons[data-v-dc2aba00] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.int-header__title[data-v-dc2aba00] {\n  margin: 0 0 2px;\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1.2;\n}\n.int-header__sub[data-v-dc2aba00] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n.int-header__badges[data-v-dc2aba00] {\n  display: flex;\n  gap: 8px;\n}\n.int-badge[data-v-dc2aba00] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12px;\n  font-weight: 600;\n  padding: 4px 10px;\n  border-radius: 20px;\n  background: #f3f4f6;\n  color: #6b7280;\n}\n.int-badge .dashicons[data-v-dc2aba00] {\n  font-size: 13px;\n  width: 13px;\n  height: 13px;\n}\n.int-badge--green[data-v-dc2aba00] {\n  background: #dcfce7;\n  color: #16a34a;\n}\n\n/* ── Toolbar ─────────────────────────────────────────── */\n.int-toolbar[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.int-toolbar__actions[data-v-dc2aba00] {\n  display: flex;\n  gap: 8px;\n}\n\n/* Buttons */\n.int-btn[data-v-dc2aba00] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 13px;\n  font-weight: 500;\n  padding: 7px 14px;\n  border-radius: 7px;\n  border: 1px solid transparent;\n  cursor: pointer;\n  transition: background 0.15s, border-color 0.15s, color 0.15s;\n  line-height: 1;\n}\n.int-btn .dashicons[data-v-dc2aba00] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.int-btn--primary[data-v-dc2aba00] {\n  background: #4f46e5;\n  color: #fff;\n  border-color: #4f46e5;\n}\n.int-btn--primary[data-v-dc2aba00]:hover {\n  background: #4338ca;\n  border-color: #4338ca;\n}\n.int-btn--ghost[data-v-dc2aba00] {\n  background: #fff;\n  color: #374151;\n  border-color: #d1d5db;\n}\n.int-btn--ghost[data-v-dc2aba00]:hover {\n  border-color: #9ca3af;\n  color: #111827;\n}\n\n/* Search */\n.int-search[data-v-dc2aba00] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  min-width: 260px;\n}\n.int-search__icon[data-v-dc2aba00] {\n  position: absolute;\n  left: 10px;\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: #9ca3af;\n  pointer-events: none;\n}\n.int-search__input[data-v-dc2aba00] {\n  width: 100%;\n  padding: 8px 32px 8px 34px;\n  font-size: 13px;\n  border: 1px solid #d1d5db;\n  border-radius: 8px;\n  outline: none;\n  color: #374151;\n  background: #fff;\n  transition: border-color 0.15s, box-shadow 0.15s;\n  line-height: 1;\n}\n.int-search__input[data-v-dc2aba00]:focus {\n  border-color: #6366f1;\n  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);\n}\n.int-search__input[data-v-dc2aba00]::placeholder {\n  color: #9ca3af;\n}\n.int-search__clear[data-v-dc2aba00] {\n  position: absolute;\n  right: 8px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 2px;\n  color: #9ca3af;\n  line-height: 1;\n}\n.int-search__clear[data-v-dc2aba00]:hover {\n  color: #374151;\n}\n.int-search__clear .dashicons[data-v-dc2aba00] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n\n/* ── Grid ────────────────────────────────────────────── */\n.int-grid[data-v-dc2aba00] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));\n  gap: 16px;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.int-card[data-v-dc2aba00] {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-top: 3px solid #e5e7eb;\n  border-radius: 10px;\n  display: flex;\n  flex-direction: column;\n  transition: box-shadow 0.18s, border-top-color 0.18s, transform 0.18s;\n}\n.int-card[data-v-dc2aba00]:hover {\n  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);\n  transform: translateY(-2px);\n}\n.int-card--active[data-v-dc2aba00] {\n  border-top-color: #6366f1;\n  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.1);\n}\n.int-card__body[data-v-dc2aba00] {\n  display: flex;\n  gap: 14px;\n  align-items: flex-start;\n  padding: 18px 18px 14px;\n  flex: 1;\n}\n.int-card__thumb[data-v-dc2aba00] {\n  width: 42px;\n  height: 42px;\n  border-radius: 8px;\n  background: #f9fafb;\n  border: 1px solid #e5e7eb;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  overflow: hidden;\n}\n.int-card__img[data-v-dc2aba00] {\n  width: 28px;\n  height: 28px;\n  object-fit: contain;\n}\n.int-card__name[data-v-dc2aba00] {\n  margin: 0 0 5px;\n  font-size: 14px;\n  font-weight: 600;\n  color: #111827;\n  line-height: 1.3;\n}\n.int-card__desc[data-v-dc2aba00] {\n  margin: 0;\n  font-size: 12.5px;\n  color: #6b7280;\n  line-height: 1.5;\n  display: -webkit-box;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n\n/* Card footer */\n.int-card__footer[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 18px;\n  border-top: 1px solid #f3f4f6;\n  gap: 10px;\n}\n.int-card__footer-left[data-v-dc2aba00] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n\n/* Status label */\n.int-status[data-v-dc2aba00] {\n  font-size: 12px;\n  font-weight: 600;\n}\n.int-status--on[data-v-dc2aba00] {\n  color: #16a34a;\n}\n.int-status--off[data-v-dc2aba00] {\n  color: #9ca3af;\n}\n\n/* Settings link */\n.int-settings-link[data-v-dc2aba00] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12px;\n  font-weight: 500;\n  color: #6366f1;\n  text-decoration: none;\n  padding: 4px 10px;\n  border: 1px solid #e0e7ff;\n  border-radius: 6px;\n  background: #f5f3ff;\n  transition: background 0.12s, border-color 0.12s;\n}\n.int-settings-link .dashicons[data-v-dc2aba00] {\n  font-size: 13px;\n  width: 13px;\n  height: 13px;\n}\n.int-settings-link[data-v-dc2aba00]:hover {\n  background: #ede9fe;\n  border-color: #c4b5fd;\n  color: #4f46e5;\n}\n\n/* Pro tag */\n.int-pro-tag[data-v-dc2aba00] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 11px;\n  font-weight: 600;\n  color: #9ca3af;\n}\n.int-pro-tag .dashicons[data-v-dc2aba00] {\n  font-size: 12px;\n  width: 12px;\n  height: 12px;\n}\n\n/* Upgrade button */\n.int-upgrade-btn[data-v-dc2aba00] {\n  font-size: 12px;\n  font-weight: 600;\n  padding: 5px 12px;\n  border-radius: 6px;\n  border: 1px solid #d1d5db;\n  background: #fff;\n  color: #374151;\n  cursor: pointer;\n  transition: background 0.12s, border-color 0.12s, color 0.12s;\n}\n.int-upgrade-btn[data-v-dc2aba00]:hover {\n  background: #4f46e5;\n  border-color: #4f46e5;\n  color: #fff;\n}\n\n/* ── Empty state ─────────────────────────────────────── */\n.int-empty[data-v-dc2aba00] {\n  text-align: center;\n  padding: 64px 24px;\n}\n.int-empty__icon[data-v-dc2aba00] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n}\n.int-empty__title[data-v-dc2aba00] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.int-empty__sub[data-v-dc2aba00] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -74480,226 +74497,303 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "integration_page" },
-    [
+  return _c("div", { staticClass: "int-page" }, [
+    _c("div", { staticClass: "int-header" }, [
       _vm._m(0),
       _vm._v(" "),
-      _vm.filteredAddons.length > 0
-        ? _c(
-            "el-row",
-            { staticClass: "mb-3", attrs: { gutter: 24 } },
-            [
-              _c("el-col", { attrs: { span: 18 } }, [
-                _vm.is_pro
-                  ? _c(
-                      "div",
-                      { staticClass: "pull-right activate-deactivate-all" },
-                      [
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "primary" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.toggleModule("all", "activate")
-                              }
-                            }
-                          },
-                          [_vm._v(" Activate All")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "danger" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.toggleModule("all", "deactivate")
-                              }
-                            }
-                          },
-                          [_vm._v(" deactivate All ")]
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 6 } }, [
-                _c(
-                  "div",
-                  { staticClass: "contactum_mdoules_search" },
-                  [
-                    _c("el-input", {
-                      staticClass: "el-input-gray-light",
-                      attrs: {
-                        placeholder: "Search Modules",
-                        "prefix-icon": "el-icon-search"
-                      },
-                      model: {
-                        value: _vm.search,
-                        callback: function($$v) {
-                          _vm.search = $$v
-                        },
-                        expression: "search"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ],
-            1
-          )
+      _vm.is_pro && _vm.filteredAddons.length
+        ? _c("div", { staticClass: "int-header__badges" }, [
+            _c("span", { staticClass: "int-badge int-badge--green" }, [
+              _c("span", { staticClass: "dashicons dashicons-yes-alt" }),
+              _vm._v("\n        " + _vm._s(_vm.activeCount) + " Active\n      ")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "int-badge" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.filteredAddons.length) +
+                  " Total\n      "
+              )
+            ])
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "int-toolbar" }, [
+      _vm.is_pro
+        ? _c("div", { staticClass: "int-toolbar__actions" }, [
+            _c(
+              "button",
+              {
+                staticClass: "int-btn int-btn--primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.toggleModule("all", "activate")
+                  }
+                }
+              },
+              [
+                _c("span", { staticClass: "dashicons dashicons-yes-alt" }),
+                _vm._v("\n        Activate All\n      ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "int-btn int-btn--ghost",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.toggleModule("all", "deactivate")
+                  }
+                }
+              },
+              [
+                _c("span", { staticClass: "dashicons dashicons-minus" }),
+                _vm._v("\n        Deactivate All\n      ")
+              ]
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "integration-wrapper" },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 24 } },
-            _vm._l(_vm.filteredAddons, function(integration, index) {
-              return _c(
-                "el-col",
-                {
-                  key: integration.id,
-                  attrs: { xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }
-                },
-                [
-                  _c("div", { staticClass: "contactum_card" }, [
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "panel-body-heading contactum_media_group"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "icon",
-                            attrs: {
-                              src: integration.thumbnail,
-                              alt: integration.name
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("h4", { staticClass: "panel-body-title" }, [
-                            _vm._v(" " + _vm._s(integration.name))
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v(" " + _vm._s(integration.description) + " ")
-                      ])
+      _c("div", { staticClass: "int-search" }, [
+        _c("span", {
+          staticClass: "dashicons dashicons-search int-search__icon"
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "int-search__input",
+          attrs: { type: "text", placeholder: "Search integrations..." },
+          domProps: { value: _vm.search },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.search
+          ? _c(
+              "button",
+              {
+                staticClass: "int-search__clear",
+                on: {
+                  click: function($event) {
+                    _vm.search = ""
+                  }
+                }
+              },
+              [_c("span", { staticClass: "dashicons dashicons-no-alt" })]
+            )
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.filteredAddons.length > 0
+      ? _c(
+          "div",
+          { staticClass: "int-grid" },
+          _vm._l(_vm.filteredAddons, function(integration, index) {
+            return _c(
+              "div",
+              {
+                key: integration.path || integration.id,
+                staticClass: "int-card",
+                class: { "int-card--active": integration.enable }
+              },
+              [
+                _c("div", { staticClass: "int-card__body" }, [
+                  _c("div", { staticClass: "int-card__thumb" }, [
+                    _c("img", {
+                      staticClass: "int-card__img",
+                      attrs: {
+                        src: integration.thumbnail,
+                        alt: integration.name
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "int-card__info" }, [
+                    _c("h3", { staticClass: "int-card__name" }, [
+                      _vm._v(_vm._s(integration.name))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "panel-footer" }, [
-                      _c(
-                        "div",
-                        { staticClass: "panel-footer-group" },
-                        [
-                          _vm.is_pro
-                            ? _c(
-                                "div",
-                                [
-                                  _c("el-switch", {
-                                    attrs: {
-                                      "active-value": 1,
-                                      "inactive-value": 0
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.toggleState(
-                                          integration,
-                                          $event,
-                                          index
-                                        )
-                                      }
-                                    },
-                                    model: {
-                                      value: integration.enable,
-                                      callback: function($$v) {
-                                        _vm.$set(integration, "enable", $$v)
-                                      },
-                                      expression: "integration.enable"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "ml-2 fs-15" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(
-                                          integration.enable == true
-                                            ? "Enabled"
-                                            : "Disabled"
-                                        ) +
-                                        " "
+                    _c("p", { staticClass: "int-card__desc" }, [
+                      _vm._v(_vm._s(integration.description))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "int-card__footer" },
+                  [
+                    _vm.is_pro
+                      ? [
+                          _c(
+                            "div",
+                            { staticClass: "int-card__footer-left" },
+                            [
+                              _c("el-switch", {
+                                attrs: {
+                                  "active-value": 1,
+                                  "inactive-value": 0
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.toggleState(
+                                      integration,
+                                      $event,
+                                      index
                                     )
-                                  ])
-                                ],
-                                1
+                                  }
+                                },
+                                model: {
+                                  value: integration.enable,
+                                  callback: function($$v) {
+                                    _vm.$set(integration, "enable", $$v)
+                                  },
+                                  expression: "integration.enable"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "int-status",
+                                  class: integration.enable
+                                    ? "int-status--on"
+                                    : "int-status--off"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(
+                                        integration.enable
+                                          ? "Active"
+                                          : "Inactive"
+                                      ) +
+                                      "\n            "
+                                  )
+                                ]
                               )
-                            : _vm._e(),
+                            ],
+                            1
+                          ),
                           _vm._v(" "),
                           integration.enable
                             ? _c(
                                 "a",
                                 {
+                                  staticClass: "int-settings-link",
                                   attrs: {
                                     href:
                                       _vm.admin_url +
                                       "?page=contactum-settings#" +
-                                      integration.author_uri
+                                      integration.author_uri,
+                                    title: "Configure"
                                   }
                                 },
-                                [_c("i", { staticClass: "el-icon-setting" })]
+                                [
+                                  _c("span", {
+                                    staticClass:
+                                      "dashicons dashicons-admin-generic"
+                                  }),
+                                  _vm._v("\n            Configure\n          ")
+                                ]
                               )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          !_vm.is_pro
-                            ? _c("el-button", { on: { click: _vm.goToPro } }, [
-                                _vm._v(" Upgrade to Pro ")
-                              ])
                             : _vm._e()
-                        ],
-                        1
-                      )
-                    ])
-                  ])
-                ]
-              )
-            }),
-            1
+                        ]
+                      : [
+                          _vm._m(1, true),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "int-upgrade-btn",
+                              on: { click: _vm.goToPro }
+                            },
+                            [_vm._v("Upgrade")]
+                          )
+                        ]
+                  ],
+                  2
+                )
+              ]
+            )
+          }),
+          0
+        )
+      : _c("div", { staticClass: "int-empty" }, [
+          _c("span", {
+            staticClass: "dashicons dashicons-search int-empty__icon"
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "int-empty__title" }, [
+            _vm._v("No integrations found")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "int-empty__sub" }, [
+            _vm._v("Try a different search term.")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "int-btn int-btn--ghost",
+              on: {
+                click: function($event) {
+                  _vm.search = ""
+                }
+              }
+            },
+            [_vm._v("Clear Search")]
           )
-        ],
-        1
-      )
-    ],
-    1
-  )
+        ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modules_header mb-5" }, [
-      _c("h4", { staticClass: "title mb-2" }, [
-        _vm._v(" Contactum Forms Modules ")
+    return _c("div", { staticClass: "int-header__left" }, [
+      _c("div", { staticClass: "int-header__icon" }, [
+        _c("span", { staticClass: "dashicons dashicons-admin-plugins" })
       ]),
       _vm._v(" "),
-      _c("p", { staticClass: "text" }, [
-        _vm._v(
-          " Here is the list of all Contactum Forms modules. You can enable or disable the modules based on your need "
-        )
+      _c("div", [
+        _c("h2", { staticClass: "int-header__title" }, [
+          _vm._v("Integrations")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "int-header__sub" }, [
+          _vm._v("Connect your forms with your favourite services")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "int-card__footer-left" }, [
+      _c("span", { staticClass: "int-pro-tag" }, [
+        _c("span", { staticClass: "dashicons dashicons-lock" }),
+        _vm._v("\n              Pro Only\n            ")
       ])
     ])
   }
@@ -87277,6 +87371,15 @@ vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.RadioButton);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Input);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Button);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Select);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Option);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Form);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.FormItem);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Skeleton);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.SkeletonItem);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Loading);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_0__.Tooltip);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$notify = element_ui__WEBPACK_IMPORTED_MODULE_0__.Notification;
 
 let app = new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
   el: '#contactum-admin-integration',

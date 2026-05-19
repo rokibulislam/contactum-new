@@ -2098,305 +2098,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'merge_tags',
-  props: {
-    field: [String, Number, Object],
-    name: {
-      type: [String, Number, Object],
-      default: null
-    },
-    filter: {
-      type: String,
-      default: null
-    },
-    fieldsonly: {
-      type: Boolean,
-      default: false
-    },
-    formFields: {
-      type: Array,
-      default: null
-    },
-    calculate: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data: function () {
-    return {
-      isHidden: true,
-      placement: 'bottom'
-    };
-  },
-  computed: {
-    smart_tags: function () {
-      return this.$store.state.smart_tags;
-    },
-    form_fields: function () {
-      var template = this.filter,
-          // fields = this.$store.state.form_fields;
-      fields = Array.isArray(this.formFields) ? this.formFields : this.$store.state.form_fields;
-
-      if (template !== null) {
-        return fields.filter(function (item) {
-          return item.template === template;
-        });
-      } // remove the action/hidden fields
-
-
-      return fields.filter(item => !['action_hook', 'custom_hidden_field'].includes(item.template));
-    }
-  },
-  methods: {
-    toggleFields: function (event) {},
-    insertField: function (tag, field) {
-      if (this.name == null) {
-        this.$emit('insert', tag, field, this.field);
-      } else {
-        this.$emit('insert', tag, field, this.name, this.field); //
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _merge_tags_index_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../merge-tags/index.vue */ "./src/admin/components/merge-tags/index.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "campaign_monitor",
-  components: {
-    merge_tags: _merge_tags_index_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function () {
-    return {
-      lists: []
-    };
-  },
-  computed: {},
-  created: function () {
-    this.getLists();
-  },
-  methods: {
-    getLists: function () {},
-    updateLists: function () {},
-    insertValue: function insertValue(type, field, property) {}
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _merge_tags_index_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../merge-tags/index.vue */ "./src/admin/components/merge-tags/index.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "mailerlite",
-  components: {
-    merge_tags: _merge_tags_index_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function () {
-    return {
-      lists: []
-    };
-  },
-  computed: {},
-  created: function () {},
-  methods: {
-    getLists: function () {},
-    insertValue: function insertValue(type, field, property) {}
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/FormSettings.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/FormSettings.vue?vue&type=script&lang=js& ***!
@@ -2452,8 +2153,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _pro_modules_mailerlite_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pro/modules/mailerlite.vue */ "./src/admin/components/pro/modules/mailerlite.vue");
-/* harmony import */ var _pro_modules_campaign_monitor_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pro/modules/campaign-monitor.vue */ "./src/admin/components/pro/modules/campaign-monitor.vue");
 //
 //
 //
@@ -2550,10 +2249,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "GeneralIntegrationSettings",
+  name: 'GeneralIntegrationSettings',
   props: {
     setting_key: {
       type: String,
@@ -2575,61 +2313,63 @@ __webpack_require__.r(__webpack_exports__);
     this.getIntegrationSettings();
   },
 
+  watch: {
+    setting_key() {
+      this.getIntegrationSettings();
+    }
+
+  },
   methods: {
-    save() {
-      this.saving = true;
-      jQuery.post(contactum.ajaxurl, {
-        action: 'contactum_save_global_integrations',
-        _ajax_nonce: contactum.nonce,
-        settings_key: this.setting_key,
-        integration: this.integration
-      }, (response, textStatus, xhr) => {
-        if (response.success) {
-          const status = response.data.status === true || response.data.status === "1" || response.data.status === "success";
-          this.$set(this.integration, 'status', status);
-          this.$notify({
-            title: 'Success',
-            message: response.data.message,
-            type: 'success',
-            position: 'bottom-right'
-          });
-          this.saving = false;
-        } else {
-          // this.integration.status = false;
-          this.$set(this.integration, 'status', false);
-          this.$notify({
-            title: 'warning',
-            message: response.data.message,
-            type: 'warning',
-            position: 'bottom-right'
-          });
-          this.saving = false;
+    getIntegrationSettings() {
+      this.loading = true;
+      jQuery.post(window.contactum.ajaxurl, {
+        action: 'contactum_get_admin_integrations',
+        _ajax_nonce: window.contactum.nonce,
+        settings_key: this.setting_key
+      }, res => {
+        this.loading = false;
+
+        if (res.success) {
+          this.settings = res.data;
+          this.integration = res.data.value;
         }
       });
     },
 
-    getIntegrationSettings() {
-      jQuery.post(contactum.ajaxurl, {
-        action: 'contactum_get_admin_integrations',
-        _ajax_nonce: contactum.nonce,
-        'settings_key': this.setting_key
-      }, (response, textStatus, xhr) => {
-        if (response.success) {
-          this.settings = response.data;
-          this.integration = response.data.value;
-        } else {}
+    save() {
+      this.saving = true;
+      jQuery.post(window.contactum.ajaxurl, {
+        action: 'contactum_save_global_integrations',
+        _ajax_nonce: window.contactum.nonce,
+        settings_key: this.setting_key,
+        integration: this.integration
+      }, res => {
+        this.saving = false;
+
+        if (res.success) {
+          const ok = res.data.status === true || res.data.status === '1' || res.data.status === 'success';
+          this.$set(this.integration, 'status', ok);
+          this.$notify({
+            title: 'Success',
+            message: res.data.message,
+            type: 'success',
+            position: 'bottom-right'
+          });
+        } else {
+          this.$set(this.integration, 'status', false);
+          this.$notify({
+            title: 'Warning',
+            message: res.data.message,
+            type: 'warning',
+            position: 'bottom-right'
+          });
+        }
       });
     },
 
     disconnect(data) {
       this.integration = data;
       this.save();
-    }
-
-  },
-  watch: {
-    setting_key(newKey, oldKey) {
-      this.loadSettings(); // or whatever method to fetch/render new data
     }
 
   }
@@ -6255,34 +5995,17 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.mergetag_link{\n    position: absolute;\n    right: 5px;\n    top: 30px;\n    color: #999;\n}\n.merge-tag-wrapper {\n    display: block;\n    position: absolute;\n    right: 0px;\n    top: 0px;\n    z-index: 1000;\n}\n\n/*\n\n.merge-tags ul li h4 {\n    padding: 0;\n    margin: 0;\n    background: #f0f0f0;\n    width: 100%;\n    padding: 2px;\n    text-align: center;\n}\n*/\n.merge-tags ul li ul li {\n    cursor: pointer;\n}\n.group-title {\n  background-color: #4b4c4d;\n  color: #fff;\n  display: block;\n  padding: 5px 10px\n}\n.el-dropdown-menu {\n  left: unset;\n  max-width: 270px;\n}\n.el-dropdown-list {\n  border: 0;\n  box-shadow: none;\n  margin: 0;\n  max-height: 280px;\n  min-width: auto;\n  overflow-y: scroll;\n  padding: 0;\n  position: static;\n  z-index: 10\n}\n.el-dropdown-list .el-dropdown-menu__item {\n  border-bottom: 1px solid #f1f1f1;\n  font-size: 13px;\n  line-height: 18px;\n  padding: 4px 10px\n}\n.el-dropdown-list .el-dropdown-menu__item:last-of-type {\n  border-bottom: 0\n}\n.el-popper[x-placement^=bottom] .popper__arrow {\n  top: -7px\n}\n\n\n\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.id, "\n.contactum_state_box {\n  border-radius: 8px;\n  display: block;\n  padding: 32px;\n  text-align: center;\n}\n.contactum_icon_btn {\n  align-items: center;\n  background-color: #1a7efb;\n  border-radius: 50%;\n  color: #fff;\n  display: flex;\n  font-size: 28px;\n  height: 58px;\n  justify-content: center;\n  text-align: center;\n  width: 58px;\n}\n.contactum_icon_btn.success {\n  background-color: #00b27f;\n  color: #fff;\n}\nlabel {\n  align-items: center;\n  color: #1e1f21 !important;\n  display: flex;\n  font-size: 15px;\n  font-weight: 500;\n}\n\n\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrapper ─────────────────────────────────────────── */\n.gis-wrap[data-v-6713783b] {\n  max-width: 680px;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.gis-card[data-v-6713783b] {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 12px;\n  overflow: hidden;\n}\n.gis-card__head[data-v-6713783b] {\n  padding: 20px 24px 18px;\n  border-bottom: 1px solid #f3f4f6;\n}\n.gis-card__head-row[data-v-6713783b] {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 16px;\n}\n.gis-card__title[data-v-6713783b] {\n  margin: 0 0 4px;\n  font-size: 16px;\n  font-weight: 700;\n  color: #111827;\n}\n.gis-card__desc[data-v-6713783b] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n\n/* Status badge */\n.gis-status-badge[data-v-6713783b] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 12px;\n  font-weight: 600;\n  padding: 4px 10px;\n  border-radius: 20px;\n  white-space: nowrap;\n  flex-shrink: 0;\n}\n.gis-status-badge .dashicons[data-v-6713783b] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.gis-status-badge--on[data-v-6713783b] {\n  background: #dcfce7;\n  color: #16a34a;\n}\n.gis-status-badge--off[data-v-6713783b] {\n  background: #fef3c7;\n  color: #d97706;\n}\n\n/* ── Form ────────────────────────────────────────────── */\n.gis-form[data-v-6713783b] {\n  padding: 20px 24px 4px;\n}\n.gis-form__item[data-v-6713783b] {\n  margin-bottom: 18px;\n}\n.gis-form__tip[data-v-6713783b] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #9ca3af;\n  line-height: 1.4;\n}\n\n/* Validation row */\n.gis-validation[data-v-6713783b] {\n  margin-bottom: 8px;\n  font-size: 13px;\n}\n.gis-validation--ok[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #16a34a;\n}\n.gis-validation--err[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #d97706;\n}\n.gis-validation .dashicons[data-v-6713783b] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n}\n.gis-error[data-v-6713783b] {\n  font-size: 13px;\n  color: #dc2626;\n  margin: 4px 0 12px;\n}\n\n/* Card footer */\n.gis-card__footer[data-v-6713783b] {\n  padding: 14px 24px;\n  border-top: 1px solid #f3f4f6;\n  background: #fafafa;\n}\n\n/* ── Connected state ─────────────────────────────────── */\n.gis-connected[data-v-6713783b] {\n  padding: 40px 24px;\n  text-align: center;\n}\n.gis-connected__icon[data-v-6713783b] {\n  width: 56px;\n  height: 56px;\n  border-radius: 50%;\n  background: #dcfce7;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 0 auto 16px;\n}\n.gis-connected__icon .dashicons[data-v-6713783b] {\n  font-size: 28px;\n  width: 28px;\n  height: 28px;\n  color: #16a34a;\n}\n.gis-connected__title[data-v-6713783b] {\n  font-size: 15px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 20px;\n  line-height: 1.4;\n}\n.gis-connected__actions[data-v-6713783b] {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\n/* Override element-ui label color */\n[data-v-6713783b]:deep(label) {\n  color: #374151 !important;\n  font-size: 13px !important;\n  font-weight: 500 !important;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -76611,42 +76334,14 @@ module.exports = content.locals || {};
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.id, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&");
+            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&");
 
             content = content.__esModule ? content.default : content;
 
@@ -77166,125 +76861,6 @@ component.options.__file = "src/admin/components/dialog/CreateCoupon.vue"
 
 /***/ }),
 
-/***/ "./src/admin/components/merge-tags/index.vue":
-/*!***************************************************!*\
-  !*** ./src/admin/components/merge-tags/index.vue ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=2f9eb1a1& */ "./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js&");
-/* harmony import */ var _index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.vue?vue&type=style&index=0&lang=css& */ "./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-;
-
-
-/* normalize component */
-
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__.render,
-  _index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "src/admin/components/merge-tags/index.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/campaign-monitor.vue":
-/*!***************************************************************!*\
-  !*** ./src/admin/components/pro/modules/campaign-monitor.vue ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./campaign-monitor.vue?vue&type=template&id=e7920a52& */ "./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52&");
-/* harmony import */ var _campaign_monitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./campaign-monitor.vue?vue&type=script&lang=js& */ "./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _campaign_monitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__.render,
-  _campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "src/admin/components/pro/modules/campaign-monitor.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/mailerlite.vue":
-/*!*********************************************************!*\
-  !*** ./src/admin/components/pro/modules/mailerlite.vue ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mailerlite.vue?vue&type=template&id=230dc78c& */ "./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c&");
-/* harmony import */ var _mailerlite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mailerlite.vue?vue&type=script&lang=js& */ "./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _mailerlite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__.render,
-  _mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "src/admin/components/pro/modules/mailerlite.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./src/admin/components/settings/FormSettings.vue":
 /*!********************************************************!*\
   !*** ./src/admin/components/settings/FormSettings.vue ***!
@@ -77335,9 +76911,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GeneralIntegrationSettings.vue?vue&type=template&id=6713783b& */ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&");
+/* harmony import */ var _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true& */ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true&");
 /* harmony import */ var _GeneralIntegrationSettings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GeneralIntegrationSettings.vue?vue&type=script&lang=js& */ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=script&lang=js&");
-/* harmony import */ var _GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& */ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& */ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -77349,11 +76925,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _GeneralIntegrationSettings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__.render,
-  _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "6713783b",
   null
   
 )
@@ -77578,54 +77154,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js&":
-/*!****************************************************************************!*\
-  !*** ./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************!*\
-  !*** ./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_campaign_monitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./campaign-monitor.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_campaign_monitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_mailerlite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./mailerlite.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_mailerlite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./src/admin/components/settings/FormSettings.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./src/admin/components/settings/FormSettings.vue?vue&type=script&lang=js& ***!
@@ -77778,10 +77306,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&":
-/*!************************************************************************************!*\
-  !*** ./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css& ***!
-  \************************************************************************************/
+/***/ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -77789,32 +77317,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&id=6713783b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
-
-/***/ }),
-
-/***/ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************!*\
-  !*** ./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_id_6713783b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
@@ -77855,57 +77363,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1&":
-/*!**********************************************************************************!*\
-  !*** ./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1& ***!
-  \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2f9eb1a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=2f9eb1a1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1&");
-
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52&":
-/*!**********************************************************************************************!*\
-  !*** ./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52& ***!
-  \**********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_campaign_monitor_vue_vue_type_template_id_e7920a52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./campaign-monitor.vue?vue&type=template&id=e7920a52& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52&");
-
-
-/***/ }),
-
-/***/ "./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c&":
-/*!****************************************************************************************!*\
-  !*** ./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c& ***!
-  \****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailerlite_vue_vue_type_template_id_230dc78c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./mailerlite.vue?vue&type=template&id=230dc78c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c&");
-
-
-/***/ }),
-
 /***/ "./src/admin/components/settings/FormSettings.vue?vue&type=template&id=cb80df9a&":
 /*!***************************************************************************************!*\
   !*** ./src/admin/components/settings/FormSettings.vue?vue&type=template&id=cb80df9a& ***!
@@ -77923,19 +77380,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&":
-/*!*****************************************************************************************************!*\
-  !*** ./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b& ***!
-  \*****************************************************************************************************/
+/***/ "./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true& ***!
+  \*****************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=template&id=6713783b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_template_id_6713783b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true&");
 
 
 /***/ }),
@@ -78845,599 +78302,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/merge-tags/index.vue?vue&type=template&id=2f9eb1a1& ***!
-  \*************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* binding */ render),
-/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "merge-tag-wrapper" },
-    [
-      _c("el-button", {
-        directives: [
-          {
-            name: "popover",
-            rawName: "v-popover:input-popover",
-            arg: "input-popover"
-          }
-        ],
-        attrs: { type: "", icon: "el-icon-more" }
-      }),
-      _vm._v(" "),
-      _c(
-        "el-popover",
-        {
-          ref: "input-popover",
-          attrs: {
-            placement: _vm.placement,
-            width: "200",
-            "popper-class": "el-dropdown-list-wrapper",
-            trigger: "click"
-          }
-        },
-        [
-          [
-            _c(
-              "ul",
-              { staticClass: "el-dropdown-menu el-dropdown-list" },
-              [
-                _vm.form_fields.length > 0
-                  ? [
-                      _c("span", { staticClass: "group-title" }, [
-                        _vm._v(" Form Fields ")
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.form_fields, function(field) {
-                        return _c(
-                          "li",
-                          [
-                            field.template === "name_field"
-                              ? [
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "name-full",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(field.label))]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "name-first",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("first")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "name-middle",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("middle")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "name-last",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("last")]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              : field.template === "image_upload"
-                              ? [
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "image",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(field.label))]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              : field.template === "file_upload"
-                              ? [
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "file",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(field.label))]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              : [
-                                  _c(
-                                    "li",
-                                    { staticClass: "el-dropdown-menu__item" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertField(
-                                                "field",
-                                                field.name
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(field.label) + " ")]
-                                      )
-                                    ]
-                                  )
-                                ]
-                          ],
-                          2
-                        )
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.smart_tags, function(smarttag) {
-                  return !_vm.calculate
-                    ? _c("li", [
-                        _c("span", { staticClass: "group-title" }, [
-                          _vm._v(_vm._s(smarttag.title))
-                        ]),
-                        _vm._v(" "),
-                        smarttag.tags
-                          ? _c(
-                              "ul",
-                              _vm._l(smarttag.tags, function(tag, index) {
-                                return _c(
-                                  "li",
-                                  {
-                                    key: index,
-                                    staticClass: "el-dropdown-menu__item",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.insertField(index)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(" " + _vm._s(tag) + " ")]
-                                )
-                              }),
-                              0
-                            )
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                })
-              ],
-              2
-            )
-          ]
-        ],
-        2
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/campaign-monitor.vue?vue&type=template&id=e7920a52& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* binding */ render),
-/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("fieldset", [
-      _c("legend", [_vm._v(" Mapping Fields ")]),
-      _vm._v(" "),
-      _c(
-        "p",
-        { staticClass: "description", staticStyle: { padding: "0 0 10px 0" } },
-        [
-          _vm._v(
-            " Please map the form input fields with Campaign Monitor required fields "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row mapping-fields" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "email" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "email" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "text" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "first_name" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "text" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "last_name" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("label", [_vm._v(" list ")]),
-      _vm._v(" "),
-      _c("select", [_c("option")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "description" }, [
-        _vm._v(" Select Campaign Monitor List for Subscription ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "campaign-list-id" } }, [
-        _vm._v(" Email Address  "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "campaign-list-id" } }, [
-        _vm._v(" First Name ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "campaign-list-id" } }, [
-        _vm._v(" Last Name ")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c&":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/modules/mailerlite.vue?vue&type=template&id=230dc78c& ***!
-  \*******************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* binding */ render),
-/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", [
-      _c("label", [_vm._v(_vm._s("list"))]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("span", { staticClass: "description" }, [
-        _vm._v(_vm._s("Select Mailerlite List for Subscription"))
-      ])
-    ]),
-    _vm._v(" "),
-    _c("fieldset", [
-      _c("legend", [_vm._v(" Mapping Fields ")]),
-      _vm._v(" "),
-      _c(
-        "p",
-        { staticClass: "description", staticStyle: { padding: "0 0 10px 0" } },
-        [
-          _vm._v(
-            " Please map the form input fields with Mailerlite required fields "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row mapping-fields" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "email" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "email" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "text" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "first_name" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "int-form-row" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("div", { staticClass: "int-field" }, [
-          _c(
-            "div",
-            { staticClass: "int-field-small" },
-            [
-              _c("input", {
-                staticClass: "regular-text",
-                attrs: { type: "text" }
-              }),
-              _vm._v(" "),
-              _c("merge_tags", {
-                attrs: { field: "last_name" },
-                on: { insert: _vm.insertValue }
-              })
-            ],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("select", [_c("option")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "aweber-list-id" } }, [
-        _vm._v(" Email Address  "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "aweber-list-id" } }, [
-        _vm._v(" First Name ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "int-field-label" }, [
-      _c("label", { attrs: { for: "aweber-list-id" } }, [_vm._v(" Last Name ")])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/FormSettings.vue?vue&type=template&id=cb80df9a&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/FormSettings.vue?vue&type=template&id=cb80df9a& ***!
@@ -79463,10 +78327,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=template&id=6713783b&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -79479,41 +78343,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "gis-wrap" }, [
     _vm.settings.settings &&
     _vm.settings.settings.hide_on_valid &&
     _vm.integration.status
-      ? _c("div", { staticClass: "contactum_card" }, [
-          _c("div", { staticClass: "contactum_card_head" }, [
-            _c("h5", { staticClass: "title" }, [
+      ? _c("div", { staticClass: "gis-card" }, [
+          _c("div", { staticClass: "gis-card__head" }, [
+            _c("h2", { staticClass: "gis-card__title" }, [
               _vm._v(_vm._s(_vm.settings.title))
             ]),
             _vm._v(" "),
             _c("p", {
-              staticClass: "text",
+              staticClass: "gis-card__desc",
               domProps: { innerHTML: _vm._s(_vm.settings.description) }
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "contactum_card_body" }, [
+          _c("div", { staticClass: "gis-connected" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("h3", {
+              staticClass: "gis-connected__title",
+              domProps: {
+                innerHTML: _vm._s(
+                  _vm.settings.settings.discard_settings.section_description
+                )
+              }
+            }),
+            _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass:
-                  "el-alert el-alert--success is-light contactum_state_box"
-              },
+              { staticClass: "gis-connected__actions" },
               [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("h3", {
-                  staticClass: "mb-4",
-                  domProps: {
-                    innerHTML: _vm._s(
-                      _vm.settings.settings.discard_settings.section_description
-                    )
-                  }
-                }),
-                _vm._v(" "),
                 _vm.settings.settings.discard_settings.show_verify
                   ? _c(
                       "el-button",
@@ -79526,21 +78387,21 @@ var render = function() {
                             expression: "saving"
                           }
                         ],
-                        attrs: { type: "primary", icon: "el-icon-success" },
-                        on: {
-                          click: function($event) {
-                            return _vm.save()
-                          }
-                        }
+                        attrs: {
+                          type: "primary",
+                          size: "small",
+                          icon: "el-icon-refresh"
+                        },
+                        on: { click: _vm.save }
                       },
-                      [_vm._v(" Verify Connection Again\n          ")]
+                      [_vm._v("Verify Again")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "el-button",
                   {
-                    attrs: { type: "danger" },
+                    attrs: { type: "danger", size: "small", plain: "" },
                     on: {
                       click: function($event) {
                         return _vm.disconnect(
@@ -79551,11 +78412,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.settings.settings.discard_settings.button_text
-                        ) +
-                        "\n          "
+                      _vm._s(_vm.settings.settings.discard_settings.button_text)
                     )
                   ]
                 )
@@ -79566,238 +78423,220 @@ var render = function() {
         ])
       : _c(
           "div",
+          { staticClass: "gis-card" },
           [
+            _c("div", { staticClass: "gis-card__head" }, [
+              _c("div", { staticClass: "gis-card__head-row" }, [
+                _c("div", [
+                  _c("h2", { staticClass: "gis-card__title" }, [
+                    _vm._v(_vm._s(_vm.settings.title))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", {
+                    staticClass: "gis-card__desc",
+                    domProps: { innerHTML: _vm._s(_vm.settings.description) }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm.settings.settings
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "gis-status-badge",
+                        class: _vm.integration.status
+                          ? "gis-status-badge--on"
+                          : "gis-status-badge--off"
+                      },
+                      [
+                        _c("span", {
+                          staticClass: "dashicons",
+                          class: _vm.integration.status
+                            ? "dashicons-yes-alt"
+                            : "dashicons-warning"
+                        }),
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(
+                              _vm.integration.status
+                                ? "Connected"
+                                : "Not Connected"
+                            ) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
             _c(
-              "el-form",
-              { attrs: { "label-position": "top" } },
+              "el-skeleton",
+              { attrs: { loading: _vm.loading, animated: "", rows: 6 } },
               [
                 _c(
-                  "el-skeleton",
+                  "el-form",
                   {
-                    class: _vm.loading ? "" : "",
-                    attrs: { loading: _vm.loading, animated: "", rows: 10 }
+                    staticClass: "gis-form",
+                    attrs: { "label-position": "top" }
                   },
                   [
-                    _c("div", { staticClass: "contactum_card" }, [
-                      _c("div", { staticClass: "contactum_card_head" }, [
-                        _c("h2", { staticClass: "title" }, [
-                          _vm._v(" " + _vm._s(_vm.settings.title) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", {
-                          staticClass: "text",
-                          domProps: {
-                            innerHTML: _vm._s(_vm.settings.description)
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "contactum_card_body" },
-                        [
-                          _vm._l(
-                            _vm.settings.settings &&
-                              _vm.settings.settings.fields
-                              ? _vm.settings.settings.fields
-                              : [],
-                            function(field, fieldKey) {
-                              return _c(
-                                "el-form-item",
-                                { key: fieldKey, staticClass: "ff-form-item" },
-                                [
-                                  field.label
-                                    ? _c("template", { slot: "label" }, [
-                                        _vm._v(" " + _vm._s(field.label) + " ")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.type == "text"
-                                    ? [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: field.placeholder,
-                                            type: field.type
-                                          },
-                                          model: {
-                                            value: _vm.integration[field.name],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.integration,
-                                                field.name,
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "integration[field.name]"
-                                          }
-                                        })
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.type == "number"
-                                    ? [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: field.placeholder,
-                                            type: field.type
-                                          },
-                                          model: {
-                                            value: _vm.integration[field.name],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.integration,
-                                                field.name,
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "integration[field.name]"
-                                          }
-                                        })
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.type == "password"
-                                    ? [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: field.placeholder,
-                                            type: field.type
-                                          },
-                                          model: {
-                                            value: _vm.integration[field.name],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.integration,
-                                                field.name,
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "integration[field.name]"
-                                          }
-                                        })
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.type == "textarea"
-                                    ? [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: field.placeholder,
-                                            type: field.type
-                                          },
-                                          model: {
-                                            value: _vm.integration[field.name],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.integration,
-                                                field.name,
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "integration[field.name]"
-                                          }
-                                        })
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.type == "select"
-                                    ? [
-                                        _c(
-                                          "el-select",
-                                          {
-                                            model: {
-                                              value:
-                                                _vm.integration[field.name],
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.integration,
-                                                  field.name,
-                                                  $$v
-                                                )
-                                              },
-                                              expression:
-                                                "integration[field.name]"
-                                            }
-                                          },
-                                          _vm._l(field.options, function(
-                                            optionName,
-                                            optionValue
-                                          ) {
-                                            return _c("el-option", {
-                                              key: optionValue,
-                                              attrs: {
-                                                label: optionName,
-                                                value: optionValue
-                                              }
-                                            })
-                                          }),
-                                          1
+                    _vm._l(
+                      _vm.settings.settings && _vm.settings.settings.fields
+                        ? _vm.settings.settings.fields
+                        : [],
+                      function(field, fieldKey) {
+                        return _c(
+                          "el-form-item",
+                          { key: fieldKey, staticClass: "gis-form__item" },
+                          [
+                            field.label
+                              ? _c("template", { slot: "label" }, [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(field.label) +
+                                      "\n          "
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            field.type === "text" || field.type === "number"
+                              ? _c("el-input", {
+                                  attrs: {
+                                    type: field.type,
+                                    placeholder: field.placeholder
+                                  },
+                                  model: {
+                                    value: _vm.integration[field.name],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.integration, field.name, $$v)
+                                    },
+                                    expression: "integration[field.name]"
+                                  }
+                                })
+                              : field.type === "password"
+                              ? _c("el-input", {
+                                  attrs: {
+                                    type: "password",
+                                    placeholder: field.placeholder,
+                                    "show-password": ""
+                                  },
+                                  model: {
+                                    value: _vm.integration[field.name],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.integration, field.name, $$v)
+                                    },
+                                    expression: "integration[field.name]"
+                                  }
+                                })
+                              : field.type === "textarea"
+                              ? _c("el-input", {
+                                  attrs: {
+                                    type: "textarea",
+                                    rows: 3,
+                                    placeholder: field.placeholder
+                                  },
+                                  model: {
+                                    value: _vm.integration[field.name],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.integration, field.name, $$v)
+                                    },
+                                    expression: "integration[field.name]"
+                                  }
+                                })
+                              : field.type === "select"
+                              ? _c(
+                                  "el-select",
+                                  {
+                                    staticStyle: { width: "100%" },
+                                    model: {
+                                      value: _vm.integration[field.name],
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.integration,
+                                          field.name,
+                                          $$v
                                         )
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  field.tips
-                                    ? _c(
-                                        "p",
-                                        { staticClass: "text-note mt-2" },
-                                        [_vm._v(_vm._s(field.tips))]
-                                      )
-                                    : _vm._e()
-                                ],
-                                2
-                              )
-                            }
-                          ),
-                          _vm._v(" "),
-                          _vm.settings.settings
-                            ? _c("div", [
-                                _vm.integration.status
-                                  ? _c("div", [
-                                      _c("p", [
-                                        _c("i", {
-                                          staticClass: "el-icon-success"
-                                        }),
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              _vm.settings.settings
-                                                .valid_message
-                                            )
-                                        )
-                                      ])
-                                    ])
-                                  : _c("div", [
-                                      _c("p", [
-                                        _c("i", {
-                                          staticClass:
-                                            "ff-icon ff-icon-close-circle-filled"
-                                        }),
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              _vm.settings.settings
-                                                .invalid_message
-                                            )
-                                        )
-                                      ])
-                                    ])
+                                      },
+                                      expression: "integration[field.name]"
+                                    }
+                                  },
+                                  _vm._l(field.options, function(
+                                    optionName,
+                                    optionValue
+                                  ) {
+                                    return _c("el-option", {
+                                      key: optionValue,
+                                      attrs: {
+                                        label: optionName,
+                                        value: optionValue
+                                      }
+                                    })
+                                  }),
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            field.tips
+                              ? _c("p", { staticClass: "gis-form__tip" }, [
+                                  _vm._v(_vm._s(field.tips))
+                                ])
+                              : _vm._e()
+                          ],
+                          2
+                        )
+                      }
+                    ),
+                    _vm._v(" "),
+                    _vm.settings.settings
+                      ? _c("div", { staticClass: "gis-validation" }, [
+                          _vm.integration.status
+                            ? _c("div", { staticClass: "gis-validation--ok" }, [
+                                _c("span", {
+                                  staticClass: "dashicons dashicons-yes-alt"
+                                }),
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(
+                                      _vm.settings.settings.valid_message
+                                    ) +
+                                    "\n          "
+                                )
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.error_message
-                            ? _c("p", [_vm._v(_vm._s(_vm.error_message))])
-                            : _vm._e()
-                        ],
-                        2
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
+                            : _c(
+                                "div",
+                                { staticClass: "gis-validation--err" },
+                                [
+                                  _c("span", {
+                                    staticClass: "dashicons dashicons-warning"
+                                  }),
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(
+                                        _vm.settings.settings.invalid_message
+                                      ) +
+                                      "\n          "
+                                  )
+                                ]
+                              )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.error_message
+                      ? _c("p", { staticClass: "gis-error" }, [
+                          _vm._v(_vm._s(_vm.error_message))
+                        ])
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "gis-card__footer" },
+              [
                 _c(
                   "el-button",
                   {
@@ -79809,10 +78648,10 @@ var render = function() {
                         expression: "saving"
                       }
                     ],
-                    attrs: { type: "primary", icon: "el-icon-success" },
+                    attrs: { type: "primary", icon: "el-icon-check" },
                     on: { click: _vm.save }
                   },
-                  [_vm._v(" Save Settings ")]
+                  [_vm._v("Save Settings")]
                 )
               ],
               1
@@ -79827,11 +78666,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "mb-4 contactum_icon_btn mx-auto success" },
-      [_c("i", { staticClass: "el-icon el-icon-check" })]
-    )
+    return _c("div", { staticClass: "gis-connected__icon" }, [
+      _c("span", { staticClass: "dashicons dashicons-yes-alt" })
+    ])
   }
 ]
 render._withStripped = true
