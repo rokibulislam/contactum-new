@@ -1819,110 +1819,277 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "CreateCoupon",
-
-  data() {
-    return {
-      /*
-      newCoupon: {
-        title: '',
-        code: '',
-        amount: '',
-        type: 'percent',
-        minPurchase: '',
-        stackable: false,
-        startDate: '',
-        endDate: '',
-        forms: '',
-        limit: 0,
-        status: 'active'
-      },
-      */
-      localCoupon: { ...this.newCoupon
-      }
-    };
-  },
-
-  computed: {
-    isEditMode() {
-      return !!this.newCoupon.id; // If ID exists, it's edit mode
-    }
-
-  },
+  name: 'CreateCoupon',
   props: {
     visible: {
       type: Boolean,
       required: true
     },
-    newCoupon: {
+    couponData: {
       type: Object,
       default: () => ({})
-    },
-    visible: Boolean
-  },
-  watch: {
-    newCoupon: {
-      handler(newVal) {
-        this.localCoupon = { ...newVal
-        }; // update local when parent changes
-      },
-
-      deep: true,
-      immediate: true
     }
   },
+
+  data() {
+    return {
+      saving: false,
+      formsLoading: false,
+      availableForms: [],
+      form: this.blankForm(),
+      rules: {
+        title: [{
+          required: true,
+          message: 'Title is required',
+          trigger: 'blur'
+        }],
+        code: [{
+          required: true,
+          message: 'Code is required',
+          trigger: 'blur'
+        }],
+        coupon_type: [{
+          required: true,
+          message: 'Select a type',
+          trigger: 'change'
+        }],
+        amount: [{
+          required: true,
+          message: 'Enter an amount',
+          trigger: 'blur'
+        }]
+      }
+    };
+  },
+
+  computed: {
+    dialogVisible: {
+      get() {
+        return this.visible;
+      },
+
+      set(val) {
+        if (!val) this.$emit('close');
+      }
+
+    },
+
+    isEditMode() {
+      return !!this.couponData?.id;
+    }
+
+  },
+  watch: {
+    visible(val) {
+      if (val) {
+        this.loadForms();
+        this.form = this.isEditMode ? this.mapFromServer(this.couponData) : this.blankForm();
+        this.$nextTick(() => this.$refs.couponForm?.clearValidate());
+      }
+    }
+
+  },
   methods: {
-    cancelNewForm() {
-      this.$emit("close");
+    blankForm() {
+      return {
+        title: '',
+        code: '',
+        coupon_type: 'fixed',
+        amount: 0,
+        status: 'active',
+        stackable: 'no',
+        start_date: '',
+        expire_date: '',
+        min_amount: 0,
+        max_use: 0,
+        per_user_limit: 0,
+        settings: {
+          form_ids: []
+        }
+      };
+    },
+
+    mapFromServer(data) {
+      const settings = typeof data.settings === 'string' ? JSON.parse(data.settings || '{}') : data.settings || {};
+      return {
+        title: data.title || '',
+        code: data.code || '',
+        coupon_type: data.coupon_type || 'fixed',
+        amount: parseFloat(data.amount) || 0,
+        status: data.status || 'active',
+        stackable: data.stackable || 'no',
+        start_date: data.start_date || '',
+        expire_date: data.expire_date || '',
+        min_amount: parseFloat(data.min_amount) || 0,
+        max_use: parseInt(data.max_use) || 0,
+        per_user_limit: parseInt(data.per_user_limit) || 0,
+        settings: {
+          form_ids: settings.form_ids || []
+        }
+      };
+    },
+
+    generateCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      this.form.code = Array.from({
+        length: 8
+      }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    },
+
+    loadForms() {
+      this.formsLoading = true;
+      jQuery.post(contactum.ajaxurl, {
+        action: 'contactum_get_forms',
+        _ajax_nonce: contactum.nonce
+      }, res => {
+        this.formsLoading = false;
+
+        if (res.success) {
+          this.availableForms = Object.values(res.data.forms || {});
+        }
+      });
+    },
+
+    handleClose() {
+      this.$emit('close');
     },
 
     saveCoupon() {
-      if (!this.localCoupon.title || !this.localCoupon.code || !this.localCoupon.amount) {
-        this.$message.error('Please fill all fields.');
-        return;
-      } // Prepare data for API
-
-
-      const action = this.isEditMode ? 'update_contactum_coupon' : 'save_contactum_coupon';
-      /*
-      const data = {
-        action: action,
-        nonce: contactum.nonce,
-        title: this.newCoupon.title,
-        code: this.newCoupon.code,
-        amount: this.newCoupon.amount,
-        type: this.newCoupon.type,
-        minPurchase: this.newCoupon.minPurchase,
-        stackable: this.newCoupon.stackable,
-        startDate: this.newCoupon.startDate,
-        endDate: this.newCoupon.endDate,
-        forms: '',
-        limit: this.newCoupon.limit,
-        status: this.newCoupon.status
-      }
-      */
-      // Send AJAX Request
-
-      jQuery.ajax({
-        url: contactum.ajaxurl,
-        type: 'POST',
-        data: {
-          action: action,
+      this.$refs.couponForm.validate(valid => {
+        if (!valid) return;
+        this.saving = true;
+        const action = this.isEditMode ? 'update_contactum_coupon' : 'save_contactum_coupon';
+        const payload = {
+          action,
           nonce: contactum.nonce,
-          data: this.localCoupon
-        },
-        success: response => {
-          if (response.success) {
-            this.$message.success('Coupon saved successfully!');
-            this.visible = false; // this.$emit('saved');
-          } else {
-            this.$message.error(response.data || 'Failed to save coupon');
+          data: { ...this.form
           }
-        },
-        error: () => {
-          this.$message.error('Server error. Please try again.');
-        }
+        };
+        if (this.isEditMode) payload.id = this.couponData.id;
+        jQuery.post(contactum.ajaxurl, payload, res => {
+          this.saving = false;
+
+          if (res.success) {
+            this.$message.success(res.data?.message || 'Coupon saved!');
+            this.$emit('saved');
+            this.$emit('close');
+          } else {
+            this.$message.error(res.data?.message || 'Failed to save coupon.');
+          }
+        });
       });
     }
 
@@ -2556,9 +2723,147 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Coupon',
+  name: 'CouponSettings',
   components: {
     CreateCoupon: _dialog_CreateCoupon_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2566,19 +2871,52 @@ __webpack_require__.r(__webpack_exports__);
   data() {
     return {
       coupons: [],
-      total: 0,
       pageSize: 10,
       currentPage: 1,
-      visible: false,
+      loading: false,
+      search: '',
+      filterStatus: '',
+      dialogVisible: false,
       currentCoupon: {}
     };
   },
 
   computed: {
-    paginatedCoupons() {
+    filteredCoupons() {
+      const q = this.search.trim().toLowerCase();
+      const st = this.filterStatus;
+      return this.coupons.filter(c => {
+        const matchSearch = !q || c.code.toLowerCase().includes(q) || (c.title || '').toLowerCase().includes(q);
+        const matchStatus = !st || c.status === st;
+        return matchSearch && matchStatus;
+      });
+    },
+
+    pagedCoupons() {
       const start = (this.currentPage - 1) * this.pageSize;
-      const end = start + this.pageSize;
-      return this.coupons.slice(start, end);
+      return this.filteredCoupons.slice(start, start + this.pageSize);
+    },
+
+    activeCoupons() {
+      return this.coupons.filter(c => c.status === 'active').length;
+    },
+
+    inactiveCoupons() {
+      return this.coupons.filter(c => c.status !== 'active').length;
+    },
+
+    totalUses() {
+      return this.coupons.reduce((s, c) => s + (parseInt(c.used_count) || 0), 0);
+    }
+
+  },
+  watch: {
+    search() {
+      this.currentPage = 1;
+    },
+
+    filterStatus() {
+      this.currentPage = 1;
     }
 
   },
@@ -2589,55 +2927,54 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     fetchCoupons() {
+      this.loading = true;
       jQuery.post(contactum.ajaxurl, {
         action: 'get_coupons',
-        _ajax_nonce: contactum.nonce
-      }, (response, textStatus, xhr) => {
-        if (response.success) {
-          this.coupons = response.data; // Update the table data
+        nonce: contactum.nonce
+      }, res => {
+        this.loading = false;
 
-          this.total = response.data.length; // Set total for pagination
-        } else {}
-      });
-    },
-
-    addCoupon() {
-      this.currentCoupon = {}; // Reset for new coupon
-
-      this.visible = true;
-    },
-
-    editCoupon(row) {
-      const coupon = this.coupons.find(c => c.id === row.id);
-
-      if (coupon) {
-        this.currentCoupon = { ...coupon
-        }; // Copy to avoid direct binding
-
-        this.visible = true; // Open the dialog
-      } else {}
-    },
-
-    deleteCoupon(row) {
-      jQuery.post(contactum.ajaxurl, {
-        action: 'delete_coupon',
-        id: row.id,
-        _ajax_nonce: contactum.nonce
-      }, response => {
-        if (response.success) {
-          this.$message.success('Coupon deleted'); //  this.fetchCoupons(); // Refresh list
-        } else {
-          this.$message.error('Failed to delete');
+        if (res.success) {
+          this.coupons = res.data || [];
         }
       });
     },
 
-    handleSizeChange(size) {
-      this.pageSize = size;
+    isExpired(row) {
+      return row.expire_date && new Date(row.expire_date) < new Date();
     },
 
-    handleCurrentChange(page) {
-      this.currentPage = page;
+    openCreate() {
+      this.currentCoupon = {};
+      this.dialogVisible = true;
+    },
+
+    openEdit(row) {
+      this.currentCoupon = { ...row
+      };
+      this.dialogVisible = true;
+    },
+
+    confirmDelete(row) {
+      this.$confirm(`Delete coupon <strong>${row.code}</strong>? This cannot be undone.`, 'Delete Coupon', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        dangerouslyUseHTMLString: true,
+        type: 'warning'
+      }).then(() => {
+        jQuery.post(contactum.ajaxurl, {
+          action: 'delete_coupon',
+          id: row.id,
+          nonce: contactum.nonce
+        }, res => {
+          if (res.success) {
+            this.$message.success('Coupon deleted.');
+            this.fetchCoupons();
+          } else {
+            this.$message.error(res.data?.message || 'Failed to delete.');
+          }
+        });
+      }).catch(() => {});
     }
 
   }
@@ -5884,9 +6221,26 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&":
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.ccd-dialog .el-dialog__header {\n  padding: 0;\n  border-bottom: 1px solid #ebeef5;\n}\n.ccd-dialog .el-dialog__body {\n  padding: 0;\n}\n.ccd-dialog .el-dialog__footer {\n  padding: 12px 20px;\n  border-top: 1px solid #ebeef5;\n}\n.ccd-dialog .el-form-item {\n  margin-bottom: 14px;\n}\n.ccd-dialog .el-form-item__label {\n  padding-bottom: 4px;\n  line-height: 1.4;\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
@@ -5894,7 +6248,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.contactum-form-item .el-form-item__label[data-v-048ad969] {\n  align-items: center;\n  color: #1e1f21;\n  display: flex;\n  font-size: 15px;\n  font-weight: 500;\n}\n.el-form--label-top .el-form-item__label[data-v-048ad969] {\n  line-height: 1;\n  padding-bottom: 16px;\n}\n\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Header ───────────────────────────────────────────────────────────── */\n.ccd-header[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 20px;\n}\n.ccd-header__icon[data-v-048ad969] {\n  width: 38px;\n  height: 38px;\n  border-radius: 9px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 17px;\n  flex-shrink: 0;\n}\n.ccd-icon--teal[data-v-048ad969]   { background: #d1fae5; color: #059669;\n}\n.ccd-icon--purple[data-v-048ad969] { background: #ede9fe; color: #7c3aed;\n}\n.ccd-header__title[data-v-048ad969] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #1a1a2e;\n  line-height: 1.3;\n}\n.ccd-header__sub[data-v-048ad969] {\n  font-size: 12px;\n  color: #909399;\n  margin-top: 1px;\n}\n\n/* ── Body: two-column ─────────────────────────────────────────────────── */\n.ccd-body[data-v-048ad969] {\n  display: flex;\n}\n\n/* ── Sidebar (preview) ────────────────────────────────────────────────── */\n.ccd-sidebar[data-v-048ad969] {\n  width: 232px;\n  flex-shrink: 0;\n  background: #f6f7fb;\n  border-right: 1px solid #ebeef5;\n  padding: 20px 16px;\n  display: flex;\n  flex-direction: column;\n  gap: 14px;\n}\n\n/* Ticket */\n.ccd-ticket[data-v-048ad969] {\n  border-radius: 11px;\n  box-shadow: 0 3px 16px rgba(0,0,0,.12);\n}\n.ccd-ticket__top[data-v-048ad969] {\n  padding: 16px 15px 12px;\n  border-radius: 11px 11px 0 0;\n  color: #fff;\n}\n.ccd-ticket--teal   .ccd-ticket__top[data-v-048ad969] { background: linear-gradient(135deg, #0d9488 0%, #059669 100%);\n}\n.ccd-ticket--purple .ccd-ticket__top[data-v-048ad969] { background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);\n}\n.ccd-ticket__eyebrow[data-v-048ad969] {\n  font-size: 8.5px;\n  font-weight: 700;\n  letter-spacing: 1.8px;\n  opacity: .7;\n  margin-bottom: 8px;\n}\n.ccd-ticket__amount[data-v-048ad969] {\n  font-size: 34px;\n  font-weight: 800;\n  line-height: 1;\n  letter-spacing: -1px;\n}\n.ccd-ticket__value[data-v-048ad969] { display: inline;\n}\n.ccd-ticket__unit[data-v-048ad969] {\n  font-size: 16px;\n  font-weight: 700;\n  vertical-align: super;\n  line-height: 1;\n}\n.ccd-ticket__unit--pre[data-v-048ad969] { margin-right: 1px;\n}\n.ccd-ticket__empty[data-v-048ad969] { opacity: .5;\n}\n.ccd-ticket__off[data-v-048ad969] {\n  font-size: 10px;\n  opacity: .75;\n  margin-top: 4px;\n}\n\n/* Tear */\n.ccd-tear[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  position: relative;\n}\n.ccd-tear__notch[data-v-048ad969] {\n  width: 13px;\n  height: 13px;\n  border-radius: 50%;\n  background: #f6f7fb;\n  flex-shrink: 0;\n  position: relative;\n  z-index: 1;\n}\n.ccd-tear__notch--l[data-v-048ad969] { margin-left: -6.5px;\n}\n.ccd-tear__notch--r[data-v-048ad969] { margin-right: -6.5px;\n}\n.ccd-tear__line[data-v-048ad969] {\n  flex: 1;\n  height: 0;\n  border-top: 1.5px dashed #d5d9e8;\n}\n\n/* Ticket bottom */\n.ccd-ticket__bottom[data-v-048ad969] {\n  padding: 11px 15px 13px;\n  background: #fff;\n  border-radius: 0 0 11px 11px;\n}\n.ccd-ticket__code[data-v-048ad969] {\n  font-family: 'Courier New', monospace;\n  font-size: 15px;\n  font-weight: 800;\n  letter-spacing: 2.5px;\n  color: #1a1a2e;\n}\n.ccd-ticket__expiry[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 10px;\n  color: #adb5bd;\n  margin-top: 3px;\n}\n\n/* Stats */\n.ccd-stats[data-v-048ad969] {\n  display: flex;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.ccd-stat[data-v-048ad969] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 9px 4px;\n}\n.ccd-stat + .ccd-stat[data-v-048ad969] { border-left: 1px solid #f0f2f5;\n}\n.ccd-stat__val[data-v-048ad969] {\n  font-size: 13px;\n  font-weight: 700;\n  color: #2c3e50;\n  line-height: 1;\n}\n.ccd-stat__key[data-v-048ad969] {\n  font-size: 9px;\n  color: #bdc3c7;\n  text-transform: uppercase;\n  letter-spacing: .5px;\n  margin-top: 3px;\n}\n\n/* Indicators */\n.ccd-indicators[data-v-048ad969] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.ccd-indicator[data-v-048ad969] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 11.5px;\n  font-weight: 500;\n  padding: 5px 10px;\n  border-radius: 6px;\n}\n.ccd-indicator--green[data-v-048ad969] { background: #ecfdf5; color: #059669;\n}\n.ccd-indicator--gray[data-v-048ad969]  { background: #f3f4f6; color: #9ca3af;\n}\n.ccd-indicator--blue[data-v-048ad969]  { background: #eff6ff; color: #2563eb;\n}\n.ccd-dot[data-v-048ad969] {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n\n/* ── Form panel ───────────────────────────────────────────────────────── */\n.ccd-form[data-v-048ad969] {\n  flex: 1;\n  padding: 18px 20px 12px;\n  overflow-y: auto;\n  max-height: 66vh;\n}\n\n/* Section label */\n.ccd-section-label[data-v-048ad969] {\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: .9px;\n  text-transform: uppercase;\n  color: #bdc3c7;\n  padding-bottom: 8px;\n  border-bottom: 1px solid #f0f2f5;\n  margin-bottom: 12px;\n}\n.ccd-form > .ccd-section-label + *[data-v-048ad969],\n.ccd-form > .ccd-row[data-v-048ad969],\n.ccd-form > .el-form-item[data-v-048ad969] {\n  margin-bottom: 14px;\n}\n.ccd-section-label[data-v-048ad969]:not(:first-child) {\n  margin-top: 20px;\n}\n\n/* Grid rows */\n.ccd-row[data-v-048ad969] { display: grid; gap: 12px;\n}\n.ccd-row--2[data-v-048ad969] { grid-template-columns: 1fr 1fr;\n}\n.ccd-row--3[data-v-048ad969] { grid-template-columns: 1fr 1fr 1fr;\n}\n\n/* Label */\n.ccd-label[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 12px;\n  font-weight: 500;\n  color: #374151;\n}\n.ccd-hint[data-v-048ad969] {\n  font-weight: 400;\n  color: #c0c4cc;\n  font-size: 11px;\n}\n\n/* Generate button */\n.ccd-gen[data-v-048ad969] {\n  margin-left: auto;\n  background: none;\n  border: none;\n  padding: 0;\n  font-size: 10.5px;\n  color: #409eff;\n  cursor: pointer;\n  display: inline-flex;\n  align-items: center;\n  gap: 3px;\n  line-height: 1;\n  font-family: inherit;\n}\n.ccd-gen[data-v-048ad969]:hover { color: #66b1ff;\n}\n\n/* Pill type buttons */\n.ccd-pills[data-v-048ad969] {\n  display: flex;\n  gap: 8px;\n}\n.ccd-pill[data-v-048ad969] {\n  flex: 1;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 5px;\n  padding: 7px 10px;\n  border: 1.5px solid #dcdfe6;\n  border-radius: 6px;\n  background: #fff;\n  font-size: 12px;\n  font-weight: 500;\n  color: #606266;\n  cursor: pointer;\n  transition: all .15s;\n  font-family: inherit;\n}\n.ccd-pill[data-v-048ad969]:hover { border-color: #c6d8f7; color: #409eff;\n}\n.ccd-pill__icon[data-v-048ad969] {\n  font-size: 13px;\n  font-weight: 700;\n}\n.ccd-pill--teal[data-v-048ad969]   { border-color: #10b981; background: #ecfdf5; color: #059669;\n}\n.ccd-pill--purple[data-v-048ad969] { border-color: #7c3aed; background: #f5f3ff; color: #7c3aed;\n}\n\n/* Switch rows */\n.ccd-switches[data-v-048ad969] {\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.ccd-switch-row[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 11px 14px;\n  background: #fff;\n}\n.ccd-switch-row + .ccd-switch-row[data-v-048ad969] { border-top: 1px solid #f5f7fa;\n}\n.ccd-switch-row__label[data-v-048ad969] {\n  font-size: 12.5px;\n  font-weight: 500;\n  color: #374151;\n  line-height: 1.3;\n}\n.ccd-switch-row__desc[data-v-048ad969] {\n  font-size: 11px;\n  color: #9ca3af;\n  margin-top: 2px;\n}\n\n/* ── Footer ───────────────────────────────────────────────────────────── */\n.ccd-footer[data-v-048ad969] {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  gap: 8px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -5929,6 +6283,23 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modul
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.id, "\n.contactum_state_box {\n  border-radius: 8px;\n  display: block;\n  padding: 32px;\n  text-align: center;\n}\n.contactum_icon_btn {\n  align-items: center;\n  background-color: #1a7efb;\n  border-radius: 50%;\n  color: #fff;\n  display: flex;\n  font-size: 28px;\n  height: 58px;\n  justify-content: center;\n  text-align: center;\n  width: 58px;\n}\n.contactum_icon_btn.success {\n  background-color: #00b27f;\n  color: #fff;\n}\nlabel {\n  align-items: center;\n  color: #1e1f21 !important;\n  display: flex;\n  font-size: 15px;\n  font-weight: 500;\n}\n\n\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrapper ──────────────────────────────────────────────────────────── */\n.ccl-wrap[data-v-29b25ab2] {\n  padding: 24px;\n}\n\n/* ── Header ───────────────────────────────────────────────────────────── */\n.ccl-header[data-v-29b25ab2] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  margin-bottom: 20px;\n}\n.ccl-header__left[data-v-29b25ab2] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.ccl-header__icon[data-v-29b25ab2] {\n  width: 40px;\n  height: 40px;\n  border-radius: 10px;\n  background: #ecf5ff;\n  color: #409eff;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 18px;\n  flex-shrink: 0;\n}\n.ccl-header__title[data-v-29b25ab2] {\n  margin: 0 0 2px;\n  font-size: 16px;\n  font-weight: 600;\n  color: #1a1a2e;\n  line-height: 1.2;\n}\n.ccl-header__sub[data-v-29b25ab2] {\n  margin: 0;\n  font-size: 12px;\n  color: #909399;\n}\n\n/* ── Stats ────────────────────────────────────────────────────────────── */\n.ccl-stats[data-v-29b25ab2] {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 16px;\n}\n.ccl-stat[data-v-29b25ab2] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 8px 14px;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  box-shadow: 0 1px 4px rgba(0,0,0,.04);\n}\n.ccl-stat__val[data-v-29b25ab2] {\n  font-size: 18px;\n  font-weight: 700;\n  color: #2c3e50;\n  line-height: 1;\n}\n.ccl-stat__key[data-v-29b25ab2] {\n  font-size: 11px;\n  color: #adb5bd;\n  text-transform: uppercase;\n  letter-spacing: .4px;\n}\n.ccl-stat--green .ccl-stat__val[data-v-29b25ab2] { color: #059669;\n}\n.ccl-stat--gray  .ccl-stat__val[data-v-29b25ab2] { color: #9ca3af;\n}\n.ccl-stat--blue  .ccl-stat__val[data-v-29b25ab2] { color: #2563eb;\n}\n\n/* ── Toolbar ──────────────────────────────────────────────────────────── */\n.ccl-toolbar[data-v-29b25ab2] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.ccl-search[data-v-29b25ab2] { width: 240px;\n}\n.ccl-filter[data-v-29b25ab2] { width: 130px;\n}\n\n/* ── Table wrapper ────────────────────────────────────────────────────── */\n.ccl-table-wrap[data-v-29b25ab2] {\n  border: 1px solid #ebeef5;\n  border-radius: 10px;\n  overflow: hidden;\n  background: #fff;\n}\n\n/* Coupon cell */\n.ccl-coupon-cell[data-v-29b25ab2] {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.ccl-code[data-v-29b25ab2] {\n  display: inline-block;\n  font-family: 'Courier New', monospace;\n  font-size: 11.5px;\n  font-weight: 800;\n  letter-spacing: 1.5px;\n  padding: 2px 8px;\n  border-radius: 4px;\n  width: fit-content;\n}\n.ccl-code--teal[data-v-29b25ab2]   { background: #d1fae5; color: #065f46;\n}\n.ccl-code--purple[data-v-29b25ab2] { background: #ede9fe; color: #4c1d95;\n}\n.ccl-coupon-title[data-v-29b25ab2] {\n  font-size: 12px;\n  color: #6b7280;\n}\n\n/* Discount */\n.ccl-discount[data-v-29b25ab2] {\n  font-size: 12.5px;\n  font-weight: 700;\n  padding: 2px 8px;\n  border-radius: 4px;\n}\n.ccl-discount--teal[data-v-29b25ab2]   { background: #ecfdf5; color: #059669;\n}\n.ccl-discount--purple[data-v-29b25ab2] { background: #f5f3ff; color: #7c3aed;\n}\n\n/* Usage */\n.ccl-usage[data-v-29b25ab2] { min-width: 80px;\n}\n.ccl-usage__label[data-v-29b25ab2] { font-size: 12px; color: #374151;\n}\n.ccl-usage__used[data-v-29b25ab2]  { font-weight: 600;\n}\n.ccl-usage__sep[data-v-29b25ab2]   { color: #d1d5db;\n}\n.ccl-usage__max[data-v-29b25ab2]   { color: #9ca3af;\n}\n\n/* Expiry */\n.ccl-expiry[data-v-29b25ab2] { font-size: 12px; color: #374151;\n}\n.ccl-expiry--expired[data-v-29b25ab2] { color: #ef4444;\n}\n.ccl-muted[data-v-29b25ab2] { font-size: 12px; color: #c0c4cc;\n}\n\n/* Status */\n.ccl-status[data-v-29b25ab2] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 12px;\n  font-weight: 500;\n  padding: 3px 9px;\n  border-radius: 20px;\n}\n.ccl-status--on[data-v-29b25ab2]  { background: #ecfdf5; color: #059669;\n}\n.ccl-status--off[data-v-29b25ab2] { background: #f3f4f6; color: #9ca3af;\n}\n.ccl-dot[data-v-29b25ab2] {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n\n/* Actions */\n.ccl-actions[data-v-29b25ab2] {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  gap: 4px;\n}\n.ccl-btn[data-v-29b25ab2] {\n  width: 28px;\n  height: 28px;\n  border: 1px solid #e4e7ed;\n  border-radius: 6px;\n  background: #fff;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  cursor: pointer;\n  transition: all .15s;\n  color: #909399;\n}\n.ccl-btn[data-v-29b25ab2]:hover { border-color: transparent;\n}\n.ccl-btn--edit[data-v-29b25ab2]:hover  { background: #ecf5ff; color: #409eff; border-color: #d9ecff;\n}\n.ccl-btn--del[data-v-29b25ab2]:hover   { background: #fef0f0; color: #f56c6c; border-color: #fde2e2;\n}\n\n/* ── Empty state ──────────────────────────────────────────────────────── */\n.ccl-empty[data-v-29b25ab2] {\n  padding: 56px 24px;\n  text-align: center;\n}\n.ccl-empty__icon-wrap[data-v-29b25ab2] {\n  width: 64px;\n  height: 64px;\n  border-radius: 16px;\n  background: #f0f4ff;\n  color: #93a8d1;\n  font-size: 28px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 0 auto 16px;\n}\n.ccl-empty__title[data-v-29b25ab2] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.ccl-empty__sub[data-v-29b25ab2] {\n  font-size: 12px;\n  color: #9ca3af;\n  margin: 0;\n}\n\n/* ── Pagination ───────────────────────────────────────────────────────── */\n.ccl-pagination[data-v-29b25ab2] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 16px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -76184,14 +76555,42 @@ module.exports = content.locals || {};
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&":
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& ***!
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&");
+            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&");
 
             content = content.__esModule ? content.default : content;
 
@@ -76248,6 +76647,34 @@ module.exports = content.locals || {};
 
 var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
             var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/GeneralIntegrationSettings.vue?vue&type=style&index=0&lang=css&");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var api = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&");
 
             content = content.__esModule ? content.default : content;
 
@@ -76709,17 +77136,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _CreateCoupon_vue_vue_type_template_id_048ad969_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateCoupon.vue?vue&type=template&id=048ad969&scoped=true& */ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=template&id=048ad969&scoped=true&");
 /* harmony import */ var _CreateCoupon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateCoupon.vue?vue&type=script&lang=js& */ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=script&lang=js&");
-/* harmony import */ var _CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& */ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateCoupon.vue?vue&type=style&index=0&lang=css& */ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& */ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
 ;
 
 
+
 /* normalize component */
 
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__["default"])(
   _CreateCoupon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _CreateCoupon_vue_vue_type_template_id_048ad969_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _CreateCoupon_vue_vue_type_template_id_048ad969_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -76986,23 +77415,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./coupon.vue?vue&type=template&id=29b25ab2& */ "./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&");
+/* harmony import */ var _coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./coupon.vue?vue&type=template&id=29b25ab2&scoped=true& */ "./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true&");
 /* harmony import */ var _coupon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./coupon.vue?vue&type=script&lang=js& */ "./src/admin/components/settings/coupon.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& */ "./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _coupon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__.render,
-  _coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "29b25ab2",
   null
   
 )
@@ -77307,9 +77738,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&":
+/***/ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************!*\
+  !*** ./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+
+/***/ }),
+
+/***/ "./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&":
 /*!***************************************************************************************************************!*\
-  !*** ./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& ***!
+  !*** ./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& ***!
   \***************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -77318,12 +77769,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=0&id=048ad969&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/dialog/CreateCoupon.vue?vue&type=style&index=1&id=048ad969&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_0_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateCoupon_vue_vue_type_style_index_1_id_048ad969_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
@@ -77364,6 +77815,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralIntegrationSettings_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+
+/***/ }),
+
+/***/ "./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&":
+/*!***********************************************************************************************************!*\
+  !*** ./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=style&index=0&id=29b25ab2&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_style_index_0_id_29b25ab2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
@@ -77486,19 +77957,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&":
-/*!*********************************************************************************!*\
-  !*** ./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2& ***!
-  \*********************************************************************************/
+/***/ "./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true&":
+/*!*********************************************************************************************!*\
+  !*** ./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true& ***!
+  \*********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./coupon.vue?vue&type=template&id=29b25ab2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_coupon_vue_vue_type_template_id_29b25ab2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./coupon.vue?vue&type=template&id=29b25ab2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true&");
 
 
 /***/ }),
@@ -77571,563 +78042,800 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-dialog",
+    {
+      attrs: {
+        visible: _vm.dialogVisible,
+        width: "860px",
+        "before-close": _vm.handleClose,
+        "close-on-click-modal": false,
+        "custom-class": "ccd-dialog",
+        top: "4vh"
+      },
+      on: {
+        "update:visible": function($event) {
+          _vm.dialogVisible = $event
+        }
+      }
+    },
     [
       _c(
-        "el-dialog",
-        {
-          attrs: { visible: _vm.visible, "before-close": _vm.cancelNewForm },
-          on: {
-            "update:visible": function($event) {
-              _vm.visible = $event
-            }
-          }
-        },
+        "div",
+        { staticClass: "ccd-header", attrs: { slot: "title" }, slot: "title" },
         [
           _c(
-            "el-form",
-            { attrs: { model: _vm.localCoupon, "label-width": "180px" } },
-            [
-              _c(
-                "el-form-item",
-                {
-                  staticClass: "contactum-form-item",
-                  attrs: { label: "Coupon Title" }
-                },
-                [
+            "div",
+            {
+              staticClass: "ccd-header__icon",
+              class:
+                _vm.form.coupon_type === "percent"
+                  ? "ccd-icon--purple"
+                  : "ccd-icon--teal"
+            },
+            [_c("i", { staticClass: "el-icon-s-ticket" })]
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c("div", { staticClass: "ccd-header__title" }, [
+              _vm._v(_vm._s(_vm.isEditMode ? "Edit Coupon" : "New Coupon"))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ccd-header__sub" }, [
+              _vm._v(
+                _vm._s(
+                  _vm.isEditMode
+                    ? "Update this discount code"
+                    : "Create a discount code for your payment forms"
+                )
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "ccd-body" },
+        [
+          _c("div", { staticClass: "ccd-sidebar" }, [
+            _c(
+              "div",
+              {
+                staticClass: "ccd-ticket",
+                class:
+                  _vm.form.coupon_type === "percent"
+                    ? "ccd-ticket--purple"
+                    : "ccd-ticket--teal"
+              },
+              [
+                _c("div", { staticClass: "ccd-ticket__top" }, [
+                  _c("div", { staticClass: "ccd-ticket__eyebrow" }, [
+                    _vm._v("DISCOUNT CODE")
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "label",
-                    {
-                      staticClass: "el-form-item__label",
-                      attrs: { slot: "label" },
-                      slot: "label"
-                    },
-                    [_vm._v("Coupon Title ")]
+                    "div",
+                    { staticClass: "ccd-ticket__amount" },
+                    [
+                      _vm.form.amount > 0
+                        ? [
+                            _vm.form.coupon_type === "percent"
+                              ? [
+                                  _c(
+                                    "span",
+                                    { staticClass: "ccd-ticket__value" },
+                                    [_vm._v(_vm._s(_vm.form.amount))]
+                                  ),
+                                  _c(
+                                    "span",
+                                    { staticClass: "ccd-ticket__unit" },
+                                    [_vm._v("%")]
+                                  )
+                                ]
+                              : [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "ccd-ticket__unit ccd-ticket__unit--pre"
+                                    },
+                                    [_vm._v("$")]
+                                  ),
+                                  _c(
+                                    "span",
+                                    { staticClass: "ccd-ticket__value" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          parseFloat(_vm.form.amount).toFixed(2)
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ]
+                          ]
+                        : _c("span", { staticClass: "ccd-ticket__empty" }, [
+                            _vm._v("—")
+                          ])
+                    ],
+                    2
                   ),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { placeholder: "Coupon Title" },
-                    model: {
-                      value: _vm.localCoupon.title,
-                      callback: function($$v) {
-                        _vm.$set(_vm.localCoupon, "title", $$v)
-                      },
-                      expression: "localCoupon.title"
-                    }
+                  _c("div", { staticClass: "ccd-ticket__off" }, [
+                    _vm._v("off your order")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ccd-tear" }, [
+                  _c("div", {
+                    staticClass: "ccd-tear__notch ccd-tear__notch--l"
                   }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "mt-1 text-note" }, [
-                    _vm._v("The name of this discount")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                {
-                  staticClass: "contactum-form-item",
-                  attrs: { label: "Coupon Code" }
-                },
-                [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "el-form-item__label",
-                      attrs: { slot: "label" },
-                      slot: "label"
-                    },
-                    [_vm._v("Coupon Code ")]
-                  ),
+                  _c("div", { staticClass: "ccd-tear__line" }),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { placeholder: "Coupon Code" },
-                    model: {
-                      value: _vm.localCoupon.code,
-                      callback: function($$v) {
-                        _vm.$set(_vm.localCoupon, "code", $$v)
-                      },
-                      expression: "localCoupon.code"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "mt-1 text-note" }, [
-                    _vm._v(
-                      " Enter a code for this discount, such as 10PERCENT. Only alphanumeric characters are allowed. "
-                    )
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-row",
-                [
-                  _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "Discount Amount / Percent" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v("Discount Amount / Percent ")]
-                          ),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            attrs: { placeholder: "Discount Amount / Percent" },
-                            model: {
-                              value: _vm.localCoupon.amount,
-                              callback: function($$v) {
-                                _vm.$set(_vm.localCoupon, "amount", $$v)
-                              },
-                              expression: "localCoupon.amount"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(" Enter the discount percentage. 10 = 10% ")
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
+                  _c("div", {
+                    staticClass: "ccd-tear__notch ccd-tear__notch--r"
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ccd-ticket__bottom" }, [
+                  _c("div", { staticClass: "ccd-ticket__code" }, [
+                    _vm._v(_vm._s(_vm.form.code || "YOURCODE"))
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
+                    "div",
+                    { staticClass: "ccd-ticket__expiry" },
                     [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "Discount Type" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v(" Discount Type ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-radio-group",
-                            {
-                              model: {
-                                value: _vm.localCoupon.type,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.localCoupon, "type", $$v)
-                                },
-                                expression: "localCoupon.type"
-                              }
-                            },
-                            [
-                              _c("el-radio", { attrs: { label: "percent" } }, [
-                                _vm._v("Percent based discount")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-radio", { attrs: { label: "fixed" } }, [
-                                _vm._v("Fixed Discount")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(
-                              " The kind of discount to apply for this discount. "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-row",
-                [
-                  _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "Min Purchase Amount" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v(" Min Purchase Amount ")]
-                          ),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            attrs: { placeholder: "Min Purchase Amount" },
-                            model: {
-                              value: _vm.localCoupon.minPurchase,
-                              callback: function($$v) {
-                                _vm.$set(_vm.localCoupon, "minPurchase", $$v)
-                              },
-                              expression: "localCoupon.minPurchase"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(
-                              " The minimum amount that must be purchased before this discount can be used. Leave blank for no minimum. "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "Stackable" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v(" Stackable ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-radio-group",
-                            {
-                              model: {
-                                value: _vm.localCoupon.stackable,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.localCoupon, "stackable", $$v)
-                                },
-                                expression: "localCoupon.stackable"
-                              }
-                            },
-                            [
-                              _c("el-radio", { attrs: { label: true } }, [
-                                _vm._v("Yes")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-radio", { attrs: { label: false } }, [
-                                _vm._v("No")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(
-                              " Can this coupon code can be used with other coupon code "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-row",
-                [
-                  _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "Start Date" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v(" Start Date ")]
-                          ),
-                          _vm._v(" "),
-                          _c("el-date-picker", {
-                            attrs: { type: "date", placeholder: "Start Date" },
-                            model: {
-                              value: _vm.localCoupon.startDate,
-                              callback: function($$v) {
-                                _vm.$set(_vm.localCoupon, "startDate", $$v)
-                              },
-                              expression: "localCoupon.startDate"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(
-                              " Enter the start date for this discount code in the format of yyyy-mm-dd. For no start date, leave blank. "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          staticClass: "contactum-form-item",
-                          attrs: { label: "End Date" }
-                        },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "el-form-item__label",
-                              attrs: { slot: "label" },
-                              slot: "label"
-                            },
-                            [_vm._v(" End Date ")]
-                          ),
-                          _vm._v(" "),
-                          _c("el-date-picker", {
-                            attrs: { type: "date", placeholder: "End date" },
-                            model: {
-                              value: _vm.localCoupon.endDate,
-                              callback: function($$v) {
-                                _vm.$set(_vm.localCoupon, "endDate", $$v)
-                              },
-                              expression: "localCoupon.endDate"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mt-1 text-note" }, [
-                            _vm._v(
-                              " Enter the expiration date for this discount code in the format of yyyy-mm-dd. For no expiration, leave blank "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                {
-                  staticClass: "contactum-form-item",
-                  attrs: { label: "Applicable Forms" }
-                },
-                [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "el-form-item__label",
-                      attrs: { slot: "label" },
-                      slot: "label"
-                    },
-                    [_vm._v(" Applicable Forms ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "Applicable Forms", clearable: "" },
-                      model: {
-                        value: _vm.localCoupon.forms,
-                        callback: function($$v) {
-                          _vm.$set(_vm.localCoupon, "forms", $$v)
-                        },
-                        expression: "localCoupon.forms"
-                      }
-                    },
-                    [
-                      _c("el-option", {
-                        attrs: { label: "Form A", value: "formA" }
-                      }),
+                      _c("i", { staticClass: "el-icon-time" }),
                       _vm._v(" "),
-                      _c("el-option", {
-                        attrs: { label: "Form B", value: "formB" }
+                      _vm.form.expire_date
+                        ? [
+                            _vm._v(
+                              _vm._s(_vm.form.expire_date.substring(0, 10))
+                            )
+                          ]
+                        : [_vm._v("No expiry")]
+                    ],
+                    2
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "ccd-stats" }, [
+              _c("div", { staticClass: "ccd-stat" }, [
+                _c("div", { staticClass: "ccd-stat__val" }, [
+                  _vm._v(_vm._s(_vm.form.max_use > 0 ? _vm.form.max_use : "∞"))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ccd-stat__key" }, [_vm._v("Uses")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-stat" }, [
+                _c("div", { staticClass: "ccd-stat__val" }, [
+                  _vm._v(
+                    _vm._s(
+                      _vm.form.min_amount > 0 ? "$" + _vm.form.min_amount : "—"
+                    )
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ccd-stat__key" }, [
+                  _vm._v("Min. Order")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-stat" }, [
+                _c("div", { staticClass: "ccd-stat__val" }, [
+                  _vm._v(_vm._s(_vm.form.settings.form_ids.length || "All"))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ccd-stat__key" }, [_vm._v("Forms")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ccd-indicators" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "ccd-indicator",
+                  class:
+                    _vm.form.status === "active"
+                      ? "ccd-indicator--green"
+                      : "ccd-indicator--gray"
+                },
+                [
+                  _c("span", { staticClass: "ccd-dot" }),
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(
+                        _vm.form.status === "active" ? "Active" : "Inactive"
+                      ) +
+                      "\n        "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.form.stackable === "yes"
+                ? _c(
+                    "div",
+                    { staticClass: "ccd-indicator ccd-indicator--blue" },
+                    [
+                      _c("i", { staticClass: "el-icon-connection" }),
+                      _vm._v("\n          Stackable\n        ")
+                    ]
+                  )
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              ref: "couponForm",
+              staticClass: "ccd-form",
+              attrs: {
+                model: _vm.form,
+                rules: _vm.rules,
+                "label-position": "top"
+              }
+            },
+            [
+              _c("div", { staticClass: "ccd-section-label" }, [
+                _vm._v("Basic Info")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "ccd-row ccd-row--2" },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { prop: "title" } },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Title")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: {
+                          placeholder: "e.g. Summer Sale",
+                          size: "small"
+                        },
+                        model: {
+                          value: _vm.form.title,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "title", $$v)
+                          },
+                          expression: "form.title"
+                        }
                       })
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _c("p", { staticClass: "mt-1 text-note" }, [
-                    _vm._v(" Leave blank for applicable for all payment forms ")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                {
-                  staticClass: "contactum-form-item",
-                  attrs: { label: "Coupon Limit" }
-                },
-                [
                   _c(
-                    "label",
-                    {
-                      staticClass: "el-form-item__label",
-                      attrs: { slot: "label" },
-                      slot: "label"
-                    },
-                    [_vm._v(" Coupon Limit ")]
-                  ),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { placeholder: "Coupon Limit" },
-                    model: {
-                      value: _vm.localCoupon.limit,
-                      callback: function($$v) {
-                        _vm.$set(_vm.localCoupon, "limit", $$v)
-                      },
-                      expression: "localCoupon.limit"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "mt-1 text-note" }, [
-                    _vm._v(
-                      " Set the limit for how many times a logged-in user can apply this coupon. Keep this empty or put zero for no limit. "
-                    )
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                {
-                  staticClass: "contactum-form-item",
-                  attrs: { label: "Status" }
-                },
-                [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "el-form-item__label",
-                      attrs: { slot: "label" },
-                      slot: "label"
-                    },
-                    [_vm._v(" Status ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-radio-group",
-                    {
-                      model: {
-                        value: _vm.localCoupon.status,
-                        callback: function($$v) {
-                          _vm.$set(_vm.localCoupon, "status", $$v)
-                        },
-                        expression: "localCoupon.status"
-                      }
-                    },
+                    "el-form-item",
+                    { attrs: { prop: "code" } },
                     [
-                      _c("el-radio", { attrs: { label: "active" } }, [
-                        _vm._v("Active")
-                      ]),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [
+                          _vm._v("\n            Coupon Code\n            "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ccd-gen",
+                              attrs: { type: "button" },
+                              on: { click: _vm.generateCode }
+                            },
+                            [
+                              _c("i", { staticClass: "el-icon-refresh" }),
+                              _vm._v(" Generate\n            ")
+                            ]
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("el-radio", { attrs: { label: "inactive" } }, [
-                        _vm._v("Inactive")
-                      ])
+                      _c("el-input", {
+                        attrs: { placeholder: "SAVE20", size: "small" },
+                        on: {
+                          input: function($event) {
+                            _vm.form.code = _vm.form.code.toUpperCase()
+                          }
+                        },
+                        model: {
+                          value: _vm.form.code,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "code", $$v)
+                          },
+                          expression: "form.code"
+                        }
+                      })
                     ],
                     1
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-section-label" }, [
+                _vm._v("Discount")
+              ]),
+              _vm._v(" "),
               _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.visible = false
-                    }
-                  }
-                },
-                [_vm._v("Cancel")]
+                "div",
+                { staticClass: "ccd-row ccd-row--2" },
+                [
+                  _c("el-form-item", { attrs: { prop: "coupon_type" } }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "ccd-label",
+                        attrs: { slot: "label" },
+                        slot: "label"
+                      },
+                      [_vm._v("Type")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ccd-pills" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ccd-pill",
+                          class: {
+                            "ccd-pill--teal": _vm.form.coupon_type === "fixed"
+                          },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.form.coupon_type = "fixed"
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "ccd-pill__icon" }, [
+                            _vm._v("$")
+                          ]),
+                          _vm._v(" Fixed")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ccd-pill",
+                          class: {
+                            "ccd-pill--purple":
+                              _vm.form.coupon_type === "percent"
+                          },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.form.coupon_type = "percent"
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "ccd-pill__icon" }, [
+                            _vm._v("%")
+                          ]),
+                          _vm._v(" Percent")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { prop: "amount" } },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.form.coupon_type === "percent"
+                                ? "Percent Off"
+                                : "Amount Off"
+                            )
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-input",
+                        {
+                          attrs: {
+                            type: "number",
+                            min: "0",
+                            step: "0.01",
+                            placeholder: "0",
+                            size: "small"
+                          },
+                          model: {
+                            value: _vm.form.amount,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "amount", _vm._n($$v))
+                            },
+                            expression: "form.amount"
+                          }
+                        },
+                        [
+                          _c("template", { slot: "append" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.form.coupon_type === "percent" ? "%" : "$"
+                              )
+                            )
+                          ])
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-section-label" }, [
+                _vm._v("Restrictions")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "ccd-row ccd-row--2" },
+                [
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Start Date")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: {
+                          type: "datetime",
+                          placeholder: "No start date",
+                          "value-format": "yyyy-MM-dd HH:mm:ss",
+                          size: "small"
+                        },
+                        model: {
+                          value: _vm.form.start_date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "start_date", $$v)
+                          },
+                          expression: "form.start_date"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Expiry Date")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: {
+                          type: "datetime",
+                          placeholder: "Never expires",
+                          "value-format": "yyyy-MM-dd HH:mm:ss",
+                          size: "small"
+                        },
+                        model: {
+                          value: _vm.form.expire_date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "expire_date", $$v)
+                          },
+                          expression: "form.expire_date"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
               ),
               _vm._v(" "),
               _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.saveCoupon } },
-                [_vm._v("Save Coupon")]
-              )
+                "div",
+                { staticClass: "ccd-row ccd-row--3" },
+                [
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Min. Order")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-input",
+                        {
+                          attrs: {
+                            type: "number",
+                            min: "0",
+                            placeholder: "0",
+                            size: "small"
+                          },
+                          model: {
+                            value: _vm.form.min_amount,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "min_amount", _vm._n($$v))
+                            },
+                            expression: "form.min_amount"
+                          }
+                        },
+                        [_c("template", { slot: "prepend" }, [_vm._v("$")])],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Total Uses")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: {
+                          type: "number",
+                          min: "0",
+                          placeholder: "Unlimited",
+                          size: "small"
+                        },
+                        model: {
+                          value: _vm.form.max_use,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "max_use", _vm._n($$v))
+                          },
+                          expression: "form.max_use"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "ccd-label",
+                          attrs: { slot: "label" },
+                          slot: "label"
+                        },
+                        [_vm._v("Per User")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: {
+                          type: "number",
+                          min: "0",
+                          placeholder: "Unlimited",
+                          size: "small"
+                        },
+                        model: {
+                          value: _vm.form.per_user_limit,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "per_user_limit", _vm._n($$v))
+                          },
+                          expression: "form.per_user_limit"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ccd-label",
+                      attrs: { slot: "label" },
+                      slot: "label"
+                    },
+                    [
+                      _vm._v("\n          Applicable Forms\n          "),
+                      _c("span", { staticClass: "ccd-hint" }, [
+                        _vm._v("· leave empty for all")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      staticStyle: { width: "100%" },
+                      attrs: {
+                        multiple: "",
+                        placeholder: "All payment forms",
+                        size: "small",
+                        loading: _vm.formsLoading
+                      },
+                      model: {
+                        value: _vm.form.settings.form_ids,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form.settings, "form_ids", $$v)
+                        },
+                        expression: "form.settings.form_ids"
+                      }
+                    },
+                    _vm._l(_vm.availableForms, function(f) {
+                      return _c("el-option", {
+                        key: f.id,
+                        attrs: { label: f.name, value: f.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-section-label" }, [
+                _vm._v("Options")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ccd-switches" }, [
+                _c(
+                  "div",
+                  { staticClass: "ccd-switch-row" },
+                  [
+                    _c("div", [
+                      _c("div", { staticClass: "ccd-switch-row__label" }, [
+                        _vm._v("Stackable")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ccd-switch-row__desc" }, [
+                        _vm._v("Allow combining with other coupons")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("el-switch", {
+                      attrs: {
+                        value: _vm.form.stackable === "yes",
+                        "active-color": "#409EFF"
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.form.stackable = $event ? "yes" : "no"
+                        }
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "ccd-switch-row" },
+                  [
+                    _c("div", [
+                      _c("div", { staticClass: "ccd-switch-row__label" }, [
+                        _vm._v("Active")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ccd-switch-row__desc" }, [
+                        _vm._v("Coupon is usable immediately when enabled")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("el-switch", {
+                      attrs: {
+                        value: _vm.form.status === "active",
+                        "active-color": "#67C23A"
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.form.status = $event ? "active" : "inactive"
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
             ],
             1
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "ccd-footer",
+          attrs: { slot: "footer" },
+          slot: "footer"
+        },
+        [
+          _c(
+            "el-button",
+            { attrs: { size: "small" }, on: { click: _vm.handleClose } },
+            [_vm._v("Cancel")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: {
+                size: "small",
+                type: "primary",
+                loading: _vm.saving,
+                icon: "el-icon-check"
+              },
+              on: { click: _vm.saveCoupon }
+            },
+            [
+              _vm._v(
+                "\n      " +
+                  _vm._s(_vm.isEditMode ? "Update Coupon" : "Create Coupon") +
+                  "\n    "
+              )
+            ]
+          )
+        ],
+        1
       )
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []
@@ -79164,10 +79872,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2& ***!
-  \************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/settings/coupon.vue?vue&type=template&id=29b25ab2&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -79182,121 +79890,459 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "contactum_card" },
+    { staticClass: "ccl-wrap" },
     [
       _c(
         "div",
-        {
-          staticStyle: {
-            display: "flex",
-            "justify-content": "space-between",
-            "align-items": "center"
-          }
-        },
+        { staticClass: "ccl-header" },
         [
-          _c("h3", [_vm._v("Available Coupons  ")]),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.addCoupon } },
-            [_vm._v("+ Add New Coupon ")]
+            {
+              attrs: { type: "primary", size: "small", icon: "el-icon-plus" },
+              on: { click: _vm.openCreate }
+            },
+            [_vm._v("\n      New Coupon\n    ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "ccl-stats" }, [
+        _c("div", { staticClass: "ccl-stat" }, [
+          _c("span", { staticClass: "ccl-stat__val" }, [
+            _vm._v(_vm._s(_vm.coupons.length))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "ccl-stat__key" }, [_vm._v("Total")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ccl-stat ccl-stat--green" }, [
+          _c("span", { staticClass: "ccl-stat__val" }, [
+            _vm._v(_vm._s(_vm.activeCoupons))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "ccl-stat__key" }, [_vm._v("Active")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ccl-stat ccl-stat--gray" }, [
+          _c("span", { staticClass: "ccl-stat__val" }, [
+            _vm._v(_vm._s(_vm.inactiveCoupons))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "ccl-stat__key" }, [_vm._v("Inactive")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ccl-stat ccl-stat--blue" }, [
+          _c("span", { staticClass: "ccl-stat__val" }, [
+            _vm._v(_vm._s(_vm.totalUses))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "ccl-stat__key" }, [_vm._v("Total Uses")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "ccl-toolbar" },
+        [
+          _c("el-input", {
+            staticClass: "ccl-search",
+            attrs: {
+              placeholder: "Search by title or code…",
+              size: "small",
+              "prefix-icon": "el-icon-search",
+              clearable: ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "el-select",
+            {
+              staticClass: "ccl-filter",
+              attrs: { size: "small", placeholder: "All Status" },
+              model: {
+                value: _vm.filterStatus,
+                callback: function($$v) {
+                  _vm.filterStatus = $$v
+                },
+                expression: "filterStatus"
+              }
+            },
+            [
+              _c("el-option", { attrs: { label: "All Status", value: "" } }),
+              _vm._v(" "),
+              _c("el-option", { attrs: { label: "Active", value: "active" } }),
+              _vm._v(" "),
+              _c("el-option", {
+                attrs: { label: "Inactive", value: "inactive" }
+              })
+            ],
+            1
           )
         ],
         1
       ),
       _vm._v(" "),
       _c(
-        "el-table",
-        {
-          staticStyle: { width: "100%", "margin-top": "10px" },
-          attrs: { data: _vm.coupons, border: "" }
-        },
-        [
-          _c("el-table-column", {
-            attrs: { prop: "id", label: "ID", width: "60" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { prop: "title", label: "Title" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { prop: "code", label: "Code" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { prop: "amount", label: "Amount" } }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "Actions", width: "120" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _c("el-button", {
-                      attrs: {
-                        type: "primary",
-                        icon: "el-icon-edit",
-                        size: "mini"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.editCoupon(scope.row)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("el-button", {
-                      attrs: {
-                        type: "danger",
-                        icon: "el-icon-delete",
-                        size: "mini"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteCoupon(scope.row)
-                        }
-                      }
-                    })
-                  ]
-                }
-              }
-            ])
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
         "div",
         {
-          staticStyle: {
-            "margin-top": "10px",
-            display: "flex",
-            "justify-content": "flex-end"
-          }
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          staticClass: "ccl-table-wrap"
         },
         [
-          _c("el-pagination", {
-            attrs: {
-              background: "",
-              layout: "total, sizes, prev, pager, next",
-              total: _vm.total,
-              "page-size": _vm.pageSize
+          _c(
+            "el-table",
+            {
+              staticStyle: { width: "100%" },
+              attrs: {
+                data: _vm.pagedCoupons,
+                "show-header": _vm.filteredCoupons.length > 0
+              }
             },
-            on: {
-              "size-change": _vm.handleSizeChange,
-              "current-change": _vm.handleCurrentChange
-            }
-          })
+            [
+              _c("el-table-column", {
+                attrs: { label: "Coupon", "min-width": "200" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c("div", { staticClass: "ccl-coupon-cell" }, [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "ccl-code",
+                              class:
+                                row.coupon_type === "percent"
+                                  ? "ccl-code--purple"
+                                  : "ccl-code--teal"
+                            },
+                            [_vm._v(_vm._s(row.code))]
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "ccl-coupon-title" }, [
+                            _vm._v(_vm._s(row.title))
+                          ])
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Discount", width: "130" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c(
+                          "span",
+                          {
+                            staticClass: "ccl-discount",
+                            class:
+                              row.coupon_type === "percent"
+                                ? "ccl-discount--purple"
+                                : "ccl-discount--teal"
+                          },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(
+                                  row.coupon_type === "percent"
+                                    ? row.amount + "% OFF"
+                                    : "$" +
+                                        parseFloat(row.amount).toFixed(2) +
+                                        " OFF"
+                                ) +
+                                "\n          "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Usage", width: "130" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "ccl-usage" },
+                          [
+                            _c("div", { staticClass: "ccl-usage__label" }, [
+                              _c("span", { staticClass: "ccl-usage__used" }, [
+                                _vm._v(_vm._s(row.used_count))
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "ccl-usage__sep" }, [
+                                _vm._v(" / ")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "ccl-usage__max" }, [
+                                _vm._v(
+                                  _vm._s(row.max_use > 0 ? row.max_use : "∞")
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            row.max_use > 0
+                              ? _c("el-progress", {
+                                  staticStyle: { "margin-top": "4px" },
+                                  attrs: {
+                                    percentage: Math.min(
+                                      100,
+                                      Math.round(
+                                        (row.used_count / row.max_use) * 100
+                                      )
+                                    ),
+                                    "show-text": false,
+                                    "stroke-width": 3,
+                                    color:
+                                      row.used_count >= row.max_use
+                                        ? "#f56c6c"
+                                        : "#409eff"
+                                  }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Expiry", width: "120" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        row.expire_date
+                          ? _c(
+                              "span",
+                              {
+                                staticClass: "ccl-expiry",
+                                class: {
+                                  "ccl-expiry--expired": _vm.isExpired(row)
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(row.expire_date.substring(0, 10)) +
+                                    "\n          "
+                                )
+                              ]
+                            )
+                          : _c("span", { staticClass: "ccl-muted" }, [
+                              _vm._v("No expiry")
+                            ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Status", width: "110" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c(
+                          "span",
+                          {
+                            staticClass: "ccl-status",
+                            class:
+                              row.status === "active"
+                                ? "ccl-status--on"
+                                : "ccl-status--off"
+                          },
+                          [
+                            _c("span", { staticClass: "ccl-dot" }),
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(
+                                  row.status === "active"
+                                    ? "Active"
+                                    : "Inactive"
+                                ) +
+                                "\n          "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { width: "80", align: "right" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c("div", { staticClass: "ccl-actions" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ccl-btn ccl-btn--edit",
+                              attrs: { title: "Edit" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.openEdit(row)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "el-icon-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ccl-btn ccl-btn--del",
+                              attrs: { title: "Delete" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.confirmDelete(row)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "el-icon-delete" })]
+                          )
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          !_vm.loading && _vm.filteredCoupons.length === 0
+            ? _c(
+                "div",
+                { staticClass: "ccl-empty" },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "ccl-empty__title" }, [
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(
+                          _vm.search || _vm.filterStatus
+                            ? "No coupons match your filters"
+                            : "No coupons yet"
+                        ) +
+                        "\n      "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  !_vm.search && !_vm.filterStatus
+                    ? _c("p", { staticClass: "ccl-empty__sub" }, [
+                        _vm._v(
+                          "\n        Create your first discount code to start offering savings\n      "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.search && !_vm.filterStatus
+                    ? _c(
+                        "el-button",
+                        {
+                          staticStyle: { "margin-top": "12px" },
+                          attrs: {
+                            type: "primary",
+                            size: "small",
+                            icon: "el-icon-plus"
+                          },
+                          on: { click: _vm.openCreate }
+                        },
+                        [_vm._v("\n        Create First Coupon\n      ")]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            : _vm._e()
         ],
         1
       ),
       _vm._v(" "),
+      _vm.filteredCoupons.length > _vm.pageSize
+        ? _c(
+            "div",
+            { staticClass: "ccl-pagination" },
+            [
+              _c("el-pagination", {
+                attrs: {
+                  background: "",
+                  layout: "total, prev, pager, next",
+                  total: _vm.filteredCoupons.length,
+                  "page-size": _vm.pageSize,
+                  "current-page": _vm.currentPage
+                },
+                on: {
+                  "update:currentPage": function($event) {
+                    _vm.currentPage = $event
+                  },
+                  "update:current-page": function($event) {
+                    _vm.currentPage = $event
+                  },
+                  "current-change": function($event) {
+                    _vm.currentPage = $event
+                  }
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c("CreateCoupon", {
-        ref: "createCoupon",
-        attrs: { "new-coupon": _vm.currentCoupon, visible: _vm.visible },
+        attrs: { visible: _vm.dialogVisible, "coupon-data": _vm.currentCoupon },
         on: {
           close: function($event) {
-            _vm.visible = false
+            _vm.dialogVisible = false
           },
-          refresh: _vm.fetchCoupons,
           saved: _vm.fetchCoupons
         }
       })
@@ -79304,7 +80350,36 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ccl-header__left" }, [
+      _c("div", { staticClass: "ccl-header__icon" }, [
+        _c("i", { staticClass: "el-icon-s-ticket" })
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("h2", { staticClass: "ccl-header__title" }, [
+          _vm._v("Discount Coupons")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "ccl-header__sub" }, [
+          _vm._v("Manage discount codes for your payment forms")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ccl-empty__icon-wrap" }, [
+      _c("i", { staticClass: "el-icon-s-ticket" })
+    ])
+  }
+]
 render._withStripped = true
 
 

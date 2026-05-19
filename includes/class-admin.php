@@ -266,6 +266,8 @@ class Admin {
 
         <?php } ?>
 
+        <?php do_action( 'contactum_settings_sidebar_sections' ); ?>
+
       </ul>
     </aside>
   </div>
