@@ -253,6 +253,7 @@ import form_payment_method from "../pro/form-template/payment-method.vue";
 import form_rating_field from "../pro/form-template/rating.vue";
 import form_repeat_field from "../pro/form-template/repeat.vue";
 import form_column_field from "../form-templates/column.vue";
+import form_range_slider_field from "../form-templates/range-slider.vue";
 import form_subscription_field from "../pro/form-template/subscription.vue";
 import form_coupon_field from "../pro/form-template/coupon.vue";
 
@@ -312,6 +313,7 @@ export default {
     form_turnstile,
     form_subscription_field,
     form_coupon_field,
+    form_range_slider_field,
     RenameForm,
     EmbedModal,
     ProFeature

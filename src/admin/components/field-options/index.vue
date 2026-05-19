@@ -77,6 +77,7 @@ import field_subscription from '../pro/field-template/subscription.vue'
 import field_plan from '../pro/field-template/plan.vue'
 
 import field_calculation_options from '../field-template/calculation_options.vue'
+import field_range_slider from '../field-template/range-slider.vue'
 
 export default {
   name: "field_options",
@@ -114,7 +115,8 @@ export default {
     field_coupon,
     field_subscription,
     field_plan,
-    field_calculation_options
+    field_calculation_options,
+    field_range_slider
   },
 
   data: function data() {
