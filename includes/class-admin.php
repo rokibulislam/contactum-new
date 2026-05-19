@@ -194,44 +194,56 @@ class Admin {
 <div class="contactum-settings">
 
   <div class="contactum-settings__sidebar-wrap">
-    <aside class="contactum-settings__sidebar contactum_layout_section_sidebar">
+    <aside class="contactum-settings__sidebar">
+
+      <div class="contactum-settings__sidebar-brand">
+        <span class="dashicons dashicons-admin-settings"></span>
+        <span><?php esc_html_e( 'Settings', 'contactum' ); ?></span>
+      </div>
+
       <ul class="contactum-settings__menu">
 
         <!-- Security -->
-        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
-          <a class="contactum-settings__menu-link" href="#">Security</a>
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu contactum-settings__menu-item--active">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-shield-alt"></span>
+            <?php esc_html_e( 'Security', 'contactum' ); ?>
+          </span>
 
           <ul class="contactum-settings__submenu">
             <li class="contactum-settings__menu-item">
               <a
                 data-hash="google_recaptcha"
-                href="<?php echo admin_url('admin.php?page=contactum-settings#google_recaptcha'); ?>"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#google_recaptcha' ) ); ?>"
                 data-component="reCaptcha"
                 data-settings_key="google_recaptcha"
               >
-                Google reCAPTCHA
+                <span class="dashicons dashicons-shield"></span>
+                <?php esc_html_e( 'Google reCAPTCHA', 'contactum' ); ?>
               </a>
             </li>
 
             <li class="contactum-settings__menu-item">
               <a
                 data-hash="hcaptcha"
-                href="<?php echo admin_url('admin.php?page=contactum-settings#hcaptcha'); ?>"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#hcaptcha' ) ); ?>"
                 data-component="hCaptcha"
                 data-settings_key="hcaptcha"
               >
-                hCaptcha
+                <span class="dashicons dashicons-lock"></span>
+                <?php esc_html_e( 'hCaptcha', 'contactum' ); ?>
               </a>
             </li>
 
             <li class="contactum-settings__menu-item">
               <a
                 data-hash="turnstile"
-                href="<?php echo admin_url('admin.php?page=contactum-settings#turnstile'); ?>"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#turnstile' ) ); ?>"
                 data-component="turnstile"
                 data-settings_key="turnstile"
               >
-                Turnstile
+                <span class="dashicons dashicons-cloud"></span>
+                <?php esc_html_e( 'Turnstile', 'contactum' ); ?>
               </a>
             </li>
           </ul>
@@ -239,16 +251,19 @@ class Admin {
 
         <?php
         $integrations = contactum()->integrations->get_integration_js_settings();
-        if ( ! empty( $integrations ) ) { ?>
+        if ( ! empty( $integrations ) ) : ?>
 
           <!-- Integrations -->
           <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
-            <a class="contactum-settings__menu-link" href="#">Configure Integrations</a>
+            <span class="contactum-settings__group-label">
+              <span class="dashicons dashicons-admin-plugins"></span>
+              <?php esc_html_e( 'Integrations', 'contactum' ); ?>
+            </span>
 
             <ul class="contactum-settings__submenu">
-              <?php foreach ( $integrations as $integration ) {
+              <?php foreach ( $integrations as $integration ) :
                 $section = $integration['sections'];
-                $url = admin_url( 'admin.php?page=contactum-settings#' . $section['id'] );
+                $url     = admin_url( 'admin.php?page=contactum-settings#' . $section['id'] );
               ?>
                 <li class="contactum-settings__menu-item">
                   <a
@@ -257,14 +272,15 @@ class Admin {
                     data-component="<?php echo esc_attr( $section['component'] ); ?>"
                     data-settings_key="<?php echo esc_attr( $section['id'] ); ?>"
                   >
+                    <span class="dashicons dashicons-admin-generic"></span>
                     <?php echo esc_html( $section['name'] ); ?>
                   </a>
                 </li>
-              <?php } ?>
+              <?php endforeach; ?>
             </ul>
           </li>
 
-        <?php } ?>
+        <?php endif; ?>
 
         <?php do_action( 'contactum_settings_sidebar_sections' ); ?>
 
@@ -280,6 +296,93 @@ class Admin {
   </div>
 
 </div>
+
+<script>
+(function () {
+  'use strict';
+
+  var COLLAPSED   = 'is-collapsed';
+  var HAS_ACTIVE  = 'has-active-child';
+  var ITEM_SEL    = '.contactum-settings__menu-item--has-submenu';
+  var LABEL_SEL   = '.contactum-settings__group-label';
+  var LINK_SEL    = '.contactum-settings__submenu a[data-component]';
+  var ACTIVE_CLS  = 'active';
+
+  function init() {
+    var sidebar = document.querySelector('.contactum-settings__sidebar');
+    if (!sidebar) return;
+
+    var groups = sidebar.querySelectorAll(ITEM_SEL);
+
+    // ── Wire up click-to-toggle on each group label ──────────────────────
+    groups.forEach(function (group) {
+      var label = group.querySelector(':scope > ' + LABEL_SEL);
+      if (!label) return;
+
+      label.addEventListener('click', function () {
+        var isNowCollapsed = group.classList.toggle(COLLAPSED);
+
+        // If user expands a group that has no active child, do nothing extra.
+        // If user collapses a group with an active child, keep the dot indicator.
+        updateActiveChild(group);
+
+        // Persist collapse state in sessionStorage so refresh keeps it
+        var key = 'ctm_sidebar_' + groupKey(group);
+        sessionStorage.setItem(key, isNowCollapsed ? '1' : '0');
+      });
+
+      // Restore saved state
+      var key = 'ctm_sidebar_' + groupKey(group);
+      var saved = sessionStorage.getItem(key);
+      if (saved === '1') {
+        group.classList.add(COLLAPSED);
+      }
+    });
+
+    // ── Mark groups that contain the current active link ─────────────────
+    markActiveGroups(sidebar);
+
+    // ── Observe future active-class changes (set by settings.js) ─────────
+    var observer = new MutationObserver(function () {
+      markActiveGroups(sidebar);
+    });
+    var submenuLinks = sidebar.querySelectorAll(LINK_SEL);
+    submenuLinks.forEach(function (link) {
+      observer.observe(link, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+
+  function markActiveGroups(sidebar) {
+    var groups = sidebar.querySelectorAll(ITEM_SEL);
+    groups.forEach(function (group) {
+      updateActiveChild(group);
+    });
+  }
+
+  function updateActiveChild(group) {
+    var hasActive = !!group.querySelector(LINK_SEL + '.' + ACTIVE_CLS);
+    group.classList.toggle(HAS_ACTIVE, hasActive);
+
+    // Auto-expand the group that contains the active link
+    if (hasActive && group.classList.contains(COLLAPSED)) {
+      group.classList.remove(COLLAPSED);
+      var key = 'ctm_sidebar_' + groupKey(group);
+      sessionStorage.setItem(key, '0');
+    }
+  }
+
+  function groupKey(group) {
+    var label = group.querySelector(':scope > ' + LABEL_SEL);
+    return label ? label.textContent.trim().replace(/\s+/g, '_').toLowerCase() : Math.random();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 
 
