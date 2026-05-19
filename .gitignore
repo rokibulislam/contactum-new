@@ -1,2 +1,6 @@
 /node_modules
 .DS_Store
+.claude
+mcp-server
+.mcp-json
+CLAUDE.MD
