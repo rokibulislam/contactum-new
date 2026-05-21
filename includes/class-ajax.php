@@ -39,6 +39,8 @@ class Ajax {
         add_action('wp_ajax_contactum_get_entries_details', [ $this, 'contactum_get_entries_details_ajax' ] );
 
         add_action('wp_ajax_contactum_get_entries_report', [ $this, 'contactum_get_entries_details_report_ajax' ]);
+
+        add_action('wp_ajax_contactum_delete_entry', [ $this, 'contactum_delete_entry_ajax' ]);
     }
 
     public function save_contactum_form() {
@@ -441,6 +443,28 @@ class Ajax {
         ];
 
         wp_send_json_success( $data );
+    }
+
+    public function contactum_delete_entry_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $entry_id = isset( $_POST['entry_id'] ) ? absint( $_POST['entry_id'] ) : 0;
+
+        if ( ! $entry_id ) {
+            wp_send_json_error( __( 'Invalid entry ID', 'contactum' ) );
+        }
+
+        $deleted = EntryManager::delete_entry( $entry_id );
+
+        if ( $deleted ) {
+            wp_send_json_success( __( 'Entry deleted successfully', 'contactum' ) );
+        } else {
+            wp_send_json_error( __( 'Could not delete entry', 'contactum' ) );
+        }
     }
 
     public function contactum_get_entries_details_report_ajax() {

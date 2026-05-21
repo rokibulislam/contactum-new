@@ -109,6 +109,8 @@ class FormManager {
             $end_date = date( 'Y-m-d', strtotime( $end_date_raw ) );
         }
 
+        $args = [ 'posts_per_page' => -1 ];
+
         // Build date_query only if at least one exists
         $date_query = array();
 
@@ -120,16 +122,15 @@ class FormManager {
             );
         }
 
-
         if ( ! empty( $date_query ) ) {
             $args['date_query'] = $date_query;
         }
 
-        if (!empty($search)) {
+        if ( ! empty( $search ) ) {
             $args['s'] = $search;
         }
 
-       $forms = $this->getForms( $args );
+        $forms = $this->getForms( $args );
 
        wp_send_json_success( $forms );
     }

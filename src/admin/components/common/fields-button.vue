@@ -75,13 +75,21 @@ export default {
           helper: "clone",
           revert: "invalid",
           cancel: ".button-faded",
-          start(event, ui) {
-          }
+          start() {}
         })
         .disableSelection();
   },
 
   methods: {
+
+    is_pro_feature(field) {
+      return !!this.field_settings[field]?.is_pro;
+    },
+
+    is_failed_to_validate(field) {
+      const validator = this.field_settings[field]?.validator;
+      return !!(validator && validator.is_valid === false);
+    },
 
     handleClick(field) {
       if (this.is_failed_to_validate(field)) {

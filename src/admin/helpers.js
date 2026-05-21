@@ -48,65 +48,35 @@ export const handleSidebarActiveLink = ($link, init = false, firstLoad = false) 
 
 
 
-export const handleSidebarSettingsActiveLink = (
-  $link,
-  init = false,
-  firstLoad = false
-) => {
-  const ACTIVE = 'contactum-settings__menu-item--active';
-  const HAS_SUB = 'contactum-settings__menu-item--has-submenu';
-  const OPEN = 'contactum-settings__menu-item--open';
-  const SUBMENU = '.contactum-settings__submenu';
+export const handleSidebarSettingsActiveLink = ($anchorOrItem) => {
+  // Accept either an <a> or its parent <li>; always work with the <a>
+  const $anchor = $anchorOrItem.is('a')
+    ? $anchorOrItem
+    : $anchorOrItem.find('> a').first();
 
-  // 1. Activate current item, deactivate siblings
-  $link
-    .addClass(ACTIVE)
-    .siblings()
-    .removeClass(`${ACTIVE} ${OPEN}`);
+  if (!$anchor.length) return;
 
-  // 2. Toggle submenu if current item has submenu
-  if ($link.hasClass(HAS_SUB)) {
-    const $submenu = $link.children(SUBMENU);
+  // 1. Deactivate every link, then activate the target
+  jQuery('.contactum-settings__menu a').removeClass('active');
+  $anchor.addClass('active');
 
-    if (firstLoad) {
-      $submenu.show();
-      $link.addClass(OPEN);
+  // 2. Expand the active group; collapse all others
+  const $group = $anchor.closest('.contactum-settings__menu-item--has-submenu');
+
+  jQuery('.contactum-settings__menu-item--has-submenu').each(function () {
+    const $g = jQuery(this);
+    if ($group.length && $g.is($group)) {
+      // Expand this group
+      $g.removeClass('is-collapsed');
+      const $label = $g.find('> .contactum-settings__group-label').first();
+      const key = 'ctm_sidebar_' + $label.text().trim().replace(/\s+/g, '_').toLowerCase();
+      try { sessionStorage.setItem(key, '0'); } catch (_) {}
     } else {
-      $link.toggleClass(OPEN);
-      $submenu.slideToggle();
+      // Collapse all other groups
+      $g.addClass('is-collapsed');
+      const $label = $g.find('> .contactum-settings__group-label').first();
+      const key = 'ctm_sidebar_' + $label.text().trim().replace(/\s+/g, '_').toLowerCase();
+      try { sessionStorage.setItem(key, '1'); } catch (_) {}
     }
-  }
-
-  // 3. Activate first submenu item (if exists)
-  const $firstSubItem = $link.find(`${SUBMENU} > li:first`);
-  if ($firstSubItem.length) {
-    $firstSubItem
-      .addClass(ACTIVE)
-      .siblings()
-      .removeClass(ACTIVE);
-  }
-
-  // 4. Init mode: ensure parent submenu opens
-  if (init) {
-    const $parent = $link.closest(`.${HAS_SUB}`);
-
-    if ($parent.length) {
-      const $parentSubmenu = $parent.children(SUBMENU);
-
-      if (firstLoad) {
-        $parent.addClass(`${ACTIVE} ${OPEN}`);
-        $parentSubmenu.show();
-      } else {
-        $parent.addClass(`${ACTIVE} ${OPEN}`);
-        $parentSubmenu.slideToggle();
-      }
-    }
-  }
-
-  // 5. Close other open submenus
-  $link
-    .siblings(`.${HAS_SUB}`)
-    .removeClass(OPEN)
-    .children(SUBMENU)
-    .slideUp();
+  });
 };

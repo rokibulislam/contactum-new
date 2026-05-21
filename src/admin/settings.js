@@ -224,11 +224,7 @@ const app = new Vue({
       if ($el.length) {
         const $finalEl = this.maybeGetFirstSubLink($el);
         this.setRoute($finalEl);
-        handleSidebarSettingsActiveLink(
-          $finalEl.parent(),
-          true,
-          true
-        );
+        handleSidebarSettingsActiveLink($finalEl);
       }
     }
   },
@@ -252,7 +248,7 @@ const app = new Vue({
         const $target = that.maybeGetFirstSubLink($el);
         that.setRoute($target);
 
-        handleSidebarSettingsActiveLink($target.parent());
+        handleSidebarSettingsActiveLink($target);
       }
     );
   }

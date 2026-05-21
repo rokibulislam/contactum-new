@@ -126,7 +126,7 @@ function contactum_get_all_entries( $args = [] ) {
     //         FROM ' . $wpdb->contactum_entries . ' status = \'' . $r['status'] . '\'' .
     //         ' ORDER BY ' . $r['orderby'] . ' ' . $r['order'];
 
-    $query = 'SELECT e.id, e.form_id, p.post_title, e.user_id, INET_NTOA( e.user_ip ) as ip_address, e.created_at, p.post_title as form_name FROM ' . $wpdb->contactum_entries  . ' e
+    $query = 'SELECT e.id, e.form_id, p.post_title, e.user_id, e.status, INET_NTOA( e.user_ip ) as ip_address, e.created_at, p.post_title as form_name FROM ' . $wpdb->contactum_entries  . ' e
     INNER JOIN ' . $wpdb->posts . ' p ON e.form_id = p.ID';
     
     $where = []; // store conditions

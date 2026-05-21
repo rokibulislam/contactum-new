@@ -1,49 +1,61 @@
 <template>
   <div class="cpm-page">
 
-    <!-- Header ────────────────────────────────────────────────────────────── -->
+    <!-- Header ─────────────────────────────────────────────────────────── -->
     <div class="cpm-header">
-      <div class="cpm-header__icon">
-        <span class="dashicons dashicons-money-alt"></span>
-      </div>
-      <div class="cpm-header__text">
-        <h2 class="cpm-header__title">Payment Transactions</h2>
-        <p class="cpm-header__sub">Track and manage all customer payments</p>
+      <div class="cpm-header__left">
+        <div class="cpm-header__icon">
+          <span class="dashicons dashicons-money-alt"></span>
+        </div>
+        <div>
+          <h1 class="cpm-header__title">Payment Transactions</h1>
+          <p class="cpm-header__sub">Track and manage all customer payments</p>
+        </div>
       </div>
     </div>
 
-    <!-- Stats ─────────────────────────────────────────────────────────────── -->
+    <!-- Stats ──────────────────────────────────────────────────────────── -->
     <div class="cpm-stats">
       <div class="cpm-stat cpm-stat--blue">
-        <span class="dashicons dashicons-chart-line"></span>
+        <div class="cpm-stat__icon-wrap">
+          <span class="dashicons dashicons-chart-line"></span>
+        </div>
         <div class="cpm-stat__body">
           <div class="cpm-stat__val">${{ formatAmount(stats.total_revenue) }}</div>
           <div class="cpm-stat__lbl">Total Revenue</div>
         </div>
       </div>
       <div class="cpm-stat">
-        <span class="dashicons dashicons-list-view"></span>
+        <div class="cpm-stat__icon-wrap">
+          <span class="dashicons dashicons-list-view"></span>
+        </div>
         <div class="cpm-stat__body">
           <div class="cpm-stat__val">{{ stats.total }}</div>
           <div class="cpm-stat__lbl">All Payments</div>
         </div>
       </div>
       <div class="cpm-stat cpm-stat--green">
-        <span class="dashicons dashicons-yes-alt"></span>
+        <div class="cpm-stat__icon-wrap">
+          <span class="dashicons dashicons-yes-alt"></span>
+        </div>
         <div class="cpm-stat__body">
           <div class="cpm-stat__val">{{ stats.completed }}</div>
           <div class="cpm-stat__lbl">Completed</div>
         </div>
       </div>
       <div class="cpm-stat cpm-stat--amber">
-        <span class="dashicons dashicons-clock"></span>
+        <div class="cpm-stat__icon-wrap">
+          <span class="dashicons dashicons-clock"></span>
+        </div>
         <div class="cpm-stat__body">
           <div class="cpm-stat__val">{{ stats.pending }}</div>
           <div class="cpm-stat__lbl">Pending</div>
         </div>
       </div>
       <div class="cpm-stat cpm-stat--red">
-        <span class="dashicons dashicons-dismiss"></span>
+        <div class="cpm-stat__icon-wrap">
+          <span class="dashicons dashicons-dismiss"></span>
+        </div>
         <div class="cpm-stat__body">
           <div class="cpm-stat__val">{{ stats.failed }}</div>
           <div class="cpm-stat__lbl">Failed</div>
@@ -51,149 +63,177 @@
       </div>
     </div>
 
-    <!-- Toolbar ───────────────────────────────────────────────────────────── -->
-    <div class="cpm-toolbar">
-      <el-select
-        v-model="filterForm"
-        clearable
-        placeholder="All Forms"
-        size="small"
-        :loading="formsLoading"
-        @change="onFilterChange"
-        class="cpm-toolbar__sel"
-      >
-        <el-option
-          v-for="f in availableForms"
-          :key="f.id"
-          :label="f.name"
-          :value="f.id"
+    <!-- Table card ─────────────────────────────────────────────────────── -->
+    <div class="cpm-card">
+
+      <!-- Toolbar -->
+      <div class="cpm-toolbar">
+        <div class="cpm-toolbar__filters">
+          <el-select
+            v-model="filterForm"
+            clearable
+            placeholder="All Forms"
+            size="small"
+            :loading="formsLoading"
+            @change="onFilterChange"
+            class="cpm-toolbar__sel"
+          >
+            <el-option
+              v-for="f in availableForms"
+              :key="f.id"
+              :label="f.name"
+              :value="f.id"
+            />
+          </el-select>
+
+          <el-select
+            v-model="filterStatus"
+            clearable
+            placeholder="All Statuses"
+            size="small"
+            @change="onFilterChange"
+            class="cpm-toolbar__sel"
+          >
+            <el-option label="Completed" value="completed" />
+            <el-option label="Pending"   value="pending" />
+            <el-option label="Failed"    value="failed" />
+            <el-option label="Refunded"  value="refunded" />
+          </el-select>
+
+          <el-select
+            v-model="filterGateway"
+            clearable
+            placeholder="All Gateways"
+            size="small"
+            @change="onFilterChange"
+            class="cpm-toolbar__sel"
+          >
+            <el-option label="Stripe"   value="stripe" />
+            <el-option label="PayPal"   value="paypal" />
+            <el-option label="Razorpay" value="razorpay" />
+            <el-option label="Mollie"   value="mollie" />
+            <el-option label="Square"   value="square" />
+          </el-select>
+        </div>
+
+        <el-input
+          v-model="search"
+          placeholder="Search transactions…"
+          prefix-icon="el-icon-search"
+          clearable
+          size="small"
+          class="cpm-toolbar__search"
+          @keyup.enter.native="onFilterChange"
+          @clear="onFilterChange"
         />
-      </el-select>
-
-      <el-select
-        v-model="filterStatus"
-        clearable
-        placeholder="All Statuses"
-        size="small"
-        @change="onFilterChange"
-        class="cpm-toolbar__sel"
-      >
-        <el-option label="Completed" value="completed" />
-        <el-option label="Pending"   value="pending" />
-        <el-option label="Failed"    value="failed" />
-        <el-option label="Refunded"  value="refunded" />
-      </el-select>
-
-      <el-select
-        v-model="filterGateway"
-        clearable
-        placeholder="All Gateways"
-        size="small"
-        @change="onFilterChange"
-        class="cpm-toolbar__sel"
-      >
-        <el-option label="Stripe"   value="stripe" />
-        <el-option label="PayPal"   value="paypal" />
-        <el-option label="Razorpay" value="razorpay" />
-        <el-option label="Mollie"   value="mollie" />
-        <el-option label="Square"   value="square" />
-      </el-select>
-    </div>
-
-    <!-- Table ─────────────────────────────────────────────────────────────── -->
-    <div class="cpm-table-wrap" v-loading="loading">
-      <el-table :data="payments" class="cpm-table" :stripe="true">
-
-        <el-table-column label="Transaction" width="160">
-          <template slot-scope="{ row }">
-            <span class="cpm-txn">
-              {{ row.transaction_id ? ('#' + row.transaction_id) : ('ID-' + row.id) }}
-            </span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Form" min-width="160">
-          <template slot-scope="{ row }">
-            <span class="cpm-form-name">{{ row.form_title || '—' }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Customer" min-width="130">
-          <template slot-scope="{ row }">
-            {{ row.customer_name || 'Guest' }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Gateway" width="110">
-          <template slot-scope="{ row }">
-            <span
-              v-if="row.gateway"
-              class="cpm-gw"
-              :class="'cpm-gw--' + row.gateway.toLowerCase()"
-            >{{ capitalize(row.gateway) }}</span>
-            <span v-else class="cpm-gw cpm-gw--other">—</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Amount" width="110">
-          <template slot-scope="{ row }">
-            <strong class="cpm-amount">${{ formatAmount(row.total) }}</strong>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Status" width="120">
-          <template slot-scope="{ row }">
-            <span class="cpm-status" :class="'cpm-status--' + (row.status || 'unknown')">
-              {{ capitalize(row.status || 'unknown') }}
-            </span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Date" width="150">
-          <template slot-scope="{ row }">
-            <span class="cpm-date">{{ formatDate(row.created_at) }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column width="60" align="center">
-          <template slot-scope="{ row }">
-            <el-tooltip content="Delete" placement="top">
-              <button class="cpm-del" @click="confirmDelete(row)">
-                <span class="dashicons dashicons-trash"></span>
-              </button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-
-      </el-table>
-
-      <!-- Empty state -->
-      <div class="cpm-empty" v-if="!loading && payments.length === 0">
-        <span class="dashicons dashicons-money-alt cpm-empty__icon"></span>
-        <p class="cpm-empty__title">No payments found</p>
-        <p class="cpm-empty__sub">
-          {{ filterForm || filterStatus || filterGateway
-            ? 'No payments match the current filters.'
-            : 'Payment records will appear here once customers complete transactions.' }}
-        </p>
-        <button
-          v-if="filterForm || filterStatus || filterGateway"
-          class="cpm-btn-clear"
-          @click="clearFilters"
-        >Clear Filters</button>
       </div>
-    </div>
 
-    <!-- Pagination ────────────────────────────────────────────────────────── -->
-    <div class="cpm-pagination" v-if="totalPages > 1">
-      <el-pagination
-        background
-        layout="prev, pager, next, ->, total"
-        :total="total"
-        :page-size="perPage"
-        :current-page.sync="page"
-        @current-change="fetchPayments"
-      />
+      <!-- Table -->
+      <div v-loading="loading">
+        <el-table :data="payments" class="cpm-table" stripe>
+
+          <el-table-column label="Transaction" width="160">
+            <template slot-scope="{ row }">
+              <span class="cpm-txn">
+                {{ row.transaction_id ? ('#' + row.transaction_id) : ('ID-' + row.id) }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Form" min-width="160" show-overflow-tooltip>
+            <template slot-scope="{ row }">
+              <span class="cpm-form-name">{{ row.form_title || '—' }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Customer" min-width="130">
+            <template slot-scope="{ row }">
+              <span class="cpm-customer">
+                <i class="el-icon-user"></i>
+                {{ row.customer_name || 'Guest' }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Gateway" width="110" align="center">
+            <template slot-scope="{ row }">
+              <span
+                v-if="row.gateway"
+                class="cpm-gw"
+                :class="'cpm-gw--' + row.gateway.toLowerCase()"
+              >{{ capitalize(row.gateway) }}</span>
+              <span v-else class="cpm-gw">—</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Amount" width="110">
+            <template slot-scope="{ row }">
+              <strong class="cpm-amount">${{ formatAmount(row.total) }}</strong>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Status" width="120" align="center">
+            <template slot-scope="{ row }">
+              <span class="cpm-status" :class="'cpm-status--' + (row.status || 'unknown')">
+                {{ capitalize(row.status || 'unknown') }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Date" width="150">
+            <template slot-scope="{ row }">
+              <span class="cpm-date">
+                <i class="el-icon-time"></i>
+                {{ formatDate(row.created_at) }}
+              </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column width="52" align="center">
+            <template slot-scope="{ row }">
+              <el-tooltip content="Delete" placement="top">
+                <button class="cpm-del" @click="confirmDelete(row)">
+                  <span class="dashicons dashicons-trash"></span>
+                </button>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+
+        </el-table>
+
+        <!-- Empty state -->
+        <div class="cpm-empty" v-if="!loading && payments.length === 0">
+          <span class="dashicons dashicons-money-alt cpm-empty__icon"></span>
+          <p class="cpm-empty__title">No payments found</p>
+          <p class="cpm-empty__sub">
+            {{ (filterForm || filterStatus || filterGateway || search)
+              ? 'No payments match the current filters.'
+              : 'Payment records will appear here once customers complete transactions.' }}
+          </p>
+          <el-button
+            v-if="filterForm || filterStatus || filterGateway || search"
+            size="small"
+            @click="clearFilters"
+          >
+            Clear Filters
+          </el-button>
+        </div>
+      </div>
+
+      <!-- Footer / Pagination -->
+      <div class="cpm-footer" v-if="total > 0">
+        <span class="cpm-footer__count">{{ total }} payment{{ total !== 1 ? 's' : '' }}</span>
+        <el-pagination
+          v-if="totalPages > 1"
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="perPage"
+          :current-page.sync="page"
+          @current-change="fetchPayments"
+        />
+      </div>
+
     </div>
 
   </div>
@@ -224,6 +264,7 @@ export default {
       filterForm:     '',
       filterStatus:   '',
       filterGateway:  '',
+      search:         '',
       page:           1,
       perPage:        20,
       total:          0,
@@ -270,6 +311,7 @@ export default {
         form_id:  this.filterForm,
         status:   this.filterStatus,
         gateway:  this.filterGateway,
+        search:   this.search,
       }, (res) => {
         this.loading = false;
         if (res.success) {
@@ -289,6 +331,7 @@ export default {
       this.filterForm    = '';
       this.filterStatus  = '';
       this.filterGateway = '';
+      this.search        = '';
       this.page          = 1;
       this.fetchPayments();
     },
@@ -342,24 +385,33 @@ export default {
 </script>
 
 <style scoped>
-/* ── Page ────────────────────────────────────────────── */
+
+/* ── Page ─────────────────────────────────────────────── */
 .cpm-page {
-  padding: 24px 28px;
-  max-width: 1200px;
+  padding: 24px;
+  background: #f8f9fa;
+  min-height: 100vh;
 }
 
-/* ── Header ──────────────────────────────────────────── */
+/* ── Header ───────────────────────────────────────────── */
 .cpm-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.cpm-header__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 .cpm-header__icon {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -373,10 +425,10 @@ export default {
 }
 .cpm-header__title {
   margin: 0 0 2px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1e1f21;
+  line-height: 1.3;
 }
 .cpm-header__sub {
   margin: 0;
@@ -384,7 +436,7 @@ export default {
   color: #6b7280;
 }
 
-/* ── Stats ───────────────────────────────────────────── */
+/* ── Stats ────────────────────────────────────────────── */
 .cpm-stats {
   display: flex;
   gap: 12px;
@@ -394,26 +446,36 @@ export default {
 .cpm-stat {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-left: 3px solid #e5e7eb;
   border-radius: 10px;
-  padding: 14px 18px;
+  box-shadow: 0 1px 4px rgba(30, 31, 33, .06);
+  padding: 16px 18px;
   flex: 1;
-  min-width: 130px;
+  min-width: 140px;
+}
+.cpm-stat__icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .cpm-stat .dashicons {
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
   color: #9ca3af;
-  flex-shrink: 0;
 }
 .cpm-stat__val {
   font-size: 20px;
-  font-weight: 700;
-  color: #111827;
+  font-weight: 600;
+  color: #1e1f21;
   line-height: 1;
 }
 .cpm-stat__lbl {
@@ -421,34 +483,70 @@ export default {
   color: #6b7280;
   margin-top: 3px;
 }
-.cpm-stat--blue  { border-left-color: #3b82f6; }
-.cpm-stat--blue  .dashicons { color: #3b82f6; }
-.cpm-stat--green { border-left-color: #22c55e; }
-.cpm-stat--green .dashicons { color: #22c55e; }
-.cpm-stat--amber { border-left-color: #f59e0b; }
-.cpm-stat--amber .dashicons { color: #f59e0b; }
-.cpm-stat--red   { border-left-color: #ef4444; }
-.cpm-stat--red   .dashicons { color: #ef4444; }
 
-/* ── Toolbar ─────────────────────────────────────────── */
-.cpm-toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-.cpm-toolbar__sel { width: 180px; }
+/* stat variants */
+.cpm-stat--blue  { border-left-color: #409eff; }
+.cpm-stat--blue  .cpm-stat__icon-wrap { background: #ecf5ff; }
+.cpm-stat--blue  .dashicons { color: #409eff; }
 
-/* ── Table wrap ──────────────────────────────────────── */
-.cpm-table-wrap {
+.cpm-stat--green { border-left-color: #059669; }
+.cpm-stat--green .cpm-stat__icon-wrap { background: #ecfdf5; }
+.cpm-stat--green .dashicons { color: #059669; }
+
+.cpm-stat--amber { border-left-color: #d97706; }
+.cpm-stat--amber .cpm-stat__icon-wrap { background: #fffbeb; }
+.cpm-stat--amber .dashicons { color: #d97706; }
+
+.cpm-stat--red   { border-left-color: #dc2626; }
+.cpm-stat--red   .cpm-stat__icon-wrap { background: #fef2f2; }
+.cpm-stat--red   .dashicons { color: #dc2626; }
+
+/* ── Table card ───────────────────────────────────────── */
+.cpm-card {
   background: #fff;
-  border: 1px solid #e5e7eb;
   border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);
   overflow: hidden;
 }
+
+/* Toolbar */
+.cpm-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+.cpm-toolbar__filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.cpm-toolbar__sel { width: 160px; }
+.cpm-toolbar__search {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+/* Table */
 .cpm-table { width: 100%; }
 
-/* ── Cells ───────────────────────────────────────────── */
+/* Footer */
+.cpm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid #f0f0f0;
+}
+.cpm-footer__count {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ── Cells ────────────────────────────────────────────── */
 .cpm-txn {
   font-size: 12px;
   font-family: 'SFMono-Regular', Consolas, monospace;
@@ -461,10 +559,31 @@ export default {
   font-weight: 500;
   color: #374151;
 }
+.cpm-customer {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #374151;
+}
+.cpm-customer .el-icon-user {
+  color: #9ca3af;
+  font-size: 13px;
+}
 .cpm-amount {
   font-size: 14px;
-  color: #111827;
+  font-weight: 600;
+  color: #1e1f21;
 }
+.cpm-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+.cpm-date .el-icon-time { color: #9ca3af; }
 
 /* Gateway badges */
 .cpm-gw {
@@ -493,6 +612,7 @@ export default {
   padding: 3px 9px;
   border-radius: 20px;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 .cpm-status::before {
   content: '';
@@ -500,17 +620,13 @@ export default {
   height: 6px;
   border-radius: 50%;
   background: currentColor;
+  flex-shrink: 0;
 }
-.cpm-status--completed { background: #dcfce7; color: #16a34a; }
+.cpm-status--completed { background: #ecfdf5; color: #059669; }
 .cpm-status--pending   { background: #fef3c7; color: #d97706; }
-.cpm-status--failed    { background: #fee2e2; color: #dc2626; }
-.cpm-status--refunded  { background: #e0e7ff; color: #4338ca; }
+.cpm-status--failed    { background: #fef2f2; color: #dc2626; }
+.cpm-status--refunded  { background: #eff6ff; color: #2563eb; }
 .cpm-status--unknown   { background: #f3f4f6; color: #6b7280; }
-
-.cpm-date {
-  font-size: 12.5px;
-  color: #6b7280;
-}
 
 /* Delete button */
 .cpm-del {
@@ -522,10 +638,10 @@ export default {
   transition: color .15s;
   line-height: 1;
 }
-.cpm-del:hover { color: #ef4444; }
+.cpm-del:hover { color: #dc2626; }
 .cpm-del .dashicons { font-size: 16px; width: 16px; height: 16px; }
 
-/* ── Empty state ─────────────────────────────────────── */
+/* ── Empty state ──────────────────────────────────────── */
 .cpm-empty {
   text-align: center;
   padding: 56px 24px;
@@ -536,6 +652,9 @@ export default {
   height: 48px !important;
   color: #d1d5db;
   margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .cpm-empty__title {
   font-size: 16px;
@@ -547,26 +666,8 @@ export default {
   font-size: 13px;
   color: #9ca3af;
   margin: 0 0 16px;
-}
-.cpm-btn-clear {
-  background: none;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 7px 16px;
-  font-size: 13px;
-  color: #374151;
-  cursor: pointer;
-  transition: border-color .15s, color .15s;
-}
-.cpm-btn-clear:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
-}
-
-/* ── Pagination ──────────────────────────────────────── */
-.cpm-pagination {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

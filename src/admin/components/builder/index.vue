@@ -201,8 +201,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import  ProFeature from '../dialog/ProFeature.vue'
+import ProFeature from '../dialog/ProFeature.vue'
 import { v4 as uuidv4 } from "uuid";
 import draggable from "vuedraggable";
 import form_notifications from "../form-notifications/index.vue";
@@ -379,14 +378,13 @@ export default {
     },
     // makeActive: function (tab, event) {
     makeActive: async function (tab) {
-      var self = this;
       this.activeTab = tab;
       if (tab === 'integrations' && (!this.integrations || Object.keys(this.integrations).length === 0)) {
         jQuery.post(window.contactum.ajaxurl, {
           action: 'contactum_get_integrations',
           post_id: this.id,
           _ajax_nonce: window.contactum.nonce
-        }, (response, textStatus, xhr) => {
+        }, (response) => {
           if (response.success) {
             this.$store.dispatch("set_form_integrations", response.data);
           }
@@ -493,34 +491,21 @@ export default {
 
     save_form_builder() {
       this.loading = true;
-      var self = this;
 
-      /*
       const payload = {
         action: "save_contactum_form",
-        form_data: new FormData(document.getElementById("contactum-form-builder")),
+        form_data: jQuery("#contactum-form-builder").serialize(),
         form_fields: JSON.stringify(this.form_fields),
         notifications: JSON.stringify(this.notifications),
         settings: JSON.stringify(this.settings),
         integrations: JSON.stringify(this.integrations),
         contactum_form_builder_nonce: contactum.nonce,
       };
-      */
-
-      const payload = {
-          action: "save_contactum_form",
-        form_data: jQuery("#contactum-form-builder").serialize(),
-          form_fields: JSON.stringify(this.form_fields),
-          notifications: JSON.stringify(this.notifications),
-          settings: JSON.stringify(this.settings),
-          integrations: JSON.stringify(this.integrations),
-          contactum_form_builder_nonce: contactum.nonce,
-      };
 
       jQuery.post(
         contactum.ajaxurl,
         payload,
-        (response, textStatus, xhr) => {
+        (response) => {
             this.loading = false;
 
           if (response.data.form_fields) {
@@ -597,12 +582,9 @@ export default {
         items: ".field-items",
         handle: ".control-button .move",
         scroll: true,
-        activate: function (event, ui) {
-
-        },
-        over: function () {
-        },
-        update: function (e, ui) {
+        activate: function() {},
+        over: function() {},
+        update: function (_, ui) {
           var item = ui.item[0],
               data = item.dataset,
               source = data.source,
@@ -641,11 +623,9 @@ export default {
       post_id: postId,
       _ajax_nonce: nonce
     },
-    (response, textStatus, xhr) => {
+    (response) => {
       if (response.success) {
         this.$store.dispatch("setContactumData", response.data);
-      } else {
-
       }
     });
 
@@ -869,8 +849,8 @@ form#contactum-form-builder {
         }
 
         li:hover > .control-button {
-              display: block;
-        }  
+              display: flex;
+        }
 
         li ul {
             margin-top: 5px;

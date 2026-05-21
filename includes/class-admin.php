@@ -322,8 +322,17 @@ class Admin {
       label.addEventListener('click', function () {
         var isNowCollapsed = group.classList.toggle(COLLAPSED);
 
-        // If user expands a group that has no active child, do nothing extra.
-        // If user collapses a group with an active child, keep the dot indicator.
+        // Collapse all other groups when this one is expanded
+        if (!isNowCollapsed) {
+          groups.forEach(function (other) {
+            if (other !== group) {
+              other.classList.add(COLLAPSED);
+              var otherKey = 'ctm_sidebar_' + groupKey(other);
+              sessionStorage.setItem(otherKey, '1');
+            }
+          });
+        }
+
         updateActiveChild(group);
 
         // Persist collapse state in sessionStorage so refresh keeps it

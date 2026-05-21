@@ -206,8 +206,9 @@ export default {
 
 /* ── Page ────────────────────────────────────────────── */
 .int-page {
-  padding: 24px 28px;
-  max-width: 1200px;
+  padding: 24px;
+  background: #f8f9fa;
+  min-height: 100vh;
 }
 
 /* ── Header ──────────────────────────────────────────── */
@@ -228,7 +229,7 @@ export default {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,10 +244,10 @@ export default {
 }
 .int-header__title {
   margin: 0 0 2px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1e1f21;
+  line-height: 1.3;
 }
 .int-header__sub {
   margin: 0;
@@ -271,8 +272,8 @@ export default {
   .dashicons { font-size: 13px; width: 13px; height: 13px; }
 
   &--green {
-    background: #dcfce7;
-    color: #16a34a;
+    background: #ecfdf5;
+    color: #059669;
   }
 }
 
@@ -307,16 +308,16 @@ export default {
   .dashicons { font-size: 14px; width: 14px; height: 14px; }
 
   &--primary {
-    background: #4f46e5;
+    background: #409eff;
     color: #fff;
-    border-color: #4f46e5;
-    &:hover { background: #4338ca; border-color: #4338ca; }
+    border-color: #409eff;
+    &:hover { background: #1a7efb; border-color: #1a7efb; }
   }
   &--ghost {
     background: #fff;
     color: #374151;
     border-color: #d1d5db;
-    &:hover { border-color: #9ca3af; color: #111827; }
+    &:hover { border-color: #9ca3af; color: #1e1f21; }
   }
 }
 
@@ -349,8 +350,8 @@ export default {
   line-height: 1;
 
   &:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+    border-color: #409eff;
+    box-shadow: 0 0 0 3px rgba(64, 158, 255, .12);
   }
   &::placeholder { color: #9ca3af; }
 }
@@ -385,13 +386,13 @@ export default {
   transition: box-shadow .18s, border-top-color .18s, transform .18s;
 
   &:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    box-shadow: 0 4px 16px rgba(30, 31, 33, .1);
     transform: translateY(-2px);
   }
 
   &--active {
-    border-top-color: #6366f1;
-    box-shadow: 0 2px 10px rgba(99, 102, 241, .1);
+    border-top-color: #409eff;
+    box-shadow: 0 2px 10px rgba(64, 158, 255, .12);
   }
 }
 
@@ -423,7 +424,7 @@ export default {
   margin: 0 0 5px;
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: #1e1f21;
   line-height: 1.3;
 }
 .int-card__desc {
@@ -443,7 +444,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 12px 18px;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid #f0f0f0;
   gap: 10px;
 }
 .int-card__footer-left {
@@ -457,7 +458,7 @@ export default {
   font-size: 12px;
   font-weight: 600;
 
-  &--on  { color: #16a34a; }
+  &--on  { color: #059669; }
   &--off { color: #9ca3af; }
 }
 
@@ -468,20 +469,20 @@ export default {
   gap: 4px;
   font-size: 12px;
   font-weight: 500;
-  color: #6366f1;
+  color: #409eff;
   text-decoration: none;
   padding: 4px 10px;
-  border: 1px solid #e0e7ff;
+  border: 1px solid #c6e2ff;
   border-radius: 6px;
-  background: #f5f3ff;
+  background: #ecf5ff;
   transition: background .12s, border-color .12s;
 
   .dashicons { font-size: 13px; width: 13px; height: 13px; }
 
   &:hover {
-    background: #ede9fe;
-    border-color: #c4b5fd;
-    color: #4f46e5;
+    background: #d9ecff;
+    border-color: #a0cfff;
+    color: #1a7efb;
   }
 }
 
@@ -510,8 +511,8 @@ export default {
   transition: background .12s, border-color .12s, color .12s;
 
   &:hover {
-    background: #4f46e5;
-    border-color: #4f46e5;
+    background: #409eff;
+    border-color: #409eff;
     color: #fff;
   }
 }

@@ -22,8 +22,8 @@
           </transition>
         </div>
         <div name="slide-fade" class="panel-field-group panel-header">
-          <h2  @click="toggleAdvanced" class="group-header"> Advance Options
-            <i :class="[show_basic_settings ? 'el-icon-arrow-up' : 'el-icon-arrow-down' ]"> </i>
+          <h2  @click="toggleAdvanced" class="group-header"> Advanced Options
+            <i :class="[show_advanced_settings ? 'el-icon-arrow-up' : 'el-icon-arrow-down', 'toggle-icon']"> </i>
           </h2>
           <transition name="slide-fade">
             <div v-if="show_advanced_settings" class="group-content">
@@ -188,7 +188,7 @@ export default {
       this.show_advanced_settings = !this.show_advanced_settings;
       if (this.show_advanced_settings) this.show_basic_settings = false;
     },
-    close: function(e) {
+    close: function() {
       this.$store.dispatch("close_field_options", this.field);
     }
   }
