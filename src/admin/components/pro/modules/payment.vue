@@ -231,6 +231,59 @@
         </div>
       </div>
 
+      <!-- ── Mollie ────────────────────────────────────────────────────────── -->
+      <div v-show="activeTab === 'mollie'" class="pms-section">
+        <div class="pms-card">
+          <div class="pms-card__head">
+            <div class="pms-card__head-left">
+              <span class="pms-gw-badge pms-gw-badge--mollie">Mollie</span>
+              <span class="pms-status" :class="settings.mollie.enabled ? 'pms-status--on' : 'pms-status--off'">
+                {{ settings.mollie.enabled ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <el-switch v-model="settings.mollie.enabled" />
+          </div>
+          <div class="pms-card__body">
+            <div class="pms-field">
+              <label class="pms-label">Mode</label>
+              <div class="pms-mode-toggle">
+                <button
+                  class="pms-mode-btn"
+                  :class="{ 'pms-mode-btn--active': settings.mollie.test_mode }"
+                  @click="settings.mollie.test_mode = true"
+                >Test</button>
+                <button
+                  class="pms-mode-btn"
+                  :class="{ 'pms-mode-btn--active': !settings.mollie.test_mode }"
+                  @click="settings.mollie.test_mode = false"
+                >Live</button>
+              </div>
+            </div>
+
+            <template v-if="settings.mollie.test_mode">
+              <div class="pms-field">
+                <label class="pms-label">Test API Key</label>
+                <el-input v-model="settings.mollie.test_api_key" type="password" show-password placeholder="test_..." />
+                <p class="pms-hint">Found in your Mollie dashboard under Developers → API keys.</p>
+              </div>
+            </template>
+            <template v-else>
+              <div class="pms-field">
+                <label class="pms-label">Live API Key</label>
+                <el-input v-model="settings.mollie.live_api_key" type="password" show-password placeholder="live_..." />
+                <p class="pms-hint">Found in your Mollie dashboard under Developers → API keys.</p>
+              </div>
+            </template>
+
+            <div class="pms-field">
+              <label class="pms-label">Webhook URL</label>
+              <code class="pms-code">{{ ajaxUrl }}?action=contactum_mollie_webhook</code>
+              <p class="pms-hint">Mollie calls this URL automatically — no manual configuration needed in your Mollie dashboard.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </template>
 
     <!-- Save button ─────────────────────────────────────────────────────────── -->
@@ -257,6 +310,7 @@ export default {
         { key: 'stripe',   label: 'Stripe',   icon: 'dashicons-money-alt' },
         { key: 'paypal',   label: 'PayPal',   icon: 'dashicons-cart' },
         { key: 'razorpay', label: 'Razorpay', icon: 'dashicons-controls-repeat' },
+        { key: 'mollie',   label: 'Mollie',   icon: 'dashicons-awards' },
       ],
       currencies: [
         { code: 'USD', name: 'US Dollar' },
@@ -300,6 +354,12 @@ export default {
           test_key_secret:  '',
           live_key_id:      '',
           live_key_secret:  '',
+        },
+        mollie: {
+          enabled:      false,
+          test_mode:    true,
+          test_api_key: '',
+          live_api_key: '',
         },
       },
     };
@@ -373,8 +433,8 @@ export default {
 .pms-header__icon {
   width: 44px;
   height: 44px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -389,15 +449,15 @@ export default {
   margin: 0 0 2px;
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: #303133;
 }
-.pms-header__sub { margin: 0; font-size: 13px; color: #6b7280; }
+.pms-header__sub { margin: 0; font-size: 13px; color: #909399; }
 
 /* ── Tabs ────────────────────────────────────────────── */
 .pms-tabs {
   display: flex;
   gap: 4px;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid #dcdfe6;
   margin-bottom: 20px;
   padding-bottom: 0;
 }
@@ -408,7 +468,7 @@ export default {
   padding: 8px 16px;
   font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
+  color: #909399;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
@@ -418,13 +478,13 @@ export default {
   position: relative;
 }
 .pms-tab .dashicons { font-size: 15px; width: 15px; height: 15px; }
-.pms-tab:hover { color: #374151; }
-.pms-tab--active { color: #3b82f6; border-bottom-color: #3b82f6; }
+.pms-tab:hover { color: #606266; }
+.pms-tab--active { color: #409eff; border-bottom-color: #409eff; }
 .pms-tab__dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #22c55e;
+  background: #67c23a;
   position: absolute;
   top: 6px;
   right: 6px;
@@ -435,8 +495,8 @@ export default {
 /* ── Card ────────────────────────────────────────────── */
 .pms-card {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 16px;
 }
@@ -445,8 +505,8 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 14px 20px;
-  border-bottom: 1px solid #f3f4f6;
-  background: #fafafa;
+  border-bottom: 1px solid #ebeef5;
+  background: #f5f7fa;
 }
 .pms-card__head-left {
   display: flex;
@@ -457,7 +517,7 @@ export default {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: #303133;
 }
 .pms-card__body { padding: 20px; }
 
@@ -469,17 +529,18 @@ export default {
   padding: 3px 10px;
   border-radius: 4px;
 }
-.pms-gw-badge--stripe   { background: #ede9fe; color: #7c3aed; }
-.pms-gw-badge--paypal   { background: #fef9c3; color: #854d0e; }
-.pms-gw-badge--razorpay { background: #dbeafe; color: #1d4ed8; }
+.pms-gw-badge--stripe   { background: #f0eeff; color: #6e4bcc; }
+.pms-gw-badge--paypal   { background: #fdf6ec; color: #e6a23c; }
+.pms-gw-badge--razorpay { background: #ecf5ff; color: #409eff; }
+.pms-gw-badge--mollie   { background: #f0f9eb; color: #67c23a; }
 
 /* Status label */
 .pms-status {
   font-size: 12px;
   font-weight: 600;
 }
-.pms-status--on  { color: #16a34a; }
-.pms-status--off { color: #9ca3af; }
+.pms-status--on  { color: #67c23a; }
+.pms-status--off { color: #909399; }
 
 /* ── Form fields ─────────────────────────────────────── */
 .pms-field { margin-bottom: 18px; }
@@ -488,21 +549,21 @@ export default {
   display: block;
   font-size: 13px;
   font-weight: 500;
-  color: #374151;
+  color: #606266;
   margin-bottom: 6px;
 }
 .pms-hint {
   margin: 6px 0 0;
   font-size: 12px;
-  color: #9ca3af;
+  color: #909399;
   line-height: 1.4;
 }
 .pms-code {
   display: inline-block;
   font-size: 11px;
   font-family: 'SFMono-Regular', Consolas, monospace;
-  background: #f3f4f6;
-  color: #374151;
+  background: #f5f7fa;
+  color: #606266;
   padding: 2px 6px;
   border-radius: 3px;
   word-break: break-all;
@@ -511,7 +572,7 @@ export default {
 /* ── Mode toggle ─────────────────────────────────────── */
 .pms-mode-toggle {
   display: inline-flex;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #dcdfe6;
   border-radius: 7px;
   overflow: hidden;
 }
@@ -521,13 +582,13 @@ export default {
   font-weight: 500;
   background: #fff;
   border: none;
-  color: #6b7280;
+  color: #606266;
   cursor: pointer;
   transition: background .12s, color .12s;
 }
-.pms-mode-btn + .pms-mode-btn { border-left: 1px solid #e5e7eb; }
+.pms-mode-btn + .pms-mode-btn { border-left: 1px solid #dcdfe6; }
 .pms-mode-btn--active {
-  background: #3b82f6;
+  background: #409eff;
   color: #fff;
 }
 

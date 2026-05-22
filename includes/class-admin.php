@@ -282,6 +282,28 @@ class Admin {
 
         <?php endif; ?>
 
+        <!-- Payments -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-money-alt"></span>
+            <?php esc_html_e( 'Payments', 'contactum' ); ?>
+          </span>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="payment_settings"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#payment_settings' ) ); ?>"
+                data-component="PaymentSettings"
+                data-settings_key="payment_settings"
+              >
+                <span class="dashicons dashicons-category"></span>
+                <?php esc_html_e( 'Payment Method', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <?php do_action( 'contactum_settings_sidebar_sections' ); ?>
 
       </ul>

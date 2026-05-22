@@ -232,14 +232,14 @@ export default {
 /* ── Card ────────────────────────────────────────────── */
 .gis-card {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .gis-card__head {
   padding: 20px 24px 18px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #ebeef5;
 }
 .gis-card__head-row {
   display: flex;
@@ -251,12 +251,12 @@ export default {
   margin: 0 0 4px;
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: #303133;
 }
 .gis-card__desc {
   margin: 0;
   font-size: 13px;
-  color: #6b7280;
+  color: #909399;
   line-height: 1.5;
 }
 
@@ -278,12 +278,12 @@ export default {
   height: 14px;
 }
 .gis-status-badge--on {
-  background: #dcfce7;
-  color: #16a34a;
+  background: #f0f9eb;
+  color: #67c23a;
 }
 .gis-status-badge--off {
-  background: #fef3c7;
-  color: #d97706;
+  background: #fdf6ec;
+  color: #e6a23c;
 }
 
 /* ── Form ────────────────────────────────────────────── */
@@ -296,7 +296,7 @@ export default {
 .gis-form__tip {
   margin: 6px 0 0;
   font-size: 12px;
-  color: #9ca3af;
+  color: #909399;
   line-height: 1.4;
 }
 
@@ -309,13 +309,13 @@ export default {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #16a34a;
+  color: #67c23a;
 }
 .gis-validation--err {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #d97706;
+  color: #e6a23c;
 }
 .gis-validation .dashicons {
   font-size: 15px;
@@ -324,15 +324,15 @@ export default {
 }
 .gis-error {
   font-size: 13px;
-  color: #dc2626;
+  color: #f56c6c;
   margin: 4px 0 12px;
 }
 
 /* Card footer */
 .gis-card__footer {
   padding: 14px 24px;
-  border-top: 1px solid #f3f4f6;
-  background: #fafafa;
+  border-top: 1px solid #ebeef5;
+  background: #f5f7fa;
 }
 
 /* ── Connected state ─────────────────────────────────── */
@@ -344,7 +344,7 @@ export default {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #dcfce7;
+  background: #f0f9eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -354,12 +354,12 @@ export default {
   font-size: 28px;
   width: 28px;
   height: 28px;
-  color: #16a34a;
+  color: #67c23a;
 }
 .gis-connected__title {
   font-size: 15px;
   font-weight: 600;
-  color: #374151;
+  color: #606266;
   margin: 0 0 20px;
   line-height: 1.4;
 }
@@ -371,7 +371,7 @@ export default {
 
 /* Override element-ui label color */
 :deep(label) {
-  color: #374151 !important;
+  color: #606266 !important;
   font-size: 13px !important;
   font-weight: 500 !important;
 }

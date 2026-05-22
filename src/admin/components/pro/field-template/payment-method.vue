@@ -310,7 +310,7 @@ export default {
 .pmf-section {
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #ebeef5;
 }
 .pmf-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
@@ -324,12 +324,12 @@ export default {
   font-size: 14px;
   width: 14px;
   height: 14px;
-  color: #6b7280;
+  color: #909399;
 }
 .pmf-section__head-label {
   font-size: 11.5px;
   font-weight: 700;
-  color: #374151;
+  color: #606266;
   text-transform: uppercase;
   letter-spacing: .5px;
 }
@@ -345,25 +345,25 @@ export default {
   align-items: center;
   gap: 8px;
   padding: 9px 12px;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid #dcdfe6;
   border-radius: 8px;
   cursor: pointer;
   transition: border-color .12s, background .12s;
   background: #fff;
 }
 .pmf-gateway-item--active {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: #409eff;
+  background: #ecf5ff;
 }
 .pmf-gateway-item__cb { display: none; }
 
 .pmf-gateway-item__desc {
   font-size: 11.5px;
-  color: #9ca3af;
+  color: #909399;
   flex: 1;
 }
 .pmf-gateway-item__warn {
-  color: #f59e0b;
+  color: #e6a23c;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -373,10 +373,10 @@ export default {
   font-size: 16px;
   width: 16px;
   height: 16px;
-  color: #d1d5db;
+  color: #c0c4cc;
   transition: color .12s;
 }
-.pmf-gateway-item--active .pmf-gateway-item__check { color: #3b82f6; }
+.pmf-gateway-item--active .pmf-gateway-item__check { color: #409eff; }
 
 /* ── Gateway badges ────────────────────────────────────── */
 .pmf-gw-badge {
@@ -385,13 +385,13 @@ export default {
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 4px;
-  background: #f3f4f6;
-  color: #6b7280;
+  background: #f5f7fa;
+  color: #909399;
   white-space: nowrap;
 }
-.pmf-gw-badge--stripe   { background: #ede9fe; color: #7c3aed; }
-.pmf-gw-badge--paypal   { background: #fef9c3; color: #854d0e; }
-.pmf-gw-badge--razorpay { background: #dbeafe; color: #1d4ed8; }
+.pmf-gw-badge--stripe   { background: #f0eeff; color: #6e4bcc; }
+.pmf-gw-badge--paypal   { background: #fdf6ec; color: #e6a23c; }
+.pmf-gw-badge--razorpay { background: #ecf5ff; color: #409eff; }
 .pmf-gw-badge--sm { font-size: 10px; padding: 1px 6px; }
 
 /* ── Label row ─────────────────────────────────────────── */
@@ -413,7 +413,7 @@ export default {
 .pmf-inline-label {
   font-size: 12.5px;
   font-weight: 500;
-  color: #4b5563;
+  color: #606266;
   width: 68px;
   flex-shrink: 0;
 }
@@ -425,7 +425,7 @@ export default {
   display: block;
   font-size: 12.5px;
   font-weight: 500;
-  color: #4b5563;
+  color: #606266;
   margin-bottom: 5px;
 }
 
@@ -433,7 +433,7 @@ export default {
 .pmf-hint {
   margin: 0 0 10px;
   font-size: 11.5px;
-  color: #9ca3af;
+  color: #909399;
   line-height: 1.4;
 }
 .pmf-notice {
@@ -446,5 +446,5 @@ export default {
   font-size: 12px;
 }
 .pmf-notice .dashicons { font-size: 14px; width: 14px; height: 14px; }
-.pmf-notice--warn { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.pmf-notice--warn { background: #fdf6ec; color: #e6a23c; border: 1px solid #f5dab1; }
 </style>

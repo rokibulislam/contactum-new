@@ -30,6 +30,7 @@ use Contactum\Fields\Field_Hcaptcha;
 use Contactum\Fields\Field_Turnstile;
 use Contactum\Fields\Field_Column;
 use Contactum\Fields\Field_Range_Slider;
+use Contactum\Fields\Field_Color;
 
 class FieldManager {
 
@@ -85,7 +86,8 @@ class FieldManager {
             'hcaptcha'       => new Field_Hcaptcha(),
             'turnstile'      => new Field_Turnstile(),
             'column_field'        => new Field_Column(),
-            'range_slider_field'  => new Field_Range_Slider()
+            'range_slider_field'  => new Field_Range_Slider(),
+            'color_picker'        => new Field_Color(),
         ];
 
         $this->fields = apply_filters( 'contactum_form_fields', $fields );
@@ -123,7 +125,8 @@ class FieldManager {
                 'file_field',
                 'submit_field',
                 'password_field',
-                'range_slider_field'
+                'range_slider_field',
+                'color_picker',
             ]
         );
 

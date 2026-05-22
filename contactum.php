@@ -109,6 +109,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/fields/class-field-turnstile.php';
         require_once CONTACTUM_INCLUDES . '/fields/class-field-url.php';
         require_once CONTACTUM_INCLUDES . '/fields/class-field-range-slider.php';
+        require_once CONTACTUM_INCLUDES . '/fields/class-field-color.php';
         require_once CONTACTUM_INCLUDES . '/fields/class-fields-pro.php';
         require_once CONTACTUM_INCLUDES . '/fields/class-field-column.php';
 

@@ -365,9 +365,9 @@ export default {
   text-transform: uppercase;
   letter-spacing: .4px;
 }
-.ccl-stat--green .ccl-stat__val { color: #059669; }
-.ccl-stat--gray  .ccl-stat__val { color: #9ca3af; }
-.ccl-stat--blue  .ccl-stat__val { color: #2563eb; }
+.ccl-stat--green .ccl-stat__val { color: #67c23a; }
+.ccl-stat--gray  .ccl-stat__val { color: #909399; }
+.ccl-stat--blue  .ccl-stat__val { color: #409eff; }
 
 /* ── Toolbar ──────────────────────────────────────────────────────────── */
 .ccl-toolbar {
@@ -403,11 +403,11 @@ export default {
   border-radius: 4px;
   width: fit-content;
 }
-.ccl-code--teal   { background: #d1fae5; color: #065f46; }
-.ccl-code--purple { background: #ede9fe; color: #4c1d95; }
+.ccl-code--teal   { background: #f0f9eb; color: #67c23a; }
+.ccl-code--purple { background: #f0eeff; color: #6e4bcc; }
 .ccl-coupon-title {
   font-size: 12px;
-  color: #6b7280;
+  color: #909399;
 }
 
 /* Discount */
@@ -417,19 +417,19 @@ export default {
   padding: 2px 8px;
   border-radius: 4px;
 }
-.ccl-discount--teal   { background: #ecfdf5; color: #059669; }
-.ccl-discount--purple { background: #f5f3ff; color: #7c3aed; }
+.ccl-discount--teal   { background: #f0f9eb; color: #67c23a; }
+.ccl-discount--purple { background: #f0eeff; color: #6e4bcc; }
 
 /* Usage */
 .ccl-usage { min-width: 80px; }
-.ccl-usage__label { font-size: 12px; color: #374151; }
+.ccl-usage__label { font-size: 12px; color: #606266; }
 .ccl-usage__used  { font-weight: 600; }
-.ccl-usage__sep   { color: #d1d5db; }
-.ccl-usage__max   { color: #9ca3af; }
+.ccl-usage__sep   { color: #dcdfe6; }
+.ccl-usage__max   { color: #909399; }
 
 /* Expiry */
-.ccl-expiry { font-size: 12px; color: #374151; }
-.ccl-expiry--expired { color: #ef4444; }
+.ccl-expiry { font-size: 12px; color: #606266; }
+.ccl-expiry--expired { color: #f56c6c; }
 .ccl-muted { font-size: 12px; color: #c0c4cc; }
 
 /* Status */
@@ -442,8 +442,8 @@ export default {
   padding: 3px 9px;
   border-radius: 20px;
 }
-.ccl-status--on  { background: #ecfdf5; color: #059669; }
-.ccl-status--off { background: #f3f4f6; color: #9ca3af; }
+.ccl-status--on  { background: #f0f9eb; color: #67c23a; }
+.ccl-status--off { background: #f5f7fa; color: #909399; }
 .ccl-dot {
   width: 6px;
   height: 6px;
@@ -497,12 +497,12 @@ export default {
 .ccl-empty__title {
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: #606266;
   margin: 0 0 6px;
 }
 .ccl-empty__sub {
   font-size: 12px;
-  color: #9ca3af;
+  color: #909399;
   margin: 0;
 }
 
