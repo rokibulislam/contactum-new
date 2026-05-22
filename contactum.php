@@ -135,6 +135,8 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/integrations/mailchimp/class-mailchimp-api.php';
         require_once CONTACTUM_INCLUDES . '/integrations/webhook/class-webhook-integration.php';
         require_once CONTACTUM_INCLUDES . '/integrations/cleantalk/class-cleantalk-integration.php';
+        require_once CONTACTUM_INCLUDES . '/integrations/s3/class-s3-client.php';
+        require_once CONTACTUM_INCLUDES . '/integrations/s3/class-s3-integration.php';
 
         require_once CONTACTUM_INCLUDES . '/class-template-manager.php';
 

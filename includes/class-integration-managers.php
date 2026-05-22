@@ -4,6 +4,7 @@ namespace Contactum;
 use Contactum\integrations\MailchimpIntegration;
 use Contactum\Integrations\WebhookIntegration;
 use Contactum\Integrations\CleanTalkIntegration;
+use Contactum\Integrations\S3Integration;
 
 class IntegrationManager {
 
@@ -83,6 +84,7 @@ class IntegrationManager {
         $integrations['mailchimp']  = new MailchimpIntegration();
         $integrations['webhook']    = new WebhookIntegration();
         $integrations['cleantalk']  = new CleanTalkIntegration();
+        $integrations['s3']         = new S3Integration();
 
         $this->integrations = apply_filters( 'contactum_integrations', $integrations );
 

@@ -124,7 +124,7 @@ class Ajax {
 
         header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
-        $attach = $this->handle_upload( $upload );
+        $attach = $this->handle_upload( $upload, $form_id );
 
         if ( $attach['success'] ) {
             $response         = [ 'success' => true ];
@@ -136,7 +136,7 @@ class Ajax {
         exit;
     }
 
-    public function handle_upload( $upload_data ) {
+    public function handle_upload( $upload_data, $form_id = 0 ) {
         $uploaded_file = wp_handle_upload( $upload_data, ['test_form' => false] );
 
         // If the wp_handle_upload call returned a local path for the image
@@ -156,6 +156,16 @@ class Ajax {
             $attach_data = wp_generate_attachment_metadata( $attach_id, $file_loc );
 
             wp_update_attachment_metadata( $attach_id, $attach_data );
+
+            /**
+             * Fires after a form file upload is saved as a WP attachment.
+             *
+             * @param int    $attach_id  WordPress attachment ID.
+             * @param string $file_loc   Absolute local file path.
+             * @param int    $form_id    ID of the form this upload belongs to (0 if unknown).
+             */
+            do_action( 'contactum_after_file_uploaded', $attach_id, $file_loc, (int) $form_id );
+
             return ['success' => true, 'attach_id' => $attach_id];
         }
 
