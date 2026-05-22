@@ -249,6 +249,18 @@ class Admin {
                 <?php esc_html_e( 'Turnstile', 'contactum' ); ?>
               </a>
             </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="cleantalk"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#cleantalk' ) ); ?>"
+                data-component="CleanTalkSettings"
+                data-settings_key="cleantalk"
+              >
+                <span class="dashicons dashicons-shield-alt"></span>
+                <?php esc_html_e( 'CleanTalk', 'contactum' ); ?>
+              </a>
+            </li>
           </ul>
         </li>
 

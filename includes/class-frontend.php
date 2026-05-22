@@ -99,9 +99,10 @@ class Frontend {
         <li class="submit submit_wrapper contactum-submit">
             <!-- <div class="contactum-label"> &nbsp; </div> -->
             <?php esc_attr( wp_nonce_field( 'contactum_form_frontend' ) ); ?>
-            <input type="hidden" name="form_id" value="<?php echo esc_attr( $form_id ); ?>">
-            <input type="hidden" name="page_id" value="<?php echo get_the_ID(); ?>">
-            <input type="hidden" name="action" value="contactum_frontend_submit">
+            <input type="hidden" name="form_id"          value="<?php echo esc_attr( $form_id ); ?>">
+            <input type="hidden" name="page_id"          value="<?php echo get_the_ID(); ?>">
+            <input type="hidden" name="action"           value="contactum_frontend_submit">
+            <input type="hidden" name="_ctm_form_start"  value="<?php echo esc_attr( time() ); ?>">
             <input type="submit" class="btn btn-submit contactum_submit_btn  contactum_submit_<?php echo esc_attr( $form_id ); ?>"
             name="submit" value="Submit" />
         </li>

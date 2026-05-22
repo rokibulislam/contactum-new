@@ -76,6 +76,8 @@ import hCaptcha from './components/settings/hCaptcha.vue'
 import turnstile from './components/settings/turnstile.vue'
 import Coupon from './components/settings/coupon.vue'
 import GeneralIntegrationSettings from './components/settings/GeneralIntegrationSettings.vue'
+import WebhookSettings from './components/settings/WebhookSettings.vue'
+import CleanTalkSettings from './components/settings/CleanTalkSettings.vue'
 import store from './store';
 
 const components = {
@@ -86,6 +88,8 @@ const components = {
     hCaptcha: hCaptcha,
     turnstile: turnstile,
     'general-integration-settings': GeneralIntegrationSettings,
+    WebhookSettings: WebhookSettings,
+    CleanTalkSettings: CleanTalkSettings,
 };
 
 import { scrollTop, handleSidebarActiveLink, handleSidebarSettingsActiveLink } from './helpers';

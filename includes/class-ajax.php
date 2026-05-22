@@ -293,6 +293,25 @@ class Ajax {
             }
         }
 
+        /**
+         * Allow integrations (e.g. CleanTalk) to validate the submission before
+         * it is saved. Return a non-empty array to reject the submission.
+         *
+         * @param array $errors       Validation error messages (empty = pass).
+         * @param int   $form_id      The form being submitted.
+         * @param array $entry_fields Sanitised field values keyed by field name.
+         * @param array $post_data    Raw (wp_unslash'd) $_POST data.
+         */
+        $spam_errors = apply_filters( 'contactum_check_spam', [], $form_id, $entry_fields, $post_data );
+
+        if ( ! empty( $spam_errors ) ) {
+            wp_send_json( [
+                'success' => false,
+                'type'    => 'spam',
+                'errors'  => $spam_errors,
+            ] );
+        }
+
         $entry_id = EntryManager::create( [ 'form_id' => $form_id ], $entry_fields );
 
         if ( is_wp_error( $entry_id ) ) {

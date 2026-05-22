@@ -2,6 +2,8 @@
 namespace Contactum;
 
 use Contactum\integrations\MailchimpIntegration;
+use Contactum\Integrations\WebhookIntegration;
+use Contactum\Integrations\CleanTalkIntegration;
 
 class IntegrationManager {
 
@@ -78,7 +80,9 @@ class IntegrationManager {
     public function getIntegrations() {
         $integrations = array();
 
-        $integrations['mailchimp'] = new MailchimpIntegration();
+        $integrations['mailchimp']  = new MailchimpIntegration();
+        $integrations['webhook']    = new WebhookIntegration();
+        $integrations['cleantalk']  = new CleanTalkIntegration();
 
         $this->integrations = apply_filters( 'contactum_integrations', $integrations );
 
@@ -90,8 +94,13 @@ class IntegrationManager {
         $settings = [];
         $integrations = $this->getIntegrations();
         
+        $security_only = [ 'cleantalk' ];
+
         if( !empty( $integrations ) ) {
             foreach ( $this->getIntegrations() as $integration_id => $integration ) {
+                if ( in_array( $integration_id, $security_only, true ) ) {
+                    continue;
+                }
                 if ( method_exists( $integration, 'get_js_settings' ) ) {
                     $settings[ $integration_id ] = $integration->get_js_settings();
                 }
