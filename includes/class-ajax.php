@@ -41,6 +41,11 @@ class Ajax {
         add_action('wp_ajax_contactum_get_entries_report', [ $this, 'contactum_get_entries_details_report_ajax' ]);
 
         add_action('wp_ajax_contactum_delete_entry', [ $this, 'contactum_delete_entry_ajax' ]);
+
+        add_action( 'wp_ajax_contactum_track_form_view',        [ $this, 'track_form_view' ] );
+        add_action( 'wp_ajax_nopriv_contactum_track_form_view', [ $this, 'track_form_view' ] );
+
+        add_action( 'wp_ajax_contactum_get_form_analytics', [ $this, 'get_form_analytics' ] );
     }
 
     public function save_contactum_form() {
@@ -465,6 +470,44 @@ class Ajax {
         } else {
             wp_send_json_error( __( 'Could not delete entry', 'contactum' ) );
         }
+    }
+
+    public function track_form_view() {
+        check_ajax_referer( 'contactum_form_frontend' );
+
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( ! $form_id ) {
+            wp_send_json_error();
+        }
+
+        contactum_track_form_view( $form_id );
+        wp_send_json_success();
+    }
+
+    public function get_form_analytics() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $args    = [];
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( $form_id ) {
+            $args['form_id'] = $form_id;
+        }
+
+        if ( isset( $_POST['startdate'] ) && ! empty( $_POST['startdate'] ) ) {
+            $args['start_date'] = date( 'Y-m-d', strtotime( sanitize_text_field( $_POST['startdate'] ) ) );
+        }
+
+        if ( isset( $_POST['enddate'] ) && ! empty( $_POST['enddate'] ) ) {
+            $args['end_date'] = date( 'Y-m-d', strtotime( sanitize_text_field( $_POST['enddate'] ) ) );
+        }
+
+        wp_send_json_success( contactum_get_form_analytics( $args ) );
     }
 
     public function contactum_get_entries_details_report_ajax() {

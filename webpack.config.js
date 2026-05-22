@@ -15,6 +15,7 @@ module.exports = [
       payments: './src/admin/payments.js',
       settings: './src/admin/settings.js',
       forms: './src/admin/forms.js',
+      analytics: './src/admin/analytics.js',
     },
 
     mode: devMode ? 'development' : 'production',

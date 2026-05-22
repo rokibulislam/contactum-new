@@ -90,11 +90,14 @@ class Admin {
 
          $integration = add_submenu_page( $slug, __( 'Integrations', 'contactum' ), esc_html__( 'Integrations', 'contactum' ),$capability, 'contactum-integrations', [ $this, 'integration_page' ] );
 
+        $analytics = add_submenu_page( $slug, __( 'Analytics', 'contactum' ), esc_html__( 'Analytics', 'contactum' ), $capability, 'contactum-analytics', [ $this, 'analytics_page' ] );
+
         do_action( 'contactum_admin_menu', $slug );
 
 //         add_action( 'load-' . $integration, array( $this, 'load_addon_scripts' ) );
 
         add_action( 'load-' . $contactum_entries, array( $this, 'load_entries_scripts' ) );
+        add_action( 'load-' . $analytics,         array( $this, 'load_analytics_scripts' ) );
 
         add_action( 'load-' . $tools, array( $this, 'load_tools_scripts' ) );
 
@@ -425,6 +428,28 @@ class Admin {
         ?>
         <div id="contactum-admin-integration"> </div>
         <?php
+    }
+
+    public function analytics_page() {
+        include __DIR__ . '/html/menu.php';
+        ?>
+        <div id="contactum-admin-analytics">
+            <router-view></router-view>
+        </div>
+        <?php
+    }
+
+    public function load_analytics_scripts() {
+        wp_register_script( 'contactum-analytics', CONTACTUM_ASSETS . '/js/analytics.js', [ 'jquery' ], CONTACTUM_VERSION, true );
+        wp_enqueue_script( 'contactum-analytics' );
+        wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style( 'contactum-admin-extra' );
+
+        wp_localize_script( 'contactum-analytics', 'contactum', [
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
+            'forms'   => contactum()->forms->all(),
+        ] );
     }
 
     public function load_addon_scripts() {

@@ -54,6 +54,15 @@ class Installer {
                 KEY `meta_key` (`meta_key`),
                 KEY `entry_id` (`contactum_entry_id`)
             ) $collate;",
+
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}contactum_form_views` (
+                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                `form_id` bigint(20) unsigned DEFAULT NULL,
+                `view_date` date DEFAULT NULL,
+                `count` int(11) unsigned NOT NULL DEFAULT 0,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `form_date` (`form_id`, `view_date`)
+            ) $collate;",
         ];
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

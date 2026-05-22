@@ -37,6 +37,8 @@ class Frontend {
 
         $this->addCustomCssJs( $form );
 
+        $this->add_view_tracking( $form->id );
+
         return ob_get_clean();
     }
 
@@ -106,6 +108,21 @@ class Frontend {
         <?php
     }
 
+
+    private function add_view_tracking( $form_id ) {
+        $nonce    = wp_create_nonce( 'contactum_form_frontend' );
+        $ajax_url = esc_js( admin_url( 'admin-ajax.php' ) );
+        $script   = "(function(){
+            if(window.jQuery){
+                jQuery.post('" . $ajax_url . "',{
+                    action:'contactum_track_form_view',
+                    form_id:" . intval( $form_id ) . ",
+                    _ajax_nonce:'" . esc_js( $nonce ) . "'
+                });
+            }
+        })();";
+        wp_add_inline_script( 'contactum-frontend', $script );
+    }
 
     public function addCustomCssJs( $form ) {
         $form_fields = $form->getFields();

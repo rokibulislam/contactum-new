@@ -28,6 +28,12 @@
                     </a>
                 </li>
 
+                <li class="<?php echo ($page == 'contactum-analytics') ? 'active' : '' ?>">
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=contactum-analytics')); ?>" class="contactum_menu_link">
+                        <?php _e('Analytics', 'contactum'); ?>
+                    </a>
+                </li>
+
             </ul>
 
         </div>

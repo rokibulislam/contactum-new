@@ -1504,6 +1504,210 @@ function contactum_get_entries_report() {
 
 
 
+function contactum_detect_device() {
+    $ua = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+    if ( preg_match( '/iPad|Tablet/i', $ua ) ) {
+        return 'Tablet';
+    }
+    if ( preg_match( '/Mobile|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i', $ua ) ) {
+        return 'Mobile';
+    }
+    return 'Desktop';
+}
+
+function contactum_maybe_create_views_table() {
+    static $created = false;
+    if ( $created ) {
+        return;
+    }
+    $created = true;
+
+    global $wpdb;
+    $table    = $wpdb->prefix . 'contactum_form_views';
+    $collate  = '';
+    if ( $wpdb->has_cap( 'collation' ) ) {
+        if ( ! empty( $wpdb->charset ) ) {
+            $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
+        }
+        if ( ! empty( $wpdb->collate ) ) {
+            $collate .= " COLLATE $wpdb->collate";
+        }
+    }
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta( "CREATE TABLE IF NOT EXISTS `$table` (
+        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+        `form_id` bigint(20) unsigned DEFAULT NULL,
+        `view_date` date DEFAULT NULL,
+        `count` int(11) unsigned NOT NULL DEFAULT 0,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `form_date` (`form_id`, `view_date`)
+    ) $collate;" );
+}
+
+function contactum_track_form_view( $form_id ) {
+    contactum_maybe_create_views_table();
+    global $wpdb;
+    $table = $wpdb->prefix . 'contactum_form_views';
+    $today = current_time( 'Y-m-d' );
+    $wpdb->query(
+        $wpdb->prepare(
+            "INSERT INTO `$table` (form_id, view_date, count)
+             VALUES (%d, %s, 1)
+             ON DUPLICATE KEY UPDATE count = count + 1",
+            absint( $form_id ),
+            $today
+        )
+    );
+}
+
+function contactum_get_form_analytics( $args = [] ) {
+    contactum_maybe_create_views_table();
+    global $wpdb;
+
+    $entries_table = $wpdb->prefix . 'contactum_entries';
+    $views_table   = $wpdb->prefix . 'contactum_form_views';
+
+    $form_id    = isset( $args['form_id'] ) ? absint( $args['form_id'] ) : 0;
+    $start_date = isset( $args['start_date'] ) ? $args['start_date'] : date( 'Y-m-01' );
+    $end_date   = isset( $args['end_date'] )   ? $args['end_date']   : date( 'Y-m-d' );
+
+    // ── Submissions by date ──────────────────────────────────────────────────
+    if ( $form_id ) {
+        $subs_raw = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT DATE(created_at) AS date, COUNT(*) AS total
+                 FROM `$entries_table`
+                 WHERE form_id = %d AND DATE(created_at) BETWEEN %s AND %s
+                 GROUP BY DATE(created_at)",
+                $form_id, $start_date, $end_date
+            ),
+            OBJECT_K
+        );
+    } else {
+        $subs_raw = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT DATE(created_at) AS date, COUNT(*) AS total
+                 FROM `$entries_table`
+                 WHERE DATE(created_at) BETWEEN %s AND %s
+                 GROUP BY DATE(created_at)",
+                $start_date, $end_date
+            ),
+            OBJECT_K
+        );
+    }
+
+    // ── Views by date ────────────────────────────────────────────────────────
+    if ( $form_id ) {
+        $views_raw = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT view_date AS date, SUM(count) AS total
+                 FROM `$views_table`
+                 WHERE form_id = %d AND view_date BETWEEN %s AND %s
+                 GROUP BY view_date",
+                $form_id, $start_date, $end_date
+            ),
+            OBJECT_K
+        );
+    } else {
+        $views_raw = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT view_date AS date, SUM(count) AS total
+                 FROM `$views_table`
+                 WHERE view_date BETWEEN %s AND %s
+                 GROUP BY view_date",
+                $start_date, $end_date
+            ),
+            OBJECT_K
+        );
+    }
+
+    // ── Build full date range ────────────────────────────────────────────────
+    $labels      = [];
+    $submissions = [];
+    $views       = [];
+
+    $period = new DatePeriod(
+        new DateTime( $start_date ),
+        new DateInterval( 'P1D' ),
+        ( new DateTime( $end_date ) )->modify( '+1 day' )
+    );
+
+    foreach ( $period as $date ) {
+        $d           = $date->format( 'Y-m-d' );
+        $labels[]    = $d;
+        $submissions[] = isset( $subs_raw[ $d ] )  ? (int) $subs_raw[ $d ]->total  : 0;
+        $views[]       = isset( $views_raw[ $d ] ) ? (int) $views_raw[ $d ]->total : 0;
+    }
+
+    $total_subs  = array_sum( $submissions );
+    $total_views = array_sum( $views );
+    $conversion  = $total_views > 0 ? round( ( $total_subs / $total_views ) * 100, 1 ) : 0;
+    $days        = max( 1, count( $labels ) );
+    $avg_per_day = round( $total_subs / $days, 1 );
+
+    // ── Device breakdown ─────────────────────────────────────────────────────
+    if ( $form_id ) {
+        $devices = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT user_device AS device, COUNT(*) AS total
+                 FROM `$entries_table`
+                 WHERE form_id = %d AND DATE(created_at) BETWEEN %s AND %s
+                   AND user_device IS NOT NULL AND user_device != ''
+                 GROUP BY user_device",
+                $form_id, $start_date, $end_date
+            ),
+            ARRAY_A
+        );
+    } else {
+        $devices = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT user_device AS device, COUNT(*) AS total
+                 FROM `$entries_table`
+                 WHERE DATE(created_at) BETWEEN %s AND %s
+                   AND user_device IS NOT NULL AND user_device != ''
+                 GROUP BY user_device",
+                $start_date, $end_date
+            ),
+            ARRAY_A
+        );
+    }
+
+    // ── Top forms ────────────────────────────────────────────────────────────
+    $top_forms_raw = $wpdb->get_results(
+        "SELECT e.form_id, p.post_title AS form_name, COUNT(e.id) AS submissions
+         FROM `$entries_table` e
+         INNER JOIN `{$wpdb->posts}` p ON e.form_id = p.ID
+         GROUP BY e.form_id, p.post_title
+         ORDER BY submissions DESC
+         LIMIT 10",
+        ARRAY_A
+    );
+
+    foreach ( $top_forms_raw as &$row ) {
+        $fid = (int) $row['form_id'];
+        $view_count = (int) $wpdb->get_var(
+            $wpdb->prepare( "SELECT SUM(count) FROM `$views_table` WHERE form_id = %d", $fid )
+        );
+        $row['views']           = $view_count;
+        $row['conversion_rate'] = $view_count > 0
+            ? round( ( (int) $row['submissions'] / $view_count ) * 100, 1 )
+            : 0;
+    }
+    unset( $row );
+
+    return [
+        'labels'            => $labels,
+        'submissions'       => $submissions,
+        'views'             => $views,
+        'total_submissions' => $total_subs,
+        'total_views'       => $total_views,
+        'conversion_rate'   => $conversion,
+        'avg_per_day'       => $avg_per_day,
+        'devices'           => $devices,
+        'top_forms'         => $top_forms_raw,
+    ];
+}
+
 function contactum_kses_js($content)
 {
     return $content ? preg_replace('/<script.*?>[\s\S]*<\/script>/is', '', $content) : '';
