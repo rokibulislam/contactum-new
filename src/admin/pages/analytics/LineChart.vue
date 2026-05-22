@@ -17,9 +17,10 @@ export default {
     name: 'LineChart',
     components: { Line },
     props: {
-        labels:      { type: Array, default: () => [] },
-        submissions: { type: Array, default: () => [] },
-        views:       { type: Array, default: () => [] },
+        labels:       { type: Array, default: () => [] },
+        submissions:  { type: Array, default: () => [] },
+        views:        { type: Array, default: () => [] },
+        abandonments: { type: Array, default: () => [] },
     },
     computed: {
         chartData() {
@@ -41,6 +42,16 @@ export default {
                         data: this.submissions,
                         borderColor: '#1a7efb',
                         backgroundColor: 'rgba(26,126,251,0.10)',
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        tension: 0.4,
+                        fill: true,
+                    },
+                    {
+                        label: 'Abandonments',
+                        data: this.abandonments,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245,158,11,0.08)',
                         borderWidth: 2,
                         pointRadius: 3,
                         tension: 0.4,

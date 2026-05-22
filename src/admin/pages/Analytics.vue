@@ -76,6 +76,26 @@
                 <div class="ctm-stat-card__label">Avg. Submissions / Day</div>
             </div>
         </div>
+
+        <div class="ctm-stat-card">
+            <div class="ctm-stat-card__icon ctm-stat-card__icon--orange">
+                <i class="el-icon-s-release"></i>
+            </div>
+            <div class="ctm-stat-card__body">
+                <div class="ctm-stat-card__value">{{ loading ? '—' : data.total_abandonments }}</div>
+                <div class="ctm-stat-card__label">Abandonments</div>
+            </div>
+        </div>
+
+        <div class="ctm-stat-card">
+            <div class="ctm-stat-card__icon ctm-stat-card__icon--red">
+                <i class="el-icon-warning"></i>
+            </div>
+            <div class="ctm-stat-card__body">
+                <div class="ctm-stat-card__value">{{ loading ? '—' : data.abandonment_rate + '%' }}</div>
+                <div class="ctm-stat-card__label">Abandonment Rate</div>
+            </div>
+        </div>
     </div>
 
     <!-- Line chart ──────────────────────────────────────────── -->
@@ -88,6 +108,7 @@
                 :labels="data.labels"
                 :submissions="data.submissions"
                 :views="data.views"
+                :abandonments="data.abandonments"
             />
         </div>
     </div>
@@ -110,10 +131,11 @@
             </div>
             <div class="ctm-chart-card__body" v-loading="loading">
                 <el-table :data="data.top_forms" size="small" style="width:100%">
-                    <el-table-column prop="form_name" label="Form" min-width="140" show-overflow-tooltip />
-                    <el-table-column prop="views" label="Views" width="70" align="right" />
-                    <el-table-column prop="submissions" label="Subs" width="70" align="right" />
-                    <el-table-column label="Rate" width="70" align="right">
+                    <el-table-column prop="form_name" label="Form" min-width="120" show-overflow-tooltip />
+                    <el-table-column prop="views" label="Views" width="62" align="right" />
+                    <el-table-column prop="submissions" label="Subs" width="62" align="right" />
+                    <el-table-column prop="abandonments" label="Abnd" width="62" align="right" />
+                    <el-table-column label="Rate" width="62" align="right">
                         <template slot-scope="{ row }">
                             {{ row.conversion_rate }}%
                         </template>
@@ -132,9 +154,9 @@ import LineChart  from './analytics/LineChart.vue';
 import DeviceChart from './analytics/DeviceChart.vue';
 
 const DEFAULT = {
-    labels: [], submissions: [], views: [],
-    total_views: 0, total_submissions: 0,
-    conversion_rate: 0, avg_per_day: 0,
+    labels: [], submissions: [], views: [], abandonments: [],
+    total_views: 0, total_submissions: 0, total_abandonments: 0,
+    conversion_rate: 0, abandonment_rate: 0, avg_per_day: 0,
     devices: [], top_forms: [],
 };
 
@@ -237,11 +259,14 @@ export default {
 /* ── Stats grid ── */
 .ctm-stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 16px;
     margin-bottom: 20px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 700px) {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -270,6 +295,8 @@ export default {
     &--green  { background: rgba(16,185,129,.12); color: #10b981; }
     &--purple { background: rgba(139,92,246,.12); color: #8b5cf6; }
     &--amber  { background: rgba(245,158,11,.12); color: #f59e0b; }
+    &--orange { background: rgba(234,88,12,.12);  color: #ea580c; }
+    &--red    { background: rgba(220,38,38,.12);  color: #dc2626; }
 }
 
 .ctm-stat-card__value {

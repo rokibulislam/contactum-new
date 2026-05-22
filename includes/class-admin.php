@@ -264,6 +264,28 @@ class Admin {
           </ul>
         </li>
 
+        <!-- Tracking -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-chart-line"></span>
+            <?php esc_html_e( 'Tracking', 'contactum' ); ?>
+          </span>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="abandonment"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#abandonment' ) ); ?>"
+                data-component="AbandonmentSettings"
+                data-settings_key="abandonment"
+              >
+                <span class="dashicons dashicons-migrate"></span>
+                <?php esc_html_e( 'Abandonment', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <?php
         $integrations = contactum()->integrations->get_integration_js_settings();
         if ( ! empty( $integrations ) ) : ?>

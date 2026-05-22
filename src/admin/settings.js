@@ -78,6 +78,7 @@ import Coupon from './components/settings/coupon.vue'
 import GeneralIntegrationSettings from './components/settings/GeneralIntegrationSettings.vue'
 import WebhookSettings from './components/settings/WebhookSettings.vue'
 import CleanTalkSettings from './components/settings/CleanTalkSettings.vue'
+import AbandonmentSettings from './components/settings/AbandonmentSettings.vue'
 import store from './store';
 
 const components = {
@@ -90,6 +91,7 @@ const components = {
     'general-integration-settings': GeneralIntegrationSettings,
     WebhookSettings: WebhookSettings,
     CleanTalkSettings: CleanTalkSettings,
+    AbandonmentSettings: AbandonmentSettings,
 };
 
 import { scrollTop, handleSidebarActiveLink, handleSidebarSettingsActiveLink } from './helpers';

@@ -1621,10 +1621,14 @@ function contactum_get_form_analytics( $args = [] ) {
         );
     }
 
+    // ── Abandonments by date ─────────────────────────────────────────────────
+    $abandonment_map = \Contactum\AbandonmentManager::abandonments_by_date( $form_id, $start_date, $end_date );
+
     // ── Build full date range ────────────────────────────────────────────────
-    $labels      = [];
-    $submissions = [];
-    $views       = [];
+    $labels       = [];
+    $submissions  = [];
+    $views        = [];
+    $abandonments = [];
 
     $period = new DatePeriod(
         new DateTime( $start_date ),
@@ -1633,17 +1637,21 @@ function contactum_get_form_analytics( $args = [] ) {
     );
 
     foreach ( $period as $date ) {
-        $d           = $date->format( 'Y-m-d' );
-        $labels[]    = $d;
-        $submissions[] = isset( $subs_raw[ $d ] )  ? (int) $subs_raw[ $d ]->total  : 0;
-        $views[]       = isset( $views_raw[ $d ] ) ? (int) $views_raw[ $d ]->total : 0;
+        $d              = $date->format( 'Y-m-d' );
+        $labels[]       = $d;
+        $submissions[]  = isset( $subs_raw[ $d ] )        ? (int) $subs_raw[ $d ]->total        : 0;
+        $views[]        = isset( $views_raw[ $d ] )       ? (int) $views_raw[ $d ]->total       : 0;
+        $abandonments[] = isset( $abandonment_map[ $d ] ) ? (int) $abandonment_map[ $d ]        : 0;
     }
 
-    $total_subs  = array_sum( $submissions );
-    $total_views = array_sum( $views );
-    $conversion  = $total_views > 0 ? round( ( $total_subs / $total_views ) * 100, 1 ) : 0;
-    $days        = max( 1, count( $labels ) );
-    $avg_per_day = round( $total_subs / $days, 1 );
+    $total_subs         = array_sum( $submissions );
+    $total_views        = array_sum( $views );
+    $total_abandonments = array_sum( $abandonments );
+    $total_starts       = $total_subs + $total_abandonments;
+    $conversion         = $total_views > 0 ? round( ( $total_subs / $total_views ) * 100, 1 ) : 0;
+    $abandonment_rate   = $total_starts > 0 ? round( ( $total_abandonments / $total_starts ) * 100, 1 ) : 0;
+    $days               = max( 1, count( $labels ) );
+    $avg_per_day        = round( $total_subs / $days, 1 );
 
     // ── Device breakdown ─────────────────────────────────────────────────────
     if ( $form_id ) {
@@ -1683,28 +1691,37 @@ function contactum_get_form_analytics( $args = [] ) {
         ARRAY_A
     );
 
+    $abnd_table = $wpdb->prefix . 'contactum_form_abandonments';
+
     foreach ( $top_forms_raw as &$row ) {
         $fid = (int) $row['form_id'];
         $view_count = (int) $wpdb->get_var(
             $wpdb->prepare( "SELECT SUM(count) FROM `$views_table` WHERE form_id = %d", $fid )
         );
-        $row['views']           = $view_count;
-        $row['conversion_rate'] = $view_count > 0
+        $abnd_count = (int) $wpdb->get_var(
+            $wpdb->prepare( "SELECT COUNT(*) FROM `$abnd_table` WHERE form_id = %d AND converted = 0", $fid )
+        );
+        $row['views']             = $view_count;
+        $row['abandonments']      = $abnd_count;
+        $row['conversion_rate']   = $view_count > 0
             ? round( ( (int) $row['submissions'] / $view_count ) * 100, 1 )
             : 0;
     }
     unset( $row );
 
     return [
-        'labels'            => $labels,
-        'submissions'       => $submissions,
-        'views'             => $views,
-        'total_submissions' => $total_subs,
-        'total_views'       => $total_views,
-        'conversion_rate'   => $conversion,
-        'avg_per_day'       => $avg_per_day,
-        'devices'           => $devices,
-        'top_forms'         => $top_forms_raw,
+        'labels'              => $labels,
+        'submissions'         => $submissions,
+        'views'               => $views,
+        'abandonments'        => $abandonments,
+        'total_submissions'   => $total_subs,
+        'total_views'         => $total_views,
+        'total_abandonments'  => $total_abandonments,
+        'conversion_rate'     => $conversion,
+        'abandonment_rate'    => $abandonment_rate,
+        'avg_per_day'         => $avg_per_day,
+        'devices'             => $devices,
+        'top_forms'           => $top_forms_raw,
     ];
 }
 

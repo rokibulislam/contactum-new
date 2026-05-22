@@ -38,6 +38,7 @@ class Frontend {
         $this->addCustomCssJs( $form );
 
         $this->add_view_tracking( $form->id );
+        $this->add_abandonment_tracking( $form->id );
 
         return ob_get_clean();
     }
@@ -109,6 +110,84 @@ class Frontend {
         <?php
     }
 
+
+    private function add_abandonment_tracking( $form_id ) {
+        $nonce    = wp_create_nonce( 'contactum_form_frontend' );
+        $ajax_url = esc_js( admin_url( 'admin-ajax.php' ) );
+        $fid      = intval( $form_id );
+
+        $script = "(function() {
+            var formId   = {$fid};
+            var ajaxUrl  = '{$ajax_url}';
+            var nonce    = '" . esc_js( $nonce ) . "';
+            var formEl   = document.getElementById('contactum_form_' + formId);
+            if (!formEl) return;
+
+            var started   = false;
+            var submitted = false;
+
+            // Per-form session hash persisted in sessionStorage.
+            var storageKey  = 'ctm_abnd_' + formId;
+            var sessionHash = '';
+            try { sessionHash = sessionStorage.getItem(storageKey) || ''; } catch(e) {}
+            if (!sessionHash) {
+                sessionHash = Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+                try { sessionStorage.setItem(storageKey, sessionHash); } catch(e) {}
+            }
+
+            formEl.addEventListener('input',  function() { started = true; }, { once: true });
+            formEl.addEventListener('change', function() { started = true; }, { once: true });
+
+            formEl.addEventListener('submit', function() {
+                submitted = true;
+                beacon('contactum_abandonment_converted', {});
+            });
+
+            function getFilledFields() {
+                var names = [];
+                formEl.querySelectorAll(
+                    'input:not([type=hidden]):not([type=submit]):not([type=button]), textarea, select'
+                ).forEach(function(el) {
+                    if (el.value && el.name) names.push(el.name);
+                });
+                return names;
+            }
+
+            function getEmail() {
+                var el = formEl.querySelector('input[type=email]');
+                return el ? el.value : '';
+            }
+
+            function beacon(action, extra) {
+                if (!navigator.sendBeacon) return;
+                var base = 'action='      + encodeURIComponent(action)
+                         + '&_ajax_nonce='  + encodeURIComponent(nonce)
+                         + '&form_id='      + encodeURIComponent(formId)
+                         + '&session_hash=' + encodeURIComponent(sessionHash);
+                Object.keys(extra).forEach(function(k) {
+                    base += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(extra[k]);
+                });
+                navigator.sendBeacon(ajaxUrl, new Blob([base], { type: 'application/x-www-form-urlencoded' }));
+            }
+
+            function sendAbandonment() {
+                if (!started || submitted) return;
+                submitted = true; // guard against duplicate fires
+                beacon('contactum_track_abandonment', {
+                    filled_fields: JSON.stringify(getFilledFields()),
+                    email:         getEmail(),
+                    page_url:      location.href
+                });
+            }
+
+            window.addEventListener('pagehide', sendAbandonment);
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'hidden') sendAbandonment();
+            });
+        })();";
+
+        wp_add_inline_script( 'contactum-frontend', $script );
+    }
 
     private function add_view_tracking( $form_id ) {
         $nonce    = wp_create_nonce( 'contactum_form_frontend' );

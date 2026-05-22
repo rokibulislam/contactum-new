@@ -63,6 +63,23 @@ class Installer {
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `form_date` (`form_id`, `view_date`)
             ) $collate;",
+
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}contactum_form_abandonments` (
+                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                `form_id` bigint(20) unsigned NOT NULL,
+                `session_hash` varchar(64) NOT NULL,
+                `filled_fields` text DEFAULT NULL,
+                `email` varchar(255) DEFAULT NULL,
+                `page_url` varchar(2048) DEFAULT NULL,
+                `user_ip` varchar(45) DEFAULT NULL,
+                `user_device` varchar(20) DEFAULT NULL,
+                `converted` tinyint(1) NOT NULL DEFAULT 0,
+                `follow_up_sent` tinyint(1) NOT NULL DEFAULT 0,
+                `abandoned_at` datetime NOT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `form_session` (`form_id`, `session_hash`),
+                KEY `converted` (`converted`)
+            ) $collate;",
         ];
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

@@ -168,6 +168,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-admin-form-handler.php';
         require_once CONTACTUM_INCLUDES . '/class-admin-template.php';
         require_once CONTACTUM_INCLUDES . '/class-admin-tools.php';
+        require_once CONTACTUM_INCLUDES . '/class-abandonment-manager.php';
         require_once CONTACTUM_INCLUDES . '/class-ajax.php';
         require_once CONTACTUM_INCLUDES . '/class-assets.php';
         require_once CONTACTUM_INCLUDES . '/class-entry-manager.php';
@@ -213,8 +214,9 @@ final class Contactum {
             $this->container['pro_upgrades']       = new Contactum\Contactum_Pro_Upgrades();
         }
 
-        $this->container['assets']    = new Contactum\Assets();
-        $this->container['ajax']      = new Contactum\Ajax();
+        $this->container['assets']      = new Contactum\Assets();
+        $this->container['ajax']        = new Contactum\Ajax();
+        $this->container['abandonment'] = new Contactum\AbandonmentManager();
         $this->container['fields']    = new Contactum\FieldManager();
         $this->container['templates'] = new Contactum\TemplateManager();
         $this->container['forms']     = new Contactum\FormManager();
