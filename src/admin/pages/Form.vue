@@ -47,7 +47,7 @@
                     <i class="el-icon-edit-outline"></i> Edit
                   </a>
                   <span class="cfl-sep">|</span>
-                  <a :href="`${admin_url}?page=contactum&route=settings&form_id=${scope.row.id}#/forms/settings/${scope.row.id}`">
+                  <!-- <a :href="`${admin_url}?page=contactum&route=settings&form_id=${scope.row.id}#/forms/settings/${scope.row.id}`">
                     <i class="el-icon-setting"></i> Settings
                   </a>
                   <span class="cfl-sep">|</span>
@@ -57,7 +57,7 @@
                   <span class="cfl-sep">|</span>
                   <a :href="`${admin_url}?page=contactum&route=builder#/forms/entries/${scope.row.id}`">
                     <i class="el-icon-tickets"></i> Entries
-                  </a>
+                  </a> -->
                   <span class="cfl-sep">|</span>
                   <a href="#" class="cfl-danger" @click.prevent="removeFormConfirmation(scope.row.id, scope.$index)">
                     <i class="el-icon-delete"></i> Delete
@@ -101,7 +101,7 @@
         </el-table-column>
 
         <!-- Actions -->
-        <el-table-column width="60" align="center">
+        <!-- <el-table-column width="60" align="center">
           <template slot-scope="scope">
             <el-dropdown trigger="click" placement="bottom-end">
               <el-button class="cfl-more-btn" size="mini">
@@ -134,7 +134,7 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-          </template>
+          </template> -->
         </el-table-column>
 
       </el-table>

@@ -344,9 +344,9 @@ export default {
 
 <style scoped lang="scss">
 /* ── Tokens (inherit from parent or redefine locally) ── */
-$primary:       #4f46e5;
-$primary-light: #ede9fe;
-$primary-dark:  #3730a3;
+$primary:       #409EFF;
+$primary-light: #ecf5ff;
+$primary-dark:  #2d8ae4;
 $danger:        #ef4444;
 $danger-light:  #fee2e2;
 $surface:       #ffffff;
@@ -409,12 +409,12 @@ $transition:    0.16s cubic-bezier(.4,0,.2,1);
   background: $primary;
   color: #fff;
   border-color: $primary;
-  box-shadow: 0 2px 8px rgba(79,70,229,.28);
+  box-shadow: 0 2px 8px rgba(64,158,255,.28);
 
   &:hover {
     background: $primary-dark;
     border-color: $primary-dark;
-    box-shadow: 0 4px 14px rgba(79,70,229,.38);
+    box-shadow: 0 4px 14px rgba(64,158,255,.38);
     transform: translateY(-1px);
   }
   &:active { transform: translateY(0); }
