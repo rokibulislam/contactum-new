@@ -185,13 +185,31 @@ ul.contactum-form.form-label-right li div.contactum-fields {
 }
 
 .address-fields {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+}
+
+/* Street address spans both columns */
+.address-fields .contactum-sub-fields:first-child {
+    grid-column: 1 / -1;
 }
 
 .address-fields .contactum-sub-fields {
-    flex-basis: calc(50% - 15px);
+    box-sizing: border-box;
+}
+
+.address-fields .contact-form-sub-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #374151;
+}
+
+.address-fields .contactum-sub-fields input,
+.address-fields .contactum-sub-fields select {
+    width: 100%;
     box-sizing: border-box;
 }
 
