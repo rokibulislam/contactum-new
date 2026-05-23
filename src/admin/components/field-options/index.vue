@@ -65,6 +65,7 @@ import field_quantity from "../pro/field-template/quantity.vue";
 import field_product_data from "../pro/field-template/product-data.vue";
 import field_price from "../pro/field-template/price.vue";
 import field_payment_method from "../pro/field-template/payment-method.vue";
+import field_payment_summary from "../pro/field-template/payment-summary.vue";
 import field_gmap_position from "../pro/field-template/gmap-position.vue";
 import field_repeatsettings from "../pro/field-template/repeatsettings.vue";
 import field_range from "../pro/field-template/range.vue";
@@ -101,6 +102,7 @@ export default {
     field_product_data,
     field_price,
     field_payment_method,
+    field_payment_summary,
     field_gmap_position,
     field_text_with_tag,
     field_required,

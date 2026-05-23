@@ -249,6 +249,7 @@ import form_total from "../pro/form-template/total.vue";
 import form_single_product from "../pro/form-template/single-product.vue";
 import form_multiple_product from "../pro/form-template/multiple-product.vue";
 import form_payment_method from "../pro/form-template/payment-method.vue";
+import form_payment_summary from "../pro/form-template/payment-summary.vue";
 import form_rating_field from "../pro/form-template/rating.vue";
 import form_repeat_field from "../pro/form-template/repeat.vue";
 import form_column_field from "../form-templates/column.vue";
@@ -303,6 +304,7 @@ export default {
     form_single_product,
     form_multiple_product,
     form_payment_method,
+    form_payment_summary,
     form_rating_field,
     form_math_captcha,
     form_submit_field,

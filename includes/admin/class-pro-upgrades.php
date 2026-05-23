@@ -91,6 +91,7 @@ class Contactum_Pro_Upgrades {
         $fields['multiple_product']   = new \Contactum\Contactum_Field_Multiple_product();
         $fields['total']              = new \Contactum\Contactum_Field_Total();
         $fields['payment_method']     = new \Contactum\Contactum_Field_Payment_Method();
+        $fields['payment_summary']    = new \Contactum\Contactum_Field_Payment_Summary();
 
         return $fields;
 
@@ -99,7 +100,7 @@ class Contactum_Pro_Upgrades {
     public function add_payment_section($groups) {
 
         $fields = apply_filters( 'contactum_field_groups_payment', array(
-            'single_product', 'multiple_product', 'total', 'payment_method', 'coupon_field', 'subscription_field'
+            'single_product', 'multiple_product', 'total', 'payment_method', 'coupon_field', 'subscription_field', 'payment_summary'
         ) );
 
         $groups[] = array(
