@@ -7,17 +7,17 @@
         <h2 class="cfi-title">Form Integrations</h2>
         <p class="cfi-subtitle">Connect this form to third-party services. Toggle an integration to activate it, then configure the mapping.</p>
       </div>
-      {{  integrations }}
-      <div class="cfi-header-meta" v-if="integrations && integrations.length">
+      {{ integrationList }
+      <div class="cfi-header-meta" v-if="integrationCount > 0">
         <span class="cfi-enabled-badge">
           <i class="el-icon-connection"></i>
-          {{ enabledCount }} / {{ integrations.length }} active
+          {{ enabledCount }} / {{ integrationCount }} active
         </span>
       </div>
     </div>
 
     <!-- ── Empty state ────────────────────────────── -->
-    <div class="cfi-empty" v-if="!integrations || !integrations.length">
+    <div class="cfi-empty" v-if="integrationCount === 0">
       <i class="el-icon-connection cfi-empty-icon"></i>
       <p>No integrations available for this form.</p>
     </div>
@@ -26,8 +26,11 @@
     <div class="cfi-grid" v-else>
       <div
         class="cfi-card"
-        :class="{ 'cfi-card--enabled': integration.formenable }"
-        v-for="(integration, index) in integrations"
+        :class="{
+          'cfi-card--enabled': integration.formenable,
+          'cfi-card--disconnected': !integration.value || !integration.value.status
+        }"
+        v-for="integration in integrationList"
         :key="integration.id"
       >
         <!-- Card body -->
@@ -45,7 +48,11 @@
           </div>
           <div class="cfi-card-info">
             <h4 class="cfi-card-title">{{ integration.title }}</h4>
-            <span class="cfi-status-badge" :class="integration.formenable ? 'cfi-status-badge--on' : 'cfi-status-badge--off'">
+            <span
+              v-if="!integration.value || !integration.value.status"
+              class="cfi-status-badge cfi-status-badge--disconnected"
+            >Not Connected</span>
+            <span v-else class="cfi-status-badge" :class="integration.formenable ? 'cfi-status-badge--on' : 'cfi-status-badge--off'">
               {{ integration.formenable ? 'Enabled' : 'Disabled' }}
             </span>
           </div>
@@ -53,32 +60,53 @@
 
         <!-- Card footer -->
         <div class="cfi-card-footer">
-          <label class="cfi-toggle-row">
-            <el-switch
-              v-model="integration.formenable"
-              @change="changeStatus(integration, $event, index)"
-            />
-            <span class="cfi-toggle-label">{{ integration.formenable ? 'Active' : 'Inactive' }}</span>
-          </label>
-          <el-button
-            v-if="integration.formenable"
-            size="small"
-            icon="el-icon-setting"
-            @click.prevent="openDialog(integration)"
-          >Configure</el-button>
+          <template v-if="integration.value && integration.value.status">
+            <label class="cfi-toggle-row">
+              <el-switch
+                v-model="integration.formenable"
+                @change="changeStatus(integration, $event, integration.id)"
+              />
+              <span class="cfi-toggle-label">{{ integration.formenable ? 'Active' : 'Inactive' }}</span>
+            </label>
+            <el-button
+              v-if="integration.formenable"
+              size="small"
+              icon="el-icon-setting"
+              @click.prevent="openDialog(integration)"
+            >Configure</el-button>
+          </template>
+          <span v-else class="cfi-not-connected-hint">
+            <i class="el-icon-warning-outline"></i> Configure in global settings first
+          </span>
         </div>
       </div>
     </div>
 
     <!-- ── Settings dialog ───────────────────────── -->
     <el-dialog
-      :title="dialogIntegration ? dialogIntegration.title + ' Settings' : 'Integration Settings'"
       :visible.sync="dialogVisible"
-      width="560px"
+      width="580px"
       custom-class="cfi-dialog"
+      :show-close="false"
     >
-      <div v-if="dialogIntegration && dialogIntegration.formenable" class="cfi-dialog-body">
+      <!-- Custom header -->
+      <template #title>
+        <div class="cfi-dlg-header" v-if="dialogIntegration">
+          <div class="cfi-dlg-header-icon">
+            <img v-if="dialogIntegration.icon" :src="dialogIntegration.icon" :alt="dialogIntegration.title" />
+            <i v-else class="el-icon-connection"></i>
+          </div>
+          <div class="cfi-dlg-header-text">
+            <h3 class="cfi-dlg-title">{{ dialogIntegration.title }}</h3>
+            <p class="cfi-dlg-subtitle">Configure field mapping for this integration</p>
+          </div>
+          <button class="cfi-dlg-close" @click="dialogVisible = false">
+            <i class="el-icon-close"></i>
+          </button>
+        </div>
+      </template>
 
+      <div v-if="dialogIntegration && dialogIntegration.formenable" class="cfi-dialog-body">
         <div
           v-for="(field, index) in dialogIntegration.integration_fields"
           :key="field.name || index"
@@ -89,10 +117,10 @@
             <el-button
               v-if="field.type === 'list_ajax_options'"
               size="mini"
+              type="text"
               icon="el-icon-refresh"
-              circle
               @click="fetchlists(dialogIntegration, index)"
-            />
+            >Refresh</el-button>
           </div>
 
           <template v-if="field.type === 'text'">
@@ -132,12 +160,11 @@
             </el-checkbox>
           </template>
         </div>
-
       </div>
 
       <template #footer>
         <div class="cfi-dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button plain @click="dialogVisible = false">Cancel</el-button>
           <el-button type="primary" icon="el-icon-check" @click="saveIntegration">Save Settings</el-button>
         </div>
       </template>
@@ -164,8 +191,14 @@ export default {
     integrations() {
       return this.$store.getters.integrations;
     },
+    integrationList() {
+      return Object.values(this.integrations || {});
+    },
+    integrationCount() {
+      return this.integrationList.length;
+    },
     enabledCount() {
-      return (this.integrations || []).filter(i => i.formenable).length;
+      return this.integrationList.filter(i => i.formenable).length;
     },
   },
 
@@ -180,7 +213,7 @@ export default {
       this.dialogVisible = false;
     },
 
-    changeStatus(integration, value, index) {
+    changeStatus(_integration, value, index) {
       this.$store.commit("updateIntegrationProperty", {
         index,
         property: 'formenable',
@@ -300,6 +333,11 @@ export default {
     border-color: var(--primary, #6366f1);
     box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.12);
   }
+
+  &--disconnected {
+    opacity: 0.7;
+    border-color: #e5e7eb;
+  }
 }
 
 .cfi-card-body {
@@ -370,6 +408,21 @@ export default {
     color: #6b7280;
     border: 1px solid #e5e7eb;
   }
+
+  &--disconnected {
+    background: #fff7ed;
+    color: #b45309;
+    border: 1px solid #fcd34d;
+  }
+}
+
+/* ── Not-connected hint ──────────────────────── */
+.cfi-not-connected-hint {
+  font-size: 12px;
+  color: #b45309;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* ── Card footer ─────────────────────────────── */
@@ -395,26 +448,140 @@ export default {
   color: #6b7280;
 }
 
-/* ── Dialog ──────────────────────────────────── */
+/* ── Dialog global overrides ─────────────────── */
+:deep(.cfi-dialog) {
+  border-radius: 14px;
+  overflow: hidden;
+
+  .el-dialog__header {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .el-dialog__body {
+    padding: 0 24px 8px;
+  }
+
+  .el-dialog__footer {
+    padding: 16px 24px 20px;
+    border-top: 1px solid #f3f4f6;
+    background: #fafafa;
+    border-radius: 0 0 14px 14px;
+  }
+}
+
+/* ── Dialog custom header ────────────────────── */
+.cfi-dlg-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px 18px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.cfi-dlg-header-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  i {
+    font-size: 20px;
+    color: #9ca3af;
+  }
+}
+
+.cfi-dlg-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cfi-dlg-title {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cfi-dlg-subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.cfi-dlg-close {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  i {
+    font-size: 14px;
+  }
+}
+
+/* ── Dialog body ─────────────────────────────── */
 .cfi-dialog-body {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-height: 65vh;
+  gap: 18px;
+  max-height: 60vh;
   overflow-y: auto;
-  padding-right: 4px;
+  padding: 20px 0 12px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 4px;
+  }
 }
 
 .cfi-dialog-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
 }
 
 .cfi-dialog-field-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 2px;
 }
 
 .cfi-dialog-label {
@@ -427,9 +594,10 @@ export default {
   position: relative;
 }
 
+/* ── Dialog footer ───────────────────────────── */
 .cfi-dialog-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
 }
 </style>
