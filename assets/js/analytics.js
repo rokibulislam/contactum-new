@@ -1834,6 +1834,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 const DEFAULT = {
@@ -1850,6 +1903,9 @@ const DEFAULT = {
   devices: [],
   top_forms: []
 };
+
+const fmt = d => d.toISOString().slice(0, 10);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Analytics',
   components: {
@@ -1859,15 +1915,120 @@ const DEFAULT = {
 
   data() {
     const today = new Date();
-    const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const thirtyAgo = new Date(today.getTime() - 29 * 86400000);
     return {
       loading: false,
       selectedFormId: null,
-      dateRange: [firstOfMonth.toISOString().slice(0, 10), today.toISOString().slice(0, 10)],
+      activePreset: '30D',
+      dateRange: [fmt(thirtyAgo), fmt(today)],
       forms: window.contactum.forms.forms || [],
       data: { ...DEFAULT
-      }
+      },
+      visible: {
+        views: true,
+        submissions: true,
+        abandonments: true
+      },
+      presets: [{
+        key: 'today',
+        label: 'Today'
+      }, {
+        key: '7D',
+        label: '7 Days'
+      }, {
+        key: '30D',
+        label: '30 Days'
+      }, {
+        key: 'MTD',
+        label: 'This Month'
+      }, {
+        key: 'last_month',
+        label: 'Last Month'
+      }],
+      seriesOptions: [{
+        key: 'views',
+        label: 'Views',
+        color: '#a78bfa'
+      }, {
+        key: 'submissions',
+        label: 'Submissions',
+        color: '#1a7efb'
+      }, {
+        key: 'abandonments',
+        label: 'Abandonments',
+        color: '#f59e0b'
+      }]
     };
+  },
+
+  computed: {
+    statCards() {
+      const d = this.data;
+      return [{
+        key: 'views',
+        icon: 'el-icon-view',
+        color: 'blue',
+        label: 'Total Views',
+        value: d.total_views
+      }, {
+        key: 'subs',
+        icon: 'el-icon-document',
+        color: 'green',
+        label: 'Submissions',
+        value: d.total_submissions
+      }, {
+        key: 'rate',
+        icon: 'el-icon-data-line',
+        color: 'purple',
+        label: 'Conversion Rate',
+        value: d.conversion_rate,
+        suffix: '%'
+      }, {
+        key: 'avg',
+        icon: 'el-icon-date',
+        color: 'amber',
+        label: 'Avg / Day',
+        value: d.avg_per_day
+      }, {
+        key: 'abnd',
+        icon: 'el-icon-s-release',
+        color: 'orange',
+        label: 'Abandonments',
+        value: d.total_abandonments
+      }, {
+        key: 'abndrate',
+        icon: 'el-icon-warning',
+        color: 'red',
+        label: 'Abandonment Rate',
+        value: d.abandonment_rate,
+        suffix: '%'
+      }];
+    },
+
+    engaged() {
+      return this.data.total_submissions + this.data.total_abandonments;
+    },
+
+    engagementRate() {
+      if (!this.data.total_views) return 0;
+      return Math.round(this.engaged / this.data.total_views * 100);
+    },
+
+    completionRate() {
+      if (!this.engaged) return 0;
+      return Math.round(this.data.total_submissions / this.engaged * 100);
+    },
+
+    overallRate() {
+      if (!this.data.total_views) return 0;
+      return Math.round(this.data.total_submissions / this.data.total_views * 100);
+    },
+
+    hasChartData() {
+      if (this.loading) return true;
+      return this.data.total_views > 0 || this.data.total_submissions > 0;
+    }
+
   },
 
   mounted() {
@@ -1875,6 +2036,47 @@ const DEFAULT = {
   },
 
   methods: {
+    applyPreset(preset) {
+      this.activePreset = preset.key;
+      const today = new Date();
+
+      switch (preset.key) {
+        case 'today':
+          this.dateRange = [fmt(today), fmt(today)];
+          break;
+
+        case '7D':
+          this.dateRange = [fmt(new Date(today.getTime() - 6 * 86400000)), fmt(today)];
+          break;
+
+        case '30D':
+          this.dateRange = [fmt(new Date(today.getTime() - 29 * 86400000)), fmt(today)];
+          break;
+
+        case 'MTD':
+          {
+            const first = new Date(today.getFullYear(), today.getMonth(), 1);
+            this.dateRange = [fmt(first), fmt(today)];
+            break;
+          }
+
+        case 'last_month':
+          {
+            const first = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const last = new Date(today.getFullYear(), today.getMonth(), 0);
+            this.dateRange = [fmt(first), fmt(last)];
+            break;
+          }
+      }
+
+      this.fetchData();
+    },
+
+    onDateChange() {
+      this.activePreset = '';
+      this.fetchData();
+    },
+
     fetchData() {
       const self = this;
       const payload = {
@@ -1895,11 +2097,9 @@ const DEFAULT = {
         data: payload,
 
         success(res) {
-          if (res.success) {
-            self.data = { ...DEFAULT,
-              ...res.data
-            };
-          }
+          if (res.success) self.data = { ...DEFAULT,
+            ...res.data
+          };
         },
 
         complete() {
@@ -2014,9 +2214,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 chart_js__WEBPACK_IMPORTED_MODULE_0__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_0__.Title, chart_js__WEBPACK_IMPORTED_MODULE_0__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_0__.Legend, chart_js__WEBPACK_IMPORTED_MODULE_0__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_0__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_0__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_0__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_0__.Filler);
+const SERIES = {
+  views: {
+    label: 'Views',
+    borderColor: '#a78bfa',
+    backgroundColor: 'rgba(167,139,250,0.10)'
+  },
+  submissions: {
+    label: 'Submissions',
+    borderColor: '#1a7efb',
+    backgroundColor: 'rgba(26,126,251,0.10)'
+  },
+  abandonments: {
+    label: 'Abandonments',
+    borderColor: '#f59e0b',
+    backgroundColor: 'rgba(245,158,11,0.08)'
+  }
+};
+
+function formatLabel(isoDate) {
+  const d = new Date(isoDate + 'T00:00:00');
+  return d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'LineChart',
   components: {
@@ -2038,48 +2265,48 @@ chart_js__WEBPACK_IMPORTED_MODULE_0__.Chart.register(chart_js__WEBPACK_IMPORTED_
     abandonments: {
       type: Array,
       default: () => []
+    },
+    visible: {
+      type: Object,
+      default: () => ({
+        views: true,
+        submissions: true,
+        abandonments: true
+      })
     }
   },
   computed: {
+    hasData() {
+      return this.labels.length > 0;
+    },
+
+    formattedLabels() {
+      return this.labels.map(formatLabel);
+    },
+
     chartData() {
-      return {
-        labels: this.labels,
-        datasets: [{
-          label: 'Views',
-          data: this.views,
-          borderColor: '#a78bfa',
-          backgroundColor: 'rgba(167,139,250,0.12)',
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.4,
-          fill: true
-        }, {
-          label: 'Submissions',
-          data: this.submissions,
-          borderColor: '#1a7efb',
-          backgroundColor: 'rgba(26,126,251,0.10)',
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.4,
-          fill: true
-        }, {
-          label: 'Abandonments',
-          data: this.abandonments,
-          borderColor: '#f59e0b',
-          backgroundColor: 'rgba(245,158,11,0.08)',
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.4,
-          fill: true
-        }]
+      const seriesMap = {
+        views: this.views,
+        submissions: this.submissions,
+        abandonments: this.abandonments
       };
-    }
+      const datasets = Object.keys(SERIES).filter(key => this.visible[key] !== false).map(key => ({ ...SERIES[key],
+        data: seriesMap[key] || [],
+        borderWidth: 2,
+        pointRadius: 3,
+        pointHoverRadius: 5,
+        tension: 0.4,
+        fill: true
+      }));
+      return {
+        labels: this.formattedLabels,
+        datasets
+      };
+    },
 
-  },
-
-  data() {
-    return {
-      options: {
+    chartOptions() {
+      const rawLabels = this.labels;
+      return {
         responsive: true,
         maintainAspectRatio: false,
         interaction: {
@@ -2088,11 +2315,26 @@ chart_js__WEBPACK_IMPORTED_MODULE_0__.Chart.register(chart_js__WEBPACK_IMPORTED_
         },
         plugins: {
           legend: {
-            display: true,
-            position: 'top'
+            display: false
           },
           tooltip: {
-            enabled: true
+            backgroundColor: '#1e1f21',
+            titleColor: '#e5e7eb',
+            bodyColor: '#d1d5db',
+            borderColor: '#374151',
+            borderWidth: 1,
+            padding: 10,
+            callbacks: {
+              title(items) {
+                const idx = items[0]?.dataIndex;
+                return rawLabels[idx] ? formatLabel(rawLabels[idx]) : '';
+              },
+
+              label(item) {
+                return `  ${item.dataset.label}: ${item.parsed.y}`;
+              }
+
+            }
           }
         },
         scales: {
@@ -2101,22 +2343,34 @@ chart_js__WEBPACK_IMPORTED_MODULE_0__.Chart.register(chart_js__WEBPACK_IMPORTED_
               display: false
             },
             ticks: {
+              color: '#9ca3af',
+              font: {
+                size: 11
+              },
               maxTicksLimit: 10,
               autoSkip: true
             }
           },
           y: {
             beginAtZero: true,
+            grid: {
+              color: 'rgba(0,0,0,.05)',
+              drawBorder: false
+            },
             ticks: {
+              color: '#9ca3af',
+              font: {
+                size: 11
+              },
               stepSize: 1,
               callback: v => Number.isInteger(v) ? v : null
             }
           }
         }
-      }
-    };
-  }
+      };
+    }
 
+  }
 });
 
 /***/ }),
@@ -3925,7 +4179,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "@charset \"UTF-8\";\n.ctm-analytics {\n  padding: 24px;\n  background: var(--background, #f8f9fa);\n  min-height: 100vh;\n  color: var(--foreground, #1e1f21);\n}\n\n/* ── Header ── */\n.ctm-analytics__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  gap: 12px;\n  margin-bottom: 24px;\n}\n.ctm-analytics__title {\n  margin: 0;\n  font-size: 22px;\n  font-weight: 600;\n  color: var(--foreground, #1e1f21);\n}\n.ctm-analytics__filters {\n  display: flex;\n  gap: 10px;\n  flex-wrap: wrap;\n  align-items: center;\n}\n.ctm-analytics__form-select {\n  width: 200px;\n}\n.ctm-analytics__datepicker {\n  width: 260px !important;\n}\n\n/* ── Stats grid ── */\n.ctm-stats-grid {\n  display: grid;\n  grid-template-columns: repeat(6, 1fr);\n  gap: 16px;\n  margin-bottom: 20px;\n}\n@media (max-width: 1200px) {\n.ctm-stats-grid {\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (max-width: 700px) {\n.ctm-stats-grid {\n    grid-template-columns: repeat(2, 1fr);\n}\n}\n.ctm-stat-card {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, 0.08);\n  padding: 20px;\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n.ctm-stat-card__icon {\n  width: 48px;\n  height: 48px;\n  border-radius: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 22px;\n  flex-shrink: 0;\n}\n.ctm-stat-card__icon--blue {\n  background: rgba(26, 126, 251, 0.12);\n  color: #1a7efb;\n}\n.ctm-stat-card__icon--green {\n  background: rgba(16, 185, 129, 0.12);\n  color: #10b981;\n}\n.ctm-stat-card__icon--purple {\n  background: rgba(139, 92, 246, 0.12);\n  color: #8b5cf6;\n}\n.ctm-stat-card__icon--amber {\n  background: rgba(245, 158, 11, 0.12);\n  color: #f59e0b;\n}\n.ctm-stat-card__icon--orange {\n  background: rgba(234, 88, 12, 0.12);\n  color: #ea580c;\n}\n.ctm-stat-card__icon--red {\n  background: rgba(220, 38, 38, 0.12);\n  color: #dc2626;\n}\n.ctm-stat-card__value {\n  font-size: 26px;\n  font-weight: 700;\n  line-height: 1.2;\n  color: var(--foreground, #1e1f21);\n}\n.ctm-stat-card__label {\n  font-size: 13px;\n  color: #6b7280;\n  margin-top: 2px;\n}\n\n/* ── Chart card ── */\n.ctm-chart-card {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, 0.08);\n  margin-bottom: 20px;\n  overflow: hidden;\n}\n.ctm-chart-card--half {\n  margin-bottom: 0;\n  flex: 1 1 0;\n  min-width: 0;\n}\n.ctm-chart-card__head {\n  padding: 16px 20px 12px;\n  border-bottom: 1px solid #f0f0f0;\n}\n.ctm-chart-card__title {\n  font-weight: 600;\n  font-size: 15px;\n  color: var(--foreground, #1e1f21);\n}\n.ctm-chart-card__body {\n  padding: 20px;\n  min-height: 80px;\n}\n\n/* ── Bottom row ── */\n.ctm-bottom-row {\n  display: flex;\n  gap: 20px;\n  flex-wrap: wrap;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n.ctm-analytics {\n  padding: 24px;\n  background: #f4f6f9;\n  min-height: 100vh;\n  color: #1e1f21;\n}\n\n/* ── Header ─────────────────────────────────────────────────────────────────── */\n.ctm-analytics__header {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  gap: 16px;\n  margin-bottom: 24px;\n}\n.ctm-analytics__title {\n  margin: 0 0 4px;\n  font-size: 22px;\n  font-weight: 700;\n  color: #111827;\n}\n.ctm-analytics__subtitle {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n.ctm-analytics__controls {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  flex-wrap: wrap;\n}\n.ctm-analytics__form-select {\n  width: 180px;\n}\n.ctm-analytics__datepicker {\n  width: 240px !important;\n}\n\n/* quick preset pills */\n.ctm-date-presets {\n  display: flex;\n  gap: 4px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  padding: 3px;\n}\n.ctm-preset-btn {\n  padding: 4px 10px;\n  border-radius: 6px;\n  border: none;\n  background: transparent;\n  font-size: 12px;\n  font-weight: 500;\n  color: #6b7280;\n  cursor: pointer;\n  transition: all 0.15s;\n  white-space: nowrap;\n}\n.ctm-preset-btn:hover {\n  background: #f3f4f6;\n  color: #374151;\n}\n.ctm-preset-btn--active {\n  background: #2563eb;\n  color: #fff;\n}\n\n/* ── Stat cards ─────────────────────────────────────────────────────────────── */\n.ctm-stats-grid {\n  display: grid;\n  grid-template-columns: repeat(6, 1fr);\n  gap: 14px;\n  margin-bottom: 20px;\n}\n@media (max-width: 1200px) {\n.ctm-stats-grid {\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (max-width: 700px) {\n.ctm-stats-grid {\n    grid-template-columns: repeat(2, 1fr);\n}\n}\n.ctm-stat-card {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);\n  padding: 18px 16px;\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  transition: box-shadow 0.15s;\n}\n.ctm-stat-card:hover {\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\n}\n.ctm-stat-card__icon {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 20px;\n  flex-shrink: 0;\n}\n.ctm-stat-card__icon--blue {\n  background: rgba(26, 126, 251, 0.1);\n  color: #1a7efb;\n}\n.ctm-stat-card__icon--green {\n  background: rgba(16, 185, 129, 0.1);\n  color: #10b981;\n}\n.ctm-stat-card__icon--purple {\n  background: rgba(139, 92, 246, 0.1);\n  color: #8b5cf6;\n}\n.ctm-stat-card__icon--amber {\n  background: rgba(245, 158, 11, 0.1);\n  color: #f59e0b;\n}\n.ctm-stat-card__icon--orange {\n  background: rgba(234, 88, 12, 0.1);\n  color: #ea580c;\n}\n.ctm-stat-card__icon--red {\n  background: rgba(220, 38, 38, 0.1);\n  color: #dc2626;\n}\n.ctm-stat-card__value {\n  font-size: 24px;\n  font-weight: 700;\n  line-height: 1.2;\n  color: #111827;\n}\n.ctm-stat-card__label {\n  font-size: 12px;\n  color: #6b7280;\n  margin-top: 3px;\n}\n\n/* ── Conversion funnel ──────────────────────────────────────────────────────── */\n.ctm-funnel-card {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  margin-bottom: 20px;\n  overflow: hidden;\n}\n.ctm-funnel-card__head {\n  display: flex;\n  align-items: baseline;\n  gap: 10px;\n  padding: 16px 20px 12px;\n  border-bottom: 1px solid #f0f0f0;\n}\n.ctm-funnel-card__title {\n  font-weight: 600;\n  font-size: 15px;\n  color: #111827;\n}\n.ctm-funnel-card__sub {\n  font-size: 12px;\n  color: #9ca3af;\n}\n.ctm-funnel-card__body {\n  padding: 24px 20px;\n}\n.ctm-funnel {\n  display: flex;\n  flex-direction: column;\n  gap: 0;\n  max-width: 560px;\n  margin: 0 auto;\n}\n.ctm-funnel__step {\n  display: grid;\n  grid-template-columns: 120px 1fr 48px;\n  align-items: center;\n  gap: 16px;\n}\n.ctm-funnel__step-meta {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n}\n.ctm-funnel__step-num {\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1.2;\n}\n.ctm-funnel__step-label {\n  font-size: 12px;\n  color: #6b7280;\n  font-weight: 500;\n}\n.ctm-funnel__bar-track {\n  height: 10px;\n  background: #f3f4f6;\n  border-radius: 10px;\n  overflow: hidden;\n}\n.ctm-funnel__bar-fill {\n  height: 100%;\n  border-radius: 10px;\n  transition: width 0.6s ease;\n}\n.ctm-funnel__bar-fill--blue {\n  background: linear-gradient(90deg, #a78bfa, #1a7efb);\n}\n.ctm-funnel__bar-fill--amber {\n  background: linear-gradient(90deg, #fbbf24, #f59e0b);\n}\n.ctm-funnel__bar-fill--green {\n  background: linear-gradient(90deg, #34d399, #10b981);\n}\n.ctm-funnel__step-pct {\n  font-size: 12px;\n  font-weight: 600;\n  color: #374151;\n  text-align: right;\n  white-space: nowrap;\n}\n.ctm-funnel__connector {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 6px 0 6px 48px;\n}\n.ctm-funnel__connector-icon {\n  font-size: 12px;\n  color: #9ca3af;\n}\n.ctm-funnel__connector-rate {\n  font-size: 11px;\n  font-weight: 600;\n  color: #6b7280;\n  background: #f3f4f6;\n  padding: 2px 8px;\n  border-radius: 20px;\n}\n\n/* ── Chart card ─────────────────────────────────────────────────────────────── */\n.ctm-chart-card {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  margin-bottom: 20px;\n  overflow: hidden;\n}\n.ctm-chart-card--half {\n  margin-bottom: 0;\n  flex: 1 1 0;\n  min-width: 0;\n}\n.ctm-chart-card__head {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  gap: 10px;\n  padding: 16px 20px 12px;\n  border-bottom: 1px solid #f0f0f0;\n}\n.ctm-chart-card__title {\n  font-weight: 600;\n  font-size: 15px;\n  color: #111827;\n}\n.ctm-chart-card__body {\n  padding: 20px;\n  min-height: 80px;\n}\n\n/* series toggle pills */\n.ctm-series-toggles {\n  display: flex;\n  gap: 6px;\n  flex-wrap: wrap;\n}\n.ctm-series-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 4px 12px 4px 8px;\n  border-radius: 20px;\n  border: 1px solid #e5e7eb;\n  background: #fff;\n  font-size: 12px;\n  font-weight: 500;\n  color: #6b7280;\n  cursor: pointer;\n  transition: all 0.15s;\n}\n.ctm-series-btn:hover {\n  border-color: #93c5fd;\n  color: #374151;\n}\n.ctm-series-btn--on {\n  border-color: #e5e7eb;\n  color: #374151;\n}\n.ctm-series-btn:not(.ctm-series-btn--on) {\n  opacity: 0.45;\n}\n.ctm-series-dot {\n  width: 8px;\n  height: 8px;\n  border-radius: 50%;\n  flex-shrink: 0;\n  transition: background 0.15s;\n}\n\n/* ── Bottom row ─────────────────────────────────────────────────────────────── */\n.ctm-bottom-row {\n  display: flex;\n  gap: 20px;\n  flex-wrap: wrap;\n}\n@media (max-width: 900px) {\n.ctm-bottom-row .ctm-chart-card--half {\n    flex: 1 1 100%;\n}\n}\n\n/* conversion bar in top-forms table */\n.ctm-conv-cell {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.ctm-conv-bar {\n  flex: 1;\n  height: 6px;\n  background: #f3f4f6;\n  border-radius: 6px;\n  overflow: hidden;\n  min-width: 40px;\n}\n.ctm-conv-bar__fill {\n  height: 100%;\n  background: linear-gradient(90deg, #34d399, #10b981);\n  border-radius: 6px;\n  transition: width 0.4s ease;\n}\n.ctm-conv-pct {\n  font-size: 12px;\n  font-weight: 600;\n  color: #374151;\n  white-space: nowrap;\n  min-width: 36px;\n  text-align: right;\n}\n\n/* ── Empty state ────────────────────────────────────────────────────────────── */\n.ctm-empty-state {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  min-height: 260px;\n  gap: 10px;\n  color: #9ca3af;\n}\n.ctm-empty-state--sm {\n  min-height: 120px;\n}\n.ctm-empty-state__icon {\n  font-size: 36px;\n  opacity: 0.4;\n}\n.ctm-empty-state__text {\n  font-size: 13px;\n  margin: 0;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -3959,7 +4213,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.ctm-linechart-wrap[data-v-712b28e6] {\n    height: 300px;\n}\n", ""]);
+exports.push([module.id, "\n.ctm-linechart-wrap[data-v-712b28e6] {\n    height: 300px;\n    position: relative;\n}\n.ctm-linechart-empty[data-v-712b28e6] {\n    height: 300px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    color: #9ca3af;\n    font-size: 13px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -75269,11 +75523,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ctm-analytics" }, [
     _c("div", { staticClass: "ctm-analytics__header" }, [
-      _c("h1", { staticClass: "ctm-analytics__title" }, [_vm._v("Analytics")]),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "ctm-analytics__filters" },
+        { staticClass: "ctm-analytics__controls" },
         [
           _c(
             "el-select",
@@ -75302,6 +75556,30 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "ctm-date-presets" },
+            _vm._l(_vm.presets, function(p) {
+              return _c(
+                "button",
+                {
+                  key: p.key,
+                  class: [
+                    "ctm-preset-btn",
+                    { "ctm-preset-btn--active": _vm.activePreset === p.key }
+                  ],
+                  on: {
+                    click: function($event) {
+                      return _vm.applyPreset(p)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(p.label))]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
           _c("el-date-picker", {
             staticClass: "ctm-analytics__datepicker",
             attrs: {
@@ -75312,7 +75590,7 @@ var render = function() {
               format: "yyyy-MM-dd",
               "value-format": "yyyy-MM-dd"
             },
-            on: { change: _vm.fetchData },
+            on: { change: _vm.onDateChange },
             model: {
               value: _vm.dateRange,
               callback: function($$v) {
@@ -75326,94 +75604,190 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "ctm-stats-grid" }, [
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.total_views))
-          ]),
+    _c(
+      "div",
+      { staticClass: "ctm-stats-grid" },
+      _vm._l(_vm.statCards, function(stat) {
+        return _c("div", { key: stat.key, staticClass: "ctm-stat-card" }, [
+          _c(
+            "div",
+            {
+              class: [
+                "ctm-stat-card__icon",
+                "ctm-stat-card__icon--" + stat.color
+              ]
+            },
+            [_c("i", { class: stat.icon })]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Total Views")
+          _c("div", { staticClass: "ctm-stat-card__body" }, [
+            _c("div", { staticClass: "ctm-stat-card__value" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.loading ? "—" : stat.value + (stat.suffix || "")) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ctm-stat-card__label" }, [
+              _vm._v(_vm._s(stat.label))
+            ])
           ])
         ])
-      ]),
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ctm-funnel-card" }, [
+      _vm._m(1),
       _vm._v(" "),
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.total_submissions))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Submissions")
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          staticClass: "ctm-funnel-card__body"
+        },
+        [
+          _c("div", { staticClass: "ctm-funnel" }, [
+            _c("div", { staticClass: "ctm-funnel__step" }, [
+              _c("div", { staticClass: "ctm-funnel__step-meta" }, [
+                _c("span", { staticClass: "ctm-funnel__step-num" }, [
+                  _vm._v(_vm._s(_vm.data.total_views))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "ctm-funnel__step-label" }, [
+                  _vm._v("Views")
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("span", { staticClass: "ctm-funnel__step-pct" }, [
+                _vm._v("100%")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ctm-funnel__connector" }, [
+              _c("i", {
+                staticClass: "el-icon-arrow-down ctm-funnel__connector-icon"
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ctm-funnel__connector-rate" }, [
+                _vm._v(_vm._s(_vm.engagementRate) + "% engaged")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ctm-funnel__step" }, [
+              _c("div", { staticClass: "ctm-funnel__step-meta" }, [
+                _c("span", { staticClass: "ctm-funnel__step-num" }, [
+                  _vm._v(_vm._s(_vm.engaged))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "ctm-funnel__step-label" }, [
+                  _vm._v("Started")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ctm-funnel__bar-track" }, [
+                _c("div", {
+                  staticClass:
+                    "ctm-funnel__bar-fill ctm-funnel__bar-fill--amber",
+                  style: { width: _vm.engagementRate + "%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "ctm-funnel__step-pct" }, [
+                _vm._v(_vm._s(_vm.engagementRate) + "%")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ctm-funnel__connector" }, [
+              _c("i", {
+                staticClass: "el-icon-arrow-down ctm-funnel__connector-icon"
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ctm-funnel__connector-rate" }, [
+                _vm._v(_vm._s(_vm.completionRate) + "% completed")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ctm-funnel__step" }, [
+              _c("div", { staticClass: "ctm-funnel__step-meta" }, [
+                _c("span", { staticClass: "ctm-funnel__step-num" }, [
+                  _vm._v(_vm._s(_vm.data.total_submissions))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "ctm-funnel__step-label" }, [
+                  _vm._v("Submitted")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ctm-funnel__bar-track" }, [
+                _c("div", {
+                  staticClass:
+                    "ctm-funnel__bar-fill ctm-funnel__bar-fill--green",
+                  style: { width: _vm.overallRate + "%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "ctm-funnel__step-pct" }, [
+                _vm._v(_vm._s(_vm.overallRate) + "%")
+              ])
+            ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.conversion_rate + "%"))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Conversion Rate")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.avg_per_day))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Avg. Submissions / Day")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(4),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.total_abandonments))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Abandonments")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ctm-stat-card" }, [
-        _vm._m(5),
-        _vm._v(" "),
-        _c("div", { staticClass: "ctm-stat-card__body" }, [
-          _c("div", { staticClass: "ctm-stat-card__value" }, [
-            _vm._v(_vm._s(_vm.loading ? "—" : _vm.data.abandonment_rate + "%"))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ctm-stat-card__label" }, [
-            _vm._v("Abandonment Rate")
-          ])
-        ])
-      ])
+        ]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "ctm-chart-card" }, [
-      _vm._m(6),
+      _c("div", { staticClass: "ctm-chart-card__head" }, [
+        _c("span", { staticClass: "ctm-chart-card__title" }, [
+          _vm._v("Views vs Submissions")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "ctm-series-toggles" },
+          _vm._l(_vm.seriesOptions, function(s) {
+            return _c(
+              "button",
+              {
+                key: s.key,
+                class: [
+                  "ctm-series-btn",
+                  { "ctm-series-btn--on": _vm.visible[s.key] }
+                ],
+                on: {
+                  click: function($event) {
+                    _vm.visible[s.key] = !_vm.visible[s.key]
+                  }
+                }
+              },
+              [
+                _c("span", {
+                  staticClass: "ctm-series-dot",
+                  style: {
+                    background: _vm.visible[s.key] ? s.color : "#d1d5db"
+                  }
+                }),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(s.label) +
+                    "\n                "
+                )
+              ]
+            )
+          }),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -75429,14 +75803,25 @@ var render = function() {
           staticClass: "ctm-chart-card__body"
         },
         [
-          _c("LineChart", {
-            attrs: {
-              labels: _vm.data.labels,
-              submissions: _vm.data.submissions,
-              views: _vm.data.views,
-              abandonments: _vm.data.abandonments
-            }
-          })
+          _vm.hasChartData
+            ? _c("LineChart", {
+                attrs: {
+                  labels: _vm.data.labels,
+                  submissions: _vm.data.submissions,
+                  views: _vm.data.views,
+                  abandonments: _vm.data.abandonments,
+                  visible: _vm.visible
+                }
+              })
+            : _c("div", { staticClass: "ctm-empty-state" }, [
+                _c("i", {
+                  staticClass: "el-icon-data-line ctm-empty-state__icon"
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "ctm-empty-state__text" }, [
+                  _vm._v("No activity in the selected period")
+                ])
+              ])
         ],
         1
       )
@@ -75444,7 +75829,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "ctm-bottom-row" }, [
       _c("div", { staticClass: "ctm-chart-card ctm-chart-card--half" }, [
-        _vm._m(7),
+        _vm._m(3),
         _vm._v(" "),
         _c(
           "div",
@@ -75465,7 +75850,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "ctm-chart-card ctm-chart-card--half" }, [
-        _vm._m(8),
+        _vm._m(4),
         _vm._v(" "),
         _c(
           "div",
@@ -75481,72 +75866,101 @@ var render = function() {
             staticClass: "ctm-chart-card__body"
           },
           [
-            _c(
-              "el-table",
-              {
-                staticStyle: { width: "100%" },
-                attrs: { data: _vm.data.top_forms, size: "small" }
-              },
-              [
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "form_name",
-                    label: "Form",
-                    "min-width": "120",
-                    "show-overflow-tooltip": ""
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "views",
-                    label: "Views",
-                    width: "62",
-                    align: "right"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "submissions",
-                    label: "Subs",
-                    width: "62",
-                    align: "right"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "abandonments",
-                    label: "Abnd",
-                    width: "62",
-                    align: "right"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { label: "Rate", width: "62", align: "right" },
-                  scopedSlots: _vm._u([
+            _vm.data.top_forms && _vm.data.top_forms.length
+              ? [
+                  _c(
+                    "el-table",
                     {
-                      key: "default",
-                      fn: function(ref) {
-                        var row = ref.row
-                        return [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(row.conversion_rate) +
-                              "%\n                        "
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                })
-              ],
-              1
-            )
+                      staticStyle: { width: "100%" },
+                      attrs: { data: _vm.data.top_forms, size: "small" }
+                    },
+                    [
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "form_name",
+                          label: "Form",
+                          "min-width": "110",
+                          "show-overflow-tooltip": ""
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "views",
+                          label: "Views",
+                          width: "56",
+                          align: "right"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "submissions",
+                          label: "Subs",
+                          width: "56",
+                          align: "right"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "Conversion", "min-width": "110" },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var row = ref.row
+                                return [
+                                  _c("div", { staticClass: "ctm-conv-cell" }, [
+                                    _c("div", { staticClass: "ctm-conv-bar" }, [
+                                      _c("div", {
+                                        staticClass: "ctm-conv-bar__fill",
+                                        style: {
+                                          width:
+                                            Math.min(row.conversion_rate, 100) +
+                                            "%"
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "ctm-conv-pct" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(row.conversion_rate) + "%"
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          909018866
+                        )
+                      })
+                    ],
+                    1
+                  )
+                ]
+              : _c(
+                  "div",
+                  { staticClass: "ctm-empty-state ctm-empty-state--sm" },
+                  [
+                    _c("i", {
+                      staticClass: "el-icon-document ctm-empty-state__icon"
+                    }),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "ctm-empty-state__text" }, [
+                      _vm._v("No submissions yet")
+                    ])
+                  ]
+                )
           ],
-          1
+          2
         )
       ])
     ])
@@ -75557,70 +75971,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--blue" },
-      [_c("i", { staticClass: "el-icon-view" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--green" },
-      [_c("i", { staticClass: "el-icon-document" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--purple" },
-      [_c("i", { staticClass: "el-icon-data-line" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--amber" },
-      [_c("i", { staticClass: "el-icon-date" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--orange" },
-      [_c("i", { staticClass: "el-icon-s-release" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "ctm-stat-card__icon ctm-stat-card__icon--red" },
-      [_c("i", { staticClass: "el-icon-warning" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ctm-chart-card__head" }, [
-      _c("span", { staticClass: "ctm-chart-card__title" }, [
-        _vm._v("Views vs Submissions")
+    return _c("div", { staticClass: "ctm-analytics__header-left" }, [
+      _c("h1", { staticClass: "ctm-analytics__title" }, [_vm._v("Analytics")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "ctm-analytics__subtitle" }, [
+        _vm._v("Track views, submissions and conversions across your forms")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ctm-funnel-card__head" }, [
+      _c("div", [
+        _c("span", { staticClass: "ctm-funnel-card__title" }, [
+          _vm._v("Conversion Funnel")
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "ctm-funnel-card__sub" }, [
+          _vm._v("How visitors move from view to submission")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ctm-funnel__bar-track" }, [
+      _c("div", {
+        staticClass: "ctm-funnel__bar-fill ctm-funnel__bar-fill--blue",
+        staticStyle: { width: "100%" }
+      })
     ])
   },
   function() {
@@ -75705,9 +76088,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ctm-linechart-wrap" }, [
-    _c("Line", {
-      attrs: { "chart-options": _vm.options, "chart-data": _vm.chartData }
-    })
+    _vm.hasData
+      ? _c("Line", {
+          attrs: {
+            "chart-options": _vm.chartOptions,
+            "chart-data": _vm.chartData
+          }
+        })
+      : _c("div", { staticClass: "ctm-linechart-empty" }, [
+          _vm._v("No data to display")
+        ])
   ])
 }
 var staticRenderFns = []
