@@ -11,8 +11,8 @@ jobs:
 
       - name: Build
         run: |
-          npm install
-          grunt zip
+          npm install --legacy-peer-deps
+          npx grunt clean copy
 
       - name: WordPress Plugin Deploy
         uses: nk-o/action-wordpress-plugin-deploy@master
