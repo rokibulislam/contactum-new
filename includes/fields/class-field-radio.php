@@ -37,13 +37,25 @@ class Field_Radio extends Field_Checkbox {
                         foreach ( $field_settings['options'] as $value => $option ) { ?>
                             <label>
                             <?php
-                                printf( '<input name="%s" class="%s" type="radio" value="%s" %s/>',
-                                    esc_attr( $field_settings['name'] ),
-                                    esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
-                                    esc_attr( $option['value'] ),
-                                    ( $option['value'] == $selected ) ? ' checked="checked"' : '',
-                                    // checked( $selected, $option['value'] )
-                                );
+
+                                if( isset($field_settings['calc_value']) && $field_settings['calc_value'] == true ) {
+                                    printf( '<input name="%s" class="%s" type="radio" value="%s" %s data-calc_value="%s"/>',
+                                        esc_attr( $field_settings['name'] ),
+                                        esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
+                                        esc_attr( $option['value'] ),
+                                        ( $option['value'] == $selected ) ? ' checked="checked"' : '',
+                                        // checked( $selected, $option['value'] )
+                                        esc_attr( $option['calc_value'] )
+                                    );
+                                } else {
+                                    printf( '<input name="%s" class="%s" type="radio" value="%s" %s/>',
+                                        esc_attr( $field_settings['name'] ),
+                                        esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
+                                        esc_attr( $option['value'] ),
+                                        ( $option['value'] == $selected ) ? ' checked="checked"' : '',
+                                        // checked( $selected, $option['value'] )
+                                    ); 
+                                }
                                 
                                 if( $option['photo'] != "" && $field_settings['photo_value'] == 1 ) {
                                   printf( '<img src="%s"/>',
@@ -66,6 +78,7 @@ class Field_Radio extends Field_Checkbox {
     public function get_field_props() {
         $defaults = $this->default_attributes();
         $props    = [
+            'calc_value' => false,
             'selected' => '',
             'inline'   => 'no',
             'layout'   => 'default',
@@ -78,20 +91,20 @@ class Field_Radio extends Field_Checkbox {
                     'label' => 'option',
                     'value' => 'option',
                     'photo' => '',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-2',
                     'value' => 'option-2',
                     'photo' => '',
+                    'calc_value' => 0,
                 ],
                 [
                     'label' => 'option-3',
                     'value' => 'option-3',
                     'photo' => '',
+                    'calc_value' => 0,
                 ],
-                // 'Option' => __( 'option', 'contactum' ),
-                // 'Option-2' => __( 'option-2', 'contactum' ),
-                // 'Option-3' => __( 'option-3', 'contactum' ),
             ],
         ];
 

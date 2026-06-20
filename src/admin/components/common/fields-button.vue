@@ -21,42 +21,6 @@
       ></i>
       {{ field_settings[field].title }}
     </li>
-<!--    -->
-<!--    <li-->
-<!--        v-if="is_failed_to_validate(field)"-->
-<!--        v-for="(field, index) in fields"-->
-<!--        @click="alert_invalidate_msg(field)"-->
-<!--        class="panel-button button-faded"-->
-<!--        :key="index"-->
-<!--        :data-form-field="field"-->
-<!--        data-source="panel"-->
-<!--    >-->
-<!--      <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--      {{ field_settings[field].title}}-->
-<!--    </li>-->
-
-<!--  <li-->
-<!--      v-if="!is_pro_feature(field) && !is_failed_to_validate(field)"-->
-<!--      v-for="(field, index) in fields"-->
-<!--      @click="add_field(field)"-->
-<!--      class="panel-button"-->
-<!--      :key="index"-->
-<!--      :data-form-field="field"-->
-<!--      data-source="panel"-->
-<!--  >-->
-<!--    <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--    {{ field_settings[field].title}} </li>-->
-<!--  <li-->
-<!--      v-if="is_pro_feature(field)"-->
-<!--      v-for="(field, index) in fields"-->
-<!--      @click="alert_pro_feature(field)"-->
-<!--      class="panel-button button-faded"-->
-<!--      :key="index"-->
-<!--      :data-form-field="field"-->
-<!--  >-->
-<!--    <i v-if="field_settings[field].icon" :class="['fa fa-' + field_settings[field].icon]" aria-hidden="true"></i>-->
-<!--    {{ field_settings[field].title}}-->
-<!--  </li>-->
   </ul>
 
     <ProFeature
@@ -111,13 +75,21 @@ export default {
           helper: "clone",
           revert: "invalid",
           cancel: ".button-faded",
-          start(event, ui) {
-          }
+          start() {}
         })
         .disableSelection();
   },
 
   methods: {
+
+    is_pro_feature(field) {
+      return !!this.field_settings[field]?.is_pro;
+    },
+
+    is_failed_to_validate(field) {
+      const validator = this.field_settings[field]?.validator;
+      return !!(validator && validator.is_valid === false);
+    },
 
     handleClick(field) {
       if (this.is_failed_to_validate(field)) {
@@ -219,7 +191,7 @@ validator.msg,
 
 .panel-form-field-buttons li {
   display: inline-block;
-  width: 47%;
+  width: 31%;
   /* width: 125px; */
   margin-right: 10px;
   text-align: center;
@@ -240,7 +212,7 @@ validator.msg,
 
 ul.panel-form-field-buttons li:hover{
   /* background: #7e3bd0; */
-  background: #409EFF;
+  background: var(--primary);
   color: #fff;
 }
 

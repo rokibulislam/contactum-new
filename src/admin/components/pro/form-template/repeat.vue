@@ -53,5 +53,8 @@ export default {
     gap: 15px
 }
 
+.contactum-column-field-inner-columns .contactum-column li {
+  flex: 1;
+}
 
 </style>

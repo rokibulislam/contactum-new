@@ -1,0 +1,40 @@
+.el-button--primary {
+    background-color: var(--primary) !important;
+}
+
+.el-button--danger {
+  background-color: #DC2727  !important;
+}
+
+.el-table thead .cell {
+    color: hsl(var(--foreground)) !important;
+}
+
+.el-table .el-table__cell {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 12px 0;
+    position: relative;
+    text-align: left;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.el-icon-circle-plus-outline {
+    font-size: 24px;
+    color: #5cb85c;
+    cursor: pointer;
+
+    &:hover {
+      color: #449d44;
+    }
+}
+
+.el-icon-remove-outline {
+    color: #d9534f;
+    font-size: 20px;
+    cursor: pointer;
+    & :hover {
+        color: #c9302c;
+    }
+}

@@ -1,33 +1,25 @@
 <template>
   <div>
-    <label class="contactum-label">{{ 'Scale Range' }}</label>
-
-    <div class="panel-field">
-      <div class="name-field-placeholder">
-        <label class="contactum-label">{{ 'From' }}</label>
-        <el-input-number v-model="editfield.scale_range.from" controls-position="right" min="1" />
+      <div class="input-item">
+        <label class="contactum-label">{{ 'Scale From' }}</label>
+        <el-input-number class="full-width" v-model="editfield.scale_range.from" controls-position="right" min="1" />
       </div>
 
-      <div class="name-field-value">
-        <label class="contactum-label">{{ 'To' }}</label>
-        <el-input-number v-model="editfield.scale_range.to" controls-position="right" min="editfield.scale_range.from" />
+      <div class="input-item">
+        <label class="contactum-label">{{ 'Scale To' }}</label>
+        <el-input-number class="full-width" v-model="editfield.scale_range.to" controls-position="right" min="editfield.scale_range.from" />
       </div>
-    </div>
 
-    <label class="contactum-label">{{ 'Scale Text' }}</label>
-
-    <div class="panel-field-opt panel-field-name clearfix panel-field">
-
-      <div class="name-field-placeholder">
-        <label class="contactum-label">{{ 'First Text' }}</label>
+      <div class="input-item">
+        <label class="contactum-label">{{ 'Scale First Text' }}</label>
         <el-input v-model="editfield.scale_text.first" />
       </div>
 
-      <div class="name-field-value">
-        <label class="contactum-label">{{ 'Last Text' }}</label>
+      <div class="input-item">
+        <label class="contactum-label">{{ 'Scale Last Text' }}</label>
         <el-input v-model="editfield.scale_text.last" />
       </div>
-    </div>
+
   </div>
 </template>
 
@@ -53,11 +45,27 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 
-.panel-field {
-  display: flex;
-  justify-content: space-between;
+.input-item {
+  margin-bottom: 20px;
+}
+
+
+/* Target the component wrapper */
+.full-width {
+  width: 100% !important;
+}
+
+/* Ensure the internal input container also takes full width */
+.full-width :deep(.el-input) {
+  width: 100%;
+}
+
+/* Optional: Align text to the left if preferred when wide */
+.full-width :deep(.el-input__inner) {
+  text-align: left;
+  padding-left: 15px;
 }
 
 </style>

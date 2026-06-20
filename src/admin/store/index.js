@@ -195,13 +195,7 @@ const store = new Vuex.Store({
 				return;
 			}
 
-			// if ('field-options' === state.current_panel && field.id === state.editing_field_id) {
-			// 	return;
-			// }
-
 			if (field) {
-				// state.editing_field_id = 0;
-				// state.current_panel = 'field-options';
 				state.current_panel = 'field_options';
 				state.editing_field_type = 'column_field';
 				state.editing_column_field_id = payload.field_id;

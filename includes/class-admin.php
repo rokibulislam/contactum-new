@@ -90,11 +90,14 @@ class Admin {
 
          $integration = add_submenu_page( $slug, __( 'Integrations', 'contactum' ), esc_html__( 'Integrations', 'contactum' ),$capability, 'contactum-integrations', [ $this, 'integration_page' ] );
 
+        $analytics = add_submenu_page( $slug, __( 'Analytics', 'contactum' ), esc_html__( 'Analytics', 'contactum' ), $capability, 'contactum-analytics', [ $this, 'analytics_page' ] );
+
         do_action( 'contactum_admin_menu', $slug );
 
 //         add_action( 'load-' . $integration, array( $this, 'load_addon_scripts' ) );
 
         add_action( 'load-' . $contactum_entries, array( $this, 'load_entries_scripts' ) );
+        add_action( 'load-' . $analytics,         array( $this, 'load_analytics_scripts' ) );
 
         add_action( 'load-' . $tools, array( $this, 'load_tools_scripts' ) );
 
@@ -124,6 +127,10 @@ class Admin {
         }
 */      
 
+?>
+
+        <div class="contactum_page_view">
+<?php 
         if( empty( $route ) ) {
             include __DIR__ . '/html/menu.php';
         }
@@ -134,7 +141,13 @@ class Admin {
          </div>
 
 
+        </div>
+
      <style>
+
+        .contactum_page_view {
+            background: #F8F9FA;
+        }
 
          #contactum-admin-forms {
              padding-left: 24px;
@@ -178,86 +191,268 @@ class Admin {
     public function settings_page() {
         include __DIR__ . '/html/menu.php';
         ?>
-        <div class="contactum_settings_wrap">
-          <div class="contactum_settings_sidebar_wrap">
-            <span class="contactum_sidebar_toggle" title="Toggle Setting"> <i class="ff-icon ff-icon-arrow-right"></i></span>
-            <div class="contactum_settings_sidebar contactum_layout_section_sidebar">
-              <ul class="contactum_settings_list contactum_list_button">
 
 
-              <!--
 
-                <li class="contactum_list_button_item has_sub_menu ">
-                  <a class="contactum_list_button_link" href="#">General</a>
-                  <ul class="contactum_list_submenu" >
-                    <li><a class="contactum-page-scroll" data-component="settings" data-section-id="#settings" data-hash="settings" href="#">Layout</a></li>
-                  </ul>
+<div class="contactum-settings">
+
+  <div class="contactum-settings__sidebar-wrap">
+    <aside class="contactum-settings__sidebar">
+
+      <div class="contactum-settings__sidebar-brand">
+        <span class="dashicons dashicons-admin-settings"></span>
+        <span><?php esc_html_e( 'Settings', 'contactum' ); ?></span>
+      </div>
+
+      <ul class="contactum-settings__menu">
+
+        <!-- Security -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu contactum-settings__menu-item--active">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-shield-alt"></span>
+            <?php esc_html_e( 'Security', 'contactum' ); ?>
+          </span>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="google_recaptcha"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#google_recaptcha' ) ); ?>"
+                data-component="reCaptcha"
+                data-settings_key="google_recaptcha"
+              >
+                <span class="dashicons dashicons-shield"></span>
+                <?php esc_html_e( 'Google reCAPTCHA', 'contactum' ); ?>
+              </a>
+            </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="hcaptcha"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#hcaptcha' ) ); ?>"
+                data-component="hCaptcha"
+                data-settings_key="hcaptcha"
+              >
+                <span class="dashicons dashicons-lock"></span>
+                <?php esc_html_e( 'hCaptcha', 'contactum' ); ?>
+              </a>
+            </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="turnstile"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#turnstile' ) ); ?>"
+                data-component="turnstile"
+                data-settings_key="turnstile"
+              >
+                <span class="dashicons dashicons-cloud"></span>
+                <?php esc_html_e( 'Turnstile', 'contactum' ); ?>
+              </a>
+            </li>
+
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="cleantalk"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#cleantalk' ) ); ?>"
+                data-component="CleanTalkSettings"
+                data-settings_key="cleantalk"
+              >
+                <span class="dashicons dashicons-shield-alt"></span>
+                <?php esc_html_e( 'CleanTalk', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Tracking -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-chart-line"></span>
+            <?php esc_html_e( 'Tracking', 'contactum' ); ?>
+          </span>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="abandonment"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#abandonment' ) ); ?>"
+                data-component="AbandonmentSettings"
+                data-settings_key="abandonment"
+              >
+                <span class="dashicons dashicons-migrate"></span>
+                <?php esc_html_e( 'Abandonment', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <?php
+        $integrations = contactum()->integrations->get_integration_js_settings();
+        if ( ! empty( $integrations ) ) : ?>
+
+          <!-- Integrations -->
+          <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+            <span class="contactum-settings__group-label">
+              <span class="dashicons dashicons-admin-plugins"></span>
+              <?php esc_html_e( 'Integrations', 'contactum' ); ?>
+            </span>
+
+            <ul class="contactum-settings__submenu">
+              <?php foreach ( $integrations as $integration ) :
+                $section = $integration['sections'];
+                $url     = admin_url( 'admin.php?page=contactum-settings#' . $section['id'] );
+              ?>
+                <li class="contactum-settings__menu-item">
+                  <a
+                    data-hash="<?php echo esc_attr( $section['id'] ); ?>"
+                    href="<?php echo esc_url( $url ); ?>"
+                    data-component="<?php echo esc_attr( $section['component'] ); ?>"
+                    data-settings_key="<?php echo esc_attr( $section['id'] ); ?>"
+                  >
+                    <span class="dashicons dashicons-admin-generic"></span>
+                    <?php echo esc_html( $section['name'] ); ?>
+                  </a>
                 </li>
+              <?php endforeach; ?>
+            </ul>
+          </li>
 
-                <li class="contactum_list_button_item has_sub_menu ">
-                  <a class="contactum_list_button_link" href="#">Payment</a>
-                  <ul class="contactum_list_submenu" >
-                    <li><a class="contactum-page-scroll" data-component="PaymentSettings" data-section-id="#PaymentSettings" data-hash="PaymentSettings" href="#PaymentSettings">Settings</a></li>
-                    <li><a class="contactum-page-scroll" data-component="coupon" data-section-id="#coupon" data-hash="coupon" href="#coupon">Coupon</a></li>
-                  
-                </ul>
-                </li>
-              -->
+        <?php endif; ?>
 
-                <li class="contactum_list_button_item has_sub_menu">
-                  <a class="contactum_list_button_link" href="#"> Security </a>
-                  <ul class="contactum_list_submenu">
-                  <li class="contactum_list_button_item">
-                      <a data-hash="google_recaptcha" 
-                      href="<?php echo admin_url('admin.php?page=contactum-settings#google_recaptcha'); ?>" 
-                      data-component="reCaptcha"
-                       data-settings_key="google_recaptcha">Google reCAPTCHA</a>
-                  </li>
-                  <li class="contactum_list_button_item">
-                      <a data-hash="hcaptcha" href="<?php echo admin_url('admin.php?page=contactum-settings#hcaptcha'); ?>" 
-                      data-component="hCaptcha"
-                      data-settings_key="hcaptcha">hCaptcha</a>
-                  </li>
-                  <li class="contactum_list_button_item">
-                      <a data-hash="turnstile" href="<?php echo admin_url('admin.php?page=contactum-settings#turnstile'); ?>" 
-                      data-component="turnstile" data-settings_key="turnstile">turnstile</a>
-                  </li>
-                  </ul>
-                </li>
+        <!-- Payments -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-money-alt"></span>
+            <?php esc_html_e( 'Payments', 'contactum' ); ?>
+          </span>
 
-              <?php
-                  $integrations = contactum()->integrations->get_integration_js_settings();
-                  if( !empty( $integrations ) ) { ?>
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="payment_settings"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#payment_settings' ) ); ?>"
+                data-component="PaymentSettings"
+                data-settings_key="payment_settings"
+              >
+                <span class="dashicons dashicons-category"></span>
+                <?php esc_html_e( 'Payment Method', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
 
-                <li class="contactum_list_button_item has_sub_menu">
-                  <a class="contactum_list_button_link" href="#"> Configure Integrations </a>
-                  <ul class="contactum_list_submenu has_sub_menu">
-                      <?php
-                      foreach( $integrations as  $integration ) {
-                          $section = $integration['sections'];
-                          $url = admin_url("admin.php?page=contactum-settings#". $section['id'] );
-                      ?>
-                        <li class="contactum_list_button_item">
-                            <a data-hash="<?php echo  $section['id']; ?>"
-                            href="<?php echo  $url; ?>"
-                            data-component="<?php echo $section['component']; ?>" data-settings_key="<?php echo  $section['id']; ?>"><?php echo $section['name'] ; ?></a>
-                        </li>
-                      <?php } ?>
-                   </ul>
-                </li>
+        <?php do_action( 'contactum_settings_sidebar_sections' ); ?>
 
-                <?php  } ?>
-              </ul>
-            </div>
-          </div>
+      </ul>
+    </aside>
+  </div>
 
-           <div class="settings_content">
-               <div id="contactum-admin-settings">
-                     <router-view></router-view>
-               </div>
-            </div>
+  <!-- Content -->
+  <div class="contactum-settings__content">
+    <div id="contactum-admin-settings">
+      <router-view></router-view>
+    </div>
+  </div>
 
-        </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var COLLAPSED   = 'is-collapsed';
+  var HAS_ACTIVE  = 'has-active-child';
+  var ITEM_SEL    = '.contactum-settings__menu-item--has-submenu';
+  var LABEL_SEL   = '.contactum-settings__group-label';
+  var LINK_SEL    = '.contactum-settings__submenu a[data-component]';
+  var ACTIVE_CLS  = 'active';
+
+  function init() {
+    var sidebar = document.querySelector('.contactum-settings__sidebar');
+    if (!sidebar) return;
+
+    var groups = sidebar.querySelectorAll(ITEM_SEL);
+
+    // ── Wire up click-to-toggle on each group label ──────────────────────
+    groups.forEach(function (group) {
+      var label = group.querySelector(':scope > ' + LABEL_SEL);
+      if (!label) return;
+
+      label.addEventListener('click', function () {
+        var isNowCollapsed = group.classList.toggle(COLLAPSED);
+
+        // Collapse all other groups when this one is expanded
+        if (!isNowCollapsed) {
+          groups.forEach(function (other) {
+            if (other !== group) {
+              other.classList.add(COLLAPSED);
+              var otherKey = 'ctm_sidebar_' + groupKey(other);
+              sessionStorage.setItem(otherKey, '1');
+            }
+          });
+        }
+
+        updateActiveChild(group);
+
+        // Persist collapse state in sessionStorage so refresh keeps it
+        var key = 'ctm_sidebar_' + groupKey(group);
+        sessionStorage.setItem(key, isNowCollapsed ? '1' : '0');
+      });
+
+      // Restore saved state
+      var key = 'ctm_sidebar_' + groupKey(group);
+      var saved = sessionStorage.getItem(key);
+      if (saved === '1') {
+        group.classList.add(COLLAPSED);
+      }
+    });
+
+    // ── Mark groups that contain the current active link ─────────────────
+    markActiveGroups(sidebar);
+
+    // ── Observe future active-class changes (set by settings.js) ─────────
+    var observer = new MutationObserver(function () {
+      markActiveGroups(sidebar);
+    });
+    var submenuLinks = sidebar.querySelectorAll(LINK_SEL);
+    submenuLinks.forEach(function (link) {
+      observer.observe(link, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+
+  function markActiveGroups(sidebar) {
+    var groups = sidebar.querySelectorAll(ITEM_SEL);
+    groups.forEach(function (group) {
+      updateActiveChild(group);
+    });
+  }
+
+  function updateActiveChild(group) {
+    var hasActive = !!group.querySelector(LINK_SEL + '.' + ACTIVE_CLS);
+    group.classList.toggle(HAS_ACTIVE, hasActive);
+
+    // Auto-expand the group that contains the active link
+    if (hasActive && group.classList.contains(COLLAPSED)) {
+      group.classList.remove(COLLAPSED);
+      var key = 'ctm_sidebar_' + groupKey(group);
+      sessionStorage.setItem(key, '0');
+    }
+  }
+
+  function groupKey(group) {
+    var label = group.querySelector(':scope > ' + LABEL_SEL);
+    return label ? label.textContent.trim().replace(/\s+/g, '_').toLowerCase() : Math.random();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+
 
         <?php
     }
@@ -267,6 +462,28 @@ class Admin {
         ?>
         <div id="contactum-admin-integration"> </div>
         <?php
+    }
+
+    public function analytics_page() {
+        include __DIR__ . '/html/menu.php';
+        ?>
+        <div id="contactum-admin-analytics">
+            <router-view></router-view>
+        </div>
+        <?php
+    }
+
+    public function load_analytics_scripts() {
+        wp_register_script( 'contactum-analytics', CONTACTUM_ASSETS . '/js/analytics.js', [ 'jquery' ], CONTACTUM_VERSION, true );
+        wp_enqueue_script( 'contactum-analytics' );
+        wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style( 'contactum-admin-extra' );
+
+        wp_localize_script( 'contactum-analytics', 'contactum', [
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
+            'forms'   => contactum()->forms->all(),
+        ] );
     }
 
     public function load_addon_scripts() {
@@ -279,6 +496,7 @@ class Admin {
         wp_enqueue_script( 'contactum-entries' );
 
         wp_enqueue_style('contactum-admin');
+        wp_enqueue_style('contactum-admin-extra');
 
         wp_localize_script( 'contactum-entries', 'contactum', [
             'forms'   => contactum()->forms->all(),
@@ -294,6 +512,7 @@ class Admin {
         wp_enqueue_script( 'contactum-tools' );
 
         wp_enqueue_style('contactum-admin');
+        wp_enqueue_style('contactum-admin-extra');
 
         wp_localize_script( 'contactum-tools', 'contactum', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -307,6 +526,7 @@ class Admin {
         wp_register_script( 'contactum-settings', CONTACTUM_ASSETS . '/js/settings.js', ['jquery'], CONTACTUM_VERSION, true );
         wp_enqueue_script( 'contactum-settings' );
 
+
         wp_localize_script( 'contactum-settings', 'contactum', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
@@ -315,6 +535,8 @@ class Admin {
         ] );
 
         wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style('contactum-admin-extra');
+
     }
 
     public function load_form_scripts() {
@@ -337,5 +559,6 @@ class Admin {
         ] );
 
         wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style('contactum-admin-extra');
     }
 }

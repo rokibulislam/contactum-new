@@ -3,9 +3,7 @@
       <label class="contactum-label">{{ field.title }}</label>
       <ul class="list-inline">
         <li v-for="(option, key) in field.options">
-          <label>
             <el-radio :label="key" v-model="value"> {{  option }} </el-radio>
-          </label>
         </li>
       </ul>
       <div v-if=" value === 'yes' "> 
@@ -41,3 +39,11 @@ export default {
   }
 };
 </script>
+
+<style lang="css" scoped>
+
+.list-inline li {
+    margin-right: 30px;
+}
+
+</style>

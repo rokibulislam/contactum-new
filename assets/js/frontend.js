@@ -5,12 +5,165 @@
             $('.contactum-form-add').on('submit', this.formSubmit);
             $('.contactum-form').on('click', 'span.contactum-clone-field', this.cloneField);
             $('.contactum-form').on('click', 'span.contactum-remove-field', this.removeField);
+            
 
             var formId = $("input[name='form_id']").val();
             var formEl = document.getElementById(`contactum_form_${formId}`);
 
-            jQuery(document.body).trigger(`contactum_init_${formId}`, [formEl]);
+            // jQuery(document.body).trigger(`contactum_init_${formId}`, [formEl]);
+
+            var self = this;
+            if (formEl) {
+
+                var result;
+                
+
+                jQuery(document.body).on(`contactum_init_${formId}`, function(event, form) {
+                    
+                    $(formEl).on('change', 'select[data-choice="active"]', function () {
+                        $(this).trigger('input');
+                    });
+                    
+                    $(formEl).on('change input', 'input, select', function() {
+                        var scope = self.calculateScopeByName(form, formEl);
+                        console.log('Updated scope:', scope);
+
+                        $(form).find('[data-calculation="true"]').each(function () {
+                            var $input = $(this);
+                            var fieldName = $input.attr('name');
+
+                            var calculationObj = contactumCalculationObj.calculation_vars.formulas;
+
+                            // Get formula for this field
+                            var formula = calculationObj[fieldName];
+                            if (!formula) return;
+
+
+                            try {
+                                // Evaluate with Math.js
+                                var result = math.evaluate(formula, scope);
+
+                                // Normalize result
+                                if (typeof result === 'number' && isFinite(result)) {
+                                    $input.val(result);
+                                } else {
+                                    $input.val(0);
+                                }
+
+                            } catch (e) {
+                                console.error('Calculation error for', fieldName, e.message);
+                            }
+
+
+                        });
+
+
+                        // var expression = 'radio * checkbox * dropdown';
+                        // var result = math.evaluate(expression, scope);
+
+                        // $(formEl)
+                        //         .find('[data-calculation="true"]')
+                        //         .each(function () {
+                        //             $(this).val(result);
+                        //         });
+                    });
+
+                    console.log( contactumCalculationObj.calculation_vars.formulas );
+                });
+
+
+
+
+                jQuery(document.body).trigger(`contactum_init_${formId}`, [formEl]);
+
+            } else {
+                console.warn("Form not found, cannot trigger contactum_init");
+            }
+
         },
+
+        calculateScopeByName: function(form2, formEl) {
+            var form = $(formEl);
+    var scope = {};
+    // ----- Radios -----
+    var processedRadioGroups = [];
+    form.find('input[type=radio]').each(function() {
+        var name = $(this).attr('name');
+        if (processedRadioGroups.includes(name)) return;
+
+        var selected = form.find(`input[name="${name}"]:checked`);
+        var val = selected.length ? parseFloat(selected.data('calc_value')) || 0 : 0;
+        scope[name] = val;
+
+        processedRadioGroups.push(name);
+    });
+
+    // ----- Checkboxes -----
+    var processedCheckboxGroups = [];
+    form.find('input[type=checkbox]').each(function() {
+        var name = $(this).attr('name');
+        if (processedCheckboxGroups.includes(name)) return;
+
+        var checked = form.find(`input[name="${name}"]:checked`);
+        var sum = 0;
+        checked.each(function() {
+            sum += parseFloat($(this).data('calc_value')) || 0;
+        });
+         name = name.replace(/\[\]/g, '').replace(/\W/g, '_');
+        scope[name] = sum;
+        processedCheckboxGroups.push(name);
+    });
+
+    // ----- Dropdowns -----
+    // form.find('select').each(function() {
+    //     var name = $(this).attr('name');
+    //     var selected = $(this).find('option:selected');
+    //     var val = parseFloat(selected.data('calc_value')) || 0;
+    //     scope[name] = val;
+    // });
+
+// ----- Dropdowns (single + multiple) -----
+form.find('select').each(function() {
+    var name = $(this).attr('name');
+    var isMultiple = $(this).prop('multiple');
+    var val = 0;
+
+    if (isMultiple) {
+        $(this).find('option:selected').each(function() {
+            val += parseFloat($(this).data('calc_value')) || 0;
+        });
+
+        // normalize name (like checkboxes)
+        name = name.replace(/\[\]/g, '').replace(/\W/g, '_');
+    } else {
+        var selected = $(this).find('option:selected');
+        val = parseFloat(selected.data('calc_value')) || 0;
+    }
+
+    scope[name] = val;
+});
+
+
+    // ----- Text / number inputs -----
+    form.find('input[type=number]').each(function() {
+        var name = $(this).attr('name');
+        var calculation = $(this).attr('calculation');
+        if( calculation ) {
+            var val = parseFloat($(this).val());
+            scope[name] = val;
+        }
+    });
+
+    return scope;
+},
+
+getDefaultValue: function(name, formula) {
+    const addPattern = new RegExp(`\\+\\s*${name}|${name}\\s*\\+`);
+    const mulPattern = new RegExp(`\\*\\s*${name}|${name}\\s*\\*`);
+
+    if (mulPattern.test(formula)) return 1; // neutral for *
+    return 0; // neutral for +
+},
 
         formSubmit: function(e) {
             e.preventDefault();

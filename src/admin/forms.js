@@ -5,6 +5,8 @@ import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 locale.use(lang);
 
+import '../styles/main.scss';
+
 import {
     Dropdown,
     DropdownItem,
@@ -35,7 +37,9 @@ import {
     FormItem,
     Tooltip,
     Card,
-    Popover
+    Popover,
+    InputNumber,
+    Tag
 } from 'element-ui';
 
 Vue.use(Popover);
@@ -65,6 +69,8 @@ Vue.use(DatePicker);
 Vue.use(Skeleton);
 Vue.use(SkeletonItem);
 Vue.use(Dialog);
+Vue.use(InputNumber)
+Vue.use(Tag)
 
 
 import VueSweetalert2 from 'vue-sweetalert2';

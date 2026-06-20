@@ -44,3 +44,39 @@ export const handleSidebarActiveLink = ($link, init = false, firstLoad = false) 
         $link.siblings().find('.contactum_list_submenu').slideUp();
     }
 }
+
+
+
+
+export const handleSidebarSettingsActiveLink = ($anchorOrItem) => {
+  // Accept either an <a> or its parent <li>; always work with the <a>
+  const $anchor = $anchorOrItem.is('a')
+    ? $anchorOrItem
+    : $anchorOrItem.find('> a').first();
+
+  if (!$anchor.length) return;
+
+  // 1. Deactivate every link, then activate the target
+  jQuery('.contactum-settings__menu a').removeClass('active');
+  $anchor.addClass('active');
+
+  // 2. Expand the active group; collapse all others
+  const $group = $anchor.closest('.contactum-settings__menu-item--has-submenu');
+
+  jQuery('.contactum-settings__menu-item--has-submenu').each(function () {
+    const $g = jQuery(this);
+    if ($group.length && $g.is($group)) {
+      // Expand this group
+      $g.removeClass('is-collapsed');
+      const $label = $g.find('> .contactum-settings__group-label').first();
+      const key = 'ctm_sidebar_' + $label.text().trim().replace(/\s+/g, '_').toLowerCase();
+      try { sessionStorage.setItem(key, '0'); } catch (_) {}
+    } else {
+      // Collapse all other groups
+      $g.addClass('is-collapsed');
+      const $label = $g.find('> .contactum-settings__group-label').first();
+      const key = 'ctm_sidebar_' + $label.text().trim().replace(/\s+/g, '_').toLowerCase();
+      try { sessionStorage.setItem(key, '1'); } catch (_) {}
+    }
+  });
+};

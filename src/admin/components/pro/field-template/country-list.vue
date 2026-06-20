@@ -176,7 +176,7 @@ export default {
 
 <style scoped>
   .panel-field-option-select {
-    margin-top: 5px;
+    margin-top: 20px;
   }
     .panel-field-option-select label {
         display: block;

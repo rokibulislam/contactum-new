@@ -13,143 +13,70 @@ class Field_Address extends  Contactum_Field {
 
     public function render( $field_settings, $form_id ) {
 
-        wp_enqueue_script( 'jquery-ui-autocomplete' );
-
-        wp_register_script( 'custom_map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCKWDThF0zcAHSzWe3tvNfZwcu-AQiItzM&libraries=places', [], '1.0', true );
-        wp_enqueue_script( 'custom_map' );
-        
-        $country_select_show_list = isset( $field_settings['address']['country_select']['country_select_show_list'] )  ? $field_settings['address']['country_select']['country_select_show_list'] : [];
-        $country_select_hide_list = isset(  $field_settings['address']['country_select']['country_select_hide_list'] ) ? $field_settings['address']['country_select']['country_select_hide_list'] : [];
-        $list_visibility_option   = $field_settings['address']['country_select']['country_list_visibility_opt_name'];
+        $country_show   = isset( $field_settings['address']['country_select']['country_select_show_list'] )
+            ? $field_settings['address']['country_select']['country_select_show_list'] : [];
+        $country_hide   = isset( $field_settings['address']['country_select']['country_select_hide_list'] )
+            ? $field_settings['address']['country_select']['country_select_hide_list'] : [];
+        $visibility     = $field_settings['address']['country_select']['country_list_visibility_opt_name'] ?? 'all';
     ?>
         <li <?php $this->print_list_attributes( $field_settings ); ?>>
             <?php $this->print_label( $field_settings ); ?>
             <div class="contactum-fields address-fields">
-                <?php foreach( $field_settings['address'] as $each_field => $field_array ) {
-                        $field_name = $field_settings['name'] . '[' . $each_field . ']' ;
-                    if ( isset( $field_array['checked'] ) && !empty( $field_array['checked'] ) ) {
+                <?php foreach ( $field_settings['address'] as $sub_key => $sub ) :
+                    $field_name = $field_settings['name'] . '[' . $sub_key . ']';
+                    if ( empty( $sub['checked'] ) ) continue;
+                    $required_attr = ! empty( $sub['required'] ) ? 'required' : '';
                 ?>
-                        <div class="contactum-sub-fields">
-                            <label class="contact-form-sub-label">  <?php echo $field_array['label']; ?>
-                                <span class="required"><?php echo ( isset( $field_array['required'] ) && !empty($field_array['required']) ) ? '*' : ''; ?></span>
-                            </label>
+                    <div class="contactum-sub-fields">
+                        <label class="contact-form-sub-label">
+                            <?php echo esc_html( $sub['label'] ); ?>
+                            <?php if ( ! empty( $sub['required'] ) ) : ?>
+                                <span class="required">*</span>
+                            <?php endif; ?>
+                        </label>
+
+                        <?php if ( in_array( $sub['type'], [ 'text', 'hidden', 'email', 'password' ], true ) ) : ?>
+                            <input
+                                type="<?php echo esc_attr( $sub['type'] ); ?>"
+                                name="<?php echo esc_attr( $field_name ); ?>"
+                                value=""
+                                placeholder="<?php echo esc_attr( $sub['placeholder'] ?? '' ); ?>"
+                                class="textfield contactum-el-form-control"
+                                size="40"
+                                data-subfield="<?php echo esc_attr( $sub_key ); ?>"
+                                <?php echo $required_attr; ?>
+                            />
+
+                        <?php elseif ( $sub['type'] === 'select' && $sub_key === 'country_select' ) :
+                            $select_class = 'ctm-country-' . absint( $form_id ) . '-' . esc_attr( $field_settings['name'] );
+                        ?>
+                            <select
+                                name="<?php echo esc_attr( $field_name ); ?>"
+                                data-required="<?php echo esc_attr( $field_settings['required'] ?? '' ); ?>"
+                                data-type="select"
+                                data-subfield="country_select"
+                                class="contactum-el-form-control <?php echo esc_attr( $select_class ); ?>">
+                            </select>
                             <?php
+                            $countries     = contactum_get_countries();
+                            $option_string = '<option value="-1">Select Country</option>';
 
-                                if ( in_array( $field_array['type'], array( 'text', 'hidden', 'email', 'password') ) ) {
-                                    $required = isset( $field_array['required'] ) && !empty( $field_array['required'] ) ? 'required' : '';
-                                    printf('<input type="%s" name="%s" value="%s" placeholder="%s" class="textfield contactum-el-form-control %s" size="40" autocomplete="%s" %s/>',
-                                        $field_array['type'],
-                                        $field_name,
-                                        "",
-                                        $field_array['placeholder'],
-                                        'contactum_map_autocomplete',
-                                        "",
-                                        $required
-                                    );
-                                } elseif ( in_array( $field_array['type'],array( 'select') ) ) {
-                                    if ( $each_field == 'country_select' ) {
-                                        printf('<select
-                                            name="%s"
-                                            data-required="%s"
-                                            data-type="select"
-                                            class="contactum-el-form-control %s">
-                                            </select>',
-                                            $field_name,
-                                            $field_settings['required'],
-                                            $field_name . $form_id
-                                        );
-
-                                        $countries         = contactum_get_countries();
-                                        $banned_countries  = $country_select_hide_list;
-                                        $allowed_countries =  $country_select_show_list;
-                                        $sel_country       = !empty( $value ) ? $value : '' ;
-                                        $option_string     = '<option value="-1">Select Country</option>';
-
-                                        if ( $list_visibility_option == 'hide' ) {
-                                            foreach ( $countries as $country ) {
-                                                if ( in_array( $country['code'], $banned_countries ) ) {
-                                                    continue;
-                                                }
-                                                $selected = ( $sel_country == $country['code'] ) ? 'selected':'';
-                                                $option_string .= "<option value=\"{$country['code']}\" { $selected } > {$country['name']}  </option>";
-                                            }
-                                        } else if ( $list_visibility_option == 'show' ) {
-                                            foreach ( $countries as $country ) {
-                                                if ( in_array( $country['code'], $allowed_countries )  ) {
-                                                    $selected = ( $sel_country == $country['code'] ) ? 'selected':'';
-                                                    $option_string .= "<option value=\"{$country['code']}\" { $selected } > {$country['name']}  </option>";
-                                                }
-                                            }
-                                        } else {
-                                            foreach ( $countries as $country ) {
-                                                $selected = ( $sel_country == $country['code'] ) ? 'selected':'';
-                                                $option_string .= "<option value=\"{$country['code']}\" { $selected } > {$country['name']}  </option>";
-                                            }
-                                        }
-
-
-
-
-                                        $script = "jQuery(document).ready(function($){
-                                            var field_name =`{$field_name}`;
-                                            $('select[name=\"'+ field_name +'\"]').html(`{$option_string}`);
-
-            $( '.contactum_map_autocomplete' ).autocomplete({
-                source: function (request, response) {
-                    if( request.term.length > 1 ) {
-                        const geocoder = new google.maps.Geocoder();
-                        geocoder.geocode({ address: request.term }, function (results, status) {
-                            if (status === google.maps.GeocoderStatus.OK) {
-                                response(
-                                    $.map(results, function (item) {
-                                        
-                                        let postalCode, city, country;
-                                        
-                                        for (var i = 0; i < item.address_components.length; i++) {
-                                            var component = item.address_components[i];
-                                            
-                                            if (component.types.includes('postal_code')) {
-                                              postalCode = component.long_name;
-                                            } else if (component.types.includes('locality')) {
-                                              city = component.long_name;
-                                            } else if (component.types.includes('country')) {
-                                              country = component.long_name;
-                                            }
-                                        }
-
-
-                                        return {
-                                            label: item.formatted_address,
-                                            value: item.formatted_address,
-                                            location: item.geometry.location,
-                                            postcode: postalCode,
-                                            city: city,
-                                            country: country,
-                                        };
-                                    })
+                            foreach ( $countries as $country ) {
+                                if ( $visibility === 'hide' && in_array( $country['code'], $country_hide, true ) ) continue;
+                                if ( $visibility === 'show' && ! in_array( $country['code'], $country_show, true ) ) continue;
+                                $option_string .= sprintf(
+                                    '<option value="%s">%s</option>',
+                                    esc_attr( $country['code'] ),
+                                    esc_html( $country['name'] )
                                 );
                             }
-                        });
-                    }
-                },
 
-                select: function (event, ui) {
-                    $('#EventZip').val(ui.item.postcode);
-                    $('#EventCountry').val(ui.item.country).trigger('change');
-                    $('input [name=\'address[street_address]\']').val(ui.item.formatted_address);
-                    $('input [name=\'address[city_name]\']').val(ui.item.city);
-                }
-            });
-
-                                        });";
-
-                                       wp_add_inline_script( 'contactum-frontend', $script );
-                                    }
-                               }
-                            ?>
-                        </div>
-                    <?php }
-                } ?>
+                            $json_opts = wp_json_encode( $option_string );
+                            $script    = "(function(){var s=document.querySelector('select.{$select_class}');if(s)s.innerHTML={$json_opts};})();";
+                            wp_add_inline_script( 'contactum-frontend', $script );
+                        endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </li>
     <?php }
@@ -180,21 +107,13 @@ class Field_Address extends  Contactum_Field {
             'enable_g_map'  => false,
             'save_coordinates' => false,
             'address_desc'  => '',
+            'autocomplete_provider' => '',
             'address'       => array(
                 'street_address'    => array(
                     'checked'       => 'checked',
                     'type'          => 'text',
                     'required'      => true,
-                    'label'         => __( 'Address Line 1', 'contactum' ),
-                    'value'         => '',
-                    'placeholder'   => ''
-                ),
-
-                'street_address2'   => array(
-                    'checked'       => 'checked',
-                    'type'          => 'text',
-                    'required'      => false,
-                    'label'         => __( 'Address Line 2', 'contactum' ),
+                    'label'         => __( 'Address', 'contactum' ),
                     'value'         => '',
                     'placeholder'   => ''
                 ),

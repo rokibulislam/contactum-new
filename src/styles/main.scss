@@ -1,0 +1,15 @@
+/* src/styles/main.scss */
+
+// Main admin SCSS
+@import '../admin/pages/Form.scss';
+@import './components/common.scss';
+
+
+@import './components/settings.scss';
+
+
+@import './components/fields/option-field.scss';
+@import './components/fields/conditional.scss';
+@import './components/element.scss';
+@import './components/table.scss';
+@import './components/card.scss';

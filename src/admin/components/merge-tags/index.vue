@@ -34,7 +34,7 @@
                     </li>
                   </template>
 
-                    <li v-for="smarttag in smart_tags">
+                    <li v-for="smarttag in smart_tags" v-if="!calculate">
                       <span class="group-title">{{ smarttag.title }}</span>
                         <ul v-if="smarttag.tags">
                             <li class="el-dropdown-menu__item" v-for="(tag,index)  in smarttag.tags" @click.prevent="insertField(index)" :key="index"> {{ tag }} </li>
@@ -62,6 +62,14 @@
             fieldsonly: {
                 type: Boolean,
                 default: false
+            },
+            formFields: {
+              type: Array,
+              default: null
+            },
+            calculate: {
+              type: Boolean,
+              default: false
             }
         },
         data: function() {
@@ -77,7 +85,10 @@
 
             form_fields: function () {
               var template = this.filter,
-                  fields = this.$store.state.form_fields;
+                  // fields = this.$store.state.form_fields;
+                  fields = Array.isArray(this.formFields)
+                  ? this.formFields
+                  : this.$store.state.form_fields;
 
               if (template !== null) {
                 return fields.filter(function(item) {

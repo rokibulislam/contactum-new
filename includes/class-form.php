@@ -172,16 +172,23 @@ class Form {
      * @return array
      */
     public function get_integrations() {
-        $integrations =  get_post_meta( $this->id, 'integrations', true );
-        $default =  contactum()->integrations->get_integration_js_settings();
+        $integrations = get_post_meta( $this->id, 'integrations', true );
+        $default      = contactum()->integrations->get_integration_js_settings();
 
-        // $modify = array_merge( $default, $integrations);
+        if ( empty( $integrations ) ) {
+            return $default;
+        }
 
-        $modify = $this->deep_merge_objects( $default, $integrations );
-           error_log(print_r( $integrations, true));
-            error_log(print_r( $default, true));
-        // return $default;
-        return $modify;
+        $merged = $this->deep_merge_objects( $default, $integrations );
+
+        // Always use live global value (status, api keys) — never stale post-meta copy.
+        foreach ( $default as $id => $settings ) {
+            if ( isset( $merged[ $id ] ) ) {
+                $merged[ $id ]['value'] = $settings['value'];
+            }
+        }
+
+        return $merged;
     }
 
     public function entries() {

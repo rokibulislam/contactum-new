@@ -12,7 +12,7 @@ locale.use(lang);
 
 
 
-import { 
+import {
     Row,
     Col,
     Button,
@@ -25,11 +25,12 @@ import {
     Option,
     Radio,
     Table,
-    TableColumn, 
+    TableColumn,
     Switch,
     Pagination,
     Loading,
     Message,
+    MessageBox,
     Notification,
     DatePicker,
     Skeleton,
@@ -54,6 +55,8 @@ Vue.use(TableColumn);
 Vue.use(DatePicker);
 Vue.use(Skeleton);
 Vue.use(SkeletonItem);
+Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox.confirm;
 
 import Entries from './pages/Entries.vue'
 import Entry from './pages/Entry.vue'

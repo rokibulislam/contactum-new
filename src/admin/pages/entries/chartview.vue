@@ -106,11 +106,11 @@ export default {
 
 <style scoped>
 .chart-container {
-    background-color: #fff;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    box-shadow: 0 2px 3px 0 hsla(0, 0%, 51%, .1);
-    padding: 24px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 2px 3px 0 hsla(0, 0%, 51%, .1);
+  padding: 24px;
   width: 100%;
   height: 400px; /* Set desired height here */
   margin-bottom: 30px;

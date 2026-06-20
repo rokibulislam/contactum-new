@@ -104,6 +104,12 @@
               <ul v-if="settings"
                 :class="[ 'contactum-form', 'sortable-list', 'form-label-' + settings.label_position]"
               >
+
+            <li v-if="!form_fields.length" class="empty-state">
+              <h3>Start building your form</h3>
+              <p>Drag fields from the right panel to begin.</p>
+            </li>
+
                 <li
                   v-for="(field, index) in form_fields"
                   :key="index"
@@ -195,8 +201,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import  ProFeature from '../dialog/ProFeature.vue'
+import ProFeature from '../dialog/ProFeature.vue'
 import { v4 as uuidv4 } from "uuid";
 import draggable from "vuedraggable";
 import form_notifications from "../form-notifications/index.vue";
@@ -244,9 +249,12 @@ import form_total from "../pro/form-template/total.vue";
 import form_single_product from "../pro/form-template/single-product.vue";
 import form_multiple_product from "../pro/form-template/multiple-product.vue";
 import form_payment_method from "../pro/form-template/payment-method.vue";
+import form_payment_summary from "../pro/form-template/payment-summary.vue";
 import form_rating_field from "../pro/form-template/rating.vue";
 import form_repeat_field from "../pro/form-template/repeat.vue";
 import form_column_field from "../form-templates/column.vue";
+import form_range_slider_field from "../form-templates/range-slider.vue";
+import form_color_picker from "../form-templates/color.vue";
 import form_subscription_field from "../pro/form-template/subscription.vue";
 import form_coupon_field from "../pro/form-template/coupon.vue";
 
@@ -296,6 +304,7 @@ export default {
     form_single_product,
     form_multiple_product,
     form_payment_method,
+    form_payment_summary,
     form_rating_field,
     form_math_captcha,
     form_submit_field,
@@ -306,6 +315,8 @@ export default {
     form_turnstile,
     form_subscription_field,
     form_coupon_field,
+    form_range_slider_field,
+    form_color_picker,
     RenameForm,
     EmbedModal,
     ProFeature
@@ -371,14 +382,13 @@ export default {
     },
     // makeActive: function (tab, event) {
     makeActive: async function (tab) {
-      var self = this;
       this.activeTab = tab;
       if (tab === 'integrations' && (!this.integrations || Object.keys(this.integrations).length === 0)) {
         jQuery.post(window.contactum.ajaxurl, {
           action: 'contactum_get_integrations',
           post_id: this.id,
           _ajax_nonce: window.contactum.nonce
-        }, (response, textStatus, xhr) => {
+        }, (response) => {
           if (response.success) {
             this.$store.dispatch("set_form_integrations", response.data);
           }
@@ -485,34 +495,21 @@ export default {
 
     save_form_builder() {
       this.loading = true;
-      var self = this;
 
-      /*
       const payload = {
         action: "save_contactum_form",
-        form_data: new FormData(document.getElementById("contactum-form-builder")),
+        form_data: jQuery("#contactum-form-builder").serialize(),
         form_fields: JSON.stringify(this.form_fields),
         notifications: JSON.stringify(this.notifications),
         settings: JSON.stringify(this.settings),
         integrations: JSON.stringify(this.integrations),
         contactum_form_builder_nonce: contactum.nonce,
       };
-      */
-
-      const payload = {
-          action: "save_contactum_form",
-        form_data: jQuery("#contactum-form-builder").serialize(),
-          form_fields: JSON.stringify(this.form_fields),
-          notifications: JSON.stringify(this.notifications),
-          settings: JSON.stringify(this.settings),
-          integrations: JSON.stringify(this.integrations),
-          contactum_form_builder_nonce: contactum.nonce,
-      };
 
       jQuery.post(
         contactum.ajaxurl,
         payload,
-        (response, textStatus, xhr) => {
+        (response) => {
             this.loading = false;
 
           if (response.data.form_fields) {
@@ -589,12 +586,9 @@ export default {
         items: ".field-items",
         handle: ".control-button .move",
         scroll: true,
-        activate: function (event, ui) {
-
-        },
-        over: function () {
-        },
-        update: function (e, ui) {
+        activate: function() {},
+        over: function() {},
+        update: function (_, ui) {
           var item = ui.item[0],
               data = item.dataset,
               source = data.source,
@@ -633,11 +627,9 @@ export default {
       post_id: postId,
       _ajax_nonce: nonce
     },
-    (response, textStatus, xhr) => {
+    (response) => {
       if (response.success) {
         this.$store.dispatch("setContactumData", response.data);
-      } else {
-
       }
     });
 
@@ -677,12 +669,8 @@ export default {
 
 <style scoped lang="scss">
 
-// $primary-color: #007bff;
-// $secondary-color: #6c757d;
 $background-color: #fff;
-$button-background-color: #409eff;
-$text-color: #000;
-$button-background-secondary-color: #dedede;
+$button-background-secondary-color: #545454;
 $button-text-secondary-color: #545454;
 
 .builder {
@@ -692,24 +680,43 @@ $button-text-secondary-color: #545454;
         margin-bottom: 5px;
         background: $background-color;
         padding-top: 10px;
+
+        align-items: center;
+        border-bottom: 1px solid #e5e7eb;
+
         .contactum-nav {
             display: flex;
             flex: 1;
             .contactum-tabs {
                 flex: 1;
                 display: flex;
-                gap: 15px;
+                gap: 25px;
                 li a {
                   text-decoration: none;
                   color: $button-text-secondary-color;
                   font-size: 15px;
-                  font-weight: 500;
+                  font-weight: 600;
+                  padding: 8px 0;
+                  position: relative;
                 }
 
                 li a.nav-tab-active {
-                  color: $button-background-color;
+                  color: var(--primary);
                 }
+
+
+              li a.nav-tab-active::after {
+                content: "";
+                position: absolute;
+                bottom: -12px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: var(--primary);
+              }
+
             }
+
             .nav-tab-wrapper {
                 padding-top: 0px !important;
             }
@@ -739,8 +746,7 @@ $button-text-secondary-color: #545454;
             padding: 8px 15px;
             cursor: pointer;
             font-size: 14px;
-            // background: #7e3bd0;
-            background: $button-background-color;
+            background: var(--primary);
             color: #fff;
             margin-right: 5px;
             outline: none;
@@ -750,7 +756,7 @@ $button-text-secondary-color: #545454;
         }
 
         button:hover {
-            background: $button-background-color;
+            background: var(--primary);
         }
 
         a {
@@ -763,7 +769,7 @@ $button-text-secondary-color: #545454;
 }
 
 .field-panel {
-    flex-basis: 35%;
+    flex-basis: 40%;
     background: #f9f9f9;
     .forms-fields-tab {
         display: flex;
@@ -784,13 +790,13 @@ $button-text-secondary-color: #545454;
         }
 
         button.active {
-            border-bottom: 2px solid $button-background-color;
+            border-bottom: 2px solid var(--primary);
         }
     }
 }
 
 .form-field {
-  flex-basis: 65%;
+  flex-basis: 60%;
   margin-right: 15px;
   background: none;
   box-sizing: border-box;
@@ -824,10 +830,12 @@ form#contactum-form-builder {
               justify-content: center;
               align-items: center;
               -webkit-box-align: center;
-              background: #f9f9f9;
               background: #000;
               top: 0;
               right: 0;
+              gap: 5px;
+               padding: 4px;
+
 
               button {
                 color: #fff;
@@ -839,14 +847,14 @@ form#contactum-form-builder {
               }
 
               button:hover {
-                background: $button-background-color;
+                background: var(--primary);
               }
             }
         }
 
         li:hover > .control-button {
-              display: block;
-        }  
+              display: flex;
+        }
 
         li ul {
             margin-top: 5px;
@@ -862,12 +870,10 @@ form#contactum-form-builder {
       border: 1px solid transparent;
       border-radius: 8px;
       padding: 10px 20px;
-      background: $button-background-color;
+      background: var(--primary);
       color: #fff;
       display: inline-block;
       border: none;
-      color: #fff;
-      // min-width: 120px;
       margin-top: 30px;
       font-size: 14px;
       font-weight: 400;
@@ -904,6 +910,19 @@ ul.contactum-form  {
             }
         }
     }
+
+    li.field-items {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: var(--primary);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      }
+    }
 }
 
 ul.contactum-form.form-label-above li .contactum-label {
@@ -937,7 +956,7 @@ ul.contactum-form.form-label-hidden li .contactum-label {
 
         span.form-id {
           // background: #7e3bd0;
-          background: #409EFF;
+          background: var(--primary);
           padding: 5px 10px;
           color: #fff;
           display: inline-block;
@@ -979,7 +998,7 @@ ul.contactum-form.form-label-right {
 
 .btn-copy {
     background: #dedede;
-    color: #545454;
+    color: $button-background-secondary-color;
     overflow: hidden;
     opacity: 1;
     border: none;
@@ -1001,10 +1020,19 @@ ul.contactum-form.form-label-right {
 
 
 .forms-sidbar-tab-content {
-  padding: 20px;
   box-sizing: border-box;
   background-color: transparent;
 }
 
+
+.empty-state {
+  height: 100%;
+  border: 2px dashed $button-background-secondary-color;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
 </style>

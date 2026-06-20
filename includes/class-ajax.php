@@ -39,6 +39,13 @@ class Ajax {
         add_action('wp_ajax_contactum_get_entries_details', [ $this, 'contactum_get_entries_details_ajax' ] );
 
         add_action('wp_ajax_contactum_get_entries_report', [ $this, 'contactum_get_entries_details_report_ajax' ]);
+
+        add_action('wp_ajax_contactum_delete_entry', [ $this, 'contactum_delete_entry_ajax' ]);
+
+        add_action( 'wp_ajax_contactum_track_form_view',        [ $this, 'track_form_view' ] );
+        add_action( 'wp_ajax_nopriv_contactum_track_form_view', [ $this, 'track_form_view' ] );
+
+        add_action( 'wp_ajax_contactum_get_form_analytics', [ $this, 'get_form_analytics' ] );
     }
 
     public function save_contactum_form() {
@@ -117,7 +124,7 @@ class Ajax {
 
         header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
-        $attach = $this->handle_upload( $upload );
+        $attach = $this->handle_upload( $upload, $form_id );
 
         if ( $attach['success'] ) {
             $response         = [ 'success' => true ];
@@ -129,7 +136,7 @@ class Ajax {
         exit;
     }
 
-    public function handle_upload( $upload_data ) {
+    public function handle_upload( $upload_data, $form_id = 0 ) {
         $uploaded_file = wp_handle_upload( $upload_data, ['test_form' => false] );
 
         // If the wp_handle_upload call returned a local path for the image
@@ -149,6 +156,16 @@ class Ajax {
             $attach_data = wp_generate_attachment_metadata( $attach_id, $file_loc );
 
             wp_update_attachment_metadata( $attach_id, $attach_data );
+
+            /**
+             * Fires after a form file upload is saved as a WP attachment.
+             *
+             * @param int    $attach_id  WordPress attachment ID.
+             * @param string $file_loc   Absolute local file path.
+             * @param int    $form_id    ID of the form this upload belongs to (0 if unknown).
+             */
+            do_action( 'contactum_after_file_uploaded', $attach_id, $file_loc, (int) $form_id );
+
             return ['success' => true, 'attach_id' => $attach_id];
         }
 
@@ -284,6 +301,25 @@ class Ajax {
                     ],
                 ]);
             }
+        }
+
+        /**
+         * Allow integrations (e.g. CleanTalk) to validate the submission before
+         * it is saved. Return a non-empty array to reject the submission.
+         *
+         * @param array $errors       Validation error messages (empty = pass).
+         * @param int   $form_id      The form being submitted.
+         * @param array $entry_fields Sanitised field values keyed by field name.
+         * @param array $post_data    Raw (wp_unslash'd) $_POST data.
+         */
+        $spam_errors = apply_filters( 'contactum_check_spam', [], $form_id, $entry_fields, $post_data );
+
+        if ( ! empty( $spam_errors ) ) {
+            wp_send_json( [
+                'success' => false,
+                'type'    => 'spam',
+                'errors'  => $spam_errors,
+            ] );
         }
 
         $entry_id = EntryManager::create( [ 'form_id' => $form_id ], $entry_fields );
@@ -441,6 +477,66 @@ class Ajax {
         ];
 
         wp_send_json_success( $data );
+    }
+
+    public function contactum_delete_entry_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $entry_id = isset( $_POST['entry_id'] ) ? absint( $_POST['entry_id'] ) : 0;
+
+        if ( ! $entry_id ) {
+            wp_send_json_error( __( 'Invalid entry ID', 'contactum' ) );
+        }
+
+        $deleted = EntryManager::delete_entry( $entry_id );
+
+        if ( $deleted ) {
+            wp_send_json_success( __( 'Entry deleted successfully', 'contactum' ) );
+        } else {
+            wp_send_json_error( __( 'Could not delete entry', 'contactum' ) );
+        }
+    }
+
+    public function track_form_view() {
+        check_ajax_referer( 'contactum_form_frontend' );
+
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( ! $form_id ) {
+            wp_send_json_error();
+        }
+
+        contactum_track_form_view( $form_id );
+        wp_send_json_success();
+    }
+
+    public function get_form_analytics() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $args    = [];
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( $form_id ) {
+            $args['form_id'] = $form_id;
+        }
+
+        if ( isset( $_POST['startdate'] ) && ! empty( $_POST['startdate'] ) ) {
+            $args['start_date'] = date( 'Y-m-d', strtotime( sanitize_text_field( $_POST['startdate'] ) ) );
+        }
+
+        if ( isset( $_POST['enddate'] ) && ! empty( $_POST['enddate'] ) ) {
+            $args['end_date'] = date( 'Y-m-d', strtotime( sanitize_text_field( $_POST['enddate'] ) ) );
+        }
+
+        wp_send_json_success( contactum_get_form_analytics( $args ) );
     }
 
     public function contactum_get_entries_details_report_ajax() {

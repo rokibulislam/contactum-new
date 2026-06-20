@@ -1,0 +1,237 @@
+// ── Settings page layout ─────────────────────────────────────────────────────
+
+.contactum-settings {
+  display: flex;
+  min-height: calc(100vh - 92px);
+  margin: 0;
+  background: #f4f6fa;
+
+  // ── Sidebar wrap ─────────────────────────────────────────────────────────
+  &__sidebar-wrap {
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  // ── Sidebar panel ────────────────────────────────────────────────────────
+  &__sidebar {
+    width: 220px;
+    min-height: 100%;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 32px;
+  }
+
+  // ── Brand row ────────────────────────────────────────────────────────────
+  &__sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 16px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-bottom: 1px solid #f0f2f5;
+    letter-spacing: -.2px;
+    flex-shrink: 0;
+
+    .dashicons {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #409eff;
+    }
+  }
+
+  // ── Menu list ────────────────────────────────────────────────────────────
+  &__menu {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 20px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  // ── Menu item ────────────────────────────────────────────────────────────
+  &__menu-item {
+    margin: 0;
+  }
+
+  // ── Group label — clickable, collapsible ─────────────────────────────────
+  &__group-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 16px 14px 6px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: color .15s;
+
+    // group icon
+    > .dashicons {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+      color: #c0c4cc;
+      transition: color .15s;
+      flex-shrink: 0;
+    }
+
+    // chevron arrow
+    &::after {
+      content: '';
+      display: block;
+      margin-left: auto;
+      width: 5px;
+      height: 5px;
+      border-right: 1.5px solid #c0c4cc;
+      border-bottom: 1.5px solid #c0c4cc;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform .22s cubic-bezier(.4, 0, .2, 1),
+                  border-color .15s;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: #6b7280;
+
+      > .dashicons { color: #9ca3af; }
+
+      &::after { border-color: #9ca3af; }
+    }
+
+    // First group — tighter top gap
+    .contactum-settings__menu-item:first-child & {
+      padding-top: 10px;
+    }
+  }
+
+  // ── Group separator line ──────────────────────────────────────────────────
+  &__menu-item--has-submenu + &__menu-item--has-submenu {
+    border-top: 1px solid #f3f4f6;
+    margin-top: 4px;
+    padding-top: 2px;
+  }
+
+  // ── Submenu — animated expand / collapse ──────────────────────────────────
+  &__submenu {
+    list-style: none;
+    margin: 0;
+    padding: 2px 0 6px;
+    overflow: hidden;
+    // start fully open
+    max-height: 800px;
+    opacity: 1;
+    transition:
+      max-height .32s cubic-bezier(.4, 0, .2, 1),
+      opacity    .22s ease,
+      padding    .22s ease;
+  }
+
+  // ── Collapsed state — toggled by JS ──────────────────────────────────────
+  &__menu-item--has-submenu.is-collapsed {
+
+    > .contactum-settings__group-label {
+      color: #9ca3af;
+
+      // chevron points right (collapsed)
+      &::after {
+        transform: rotate(-45deg) translateY(1px);
+      }
+    }
+
+    > .contactum-settings__submenu {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      pointer-events: none;
+    }
+  }
+
+  // ── Group label highlight when group has an active child ──────────────────
+  &__menu-item--has-submenu.has-active-child {
+
+    > .contactum-settings__group-label {
+      color: #374151;
+
+      > .dashicons { color: #6b7280; }
+    }
+
+    // dot indicator on the group label when collapsed
+    &.is-collapsed > .contactum-settings__group-label::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #3b82f6;
+      flex-shrink: 0;
+    }
+  }
+
+  // ── Nav links (<a> tags inside submenu) ──────────────────────────────────
+  &__menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 22px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    border-radius: 0 6px 6px 0;
+    margin-right: 8px;
+    transition: background .12s, color .12s, border-color .12s;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    > .dashicons {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: .5;
+      transition: opacity .12s, color .12s;
+    }
+
+    &:hover {
+      background: #f5f7ff;
+      color: #1d4ed8;
+      border-left-color: #bfdbfe;
+
+      > .dashicons { opacity: .8; }
+    }
+
+    // Active — added by settings.js
+    &.active {
+      background: linear-gradient(90deg, #eff6ff 0%, #f8fbff 100%);
+      color: #1d4ed8;
+      font-weight: 600;
+      border-left-color: #3b82f6;
+
+      > .dashicons {
+        opacity: 1;
+        color: #3b82f6;
+      }
+    }
+  }
+
+  // ── Content area ─────────────────────────────────────────────────────────
+  &__content {
+    flex: 1;
+    padding: 24px 28px;
+    min-width: 0;
+  }
+}

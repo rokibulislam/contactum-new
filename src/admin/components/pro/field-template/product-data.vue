@@ -5,6 +5,7 @@
       <el-radio-group v-model="select_type">
         <el-radio-button label="checkbox"></el-radio-button>
         <el-radio-button label="radio"></el-radio-button>
+        <el-radio-button label="select"></el-radio-button>
       </el-radio-group>
     </div>
 
@@ -15,22 +16,22 @@
         <li> <el-checkbox v-model="editfield.photo_value" :label="photo_value"> {{ "Photo" }} </el-checkbox> </li>
       </ul>
 
-      <ul :class="['field-options', 'option-field-swapper']">
+      <ul :class="['field-options', 'option-field-swapper']" :key="select_type">
         <li v-for="(option, index) in options" :key="index" style="display: flex;" class="option-field-option">
+          
           <div class="selector">
-
-            <template v-if="select_type == 'radio'">
-              <input type="radio" :value="option.type" v-model="selected" />
+            <template v-if="select_type == 'radio' || select_type == 'select' ">
+              <input type="radio"  v-model="selectedSingle" :value="option.name"/>
             </template>
 
-            <template v-else>
-              <input type="checkbox" :value="option.type" v-model="selected" />
+            <template v-else-if="select_type == 'checkbox'">
+              <input type="checkbox"  v-model="selectedMultiple" :value="option.name" />
             </template>
-
           </div>
 
           <div class="sort-handler">
-            <i class="fa fa-bars"></i>
+            <!-- <i class="fa fa-bars"></i> -->
+            <i class="el-icon-s-fold"></i>
           </div>
 
           <div v-if="editfield.photo_value == true ">
@@ -58,14 +59,13 @@
             <el-input-number v-model="option.price"  />
           </div>
 
-          <div>
+            <i class="el-icon-circle-plus-outline" @click.prevent="add_option"></i>
             <i class="el-icon-remove-outline"  v-if="options.length > 1" @click="delete_option(index)"></i>
-          </div>
+            
         </li>
       </ul>
 
       <div>
-        <i class="el-icon-circle-plus-outline" @click.prevent="add_option"></i>
         <el-button  type="danger" @click.prevent="clear_selection">{{ 'Clear Selection' }} </el-button>
       </div>
     </div>
@@ -82,8 +82,10 @@ export default {
     return {
       options: [],
       select_type: "radio",
-      selected: "",
-      show_value: true
+      selectedMultiple: [],
+      selectedSingle: null,
+      show_value: true,
+      isInitialized: false
     };
   },
   computed: {
@@ -97,36 +99,102 @@ export default {
       return this.editfield.select_type;
     }
   },
-
+created() {
+  this.set_options();
+},
   methods: {
-    set_options: function() {
+
+    set_options: function () {
       this.options = this.editfield.options;
-      this.selected = this.field_selected;
       this.select_type = this.field_select_type;
+
+      if (this.editfield.select_type == 'checkbox') {
+        this.selectedMultiple = Array.isArray(this.editfield.selected)
+          ? [...this.editfield.selected]
+          : [];
+          this.field_selected = this.selectedMultiple;
+          this.selectedSingle = null;
+      } else {
+        this.selectedSingle = this.editfield.selected || null;
+        this.field_selected = this.selectedSingle;
+        this.selectedMultiple = [];
+      }
+
+      this.$nextTick(() => {
+        this.isInitialized = true;
+      });
     },
 
     add_option: function() {
-      let name = "Product-" + this.options.length;
+      const numbers = this.options
+      .map(opt => {
+        const match = opt.name.match(/Product-(\d+)/);
+        return match ? parseInt(match[1]) : 0;
+      });
+
+      const nextNumber = numbers.length ? Math.max(...numbers) + 1 : 1;
+
+      const name = `Product-${nextNumber}`;
+
       this.options.push({
-        price: 10,
         name: name,
+        price: 0,
         photo: "",
       });
     },
 
     delete_option: function(index) {
       this.options.splice(index, 1);
-    }
+    },
+
+    clear_selection: function () {
+        this.selected = [];
+        this.selectedSingle = null;
+        this.selectedMultiple = [];
+    },
 
   },
   watch: {
-    select_type: function(new_value) {
+    select_type: function(newValue, oldValue) {
+      if (!this.isInitialized) return;
+      if (newValue === oldValue) return;
+
+      this.selectedSingle = null;
+      this.selectedMultiple = [];
+
       this.$store.dispatch("update_editing_form_field", {
         id: this.editfield.id,
         property: "select_type",
+        value: newValue
+      });
+
+      this.$store.dispatch("update_editing_form_field", {
+        id: this.editfield.id,
+        property: "selected",
+        value: newValue === "checkbox" ? [] : null
+      });
+
+    },
+
+    selectedMultiple: function(new_value) {
+      if (!this.isInitialized || this.select_type !== "checkbox") return;
+      this.$store.dispatch("update_editing_form_field", {
+        id: this.editfield.id,
+        property: "selected",
         value: new_value
       });
-    }
+    },
+
+
+    selectedSingle: function(new_value) {
+      if (!this.isInitialized || this.select_type === "checkbox") return;
+
+      this.$store.dispatch("update_editing_form_field", {
+        id: this.editfield.id,
+        property: "selected",
+        value: new_value
+      });
+    },
   }
 };
 </script>
@@ -134,9 +202,15 @@ export default {
 
 
  <style lang="scss" scoped>
+
  .field-option-actions {
-   display: flex;
-   justify-content: space-between;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
  }
 
  .option-field-option i {
@@ -158,23 +232,31 @@ export default {
  }
 
  .option-field-option {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   padding: 8px 0;
-   border-bottom: 1px solid #f0f0f0;
+  display: grid;
+  grid-template-columns: 30px 24px auto 1fr 1fr 32px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
  }
 
- .option-actions {
-   margin-top: 15px;
-   display: flex;
-   align-items: center;
-   gap: 10px;
+.option-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
 
-   & button {
-     padding: 6px 10px;
-   }
- }
+
+  & button {
+    padding: 6px 10px;
+  }
+}
+
 
  .option-field-swapper .sort-handler {
    width: 22px;
@@ -219,26 +301,6 @@ export default {
      &:hover {
        color: #0056b3;
      }
-   }
- }
-
- .el-icon-circle-plus-outline {
-   font-size: 24px;
-   color: #5cb85c;
-   cursor: pointer;
-
-   &:hover {
-     color: #449d44;
-   }
- }
-
- .el-icon-remove-outline {
-   color: #d9534f;
-   font-size: 20px;
-   cursor: pointer;
-
-   & :hover {
-     color: #c9302c;
    }
  }
 

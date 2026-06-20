@@ -38,6 +38,7 @@ import {
     Skeleton,
     SkeletonItem, Dialog, MessageBox, Card,
 } from 'element-ui';
+
 Vue.use(Card);
 Vue.use(Tooltip);
 Vue.use(Form);
@@ -75,6 +76,10 @@ import hCaptcha from './components/settings/hCaptcha.vue'
 import turnstile from './components/settings/turnstile.vue'
 import Coupon from './components/settings/coupon.vue'
 import GeneralIntegrationSettings from './components/settings/GeneralIntegrationSettings.vue'
+import WebhookSettings from './components/settings/WebhookSettings.vue'
+import CleanTalkSettings from './components/settings/CleanTalkSettings.vue'
+import AbandonmentSettings from './components/settings/AbandonmentSettings.vue'
+import S3Settings from './components/settings/S3Settings.vue'
 import store from './store';
 
 const components = {
@@ -85,10 +90,16 @@ const components = {
     hCaptcha: hCaptcha,
     turnstile: turnstile,
     'general-integration-settings': GeneralIntegrationSettings,
+    WebhookSettings: WebhookSettings,
+    CleanTalkSettings: CleanTalkSettings,
+    AbandonmentSettings: AbandonmentSettings,
+    S3Settings: S3Settings,
 };
 
-import { scrollTop, handleSidebarActiveLink } from './helpers'
+import { scrollTop, handleSidebarActiveLink, handleSidebarSettingsActiveLink } from './helpers';
 
+
+/*
 const app = new Vue({
     data() {
         return {
@@ -154,3 +165,100 @@ const app = new Vue({
         });
       }
 }).$mount('#contactum-admin-settings',);
+
+
+*/
+
+
+
+const app = new Vue({
+  data() {
+    return {
+      componentName: '',
+      setting_key: ''
+    };
+  },
+
+  components: components,
+  store,
+
+  template: `
+    <div>
+      <component
+        :is="componentName"
+        :setting_key="setting_key"
+        :key="setting_key"
+      />
+    </div>
+  `,
+
+  methods: {
+    setRoute($el) {
+      const hash = $el.data('hash');
+      const component = $el.data('component');
+
+      this.setting_key = hash;
+
+      if (this.$options.components[component]) {
+        this.componentName = component;
+        location.hash = hash;
+      }
+    },
+
+    maybeGetFirstSubLink($el) {
+      if (
+        $el.attr('href') === '#' &&
+        $el.parent().hasClass('contactum-settings__menu-item--has-submenu')
+      ) {
+        const $firstSub = $el
+          .parent()
+          .find('.contactum-settings__submenu li:first a');
+
+        if ($firstSub.length) {
+          return $firstSub;
+        }
+      }
+
+      return $el;
+    },
+
+    loadFromHash() {
+      const hash = location.hash.substr(1) || 'google_recaptcha';
+
+      const $el = jQuery(
+        `.contactum-settings__menu a[data-hash="${hash}"]`
+      ).first();
+
+      if ($el.length) {
+        const $finalEl = this.maybeGetFirstSubLink($el);
+        this.setRoute($finalEl);
+        handleSidebarSettingsActiveLink($finalEl);
+      }
+    }
+  },
+
+  created() {
+    this.loadFromHash();
+    window.addEventListener('hashchange', this.loadFromHash);
+
+    const that = this;
+
+    jQuery('.contactum-settings__menu').on(
+      'click',
+      'a',
+      function (e) {
+        const $el = jQuery(this);
+
+        if ($el.attr('href') === '#') {
+              e.preventDefault();
+        }
+
+        const $target = that.maybeGetFirstSubLink($el);
+        that.setRoute($target);
+
+        handleSidebarSettingsActiveLink($target);
+      }
+    );
+  }
+}).$mount('#contactum-admin-settings');
+

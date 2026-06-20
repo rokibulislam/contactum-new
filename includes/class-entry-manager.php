@@ -23,6 +23,7 @@ class EntryManager {
             'form_id'     => 0,
             'user_id'     => get_current_user_id(),
             'user_ip'     => ip2long( contactum_get_client_ip() ),
+            'user_device' => contactum_detect_device(),
             'created_at'  => current_time( 'mysql' )
         ];
 

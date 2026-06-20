@@ -189,3 +189,77 @@ class Contactum_Field_Payment_Method extends Contactum_Form_Field_Pro {
         $this->description = __('', 'Contactum');
     }
 }
+
+
+/**
+ * Payment Summary stub — full implementation lives in contact-pro.
+ */
+class Contactum_Field_Payment_Summary extends Contactum_Form_Field_Pro {
+
+    public function __construct() {
+        $this->name       = __( 'Payment Summary', 'contactum' );
+        $this->input_type = 'payment_summary';
+        $this->icon       = 'list-alt';
+    }
+
+    public function is_full_width() {
+        return true;
+    }
+
+    public function get_field_props() {
+        return array_merge( $this->default_attributes(), [
+            'currency_symbol'   => '$',
+            'currency_position' => 'left',
+            'tax_rate'          => 0,
+            'tax_label'         => __( 'Tax', 'contactum' ),
+            'subtotal_label'    => __( 'Subtotal', 'contactum' ),
+            'total_label'       => __( 'Total', 'contactum' ),
+            'empty_message'     => __( 'No items selected yet.', 'contactum' ),
+            'is_meta'           => 'no',
+            'required'          => 'no',
+        ] );
+    }
+
+    public function get_options_settings() {
+        return [
+            [
+                'name'      => 'label',
+                'title'     => __( 'Field Label', 'contactum' ),
+                'type'      => 'text',
+                'section'   => 'basic',
+                'priority'  => 10,
+                'help_text' => __( 'Enter a title for this summary block', 'contactum' ),
+            ],
+            [
+                'name'      => 'payment_summary',
+                'title'     => __( 'Summary Options', 'contactum' ),
+                'type'      => 'payment_summary',
+                'section'   => 'basic',
+                'priority'  => 11,
+                'help_text' => '',
+            ],
+            [
+                'name'      => 'width',
+                'title'     => __( 'Field Size', 'contactum' ),
+                'type'      => 'radio',
+                'options'   => [
+                    'small'  => __( 'Small', 'contactum' ),
+                    'medium' => __( 'Medium', 'contactum' ),
+                    'large'  => __( 'Large', 'contactum' ),
+                ],
+                'section'   => 'advanced',
+                'priority'  => 21,
+                'default'   => 'large',
+                'inline'    => true,
+            ],
+            [
+                'name'      => 'css',
+                'title'     => __( 'CSS Class Name', 'contactum' ),
+                'type'      => 'text',
+                'section'   => 'advanced',
+                'priority'  => 22,
+                'help_text' => '',
+            ],
+        ];
+    }
+}

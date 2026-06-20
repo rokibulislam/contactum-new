@@ -7,6 +7,7 @@ use Contactum\Templates\Template_Event_Registration;
 use Contactum\Templates\Template_Leave_Request;
 use Contactum\Templates\Template_Support;
 use Contactum\Templates\Template_Volunteer_Application;
+use Contactum\Templates\Template_Conversational;
 
 class TemplateManager {
 
@@ -41,6 +42,7 @@ class TemplateManager {
             'leave'       => new Template_Leave_Request(),
             'support'     => new Template_Support(),
             'volunteer'   => new Template_Volunteer_Application(),
+            'conversational' => new Template_Conversational()
         ];
 
         $this->templates = apply_filters( 'contactum-form-templates', $templates );
@@ -71,6 +73,7 @@ class TemplateManager {
             'form_settings' => $template->get_form_settings(),
             'notifications' => $template->get_form_notifications(),
             'integrations'  => [],
+            'is_conversion' => method_exists( $template, 'is_conversion' ) ? true : false
         ];
 
         foreach ( $meta_updates as $meta_key => $meta_value ) {

@@ -28,7 +28,7 @@
     </div>
     <div class="settings_content">
       <div id="contactum-admin-settings">
-        <div class="contactum_cad" id="layout">
+        <div class="contactum_card" id="layout">
           <table class="form-table">
             <tbody>
             <tr class="contactum-label-position">
@@ -43,7 +43,7 @@
             </tbody>
           </table>
         </div>
-        <div class="contactum_cad" id="confirmation">
+        <div class="contactum_card" id="confirmation">
           <table class="form-table">
             <tbody>
             <tr class="contactum-redirect-to" >
@@ -85,7 +85,7 @@
             </tbody>
           </table>
         </div>
-        <div class="contactum_cad" id="scheduling">
+        <div class="contactum_card" id="scheduling">
           <table class="form-table">
             <tbody>
             <tr class="contactum-schedule-entries">
@@ -162,7 +162,7 @@
             </tbody>
           </table>
         </div>
-        <div class="contactum_cad" id="custom-css-js">
+        <div class="contactum_card" id="custom-css-js">
           <table class="form-table">
             <tbody>
             <tr class="contactum-use-theme-css">
