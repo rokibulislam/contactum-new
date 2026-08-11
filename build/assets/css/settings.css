@@ -1,0 +1,115 @@
+
+.contactum-form-item .el-form-item__label[data-v-048ad969] {
+  align-items: center;
+  color: #1e1f21;
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+}
+.el-form--label-top .el-form-item__label[data-v-048ad969] {
+  line-height: 1;
+  padding-bottom: 16px;
+}
+
+
+
+.mergetag_link{
+    position: absolute;
+    right: 5px;
+    top: 30px;
+    color: #999;
+}
+.merge-tag-wrapper {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 1000;
+}
+
+/*
+
+.merge-tags ul li h4 {
+    padding: 0;
+    margin: 0;
+    background: #f0f0f0;
+    width: 100%;
+    padding: 2px;
+    text-align: center;
+}
+*/
+.merge-tags ul li ul li {
+    cursor: pointer;
+}
+.group-title {
+  background-color: #4b4c4d;
+  color: #fff;
+  display: block;
+  padding: 5px 10px
+}
+.el-dropdown-menu {
+  left: unset;
+  max-width: 270px;
+}
+.el-dropdown-list {
+  border: 0;
+  box-shadow: none;
+  margin: 0;
+  max-height: 280px;
+  min-width: auto;
+  overflow-y: scroll;
+  padding: 0;
+  position: static;
+  z-index: 10
+}
+.el-dropdown-list .el-dropdown-menu__item {
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 4px 10px
+}
+.el-dropdown-list .el-dropdown-menu__item:last-of-type {
+  border-bottom: 0
+}
+.el-popper[x-placement^=bottom] .popper__arrow {
+  top: -7px
+}
+
+
+
+
+
+.contactum_state_box {
+  border-radius: 8px;
+  display: block;
+  padding: 32px;
+  text-align: center;
+}
+.contactum_icon_btn {
+  align-items: center;
+  background-color: #1a7efb;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 28px;
+  height: 58px;
+  justify-content: center;
+  text-align: center;
+  width: 58px;
+}
+.contactum_icon_btn.success {
+  background-color: #00b27f;
+  color: #fff;
+}
+label {
+  align-items: center;
+  color: #1e1f21 !important;
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+
+
+/*# sourceMappingURL=settings.css.map*/

@@ -62,7 +62,10 @@ module.exports = function(grunt) {
                     '!**/composer.lock',
                     '!**/phpcs-report.txt',
                     '!**/phpcs.xml.dist',
-                    '!**/webpack.config.js'
+                    '!**/webpack.config.js',
+                    '!.claude/**',
+                    '!CLAUDE.md',
+                    '!mcp-server/**',
                 ],
                 dest: 'build/'
             }
