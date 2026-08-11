@@ -75,6 +75,11 @@ Contactum is drag and drop contact form builder plugin which will allow showing 
 
 == Changelog ==
 
+= v4.1.5(11 Aug, 2026) =
+* **update:** Add Amazon s3
+* **update:** Add Webhook
+* **update:** update form fields
+
 = v4.1.3(20 June, 2026) =
 * **update:** Change Overall UI
 
