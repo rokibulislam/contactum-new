@@ -7,7 +7,6 @@
         <h2 class="cfi-title">Form Integrations</h2>
         <p class="cfi-subtitle">Connect this form to third-party services. Toggle an integration to activate it, then configure the mapping.</p>
       </div>
-      {{ integrationList }
       <div class="cfi-header-meta" v-if="integrationCount > 0">
         <span class="cfi-enabled-badge">
           <i class="el-icon-connection"></i>

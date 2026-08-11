@@ -115,37 +115,62 @@
                   :key="index"
                   :class="[ field.name, field.css, 'form-field-' + field.template, 'field-items',
                                     field.width ? 'field-size-' + field.width : '',
+                                    !is_field_type_available(field.template) ? 'field-unavailable' : '',
                                     ]"
                   :data-index="index"
                   data-source="stage"
                 >
-                  <div class="contactum-label">
-                    <label v-if="!is_full_width(field.template) && ( field.template != 'submit_field' && field.template != 'name_field' ) ">
-                      {{ field.label }}
-                      <span
-                        v-if="field.required && 'yes' === field.required"
-                        class="required"
-                      >*</span>
-                    </label>
-                  </div>
+                  <template v-if="is_field_type_available(field.template)">
+                    <div class="contactum-label">
+                      <label v-if="!is_full_width(field.template) && ( field.template != 'submit_field' && field.template != 'name_field' ) ">
+                        {{ field.label }}
+                        <span
+                          v-if="field.required && 'yes' === field.required"
+                          class="required"
+                        >*</span>
+                      </label>
+                    </div>
 
-                  <!-- {{  field.template }} -->
-                  <component :is="'form_' + field.template" :field="field"></component>
-                  <div class="control-button">
-                    <!-- <i class="el-icon-rank" v-if="field.template != 'submit_field'"> </i> -->
-                    <i class="fa fa-arrows move"></i>
-                    <button @click.prevent="select_field(field)">
-                      <!-- <i class="fa fa-pencil"></i> -->
-                      <i class="el-icon-edit"></i>
-                    </button>
-                    <button @click.prevent="delete_field(index)">
-                      <!-- <i class="fa fa-trash"></i> -->
-                      <i class="el-icon-delete"></i>
-                    </button>
-                    <button @click.prevent="duplicate_field(field,index)">
-                      <!-- <i class="fa fa-clone"></i> -->
-                      <i class="el-icon-copy-document"> </i>
-                    </button>
+                    <!-- {{  field.template }} -->
+                    <component :is="'form_' + field.template" :field="field"></component>
+                    <div class="control-button">
+                      <!-- <i class="el-icon-rank" v-if="field.template != 'submit_field'"> </i> -->
+                      <i class="fa fa-arrows move"></i>
+                      <button @click.prevent="select_field(field)">
+                        <!-- <i class="fa fa-pencil"></i> -->
+                        <i class="el-icon-edit"></i>
+                      </button>
+                      <button @click.prevent="delete_field(index)">
+                        <!-- <i class="fa fa-trash"></i> -->
+                        <i class="el-icon-delete"></i>
+                      </button>
+                      <button @click.prevent="duplicate_field(field,index)">
+                        <!-- <i class="fa fa-clone"></i> -->
+                        <i class="el-icon-copy-document"> </i>
+                      </button>
+                    </div>
+                  </template>
+
+                  <!-- The field's providing plugin/module is currently inactive.
+                       No component is mounted for it (so it can't render or be
+                       opened for editing — that's what previously crashed the
+                       field-options panel), and it's also silently omitted from
+                       the live form by FieldManager::render_fields() on the PHP
+                       side, so this makes that same fact visible here instead
+                       of showing a field that looks normal but isn't. -->
+                  <div v-else class="contactum-field-unavailable">
+                    <i class="el-icon-warning-outline contactum-field-unavailable__icon"></i>
+                    <div class="contactum-field-unavailable__text">
+                      <strong>{{ field.label || field.template }}</strong> is unavailable — the plugin or module
+                      providing this field type is inactive. Its data is preserved and it will reappear once
+                      reactivated; until then it's also left out of the live form.
+                    </div>
+                    <div class="control-button">
+                      <i class="fa fa-arrows move"></i>
+                      <button @click.prevent="delete_field(index)" title="Remove this field">
+                        <i class="el-icon-delete"></i>
+                      </button>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -484,6 +509,13 @@ export default {
       }
 
       return false;
+    },
+
+    is_field_type_available: function (template) {
+      // A saved field's type can be missing from field_settings when the
+      // plugin/module that registers it (e.g. contact-pro, or one of its
+      // modules) is deactivated after the field was added to the form.
+      return !!(this.field_settings && this.field_settings[template]);
     },
 
     is_invisible: function (field) {
@@ -917,12 +949,50 @@ ul.contactum-form  {
       padding: 16px;
       border: 1px solid #e5e7eb;
       transition: all 0.2s ease;
-      
+
       &:hover {
         border-color: var(--primary);
         box-shadow: 0 10px 25px rgba(0,0,0,0.06);
       }
     }
+
+    li.field-unavailable {
+      border-color: #f5dab1;
+      background: #fdf6ec;
+
+      &:hover {
+        border-color: #e6a23c;
+        box-shadow: 0 10px 25px rgba(230,162,60,0.08);
+      }
+    }
+}
+
+.contactum-field-unavailable {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  &__icon {
+    font-size: 20px;
+    color: #e6a23c;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  &__text {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #7d5a1e;
+
+    strong {
+      color: #5c3f10;
+    }
+  }
+
+  .control-button {
+    flex-shrink: 0;
+  }
 }
 
 ul.contactum-form.form-label-above li .contactum-label {

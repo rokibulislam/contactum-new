@@ -57,7 +57,7 @@ class WebhookIntegration extends Contactum_Integration {
         return [
             'id'        => 'webhook',
             'title'     => '',
-            'name'      => __( 'Webhook / Zapier', 'contactum' ),
+            'name'      => __( 'Webhook', 'contactum' ),
             'icon'      => 'dashicons-rest-api',
             'component' => 'WebhookSettings',
         ];

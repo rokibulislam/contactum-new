@@ -16,6 +16,7 @@ module.exports = [
       settings: './src/admin/settings.js',
       forms: './src/admin/forms.js',
       analytics: './src/admin/analytics.js',
+      support: './src/admin/support.js',
     },
 
     mode: devMode ? 'development' : 'production',

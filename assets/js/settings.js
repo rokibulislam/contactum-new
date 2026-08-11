@@ -2407,6 +2407,590 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'PaymentSettings',
 
@@ -2436,6 +3020,42 @@ __webpack_require__.r(__webpack_exports__);
         key: 'mollie',
         label: 'Mollie',
         icon: 'dashicons-awards'
+      }, {
+        key: 'authorizenet',
+        label: 'Authorize.net',
+        icon: 'dashicons-shield'
+      }, {
+        key: 'square',
+        label: 'Square',
+        icon: 'dashicons-screenoptions'
+      }, {
+        key: 'paystack',
+        label: 'Paystack',
+        icon: 'dashicons-tickets-alt'
+      }, {
+        key: 'payrexx',
+        label: 'Payrexx',
+        icon: 'dashicons-flag'
+      }, {
+        key: 'moneris',
+        label: 'Moneris',
+        icon: 'dashicons-bank'
+      }, {
+        key: 'xendit',
+        label: 'Xendit',
+        icon: 'dashicons-admin-site-alt3'
+      }, {
+        key: 'flutterwave',
+        label: 'Flutterwave',
+        icon: 'dashicons-chart-area'
+      }, {
+        key: 'billplz',
+        label: 'Billplz',
+        icon: 'dashicons-media-text'
+      }, {
+        key: 'sslcommerz',
+        label: 'SSLCommerz',
+        icon: 'dashicons-shield-alt'
       }],
       currencies: [{
         code: 'USD',
@@ -2468,6 +3088,64 @@ __webpack_require__.r(__webpack_exports__);
         code: 'BDT',
         name: 'Bangladeshi Taka'
       }],
+      // Required credential fields per gateway/mode — kept in sync with
+      // get_active_gateways() in class-field-payment-method.php, which is
+      // the authoritative definition of "active" on the PHP side. Used so
+      // the tab dot reflects enabled AND fully configured, not just enabled.
+      credentialFields: {
+        stripe: {
+          test: ['test_publishable_key', 'test_secret_key'],
+          live: ['live_publishable_key', 'live_secret_key']
+        },
+        paypal: {
+          test: ['sandbox_client_id', 'sandbox_client_secret'],
+          live: ['live_client_id', 'live_client_secret']
+        },
+        razorpay: {
+          test: ['test_key_id', 'test_key_secret'],
+          live: ['live_key_id', 'live_key_secret']
+        },
+        mollie: {
+          test: ['test_api_key'],
+          live: ['live_api_key']
+        },
+        authorizenet: {
+          test: ['sandbox_login_id', 'sandbox_transaction_key'],
+          live: ['live_login_id', 'live_transaction_key']
+        },
+        square: {
+          test: ['sandbox_access_token', 'sandbox_location_id'],
+          live: ['live_access_token', 'live_location_id']
+        },
+        paystack: {
+          test: ['test_secret_key', 'test_public_key'],
+          live: ['live_secret_key', 'live_public_key']
+        },
+        payrexx: {
+          test: ['instance', 'api_secret'],
+          live: ['instance', 'api_secret']
+        },
+        moneris: {
+          test: ['store_id', 'hpp_key'],
+          live: ['store_id', 'hpp_key']
+        },
+        xendit: {
+          test: ['test_secret_key'],
+          live: ['live_secret_key']
+        },
+        flutterwave: {
+          test: ['test_secret_key'],
+          live: ['live_secret_key']
+        },
+        billplz: {
+          test: ['test_api_key', 'test_collection_id'],
+          live: ['live_api_key', 'live_collection_id']
+        },
+        sslcommerz: {
+          test: ['test_store_id', 'test_store_password'],
+          live: ['live_store_id', 'live_store_password']
+        }
+      },
       settings: {
         general: {
           currency: 'USD',
@@ -2504,6 +3182,76 @@ __webpack_require__.r(__webpack_exports__);
           test_mode: true,
           test_api_key: '',
           live_api_key: ''
+        },
+        authorizenet: {
+          enabled: false,
+          test_mode: true,
+          sandbox_login_id: '',
+          sandbox_transaction_key: '',
+          live_login_id: '',
+          live_transaction_key: '',
+          signature_key: ''
+        },
+        square: {
+          enabled: false,
+          test_mode: true,
+          sandbox_access_token: '',
+          sandbox_location_id: '',
+          live_access_token: '',
+          live_location_id: '',
+          webhook_signature_key: ''
+        },
+        paystack: {
+          enabled: false,
+          test_mode: true,
+          test_secret_key: '',
+          test_public_key: '',
+          live_secret_key: '',
+          live_public_key: ''
+        },
+        payrexx: {
+          enabled: false,
+          instance: '',
+          api_secret: ''
+        },
+        moneris: {
+          enabled: false,
+          test_mode: true,
+          region: 'ca',
+          store_id: '',
+          hpp_key: ''
+        },
+        xendit: {
+          enabled: false,
+          test_mode: true,
+          test_secret_key: '',
+          test_webhook_token: '',
+          live_secret_key: '',
+          live_webhook_token: ''
+        },
+        flutterwave: {
+          enabled: false,
+          test_mode: true,
+          test_secret_key: '',
+          live_secret_key: '',
+          secret_hash: ''
+        },
+        billplz: {
+          enabled: false,
+          test_mode: true,
+          test_api_key: '',
+          test_collection_id: '',
+          live_api_key: '',
+          live_collection_id: '',
+          x_signature_key: ''
+        },
+        sslcommerz: {
+          enabled: false,
+          test_mode: true,
+          test_store_id: '',
+          test_store_password: '',
+          live_store_id: '',
+          live_store_password: ''
         }
       }
     };
@@ -2515,7 +3263,20 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     isGatewayEnabled(tab) {
-      return tab !== 'general' && this.settings[tab] && this.settings[tab].enabled;
+      const gw = this.settings[tab];
+
+      if (tab === 'general' || !gw || !gw.enabled) {
+        return false;
+      }
+
+      const creds = this.credentialFields[tab];
+
+      if (!creds) {
+        return true;
+      }
+
+      const mode = gw.test_mode === false ? 'live' : 'test';
+      return creds[mode].every(field => !!gw[field]);
     },
 
     loadSettings() {
@@ -7451,7 +8212,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrap ────────────────────────────────────────────── */\n.pms-wrap[data-v-35821388] { max-width: 720px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.pms-header[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.pms-header__left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.pms-header__icon[data-v-35821388] {\n  width: 44px;\n  height: 44px;\n  border-radius: 8px;\n  background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.pms-header__icon .dashicons[data-v-35821388] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.pms-header__title[data-v-35821388] {\n  margin: 0 0 2px;\n  font-size: 18px;\n  font-weight: 700;\n  color: #303133;\n}\n.pms-header__sub[data-v-35821388] { margin: 0; font-size: 13px; color: #909399;\n}\n\n/* ── Tabs ────────────────────────────────────────────── */\n.pms-tabs[data-v-35821388] {\n  display: flex;\n  gap: 4px;\n  border-bottom: 2px solid #dcdfe6;\n  margin-bottom: 20px;\n  padding-bottom: 0;\n}\n.pms-tab[data-v-35821388] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 8px 16px;\n  font-size: 13px;\n  font-weight: 500;\n  color: #909399;\n  background: none;\n  border: none;\n  border-bottom: 2px solid transparent;\n  margin-bottom: -2px;\n  cursor: pointer;\n  transition: color .15s, border-color .15s;\n  position: relative;\n}\n.pms-tab .dashicons[data-v-35821388] { font-size: 15px; width: 15px; height: 15px;\n}\n.pms-tab[data-v-35821388]:hover { color: #606266;\n}\n.pms-tab--active[data-v-35821388] { color: #409eff; border-bottom-color: #409eff;\n}\n.pms-tab__dot[data-v-35821388] {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: #67c23a;\n  position: absolute;\n  top: 6px;\n  right: 6px;\n}\n.pms-loading[data-v-35821388] { padding: 20px 0;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.pms-card[data-v-35821388] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n  margin-bottom: 16px;\n}\n.pms-card__head[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  border-bottom: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n.pms-card__head-left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.pms-card__title[data-v-35821388] {\n  margin: 0;\n  font-size: 14px;\n  font-weight: 600;\n  color: #303133;\n}\n.pms-card__body[data-v-35821388] { padding: 20px;\n}\n\n/* Gateway badges */\n.pms-gw-badge[data-v-35821388] {\n  display: inline-block;\n  font-size: 12px;\n  font-weight: 700;\n  padding: 3px 10px;\n  border-radius: 4px;\n}\n.pms-gw-badge--stripe[data-v-35821388]   { background: #f0eeff; color: #6e4bcc;\n}\n.pms-gw-badge--paypal[data-v-35821388]   { background: #fdf6ec; color: #e6a23c;\n}\n.pms-gw-badge--razorpay[data-v-35821388] { background: #ecf5ff; color: #409eff;\n}\n.pms-gw-badge--mollie[data-v-35821388]   { background: #f0f9eb; color: #67c23a;\n}\n\n/* Status label */\n.pms-status[data-v-35821388] {\n  font-size: 12px;\n  font-weight: 600;\n}\n.pms-status--on[data-v-35821388]  { color: #67c23a;\n}\n.pms-status--off[data-v-35821388] { color: #909399;\n}\n\n/* ── Form fields ─────────────────────────────────────── */\n.pms-field[data-v-35821388] { margin-bottom: 18px;\n}\n.pms-field[data-v-35821388]:last-child { margin-bottom: 0;\n}\n.pms-label[data-v-35821388] {\n  display: block;\n  font-size: 13px;\n  font-weight: 500;\n  color: #606266;\n  margin-bottom: 6px;\n}\n.pms-hint[data-v-35821388] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n.pms-code[data-v-35821388] {\n  display: inline-block;\n  font-size: 11px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f5f7fa;\n  color: #606266;\n  padding: 2px 6px;\n  border-radius: 3px;\n  word-break: break-all;\n}\n\n/* ── Mode toggle ─────────────────────────────────────── */\n.pms-mode-toggle[data-v-35821388] {\n  display: inline-flex;\n  border: 1px solid #dcdfe6;\n  border-radius: 7px;\n  overflow: hidden;\n}\n.pms-mode-btn[data-v-35821388] {\n  padding: 6px 16px;\n  font-size: 13px;\n  font-weight: 500;\n  background: #fff;\n  border: none;\n  color: #606266;\n  cursor: pointer;\n  transition: background .12s, color .12s;\n}\n.pms-mode-btn + .pms-mode-btn[data-v-35821388] { border-left: 1px solid #dcdfe6;\n}\n.pms-mode-btn--active[data-v-35821388] {\n  background: #409eff;\n  color: #fff;\n}\n\n/* ── Footer ──────────────────────────────────────────── */\n.pms-footer[data-v-35821388] {\n  padding-top: 4px;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrap ────────────────────────────────────────────── */\n.pms-wrap[data-v-35821388] { max-width: 900px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.pms-header[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.pms-header__left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.pms-header__icon[data-v-35821388] {\n  width: 44px;\n  height: 44px;\n  border-radius: 8px;\n  background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.pms-header__icon .dashicons[data-v-35821388] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.pms-header__title[data-v-35821388] {\n  margin: 0 0 2px;\n  font-size: 18px;\n  font-weight: 700;\n  color: #303133;\n}\n.pms-header__sub[data-v-35821388] { margin: 0; font-size: 13px; color: #909399;\n}\n\n/* ── Body layout (sidebar + content) ──────────────────── */\n.pms-body[data-v-35821388] {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n}\n.pms-content[data-v-35821388] {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar (tabs) ─────────────────────────────────────── */\n.pms-sidebar[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 190px;\n  padding-right: 16px;\n  border-right: 1px solid #dcdfe6;\n}\n.pms-tabs[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.pms-tab[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  width: 100%;\n  padding: 9px 12px;\n  font-size: 13px;\n  font-weight: 500;\n  color: #909399;\n  background: none;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  text-align: left;\n  transition: color .15s, background-color .15s;\n}\n.pms-tab .dashicons[data-v-35821388] { font-size: 15px; width: 15px; height: 15px; flex-shrink: 0;\n}\n.pms-tab[data-v-35821388]:hover { color: #606266; background: #f5f7fa;\n}\n.pms-tab--active[data-v-35821388] { color: #409eff; background: #ecf5ff;\n}\n.pms-tab__dot[data-v-35821388] {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: #67c23a;\n  margin-left: auto;\n  flex-shrink: 0;\n}\n.pms-loading[data-v-35821388] { padding: 20px 0;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.pms-card[data-v-35821388] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n  margin-bottom: 16px;\n}\n.pms-card__head[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  border-bottom: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n.pms-card__head-left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.pms-card__title[data-v-35821388] {\n  margin: 0;\n  font-size: 14px;\n  font-weight: 600;\n  color: #303133;\n}\n.pms-card__body[data-v-35821388] { padding: 20px;\n}\n\n/* Gateway badges */\n.pms-gw-badge[data-v-35821388] {\n  display: inline-block;\n  font-size: 12px;\n  font-weight: 700;\n  padding: 3px 10px;\n  border-radius: 4px;\n}\n.pms-gw-badge--stripe[data-v-35821388]   { background: #f0eeff; color: #6e4bcc;\n}\n.pms-gw-badge--paypal[data-v-35821388]   { background: #fdf6ec; color: #e6a23c;\n}\n.pms-gw-badge--razorpay[data-v-35821388] { background: #ecf5ff; color: #409eff;\n}\n.pms-gw-badge--mollie[data-v-35821388]   { background: #f0f9eb; color: #67c23a;\n}\n.pms-gw-badge--authorizenet[data-v-35821388] { background: #fef0f0; color: #f56c6c;\n}\n.pms-gw-badge--square[data-v-35821388] { background: #eafaf1; color: #2f9e44;\n}\n.pms-gw-badge--paystack[data-v-35821388] { background: #e8f5e9; color: #00a86b;\n}\n.pms-gw-badge--payrexx[data-v-35821388] { background: #fff4e6; color: #e8590c;\n}\n.pms-gw-badge--moneris[data-v-35821388] { background: #e7f5ff; color: #1971c2;\n}\n.pms-gw-badge--xendit[data-v-35821388] { background: #edf2ff; color: #4263eb;\n}\n.pms-gw-badge--flutterwave[data-v-35821388] { background: #fff9db; color: #f08c00;\n}\n.pms-gw-badge--billplz[data-v-35821388] { background: #e6fcf5; color: #0ca678;\n}\n.pms-gw-badge--sslcommerz[data-v-35821388] { background: #eef2ff; color: #4338ca;\n}\n\n/* Status label */\n.pms-status[data-v-35821388] {\n  font-size: 12px;\n  font-weight: 600;\n}\n.pms-status--on[data-v-35821388]  { color: #67c23a;\n}\n.pms-status--off[data-v-35821388] { color: #909399;\n}\n\n/* ── Form fields ─────────────────────────────────────── */\n.pms-field[data-v-35821388] { margin-bottom: 18px;\n}\n.pms-field[data-v-35821388]:last-child { margin-bottom: 0;\n}\n.pms-label[data-v-35821388] {\n  display: block;\n  font-size: 13px;\n  font-weight: 500;\n  color: #606266;\n  margin-bottom: 6px;\n}\n.pms-hint[data-v-35821388] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n.pms-code[data-v-35821388] {\n  display: inline-block;\n  font-size: 11px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f5f7fa;\n  color: #606266;\n  padding: 2px 6px;\n  border-radius: 3px;\n  word-break: break-all;\n}\n\n/* ── Mode toggle ─────────────────────────────────────── */\n.pms-mode-toggle[data-v-35821388] {\n  display: inline-flex;\n  border: 1px solid #dcdfe6;\n  border-radius: 7px;\n  overflow: hidden;\n}\n.pms-mode-btn[data-v-35821388] {\n  padding: 6px 16px;\n  font-size: 13px;\n  font-weight: 500;\n  background: #fff;\n  border: none;\n  color: #606266;\n  cursor: pointer;\n  transition: background .12s, color .12s;\n}\n.pms-mode-btn + .pms-mode-btn[data-v-35821388] { border-left: 1px solid #dcdfe6;\n}\n.pms-mode-btn--active[data-v-35821388] {\n  background: #409eff;\n  color: #fff;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -80279,1167 +81040,3562 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "pms-wrap" },
-    [
-      _vm._m(0),
+  return _c("div", { staticClass: "pms-wrap" }, [
+    _c(
+      "div",
+      { staticClass: "pms-header" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "el-button",
+          {
+            attrs: {
+              type: "primary",
+              loading: _vm.saving,
+              icon: "el-icon-check"
+            },
+            on: { click: _vm.saveSettings }
+          },
+          [_vm._v("\n      Save Settings\n    ")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "pms-body" }, [
+      _c("div", { staticClass: "pms-sidebar" }, [
+        _c(
+          "div",
+          { staticClass: "pms-tabs" },
+          _vm._l(_vm.tabs, function(tab) {
+            return _c(
+              "button",
+              {
+                key: tab.key,
+                staticClass: "pms-tab",
+                class: { "pms-tab--active": _vm.activeTab === tab.key },
+                on: {
+                  click: function($event) {
+                    _vm.activeTab = tab.key
+                  }
+                }
+              },
+              [
+                _c("span", { staticClass: "dashicons", class: tab.icon }),
+                _vm._v("\n          " + _vm._s(tab.label) + "\n          "),
+                _vm.isGatewayEnabled(tab.key)
+                  ? _c("span", { staticClass: "pms-tab__dot" })
+                  : _vm._e()
+              ]
+            )
+          }),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "pms-tabs" },
-        _vm._l(_vm.tabs, function(tab) {
-          return _c(
-            "button",
-            {
-              key: tab.key,
-              staticClass: "pms-tab",
-              class: { "pms-tab--active": _vm.activeTab === tab.key },
-              on: {
-                click: function($event) {
-                  _vm.activeTab = tab.key
-                }
-              }
-            },
-            [
-              _c("span", { staticClass: "dashicons", class: tab.icon }),
-              _vm._v("\n      " + _vm._s(tab.label) + "\n      "),
-              _vm.isGatewayEnabled(tab.key)
-                ? _c("span", { staticClass: "pms-tab__dot" })
-                : _vm._e()
-            ]
-          )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _vm.loading
-        ? _c(
-            "div",
-            { staticClass: "pms-loading" },
-            [_c("el-skeleton", { attrs: { rows: 6, animated: "" } })],
-            1
-          )
-        : [
-            _c(
-              "div",
-              {
-                directives: [
+        { staticClass: "pms-content" },
+        [
+          _vm.loading
+            ? _c(
+                "div",
+                { staticClass: "pms-loading" },
+                [_c("el-skeleton", { attrs: { rows: 6, animated: "" } })],
+                1
+              )
+            : [
+                _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.activeTab === "general",
-                    expression: "activeTab === 'general'"
-                  }
-                ],
-                staticClass: "pms-section"
-              },
-              [
-                _c("div", { staticClass: "pms-card" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "pms-card__body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "pms-field" },
-                      [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Default Currency")
-                        ]),
-                        _vm._v(" "),
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "general",
+                        expression: "activeTab === 'general'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pms-card__body" }, [
                         _c(
-                          "el-select",
-                          {
-                            staticStyle: { width: "200px" },
-                            model: {
-                              value: _vm.settings.general.currency,
-                              callback: function($$v) {
-                                _vm.$set(_vm.settings.general, "currency", $$v)
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Default Currency")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "el-select",
+                              {
+                                staticStyle: { width: "200px" },
+                                model: {
+                                  value: _vm.settings.general.currency,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.general,
+                                      "currency",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.general.currency"
+                                }
                               },
-                              expression: "settings.general.currency"
-                            }
-                          },
-                          _vm._l(_vm.currencies, function(c) {
-                            return _c("el-option", {
-                              key: c.code,
-                              attrs: {
-                                label: c.name + " (" + c.code + ")",
-                                value: c.code
-                              }
-                            })
-                          }),
+                              _vm._l(_vm.currencies, function(c) {
+                                return _c("el-option", {
+                                  key: c.code,
+                                  attrs: {
+                                    label: c.name + " (" + c.code + ")",
+                                    value: c.code
+                                  }
+                                })
+                              }),
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v("Currency used for payment transactions.")
+                            ])
+                          ],
                           1
                         ),
                         _vm._v(" "),
-                        _c("p", { staticClass: "pms-hint" }, [
-                          _vm._v("Currency used for payment transactions.")
-                        ])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "pms-field" },
-                      [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Success Redirect URL")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          attrs: {
-                            placeholder: "https://yoursite.com/thank-you"
-                          },
-                          model: {
-                            value: _vm.settings.general.success_url,
-                            callback: function($$v) {
-                              _vm.$set(_vm.settings.general, "success_url", $$v)
-                            },
-                            expression: "settings.general.success_url"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "pms-hint" }, [
-                          _vm._v(
-                            "Redirect here after a successful payment. Leave empty to stay on page."
-                          )
-                        ])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "pms-field" },
-                      [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Cancel / Failure Redirect URL")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          attrs: {
-                            placeholder: "https://yoursite.com/payment-failed"
-                          },
-                          model: {
-                            value: _vm.settings.general.cancel_url,
-                            callback: function($$v) {
-                              _vm.$set(_vm.settings.general, "cancel_url", $$v)
-                            },
-                            expression: "settings.general.cancel_url"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "pms-hint" }, [
-                          _vm._v(
-                            "Redirect here when a payment is cancelled or fails."
-                          )
-                        ])
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.activeTab === "stripe",
-                    expression: "activeTab === 'stripe'"
-                  }
-                ],
-                staticClass: "pms-section"
-              },
-              [
-                _c("div", { staticClass: "pms-card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__head" },
-                    [
-                      _c("div", { staticClass: "pms-card__head-left" }, [
                         _c(
-                          "span",
-                          { staticClass: "pms-gw-badge pms-gw-badge--stripe" },
-                          [_vm._v("Stripe")]
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Success Redirect URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: {
+                                placeholder: "https://yoursite.com/thank-you"
+                              },
+                              model: {
+                                value: _vm.settings.general.success_url,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.general,
+                                    "success_url",
+                                    $$v
+                                  )
+                                },
+                                expression: "settings.general.success_url"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Redirect here after a successful payment. Leave empty to stay on page."
+                              )
+                            ])
+                          ],
+                          1
                         ),
                         _vm._v(" "),
                         _c(
-                          "span",
-                          {
-                            staticClass: "pms-status",
-                            class: _vm.settings.stripe.enabled
-                              ? "pms-status--on"
-                              : "pms-status--off"
-                          },
+                          "div",
+                          { staticClass: "pms-field" },
                           [
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(
-                                  _vm.settings.stripe.enabled
-                                    ? "Enabled"
-                                    : "Disabled"
-                                ) +
-                                "\n            "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("el-switch", {
-                        model: {
-                          value: _vm.settings.stripe.enabled,
-                          callback: function($$v) {
-                            _vm.$set(_vm.settings.stripe, "enabled", $$v)
-                          },
-                          expression: "settings.stripe.enabled"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__body" },
-                    [
-                      _c("div", { staticClass: "pms-field" }, [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Mode")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pms-mode-toggle" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active":
-                                  _vm.settings.stripe.test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.stripe.test_mode = true
-                                }
-                              }
-                            },
-                            [_vm._v("Test")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active": !_vm.settings.stripe
-                                  .test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.stripe.test_mode = false
-                                }
-                              }
-                            },
-                            [_vm._v("Live")]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm.settings.stripe.test_mode
-                        ? [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Test Publishable Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "pk_test_..." },
-                                  model: {
-                                    value:
-                                      _vm.settings.stripe.test_publishable_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.stripe,
-                                        "test_publishable_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.stripe.test_publishable_key"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Cancel / Failure Redirect URL")
+                            ]),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Test Secret Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "sk_test_..."
-                                  },
-                                  model: {
-                                    value: _vm.settings.stripe.test_secret_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.stripe,
-                                        "test_secret_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.stripe.test_secret_key"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                        : [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Publishable Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "pk_live_..." },
-                                  model: {
-                                    value:
-                                      _vm.settings.stripe.live_publishable_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.stripe,
-                                        "live_publishable_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.stripe.live_publishable_key"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
+                            _c("el-input", {
+                              attrs: {
+                                placeholder:
+                                  "https://yoursite.com/payment-failed"
+                              },
+                              model: {
+                                value: _vm.settings.general.cancel_url,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.general,
+                                    "cancel_url",
+                                    $$v
+                                  )
+                                },
+                                expression: "settings.general.cancel_url"
+                              }
+                            }),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Secret Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "sk_live_..."
-                                  },
-                                  model: {
-                                    value: _vm.settings.stripe.live_secret_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.stripe,
-                                        "live_secret_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.stripe.live_secret_key"
-                                  }
-                                })
-                              ],
-                              1
-                            )
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Redirect here when a payment is cancelled or fails."
+                              )
+                            ])
                           ],
+                          1
+                        )
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "stripe",
+                        expression: "activeTab === 'stripe'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--stripe"
+                              },
+                              [_vm._v("Stripe")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.stripe.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.stripe.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.stripe.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.stripe, "enabled", $$v)
+                              },
+                              expression: "settings.stripe.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "pms-field" },
+                        { staticClass: "pms-card__body" },
                         [
-                          _c("label", { staticClass: "pms-label" }, [
-                            _vm._v("Webhook Secret")
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.stripe.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.stripe.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.stripe
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.stripe.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
-                          _c("el-input", {
-                            attrs: {
-                              type: "password",
-                              "show-password": "",
-                              placeholder: "whsec_..."
-                            },
-                            model: {
-                              value: _vm.settings.stripe.webhook_secret,
-                              callback: function($$v) {
-                                _vm.$set(
-                                  _vm.settings.stripe,
-                                  "webhook_secret",
-                                  $$v
+                          _vm.settings.stripe.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Publishable Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "pk_test_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.stripe
+                                            .test_publishable_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.stripe,
+                                            "test_publishable_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.stripe.test_publishable_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "sk_test_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.stripe.test_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.stripe,
+                                            "test_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.stripe.test_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
                                 )
-                              },
-                              expression: "settings.stripe.webhook_secret"
-                            }
-                          }),
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Publishable Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "pk_live_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.stripe
+                                            .live_publishable_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.stripe,
+                                            "live_publishable_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.stripe.live_publishable_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "sk_live_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.stripe.live_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.stripe,
+                                            "live_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.stripe.live_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
                           _vm._v(" "),
-                          _c("p", { staticClass: "pms-hint" }, [
-                            _vm._v(
-                              "\n              Add this endpoint URL to your Stripe dashboard:\n              "
+                          _c(
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("Webhook Secret")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "whsec_..."
+                                },
+                                model: {
+                                  value: _vm.settings.stripe.webhook_secret,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.stripe,
+                                      "webhook_secret",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.stripe.webhook_secret"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "pms-hint" }, [
+                                _vm._v(
+                                  "\n              Add this endpoint URL to your Stripe dashboard:\n              "
+                                ),
+                                _c("code", { staticClass: "pms-code" }, [
+                                  _vm._v(
+                                    _vm._s(_vm.ajaxUrl) +
+                                      "?action=contactum_stripe_webhook"
+                                  )
+                                ])
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "paypal",
+                        expression: "activeTab === 'paypal'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--paypal"
+                              },
+                              [_vm._v("PayPal")]
                             ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.paypal.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.paypal.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.paypal.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.paypal, "enabled", $$v)
+                              },
+                              expression: "settings.paypal.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.paypal.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paypal.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.paypal
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paypal.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.paypal.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Client ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Sandbox Client ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.paypal.sandbox_client_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paypal,
+                                            "sandbox_client_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paypal.sandbox_client_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Client Secret")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Sandbox Client Secret"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.paypal
+                                            .sandbox_client_secret,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paypal,
+                                            "sandbox_client_secret",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paypal.sandbox_client_secret"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Client ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "Live Client ID" },
+                                      model: {
+                                        value:
+                                          _vm.settings.paypal.live_client_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paypal,
+                                            "live_client_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paypal.live_client_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Client Secret")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live Client Secret"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.paypal
+                                            .live_client_secret,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paypal,
+                                            "live_client_secret",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paypal.live_client_secret"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "razorpay",
+                        expression: "activeTab === 'razorpay'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--razorpay"
+                              },
+                              [_vm._v("Razorpay")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.razorpay.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.razorpay.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.razorpay.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.razorpay, "enabled", $$v)
+                              },
+                              expression: "settings.razorpay.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.razorpay.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.razorpay.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .razorpay.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.razorpay.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.razorpay.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Key ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "rzp_test_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.razorpay.test_key_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.razorpay,
+                                            "test_key_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.razorpay.test_key_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Key Secret")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Test Key Secret"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.razorpay.test_key_secret,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.razorpay,
+                                            "test_key_secret",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.razorpay.test_key_secret"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Key ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "rzp_live_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.razorpay.live_key_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.razorpay,
+                                            "live_key_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.razorpay.live_key_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Key Secret")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live Key Secret"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.razorpay.live_key_secret,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.razorpay,
+                                            "live_key_secret",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.razorpay.live_key_secret"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "mollie",
+                        expression: "activeTab === 'mollie'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--mollie"
+                              },
+                              [_vm._v("Mollie")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.mollie.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.mollie.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.mollie.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.mollie, "enabled", $$v)
+                              },
+                              expression: "settings.mollie.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.mollie.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.mollie.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.mollie
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.mollie.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.mollie.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test API Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "test_..."
+                                      },
+                                      model: {
+                                        value: _vm.settings.mollie.test_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.mollie,
+                                            "test_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.mollie.test_api_key"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Found in your Mollie dashboard under Developers → API keys."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live API Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "live_..."
+                                      },
+                                      model: {
+                                        value: _vm.settings.mollie.live_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.mollie,
+                                            "live_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.mollie.live_api_key"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Found in your Mollie dashboard under Developers → API keys."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
                             _c("code", { staticClass: "pms-code" }, [
                               _vm._v(
                                 _vm._s(_vm.ajaxUrl) +
-                                  "?action=contactum_stripe_webhook"
+                                  "?action=contactum_mollie_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Mollie calls this URL automatically — no manual configuration needed in your Mollie dashboard."
                               )
                             ])
                           ])
                         ],
-                        1
+                        2
                       )
-                    ],
-                    2
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.activeTab === "paypal",
-                    expression: "activeTab === 'paypal'"
-                  }
-                ],
-                staticClass: "pms-section"
-              },
-              [
-                _c("div", { staticClass: "pms-card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__head" },
-                    [
-                      _c("div", { staticClass: "pms-card__head-left" }, [
-                        _c(
-                          "span",
-                          { staticClass: "pms-gw-badge pms-gw-badge--paypal" },
-                          [_vm._v("PayPal")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass: "pms-status",
-                            class: _vm.settings.paypal.enabled
-                              ? "pms-status--on"
-                              : "pms-status--off"
-                          },
-                          [
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(
-                                  _vm.settings.paypal.enabled
-                                    ? "Enabled"
-                                    : "Disabled"
-                                ) +
-                                "\n            "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("el-switch", {
-                        model: {
-                          value: _vm.settings.paypal.enabled,
-                          callback: function($$v) {
-                            _vm.$set(_vm.settings.paypal, "enabled", $$v)
-                          },
-                          expression: "settings.paypal.enabled"
-                        }
-                      })
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "authorizenet",
+                        expression: "activeTab === 'authorizenet'"
+                      }
                     ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__body" },
-                    [
-                      _c("div", { staticClass: "pms-field" }, [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Mode")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pms-mode-toggle" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active":
-                                  _vm.settings.paypal.test_mode
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--authorizenet"
                               },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.paypal.test_mode = true
-                                }
-                              }
-                            },
-                            [_vm._v("Sandbox")]
-                          ),
+                              [_vm._v("Authorize.net")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.authorizenet.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.authorizenet.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.authorizenet.enabled,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.settings.authorizenet,
+                                  "enabled",
+                                  $$v
+                                )
+                              },
+                              expression: "settings.authorizenet.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.authorizenet.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.authorizenet.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .authorizenet.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.authorizenet.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.authorizenet.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox API Login ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Sandbox API Login ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.authorizenet
+                                            .sandbox_login_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.authorizenet,
+                                            "sandbox_login_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.authorizenet.sandbox_login_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Transaction Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Sandbox Transaction Key"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.authorizenet
+                                            .sandbox_transaction_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.authorizenet,
+                                            "sandbox_transaction_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.authorizenet.sandbox_transaction_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live API Login ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Live API Login ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.authorizenet
+                                            .live_login_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.authorizenet,
+                                            "live_login_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.authorizenet.live_login_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Transaction Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live Transaction Key"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.authorizenet
+                                            .live_transaction_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.authorizenet,
+                                            "live_transaction_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.authorizenet.live_transaction_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
                           _vm._v(" "),
                           _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active": !_vm.settings.paypal
-                                  .test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.paypal.test_mode = false
-                                }
-                              }
-                            },
-                            [_vm._v("Live")]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm.settings.paypal.test_mode
-                        ? [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Sandbox Client ID")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "Sandbox Client ID" },
-                                  model: {
-                                    value:
-                                      _vm.settings.paypal.sandbox_client_id,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.paypal,
-                                        "sandbox_client_id",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.paypal.sandbox_client_id"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Sandbox Client Secret")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "Sandbox Client Secret"
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("Signature Key")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "Signature Key"
+                                },
+                                model: {
+                                  value:
+                                    _vm.settings.authorizenet.signature_key,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.authorizenet,
+                                      "signature_key",
+                                      $$v
+                                    )
                                   },
-                                  model: {
-                                    value:
-                                      _vm.settings.paypal.sandbox_client_secret,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.paypal,
-                                        "sandbox_client_secret",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.paypal.sandbox_client_secret"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                        : [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Client ID")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "Live Client ID" },
-                                  model: {
-                                    value: _vm.settings.paypal.live_client_id,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.paypal,
-                                        "live_client_id",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "settings.paypal.live_client_id"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Client Secret")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "Live Client Secret"
-                                  },
-                                  model: {
-                                    value:
-                                      _vm.settings.paypal.live_client_secret,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.paypal,
-                                        "live_client_secret",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.paypal.live_client_secret"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                    ],
-                    2
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.activeTab === "razorpay",
-                    expression: "activeTab === 'razorpay'"
-                  }
-                ],
-                staticClass: "pms-section"
-              },
-              [
-                _c("div", { staticClass: "pms-card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__head" },
-                    [
-                      _c("div", { staticClass: "pms-card__head-left" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "pms-gw-badge pms-gw-badge--razorpay"
-                          },
-                          [_vm._v("Razorpay")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass: "pms-status",
-                            class: _vm.settings.razorpay.enabled
-                              ? "pms-status--on"
-                              : "pms-status--off"
-                          },
-                          [
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(
-                                  _vm.settings.razorpay.enabled
-                                    ? "Enabled"
-                                    : "Disabled"
-                                ) +
-                                "\n            "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("el-switch", {
-                        model: {
-                          value: _vm.settings.razorpay.enabled,
-                          callback: function($$v) {
-                            _vm.$set(_vm.settings.razorpay, "enabled", $$v)
-                          },
-                          expression: "settings.razorpay.enabled"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__body" },
-                    [
-                      _c("div", { staticClass: "pms-field" }, [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Mode")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pms-mode-toggle" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active":
-                                  _vm.settings.razorpay.test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.razorpay.test_mode = true
+                                  expression:
+                                    "settings.authorizenet.signature_key"
                                 }
-                              }
-                            },
-                            [_vm._v("Test")]
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "pms-hint" }, [
+                                _vm._v(
+                                  "\n              Found in the Merchant Interface under Account → Settings → Security Settings → General Security Settings → Signature Key.\n              Used to verify the webhook below.\n            "
+                                )
+                              ])
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active": !_vm.settings.razorpay
-                                  .test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.razorpay.test_mode = false
-                                }
-                              }
-                            },
-                            [_vm._v("Live")]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm.settings.razorpay.test_mode
-                        ? [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Test Key ID")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "rzp_test_..." },
-                                  model: {
-                                    value: _vm.settings.razorpay.test_key_id,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.razorpay,
-                                        "test_key_id",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "settings.razorpay.test_key_id"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Test Key Secret")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "Test Key Secret"
-                                  },
-                                  model: {
-                                    value:
-                                      _vm.settings.razorpay.test_key_secret,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.razorpay,
-                                        "test_key_secret",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.razorpay.test_key_secret"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                        : [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Key ID")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: { placeholder: "rzp_live_..." },
-                                  model: {
-                                    value: _vm.settings.razorpay.live_key_id,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.razorpay,
-                                        "live_key_id",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "settings.razorpay.live_key_id"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_authorizenet_webhook"
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live Key Secret")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "Live Key Secret"
-                                  },
-                                  model: {
-                                    value:
-                                      _vm.settings.razorpay.live_key_secret,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.razorpay,
-                                        "live_key_secret",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "settings.razorpay.live_key_secret"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                    ],
-                    2
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "\n              Add this endpoint in the Merchant Interface under Account → Settings → Webhooks, subscribed to the\n              authCapture/void/refund transaction events.\n            "
+                              )
+                            ])
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.activeTab === "mollie",
-                    expression: "activeTab === 'mollie'"
-                  }
-                ],
-                staticClass: "pms-section"
-              },
-              [
-                _c("div", { staticClass: "pms-card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__head" },
-                    [
-                      _c("div", { staticClass: "pms-card__head-left" }, [
-                        _c(
-                          "span",
-                          { staticClass: "pms-gw-badge pms-gw-badge--mollie" },
-                          [_vm._v("Mollie")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass: "pms-status",
-                            class: _vm.settings.mollie.enabled
-                              ? "pms-status--on"
-                              : "pms-status--off"
-                          },
-                          [
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(
-                                  _vm.settings.mollie.enabled
-                                    ? "Enabled"
-                                    : "Disabled"
-                                ) +
-                                "\n            "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("el-switch", {
-                        model: {
-                          value: _vm.settings.mollie.enabled,
-                          callback: function($$v) {
-                            _vm.$set(_vm.settings.mollie, "enabled", $$v)
-                          },
-                          expression: "settings.mollie.enabled"
-                        }
-                      })
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "square",
+                        expression: "activeTab === 'square'"
+                      }
                     ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "pms-card__body" },
-                    [
-                      _c("div", { staticClass: "pms-field" }, [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Mode")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pms-mode-toggle" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active":
-                                  _vm.settings.mollie.test_mode
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--square"
                               },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.mollie.test_mode = true
-                                }
-                              }
-                            },
-                            [_vm._v("Test")]
-                          ),
+                              [_vm._v("Square")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.square.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.square.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.square.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.square, "enabled", $$v)
+                              },
+                              expression: "settings.square.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.square.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.square.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.square
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.square.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.square.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Access Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "EAAA..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.square
+                                            .sandbox_access_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.square,
+                                            "sandbox_access_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.square.sandbox_access_token"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Location ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Sandbox Location ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.square
+                                            .sandbox_location_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.square,
+                                            "sandbox_location_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.square.sandbox_location_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Access Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "EAAA..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.square.live_access_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.square,
+                                            "live_access_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.square.live_access_token"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Location ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Live Location ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.square.live_location_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.square,
+                                            "live_location_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.square.live_location_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("p", { staticClass: "pms-hint" }, [
+                            _vm._v(
+                              "Found in the Square Developer Dashboard under your application's Credentials and Locations pages."
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
-                            "button",
-                            {
-                              staticClass: "pms-mode-btn",
-                              class: {
-                                "pms-mode-btn--active": !_vm.settings.mollie
-                                  .test_mode
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.settings.mollie.test_mode = false
-                                }
-                              }
-                            },
-                            [_vm._v("Live")]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm.settings.mollie.test_mode
-                        ? [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Test API Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "test_..."
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("Webhook Signature Key")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "Signature Key"
+                                },
+                                model: {
+                                  value:
+                                    _vm.settings.square.webhook_signature_key,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.square,
+                                      "webhook_signature_key",
+                                      $$v
+                                    )
                                   },
-                                  model: {
-                                    value: _vm.settings.mollie.test_api_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.mollie,
-                                        "test_api_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "settings.mollie.test_api_key"
+                                  expression:
+                                    "settings.square.webhook_signature_key"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_square_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(2)
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "paystack",
+                        expression: "activeTab === 'paystack'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--paystack"
+                              },
+                              [_vm._v("Paystack")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.paystack.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.paystack.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.paystack.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.paystack, "enabled", $$v)
+                              },
+                              expression: "settings.paystack.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.paystack.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paystack.test_mode = true
+                                    }
                                   }
-                                }),
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .paystack.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paystack.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.paystack.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Public Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "pk_test_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.paystack.test_public_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paystack,
+                                            "test_public_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paystack.test_public_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
                                 _vm._v(" "),
-                                _c("p", { staticClass: "pms-hint" }, [
-                                  _vm._v(
-                                    "Found in your Mollie dashboard under Developers → API keys."
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "sk_test_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.paystack.test_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paystack,
+                                            "test_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paystack.test_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Public Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "pk_live_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.paystack.live_public_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paystack,
+                                            "live_public_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paystack.live_public_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "sk_live_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.paystack.live_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paystack,
+                                            "live_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paystack.live_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_paystack_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "\n              Add this URL in the Paystack Dashboard under Settings → API Keys & Webhooks. Paystack signs\n              webhooks with your Secret Key above — no separate signing secret to configure.\n            "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(3)
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "payrexx",
+                        expression: "activeTab === 'payrexx'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--payrexx"
+                              },
+                              [_vm._v("Payrexx")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.payrexx.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.payrexx.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.payrexx.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.payrexx, "enabled", $$v)
+                              },
+                              expression: "settings.payrexx.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pms-card__body" }, [
+                        _c(
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Instance")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: { placeholder: "your-instance-name" },
+                              model: {
+                                value: _vm.settings.payrexx.instance,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.payrexx,
+                                    "instance",
+                                    $$v
                                   )
-                                ])
-                              ],
-                              1
-                            )
-                          ]
-                        : [
-                            _c(
-                              "div",
-                              { staticClass: "pms-field" },
-                              [
-                                _c("label", { staticClass: "pms-label" }, [
-                                  _vm._v("Live API Key")
-                                ]),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  attrs: {
-                                    type: "password",
-                                    "show-password": "",
-                                    placeholder: "live_..."
-                                  },
-                                  model: {
-                                    value: _vm.settings.mollie.live_api_key,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.settings.mollie,
-                                        "live_api_key",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "settings.mollie.live_api_key"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("p", { staticClass: "pms-hint" }, [
-                                  _vm._v(
-                                    "Found in your Mollie dashboard under Developers → API keys."
-                                  )
-                                ])
-                              ],
-                              1
-                            )
+                                },
+                                expression: "settings.payrexx.instance"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                'The subdomain of your Payrexx account, e.g. "your-instance-name" from your-instance-name.payrexx.com.'
+                              )
+                            ])
                           ],
-                      _vm._v(" "),
-                      _c("div", { staticClass: "pms-field" }, [
-                        _c("label", { staticClass: "pms-label" }, [
-                          _vm._v("Webhook URL")
-                        ]),
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("code", { staticClass: "pms-code" }, [
-                          _vm._v(
-                            _vm._s(_vm.ajaxUrl) +
-                              "?action=contactum_mollie_webhook"
-                          )
-                        ]),
+                        _c(
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("API Secret")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: {
+                                type: "password",
+                                "show-password": "",
+                                placeholder: "API Secret"
+                              },
+                              model: {
+                                value: _vm.settings.payrexx.api_secret,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.payrexx,
+                                    "api_secret",
+                                    $$v
+                                  )
+                                },
+                                expression: "settings.payrexx.api_secret"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Found in the Payrexx Dashboard under Account → API Keys. Payrexx has no separate sandbox environment — test payments are made through this same instance."
+                              )
+                            ])
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("p", { staticClass: "pms-hint" }, [
-                          _vm._v(
-                            "Mollie calls this URL automatically — no manual configuration needed in your Mollie dashboard."
-                          )
+                        _c("div", { staticClass: "pms-field" }, [
+                          _c("label", { staticClass: "pms-label" }, [
+                            _vm._v("Webhook URL")
+                          ]),
+                          _vm._v(" "),
+                          _c("code", { staticClass: "pms-code" }, [
+                            _vm._v(
+                              _vm._s(_vm.ajaxUrl) +
+                                "?action=contactum_payrexx_webhook"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "pms-hint" }, [
+                            _vm._v(
+                              "Add this URL as a webhook in the Payrexx Dashboard under Account → Webhooks."
+                            )
+                          ])
                         ])
                       ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "moneris",
+                        expression: "activeTab === 'moneris'"
+                      }
                     ],
-                    2
-                  )
-                ])
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--moneris"
+                              },
+                              [_vm._v("Moneris")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.moneris.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.moneris.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.moneris.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.moneris, "enabled", $$v)
+                              },
+                              expression: "settings.moneris.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pms-card__body" }, [
+                        _c("div", { staticClass: "pms-field" }, [
+                          _c("label", { staticClass: "pms-label" }, [
+                            _vm._v("Region")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-mode-toggle" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "pms-mode-btn",
+                                class: {
+                                  "pms-mode-btn--active":
+                                    _vm.settings.moneris.region === "ca"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.settings.moneris.region = "ca"
+                                  }
+                                }
+                              },
+                              [_vm._v("Canada")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "pms-mode-btn",
+                                class: {
+                                  "pms-mode-btn--active":
+                                    _vm.settings.moneris.region === "us"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.settings.moneris.region = "us"
+                                  }
+                                }
+                              },
+                              [_vm._v("US")]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "pms-field" }, [
+                          _c("label", { staticClass: "pms-label" }, [
+                            _vm._v("Mode")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-mode-toggle" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "pms-mode-btn",
+                                class: {
+                                  "pms-mode-btn--active":
+                                    _vm.settings.moneris.test_mode
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.settings.moneris.test_mode = true
+                                  }
+                                }
+                              },
+                              [_vm._v("Test")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "pms-mode-btn",
+                                class: {
+                                  "pms-mode-btn--active": !_vm.settings.moneris
+                                    .test_mode
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.settings.moneris.test_mode = false
+                                  }
+                                }
+                              },
+                              [_vm._v("Live")]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Store ID")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: { placeholder: "Store ID" },
+                              model: {
+                                value: _vm.settings.moneris.store_id,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.moneris,
+                                    "store_id",
+                                    $$v
+                                  )
+                                },
+                                expression: "settings.moneris.store_id"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Hosted Paypage Key")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: {
+                                type: "password",
+                                "show-password": "",
+                                placeholder: "Hosted Paypage Key"
+                              },
+                              model: {
+                                value: _vm.settings.moneris.hpp_key,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.settings.moneris, "hpp_key", $$v)
+                                },
+                                expression: "settings.moneris.hpp_key"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Found in the Moneris Merchant Resource Center under Admin → Hosted Config → Hosted Paypage Configuration."
+                              )
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "pms-field" }, [
+                          _c("label", { staticClass: "pms-label" }, [
+                            _vm._v("Response URL")
+                          ]),
+                          _vm._v(" "),
+                          _c("code", { staticClass: "pms-code" }, [
+                            _vm._v(
+                              _vm._s(_vm.ajaxUrl) +
+                                "?action=contactum_moneris_webhook"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "pms-hint" }, [
+                            _vm._v(
+                              "\n              Set your Hosted Paypage profile's approved/declined redirect URLs to point back to your own site\n              (e.g. your Success/Cancel Redirect URLs above) in the Moneris Merchant Resource Center — Moneris\n              doesn't accept those as per-transaction parameters the way the other gateways here do.\n            "
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(4)
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "xendit",
+                        expression: "activeTab === 'xendit'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--xendit"
+                              },
+                              [_vm._v("Xendit")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.xendit.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.xendit.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.xendit.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.xendit, "enabled", $$v)
+                              },
+                              expression: "settings.xendit.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.xendit.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.xendit.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.xendit
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.xendit.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.xendit.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "xnd_development_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.xendit.test_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.xendit,
+                                            "test_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.xendit.test_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Webhook Verification Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder:
+                                          "Webhook Verification Token"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.xendit
+                                            .test_webhook_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.xendit,
+                                            "test_webhook_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.xendit.test_webhook_token"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "xnd_production_..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.xendit.live_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.xendit,
+                                            "live_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.xendit.live_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Webhook Verification Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder:
+                                          "Webhook Verification Token"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.xendit
+                                            .live_webhook_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.xendit,
+                                            "live_webhook_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.xendit.live_webhook_token"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_xendit_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                '\n              Add this URL as a Callback URL in the Xendit Dashboard under Settings → Developers → Webhooks,\n              for the Invoice "invoice.paid" event, and paste the matching Verification Token above.\n            '
+                              )
+                            ])
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "flutterwave",
+                        expression: "activeTab === 'flutterwave'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--flutterwave"
+                              },
+                              [_vm._v("Flutterwave")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.flutterwave.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.flutterwave.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.flutterwave.enabled,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.settings.flutterwave,
+                                  "enabled",
+                                  $$v
+                                )
+                              },
+                              expression: "settings.flutterwave.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.flutterwave.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.flutterwave.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Test")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .flutterwave.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.flutterwave.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.flutterwave.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Test Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "FLWSECK_TEST-..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.flutterwave
+                                            .test_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.flutterwave,
+                                            "test_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.flutterwave.test_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "FLWSECK-..."
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.flutterwave
+                                            .live_secret_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.flutterwave,
+                                            "live_secret_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.flutterwave.live_secret_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("Secret Hash")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "Secret Hash"
+                                },
+                                model: {
+                                  value: _vm.settings.flutterwave.secret_hash,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.flutterwave,
+                                      "secret_hash",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.flutterwave.secret_hash"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "pms-hint" }, [
+                                _vm._v(
+                                  "Set this same value as your webhook secret hash in the Flutterwave Dashboard under Settings → Webhooks — used for both test and live."
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_flutterwave_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Add this URL as your Webhook URL in the Flutterwave Dashboard under Settings → Webhooks."
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(5)
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "billplz",
+                        expression: "activeTab === 'billplz'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--billplz"
+                              },
+                              [_vm._v("Billplz")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.billplz.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.billplz.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.billplz.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.billplz, "enabled", $$v)
+                              },
+                              expression: "settings.billplz.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.billplz.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.billplz.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .billplz.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.billplz.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.billplz.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox API Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Sandbox API Secret Key"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.billplz.test_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.billplz,
+                                            "test_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.billplz.test_api_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Collection ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Sandbox Collection ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.billplz
+                                            .test_collection_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.billplz,
+                                            "test_collection_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.billplz.test_collection_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live API Secret Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live API Secret Key"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.billplz.live_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.billplz,
+                                            "live_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.billplz.live_api_key"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Collection ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Live Collection ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.billplz
+                                            .live_collection_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.billplz,
+                                            "live_collection_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.billplz.live_collection_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("p", { staticClass: "pms-hint" }, [
+                            _vm._v(
+                              "Bills must belong to a Collection — create one in the Billplz Dashboard first and paste its ID here."
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("X-Signature Key")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "X-Signature Key"
+                                },
+                                model: {
+                                  value: _vm.settings.billplz.x_signature_key,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.billplz,
+                                      "x_signature_key",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.billplz.x_signature_key"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "pms-hint" }, [
+                                _vm._v(
+                                  "Found in the Billplz Dashboard under Settings → API Keys — used to verify the callback below."
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Callback URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_billplz_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Bills are created with this as their callback_url automatically — no manual configuration needed in the Billplz Dashboard."
+                              )
+                            ])
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "sslcommerz",
+                        expression: "activeTab === 'sslcommerz'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--sslcommerz"
+                              },
+                              [_vm._v("SSLCommerz")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.sslcommerz.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.sslcommerz.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.sslcommerz.enabled,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.settings.sslcommerz,
+                                  "enabled",
+                                  $$v
+                                )
+                              },
+                              expression: "settings.sslcommerz.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.sslcommerz.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.sslcommerz.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings
+                                      .sslcommerz.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.sslcommerz.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.sslcommerz.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Store ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        placeholder: "Sandbox Store ID"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.sslcommerz.test_store_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.sslcommerz,
+                                            "test_store_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.sslcommerz.test_store_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Store Password")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Sandbox Store Password"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.sslcommerz
+                                            .test_store_password,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.sslcommerz,
+                                            "test_store_password",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.sslcommerz.test_store_password"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Store ID")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "Live Store ID" },
+                                      model: {
+                                        value:
+                                          _vm.settings.sslcommerz.live_store_id,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.sslcommerz,
+                                            "live_store_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.sslcommerz.live_store_id"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Store Password")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live Store Password"
+                                      },
+                                      model: {
+                                        value:
+                                          _vm.settings.sslcommerz
+                                            .live_store_password,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.sslcommerz,
+                                            "live_store_password",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.sslcommerz.live_store_password"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c("p", { staticClass: "pms-hint" }, [
+                            _vm._v(
+                              "Sandbox and Live are separate SSLCommerz merchant accounts with their own credentials."
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("IPN URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_sslcommerz_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Sessions are created with this as their ipn_url automatically — no manual configuration needed in the SSLCommerz panel."
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(6)
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                )
               ]
-            )
-          ],
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "pms-footer" },
-        [
-          _c(
-            "el-button",
-            {
-              attrs: {
-                type: "primary",
-                loading: _vm.saving,
-                icon: "el-icon-check"
-              },
-              on: { click: _vm.saveSettings }
-            },
-            [_vm._v("\n      Save Settings\n    ")]
-          )
         ],
-        1
+        2
       )
-    ],
-    2
-  )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pms-header" }, [
-      _c("div", { staticClass: "pms-header__left" }, [
-        _c("div", { staticClass: "pms-header__icon" }, [
-          _c("span", { staticClass: "dashicons dashicons-money-alt" })
+    return _c("div", { staticClass: "pms-header__left" }, [
+      _c("div", { staticClass: "pms-header__icon" }, [
+        _c("span", { staticClass: "dashicons dashicons-money-alt" })
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("h2", { staticClass: "pms-header__title" }, [
+          _vm._v("Payment Gateways")
         ]),
         _vm._v(" "),
-        _c("div", [
-          _c("h2", { staticClass: "pms-header__title" }, [
-            _vm._v("Payment Gateways")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "pms-header__sub" }, [
-            _vm._v("Configure payment methods for your forms")
-          ])
+        _c("p", { staticClass: "pms-header__sub" }, [
+          _vm._v("Configure payment methods for your forms")
         ])
       ])
     ])
@@ -81450,6 +84606,71 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "pms-card__head" }, [
       _c("h3", { staticClass: "pms-card__title" }, [_vm._v("General Settings")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "pms-hint" }, [
+      _vm._v(
+        "\n              Add this exact URL as a webhook endpoint in the Square Developer Dashboard, subscribed to\n              "
+      ),
+      _c("code", { staticClass: "pms-code" }, [_vm._v("payment.created")]),
+      _vm._v(" and "),
+      _c("code", { staticClass: "pms-code" }, [_vm._v("payment.updated")]),
+      _vm._v(
+        ".\n              Square signs each request using the exact URL you register, so it must match this one precisely.\n            "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pms-field" }, [
+      _c("p", { staticClass: "pms-hint" }, [
+        _vm._v(
+          "\n              Paystack requires a customer email for every transaction. The first Email field on the form is\n              used automatically; if the form has none, the site admin email is used instead.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pms-field" }, [
+      _c("p", { staticClass: "pms-hint" }, [
+        _c("strong", [_vm._v("Note:")]),
+        _vm._v(
+          " unlike the other gateways here, Moneris payment confirmation is not\n              independently re-verified against the Moneris API — it trusts the result Moneris posts back\n              directly. Confirm this meets your requirements before processing real transactions.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pms-field" }, [
+      _c("p", { staticClass: "pms-hint" }, [
+        _vm._v(
+          "\n              Flutterwave requires a customer email for every transaction. The first Email field on the form is\n              used automatically; if the form has none, the site admin email is used instead.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pms-field" }, [
+      _c("p", { staticClass: "pms-hint" }, [
+        _vm._v(
+          "\n              SSLCommerz requires customer name, email, phone, and address details. Name/Email/Phone/Country\n              fields on the form are used automatically where present; address details this plugin can't\n              reliably detect are sent as placeholder values, which SSLCommerz accepts as long as they're non-empty.\n            "
+        )
+      ])
     ])
   }
 ]
@@ -83171,12 +86392,12 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", [
         _c("h2", { staticClass: "ctm-webhook-settings__title" }, [
-          _vm._v("Webhook / Zapier")
+          _vm._v("Webhook")
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "ctm-webhook-settings__desc" }, [
           _vm._v(
-            "\n                    POST form submissions to any URL — Zapier, Make, n8n, or your own endpoint.\n                    Configure a default URL here; each form can also set its own URL.\n                "
+            "\n                    POST form submissions to any URL  Make, n8n, or your own endpoint.\n                    Configure a default URL here; each form can also set its own URL.\n                "
           )
         ])
       ])

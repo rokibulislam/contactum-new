@@ -8,11 +8,20 @@
           <span class="dashicons dashicons-money-alt"></span>
         </div>
         <div>
-          <h1 class="cpm-header__title">Payment Transactions</h1>
-          <p class="cpm-header__sub">Track and manage all customer payments</p>
+          <h1 class="cpm-header__title">{{ activeTab === 'subscriptions' ? 'Subscriptions' : 'Payment Transactions' }}</h1>
+          <p class="cpm-header__sub">
+            {{ activeTab === 'subscriptions' ? 'Track and manage recurring subscriptions' : 'Track and manage all customer payments' }}
+          </p>
         </div>
       </div>
+
+      <el-radio-group v-model="activeTab" size="small">
+        <el-radio-button label="transactions">Transactions</el-radio-button>
+        <el-radio-button label="subscriptions">Subscriptions</el-radio-button>
+      </el-radio-group>
     </div>
+
+    <template v-if="activeTab === 'transactions'">
 
     <!-- Stats ──────────────────────────────────────────────────────────── -->
     <div class="cpm-stats">
@@ -236,19 +245,27 @@
 
     </div>
 
+    </template>
+
+    <Subscriptions v-else />
+
   </div>
 </template>
 
 <script>
 /* global jQuery */
+import Subscriptions from './Subscriptions.vue';
 const $ = window.jQuery;
 const cpm = window.contactum || {};
 
 export default {
   name: 'Payment',
 
+  components: { Subscriptions },
+
   data() {
     return {
+      activeTab:      'transactions',
       payments:       [],
       loading:        false,
       stats: {

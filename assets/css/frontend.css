@@ -351,3 +351,18 @@ ul.contactum-form.form-label-right li div.contactum-fields {
     display: flex;
     gap: 10px;
 }
+
+/* Honeypot spam-trap field — visually hidden off-screen rather than
+   display:none/visibility:hidden, which some bots specifically detect and
+   skip. Real visitors and screen readers never encounter it. */
+.contactum-honeypot-field {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}

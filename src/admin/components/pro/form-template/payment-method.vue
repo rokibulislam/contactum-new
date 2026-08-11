@@ -37,10 +37,19 @@ export default {
     },
     gatewayMeta() {
       return [
-        { key: 'stripe',   label: 'Credit / Debit Card', icon: '💳' },
-        { key: 'paypal',   label: 'PayPal',              icon: '🅿️' },
-        { key: 'razorpay', label: 'Razorpay',            icon: '₹' },
-        { key: 'mollie',   label: 'Mollie',              icon: '🔵' },
+        { key: 'stripe',       label: 'Credit / Debit Card', icon: '💳' },
+        { key: 'paypal',       label: 'PayPal',              icon: '🅿️' },
+        { key: 'razorpay',     label: 'Razorpay',            icon: '₹' },
+        { key: 'mollie',       label: 'Mollie',               icon: '🔵' },
+        { key: 'authorizenet', label: 'Authorize.net',        icon: '💳' },
+        { key: 'square',       label: 'Square',               icon: '⬛' },
+        { key: 'paystack',     label: 'Paystack',             icon: '🔵' },
+        { key: 'payrexx',      label: 'Payrexx',              icon: '🟠' },
+        { key: 'moneris',      label: 'Moneris',              icon: '💳' },
+        { key: 'xendit',       label: 'Xendit',                icon: '🔷' },
+        { key: 'flutterwave',  label: 'Flutterwave',          icon: '🟡' },
+        { key: 'billplz',      label: 'Billplz',               icon: '🧾' },
+        { key: 'sslcommerz',   label: 'SSLCommerz',           icon: '🔒' },
       ];
     },
     enabledGateways() {
@@ -49,8 +58,17 @@ export default {
         : {};
       return gws;
     },
+    // Gateways enabled site-wide AND (if configured) checked for this field
+    // in the "Active Gateways" list on the settings panel — mirrors
+    // get_active_gateways() in class-field-payment-method.php.
     activeGateways() {
-      return this.gatewayMeta.filter(gw => this.enabledGateways[gw.key] === true);
+      const selected = this.ps.enabled_gateways;
+      const hasSelection = Array.isArray(selected);
+
+      return this.gatewayMeta.filter(gw => {
+        if (this.enabledGateways[gw.key] !== true) return false;
+        return hasSelection ? selected.includes(gw.key) : true;
+      });
     },
   },
   methods: {

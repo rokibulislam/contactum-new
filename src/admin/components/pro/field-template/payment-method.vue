@@ -9,10 +9,17 @@
       </div>
 
       <div v-if="activeGateways.length" class="pmf-gateway-status-list">
-        <div v-for="gw in activeGateways" :key="gw.key" class="pmf-gateway-status-item">
+        <label v-for="gw in activeGateways" :key="gw.key" class="pmf-gateway-status-item">
+          <el-checkbox
+            :value="isGatewaySelected(gw.key)"
+            @input="toggleGateway(gw.key, $event)"
+          />
           <span class="pmf-gw-badge" :class="'pmf-gw-badge--' + gw.key">{{ gw.label }}</span>
-          <span class="pmf-gateway-status-item__on dashicons dashicons-yes-alt"></span>
-        </div>
+        </label>
+        <p v-if="!selectedGateways.length" class="pmf-notice pmf-notice--warn">
+          <span class="dashicons dashicons-info"></span>
+          No gateways checked — this field won't show any payment option on the form.
+        </p>
       </div>
 
       <p v-else class="pmf-notice pmf-notice--warn">
@@ -24,7 +31,7 @@
     </div>
 
     <!-- Custom Labels ──────────────────────────────────────────────────────── -->
-    <template v-if="activeGateways.length">
+    <template v-if="selectedGateways.length">
       <div class="pmf-section">
         <div class="pmf-section__head">
           <span class="pmf-section__head-icon dashicons dashicons-tag"></span>
@@ -32,7 +39,7 @@
         </div>
         <p class="pmf-hint">Override the default label shown to customers for each gateway.</p>
         <div
-          v-for="gw in activeGateways"
+          v-for="gw in selectedGateways"
           :key="'lbl_' + gw.key"
           class="pmf-label-row"
         >
@@ -74,15 +81,27 @@ export default {
   mixins: [option_field],
   computed: {
     fieldSettings() {
-      return this.field.payment_settings || {};
+      // `field` (from field-options/index.vue's v-for) is the settings
+      // panel's descriptor metadata, not the field being edited — the live
+      // field (with its real id and current values) is `editfield`.
+      return this.editfield.payment_settings || {};
     },
 
     allGatewayMeta() {
       return [
-        { key: 'stripe',   label: 'Stripe / Card' },
-        { key: 'paypal',   label: 'PayPal' },
-        { key: 'razorpay', label: 'Razorpay' },
-        { key: 'mollie',   label: 'Mollie' },
+        { key: 'stripe',       label: 'Stripe / Card' },
+        { key: 'paypal',       label: 'PayPal' },
+        { key: 'razorpay',     label: 'Razorpay' },
+        { key: 'mollie',       label: 'Mollie' },
+        { key: 'authorizenet', label: 'Authorize.net' },
+        { key: 'square',       label: 'Square' },
+        { key: 'paystack',     label: 'Paystack' },
+        { key: 'payrexx',      label: 'Payrexx' },
+        { key: 'moneris',      label: 'Moneris' },
+        { key: 'xendit',       label: 'Xendit' },
+        { key: 'flutterwave',  label: 'Flutterwave' },
+        { key: 'billplz',      label: 'Billplz' },
+        { key: 'sslcommerz',   label: 'SSLCommerz' },
       ];
     },
 
@@ -96,6 +115,13 @@ export default {
       return this.allGatewayMeta.filter(gw => this.enabledMap[gw.key] === true);
     },
 
+    // Which of the active gateways are checked for this specific field.
+    // Not yet configured (key absent) = every active gateway, so existing
+    // fields saved before this setting existed keep behaving as before.
+    selectedGateways() {
+      return this.activeGateways.filter(gw => this.isGatewaySelected(gw.key));
+    },
+
     paymentSettingsUrl() {
       return window.contactum && window.contactum.admin_url
         ? window.contactum.admin_url + '?page=contactum-settings#payment_settings'
@@ -104,6 +130,29 @@ export default {
   },
 
   methods: {
+    isGatewaySelected(key) {
+      const list = this.fieldSettings.enabled_gateways;
+      if (!Array.isArray(list)) return true;
+      return list.includes(key);
+    },
+
+    toggleGateway(key, checked) {
+      // First interaction: materialize the full active list rather than
+      // starting from an empty array, so unchecking one gateway doesn't
+      // silently opt out every other one that was implicitly "on" before.
+      let list = Array.isArray(this.fieldSettings.enabled_gateways)
+        ? this.fieldSettings.enabled_gateways.slice()
+        : this.activeGateways.map(gw => gw.key);
+
+      if (checked && !list.includes(key)) {
+        list.push(key);
+      } else if (!checked) {
+        list = list.filter(k => k !== key);
+      }
+
+      this.updateField('enabled_gateways', list);
+    },
+
     getLabel(key) {
       return (this.fieldSettings.labels || {})[key] || '';
     },
@@ -116,10 +165,10 @@ export default {
 
     updateField(key, value) {
       const settings = Object.assign({}, this.fieldSettings, { [key]: value });
-      this.$store.dispatch('updateFieldSettings', {
-        field: this.field,
-        key:   'payment_settings',
-        value: settings,
+      this.$store.dispatch('update_editing_form_field', {
+        id:       this.editfield.id,
+        property: 'payment_settings',
+        value:    settings,
       });
     },
   },
@@ -166,12 +215,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-.pmf-gateway-status-item__on {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  color: #67c23a;
+  cursor: pointer;
 }
 
 /* Gateway badges */
@@ -185,10 +229,19 @@ export default {
   color: #909399;
   white-space: nowrap;
 }
-.pmf-gw-badge--stripe   { background: #f0eeff; color: #6e4bcc; }
-.pmf-gw-badge--paypal   { background: #fdf6ec; color: #e6a23c; }
-.pmf-gw-badge--razorpay { background: #ecf5ff; color: #409eff; }
-.pmf-gw-badge--mollie   { background: #f0f9eb; color: #67c23a; }
+.pmf-gw-badge--stripe       { background: #f0eeff; color: #6e4bcc; }
+.pmf-gw-badge--paypal       { background: #fdf6ec; color: #e6a23c; }
+.pmf-gw-badge--razorpay     { background: #ecf5ff; color: #409eff; }
+.pmf-gw-badge--mollie       { background: #f0f9eb; color: #67c23a; }
+.pmf-gw-badge--authorizenet { background: #fef0f0; color: #f56c6c; }
+.pmf-gw-badge--square       { background: #eafaf1; color: #2f9e44; }
+.pmf-gw-badge--paystack     { background: #e8f5e9; color: #00a86b; }
+.pmf-gw-badge--payrexx      { background: #fff4e6; color: #e8590c; }
+.pmf-gw-badge--moneris      { background: #e7f5ff; color: #1971c2; }
+.pmf-gw-badge--xendit       { background: #edf2ff; color: #4263eb; }
+.pmf-gw-badge--flutterwave  { background: #fff9db; color: #f08c00; }
+.pmf-gw-badge--billplz      { background: #e6fcf5; color: #0ca678; }
+.pmf-gw-badge--sslcommerz   { background: #eef2ff; color: #4338ca; }
 .pmf-gw-badge--sm { font-size: 10px; padding: 1px 6px; }
 
 /* Label row */

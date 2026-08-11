@@ -34,6 +34,18 @@
                     </a>
                 </li>
 
+                <li class="<?php echo ($page == 'contactum-support') ? 'active' : '' ?>">
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=contactum-support')); ?>" class="contactum_menu_link">
+                        <?php _e('Support', 'contactum'); ?>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://wpcontactum.com?utm_source=fluent-forms&utm_medium=free_plugin&utm_campaign=upgrade_pro" target="_blank" class="contactum_menu_link">
+                        <?php _e('Upgrade To Pro', 'contactum'); ?>
+                    </a>
+                </li>
+
             </ul>
 
         </div>

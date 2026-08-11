@@ -1670,9 +1670,9 @@ function mergeFn (a, b) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1681,7 +1681,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Subscriptions_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Subscriptions.vue */ "./src/admin/pages/Subscriptions.vue");
 //
 //
 //
@@ -1766,614 +1765,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* global jQuery */
-
-const $ = window.jQuery;
 const cpm = window.contactum || {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Payment',
-  components: {
-    Subscriptions: _Subscriptions_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
+  name: 'Support',
 
   data() {
     return {
-      activeTab: 'transactions',
-      payments: [],
-      loading: false,
-      stats: {
-        total_revenue: 0,
-        total: 0,
-        completed: 0,
-        pending: 0,
-        failed: 0,
-        refunded: 0
-      },
-      availableForms: [],
-      formsLoading: false,
-      filterForm: '',
-      filterStatus: '',
-      filterGateway: '',
-      search: '',
-      page: 1,
-      perPage: 20,
-      total: 0,
-      totalPages: 0
+      openFaq: 0,
+      faqs: [{
+        q: 'A field I added disappeared from the form builder — what happened?',
+        a: 'If a field type comes from a module or the Pro add-on and that module gets deactivated, the field stays on the form (its data is preserved) but is shown as unavailable in the builder and left out of the live form until the module is reactivated.'
+      }, {
+        q: 'How do I stop spam submissions without adding a CAPTCHA?',
+        a: 'Every form already includes an invisible honeypot field and a minimum-time-to-submit check — both run automatically and reject obvious bot submissions before they\'re saved as entries.'
+      }, {
+        q: 'Where do I enable a payment gateway?',
+        a: 'Go to Contactum → Payment Settings, enable the gateway you want, and fill in its API credentials. A gateway only appears on the frontend once it\'s enabled and its credentials are complete.'
+      }, {
+        q: 'How do I export my form entries?',
+        a: 'Open a form\'s Entries screen and use the export action to download a CSV of all entries, optionally filtered.'
+      }, {
+        q: 'Why isn\'t my reCAPTCHA / hCaptcha / Turnstile showing up?',
+        a: 'Double-check the site key and secret key are saved under Settings, and that the corresponding field has been added to the form — the widget only renders when both are present.'
+      }]
     };
   },
 
-  mounted() {
-    this.loadForms();
-    this.fetchStats();
-    this.fetchPayments();
-  },
-
-  methods: {
-    loadForms() {
-      this.formsLoading = true;
-      $.post(cpm.ajaxurl, {
-        action: 'contactum_get_forms',
-        _ajax_nonce: cpm.nonce
-      }, res => {
-        this.formsLoading = false;
-
-        if (res.success) {
-          this.availableForms = Object.values(res.data.forms || {});
-        }
-      });
+  computed: {
+    mailtoHref() {
+      return 'mailto:' + (cpm.admin_email || '');
     },
 
-    fetchStats() {
-      $.post(cpm.ajaxurl, {
-        action: 'contactum_get_payment_stats',
-        nonce: cpm.nonce
-      }, res => {
-        if (res.success) this.stats = res.data;
-      });
-    },
-
-    fetchPayments() {
-      this.loading = true;
-      $.post(cpm.ajaxurl, {
-        action: 'contactum_get_payments',
-        nonce: cpm.nonce,
-        page: this.page,
-        per_page: this.perPage,
-        form_id: this.filterForm,
-        status: this.filterStatus,
-        gateway: this.filterGateway,
-        search: this.search
-      }, res => {
-        this.loading = false;
-
-        if (res.success) {
-          this.payments = res.data.payments;
-          this.total = res.data.total;
-          this.totalPages = res.data.pages;
-        }
-      });
-    },
-
-    onFilterChange() {
-      this.page = 1;
-      this.fetchPayments();
-    },
-
-    clearFilters() {
-      this.filterForm = '';
-      this.filterStatus = '';
-      this.filterGateway = '';
-      this.search = '';
-      this.page = 1;
-      this.fetchPayments();
-    },
-
-    confirmDelete(row) {
-      const label = row.transaction_id ? '#' + row.transaction_id : 'ID-' + row.id;
-      this.$confirm(`Delete payment <strong>${label}</strong>? This cannot be undone.`, 'Delete Payment', {
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-        dangerouslyUseHTMLString: true,
-        confirmButtonClass: 'el-button--danger'
-      }).then(() => {
-        $.post(cpm.ajaxurl, {
-          action: 'contactum_delete_payment',
-          nonce: cpm.nonce,
-          id: row.id
-        }, res => {
-          if (res.success) {
-            this.$message.success('Payment deleted');
-            this.fetchPayments();
-            this.fetchStats();
-          } else {
-            this.$message.error(res.data && res.data.message || 'Failed to delete payment');
-          }
-        });
-      }).catch(() => {});
-    },
-
-    formatAmount(val) {
-      return parseFloat(val || 0).toFixed(2);
-    },
-
-    formatDate(val) {
-      if (!val) return '—';
-      return new Date(val).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-    },
-
-    capitalize(str) {
-      if (!str) return '';
-      return str.charAt(0).toUpperCase() + str.slice(1);
+    infoRows() {
+      return [{
+        label: 'Contactum Version',
+        value: cpm.contactum_version || '—'
+      }, {
+        label: 'Contactum Pro Version',
+        value: cpm.contactum_pro || 'Not active'
+      }, {
+        label: 'WordPress Version',
+        value: cpm.wp_version || '—'
+      }, {
+        label: 'PHP Version',
+        value: cpm.php_version || '—'
+      }, {
+        label: 'MySQL Version',
+        value: cpm.mysql_version || '—'
+      }, {
+        label: 'PHP Memory Limit',
+        value: cpm.memory_limit || '—'
+      }, {
+        label: 'Max Upload Size',
+        value: cpm.max_upload_size || '—'
+      }, {
+        label: 'Active Theme',
+        value: cpm.theme || '—'
+      }, {
+        label: 'Multisite',
+        value: cpm.is_multisite ? 'Yes' : 'No'
+      }];
     }
 
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* global jQuery */
-const $ = window.jQuery;
-const cpm = window.contactum || {};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Subscriptions',
-
-  data() {
-    return {
-      subscriptions: [],
-      loading: false,
-      availableForms: [],
-      formsLoading: false,
-      filterForm: '',
-      filterStatus: '',
-      page: 1,
-      perPage: 20,
-      total: 0,
-      totalPages: 0
-    };
   },
-
-  mounted() {
-    this.loadForms();
-    this.fetchSubscriptions();
-  },
-
   methods: {
-    loadForms() {
-      this.formsLoading = true;
-      $.post(cpm.ajaxurl, {
-        action: 'contactum_get_forms',
-        _ajax_nonce: cpm.nonce
-      }, res => {
-        this.formsLoading = false;
-
-        if (res.success) {
-          this.availableForms = Object.values(res.data.forms || {});
-        }
+    copyInfo() {
+      const text = this.infoRows.map(r => r.label + ': ' + r.value).join('\n');
+      navigator.clipboard.writeText(text).then(() => {
+        this.$message.success('System info copied to clipboard');
+      }).catch(() => {
+        this.$message.error('Could not copy — please copy manually');
       });
-    },
-
-    fetchSubscriptions() {
-      this.loading = true;
-      $.post(cpm.ajaxurl, {
-        action: 'contactum_get_subscriptions',
-        nonce: cpm.nonce,
-        page: this.page,
-        per_page: this.perPage,
-        form_id: this.filterForm,
-        status: this.filterStatus
-      }, res => {
-        this.loading = false;
-
-        if (res.success) {
-          this.subscriptions = res.data.subscriptions;
-          this.total = res.data.total;
-          this.totalPages = res.data.pages;
-        }
-      });
-    },
-
-    onFilterChange() {
-      this.page = 1;
-      this.fetchSubscriptions();
-    },
-
-    clearFilters() {
-      this.filterForm = '';
-      this.filterStatus = '';
-      this.page = 1;
-      this.fetchSubscriptions();
-    },
-
-    isCancelable(status) {
-      return ['active', 'trialing', 'past_due'].includes(status);
-    },
-
-    statusClass(status) {
-      if (status === 'active' || status === 'trialing') return 'completed';
-      if (status === 'past_due' || status === 'pending') return 'pending';
-      if (status === 'canceled' || status === 'failed') return 'failed';
-      return 'unknown';
-    },
-
-    confirmCancel(row) {
-      this.$confirm(`Cancel the <strong>${row.plan_name || 'subscription'}</strong> for <strong>${row.customer_email || 'this customer'}</strong>? This stops future billing immediately and cannot be undone.`, 'Cancel Subscription', {
-        confirmButtonText: 'Cancel Subscription',
-        cancelButtonText: 'Keep It',
-        type: 'warning',
-        dangerouslyUseHTMLString: true,
-        confirmButtonClass: 'el-button--danger'
-      }).then(() => {
-        $.post(cpm.ajaxurl, {
-          action: 'contactum_cancel_subscription',
-          nonce: cpm.nonce,
-          id: row.id
-        }, res => {
-          if (res.success) {
-            this.$message.success('Subscription canceled');
-            this.fetchSubscriptions();
-          } else {
-            this.$message.error(res.data && res.data.message || 'Failed to cancel subscription');
-          }
-        });
-      }).catch(() => {});
-    },
-
-    formatAmount(val) {
-      return parseFloat(val || 0).toFixed(2);
-    },
-
-    intervalLabel(row) {
-      const count = parseInt(row.interval_count, 10) || 1;
-      const unit = row.billing_interval || 'month';
-      return count === 1 ? unit : count + ' ' + unit + 's';
-    },
-
-    formatDate(val) {
-      if (!val) return '—';
-      return new Date(val).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-    },
-
-    capitalize(str) {
-      if (!str) return '';
-      return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
   }
@@ -4175,9 +3637,9 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&":
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& ***!
   \********************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
@@ -4185,24 +3647,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Page ─────────────────────────────────────────────── */\n.cpm-page[data-v-23880812] {\n  padding: 24px;\n  background: #f8f9fa;\n  min-height: 100vh;\n}\n\n/* ── Header ───────────────────────────────────────────── */\n.cpm-header[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 24px;\n  flex-wrap: wrap;\n}\n.cpm-header__left[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.cpm-header__icon[data-v-23880812] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-header__icon .dashicons[data-v-23880812] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.cpm-header__title[data-v-23880812] {\n  margin: 0 0 2px;\n  font-size: 22px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1.3;\n}\n.cpm-header__sub[data-v-23880812] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Stats ────────────────────────────────────────────── */\n.cpm-stats[data-v-23880812] {\n  display: flex;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.cpm-stat[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-left: 3px solid #e5e7eb;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .06);\n  padding: 16px 18px;\n  flex: 1;\n  min-width: 140px;\n}\n.cpm-stat__icon-wrap[data-v-23880812] {\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  background: #f3f4f6;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-stat .dashicons[data-v-23880812] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: #9ca3af;\n}\n.cpm-stat__val[data-v-23880812] {\n  font-size: 20px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1;\n}\n.cpm-stat__lbl[data-v-23880812] {\n  font-size: 12px;\n  color: #6b7280;\n  margin-top: 3px;\n}\n\n/* stat variants */\n.cpm-stat--blue[data-v-23880812]  { border-left-color: #409eff;\n}\n.cpm-stat--blue  .cpm-stat__icon-wrap[data-v-23880812] { background: #ecf5ff;\n}\n.cpm-stat--blue  .dashicons[data-v-23880812] { color: #409eff;\n}\n.cpm-stat--green[data-v-23880812] { border-left-color: #059669;\n}\n.cpm-stat--green .cpm-stat__icon-wrap[data-v-23880812] { background: #ecfdf5;\n}\n.cpm-stat--green .dashicons[data-v-23880812] { color: #059669;\n}\n.cpm-stat--amber[data-v-23880812] { border-left-color: #d97706;\n}\n.cpm-stat--amber .cpm-stat__icon-wrap[data-v-23880812] { background: #fffbeb;\n}\n.cpm-stat--amber .dashicons[data-v-23880812] { color: #d97706;\n}\n.cpm-stat--red[data-v-23880812]   { border-left-color: #dc2626;\n}\n.cpm-stat--red   .cpm-stat__icon-wrap[data-v-23880812] { background: #fef2f2;\n}\n.cpm-stat--red   .dashicons[data-v-23880812] { color: #dc2626;\n}\n\n/* ── Table card ───────────────────────────────────────── */\n.cpm-card[data-v-23880812] {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);\n  overflow: hidden;\n}\n\n/* Toolbar */\n.cpm-toolbar[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 20px;\n  border-bottom: 1px solid #f0f0f0;\n  flex-wrap: wrap;\n}\n.cpm-toolbar__filters[data-v-23880812] {\n  display: flex;\n  gap: 10px;\n  flex-wrap: wrap;\n  flex: 1;\n}\n.cpm-toolbar__sel[data-v-23880812] { width: 160px;\n}\n.cpm-toolbar__search[data-v-23880812] {\n  width: 240px;\n  flex-shrink: 0;\n}\n\n/* Table */\n.cpm-table[data-v-23880812] { width: 100%;\n}\n\n/* Footer */\n.cpm-footer[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 20px;\n  border-top: 1px solid #f0f0f0;\n}\n.cpm-footer__count[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n}\n\n/* ── Cells ────────────────────────────────────────────── */\n.cpm-txn[data-v-23880812] {\n  font-size: 12px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f3f4f6;\n  color: #374151;\n  padding: 2px 7px;\n  border-radius: 4px;\n}\n.cpm-form-name[data-v-23880812] {\n  font-weight: 500;\n  color: #374151;\n}\n.cpm-customer[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 13px;\n  color: #374151;\n}\n.cpm-customer .el-icon-user[data-v-23880812] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n.cpm-amount[data-v-23880812] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.cpm-date[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12.5px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cpm-date .el-icon-time[data-v-23880812] { color: #9ca3af;\n}\n\n/* Gateway badges */\n.cpm-gw[data-v-23880812] {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 2px 8px;\n  border-radius: 4px;\n  text-transform: capitalize;\n  background: #f3f4f6;\n  color: #6b7280;\n}\n.cpm-gw--stripe[data-v-23880812]   { background: #ede9fe; color: #7c3aed;\n}\n.cpm-gw--paypal[data-v-23880812]   { background: #fef9c3; color: #854d0e;\n}\n.cpm-gw--razorpay[data-v-23880812] { background: #dbeafe; color: #1d4ed8;\n}\n.cpm-gw--mollie[data-v-23880812]   { background: #fce7f3; color: #9d174d;\n}\n.cpm-gw--square[data-v-23880812]   { background: #dcfce7; color: #166534;\n}\n\n/* Status pills */\n.cpm-status[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 3px 9px;\n  border-radius: 20px;\n  text-transform: capitalize;\n  white-space: nowrap;\n}\n.cpm-status[data-v-23880812]::before {\n  content: '';\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n.cpm-status--completed[data-v-23880812] { background: #ecfdf5; color: #059669;\n}\n.cpm-status--pending[data-v-23880812]   { background: #fef3c7; color: #d97706;\n}\n.cpm-status--failed[data-v-23880812]    { background: #fef2f2; color: #dc2626;\n}\n.cpm-status--refunded[data-v-23880812]  { background: #eff6ff; color: #2563eb;\n}\n.cpm-status--unknown[data-v-23880812]   { background: #f3f4f6; color: #6b7280;\n}\n\n/* Delete button */\n.cpm-del[data-v-23880812] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  color: #d1d5db;\n  transition: color .15s;\n  line-height: 1;\n}\n.cpm-del[data-v-23880812]:hover { color: #dc2626;\n}\n.cpm-del .dashicons[data-v-23880812] { font-size: 16px; width: 16px; height: 16px;\n}\n\n/* ── Empty state ──────────────────────────────────────── */\n.cpm-empty[data-v-23880812] {\n  text-align: center;\n  padding: 56px 24px;\n}\n.cpm-empty__icon[data-v-23880812] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.cpm-empty__title[data-v-23880812] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.cpm-empty__sub[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n  max-width: 400px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.id, "\n.cpm-card[data-v-9755fbfc] {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);\n  overflow: hidden;\n}\n.cpm-toolbar[data-v-9755fbfc] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 20px;\n  border-bottom: 1px solid #f0f0f0;\n  flex-wrap: wrap;\n}\n.cpm-toolbar__filters[data-v-9755fbfc] {\n  display: flex;\n  gap: 10px;\n  flex-wrap: wrap;\n  flex: 1;\n}\n.cpm-toolbar__sel[data-v-9755fbfc] { width: 160px;\n}\n.cpm-table[data-v-9755fbfc] { width: 100%;\n}\n.cpm-footer[data-v-9755fbfc] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 20px;\n  border-top: 1px solid #f0f0f0;\n}\n.cpm-footer__count[data-v-9755fbfc] {\n  font-size: 13px;\n  color: #9ca3af;\n}\n.cpm-form-name[data-v-9755fbfc] {\n  font-weight: 500;\n  color: #374151;\n}\n.cpm-customer[data-v-9755fbfc] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 13px;\n  color: #374151;\n}\n.cpm-customer .el-icon-user[data-v-9755fbfc] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n.cpm-amount[data-v-9755fbfc] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.csub-interval[data-v-9755fbfc] {\n  font-size: 12px;\n  color: #9ca3af;\n  margin-left: 3px;\n}\n.csub-cycles[data-v-9755fbfc] {\n  font-size: 13px;\n  color: #6b7280;\n  font-variant-numeric: tabular-nums;\n}\n.cpm-date[data-v-9755fbfc] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12.5px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cpm-date .el-icon-time[data-v-9755fbfc] { color: #9ca3af;\n}\n.cpm-status[data-v-9755fbfc] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 3px 9px;\n  border-radius: 20px;\n  text-transform: capitalize;\n  white-space: nowrap;\n}\n.cpm-status[data-v-9755fbfc]::before {\n  content: '';\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n.cpm-status--completed[data-v-9755fbfc] { background: #ecfdf5; color: #059669;\n}\n.cpm-status--pending[data-v-9755fbfc]   { background: #fef3c7; color: #d97706;\n}\n.cpm-status--failed[data-v-9755fbfc]    { background: #fef2f2; color: #dc2626;\n}\n.cpm-status--unknown[data-v-9755fbfc]   { background: #f3f4f6; color: #6b7280;\n}\n.cpm-del[data-v-9755fbfc] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  color: #d1d5db;\n  transition: color .15s;\n  line-height: 1;\n}\n.cpm-del[data-v-9755fbfc]:hover { color: #dc2626;\n}\n.cpm-del .dashicons[data-v-9755fbfc] { font-size: 16px; width: 16px; height: 16px;\n}\n.cpm-empty[data-v-9755fbfc] {\n  text-align: center;\n  padding: 56px 24px;\n}\n.cpm-empty__icon[data-v-9755fbfc] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.cpm-empty__title[data-v-9755fbfc] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.cpm-empty__sub[data-v-9755fbfc] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n  max-width: 400px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
+exports.push([module.id, "\n.csup-page[data-v-1100495b] {\n  padding: 24px;\n  background: #f8f9fa;\n  min-height: 100vh;\n}\n.csup-header[data-v-1100495b] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.csup-header__icon[data-v-1100495b] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.csup-header__icon .dashicons[data-v-1100495b] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.csup-header__title[data-v-1100495b] {\n  margin: 0 0 2px;\n  font-size: 22px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.csup-header__sub[data-v-1100495b] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n.csup-links[data-v-1100495b] {\n  display: flex;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.csup-link-card[data-v-1100495b] {\n  flex: 1;\n  min-width: 220px;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 10px;\n  padding: 16px 18px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .06);\n  text-decoration: none;\n  transition: box-shadow .15s, border-color .15s;\n}\n.csup-link-card[data-v-1100495b]:hover {\n  border-color: #6366f1;\n  box-shadow: 0 4px 12px rgba(99,102,241,.12);\n}\n.csup-link-card__icon[data-v-1100495b] {\n  font-size: 20px;\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  background: #eef2ff;\n  color: #6366f1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.csup-link-card strong[data-v-1100495b] {\n  display: block;\n  font-size: 14px;\n  color: #1e1f21;\n}\n.csup-link-card span[data-v-1100495b] {\n  display: block;\n  font-size: 12px;\n  color: #9ca3af;\n  margin-top: 2px;\n}\n.csup-columns[data-v-1100495b] {\n  display: grid;\n  grid-template-columns: 1.3fr 1fr;\n  gap: 16px;\n  align-items: start;\n}\n@media (max-width: 900px) {\n.csup-columns[data-v-1100495b] { grid-template-columns: 1fr;\n}\n}\n.csup-card[data-v-1100495b] {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);\n  padding: 20px 22px;\n}\n.csup-card__head[data-v-1100495b] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.csup-card__title[data-v-1100495b] {\n  margin: 0 0 4px;\n  font-size: 16px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.csup-hint[data-v-1100495b] {\n  margin: 0 0 14px;\n  font-size: 12.5px;\n  color: #9ca3af;\n}\n.csup-faq__answer[data-v-1100495b] {\n  margin: 0;\n  font-size: 13px;\n  line-height: 1.6;\n  color: #4b5563;\n}\n.csup-copy-btn[data-v-1100495b] {\n  background: #f3f4f6;\n  border: none;\n  border-radius: 6px;\n  width: 30px;\n  height: 30px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  color: #6b7280;\n  transition: background .15s, color .15s;\n}\n.csup-copy-btn[data-v-1100495b]:hover {\n  background: #eef2ff;\n  color: #6366f1;\n}\n.csup-info-table[data-v-1100495b] {\n  width: 100%;\n  border-collapse: collapse;\n}\n.csup-info-table tr:not(:last-child) td[data-v-1100495b] {\n  border-bottom: 1px solid #f3f4f6;\n}\n.csup-info-table td[data-v-1100495b] {\n  padding: 8px 0;\n  font-size: 12.5px;\n}\n.csup-info-table__label[data-v-1100495b] {\n  color: #9ca3af;\n  white-space: nowrap;\n}\n.csup-info-table__value[data-v-1100495b] {\n  text-align: right;\n  color: #374151;\n  font-weight: 500;\n  word-break: break-word;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -74458,42 +73903,14 @@ module.exports = content.locals || {};
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&":
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& ***!
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& ***!
   \************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var api = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.id, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var api = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&");
+            var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&");
 
             content = content.__esModule ? content.default : content;
 
@@ -74942,9 +74359,9 @@ module.exports = function ( delay, noTrailing, callback, debounceMode ) {
 
 /***/ }),
 
-/***/ "./src/admin/pages/Payment.vue":
+/***/ "./src/admin/pages/Support.vue":
 /*!*************************************!*\
-  !*** ./src/admin/pages/Payment.vue ***!
+  !*** ./src/admin/pages/Support.vue ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -74953,9 +74370,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Payment.vue?vue&type=template&id=23880812&scoped=true& */ "./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true&");
-/* harmony import */ var _Payment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Payment.vue?vue&type=script&lang=js& */ "./src/admin/pages/Payment.vue?vue&type=script&lang=js&");
-/* harmony import */ var _Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& */ "./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&");
+/* harmony import */ var _Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Support.vue?vue&type=template&id=1100495b&scoped=true& */ "./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true&");
+/* harmony import */ var _Support_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Support.vue?vue&type=script&lang=js& */ "./src/admin/pages/Support.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& */ "./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -74966,67 +74383,26 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Payment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Support_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "23880812",
+  "1100495b",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "src/admin/pages/Payment.vue"
+component.options.__file = "src/admin/pages/Support.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./src/admin/pages/Subscriptions.vue":
-/*!*******************************************!*\
-  !*** ./src/admin/pages/Subscriptions.vue ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true& */ "./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true&");
-/* harmony import */ var _Subscriptions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Subscriptions.vue?vue&type=script&lang=js& */ "./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js&");
-/* harmony import */ var _Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& */ "./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-;
-
-
-/* normalize component */
-
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Subscriptions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "9755fbfc",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "src/admin/pages/Subscriptions.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./src/admin/pages/Payment.vue?vue&type=script&lang=js&":
+/***/ "./src/admin/pages/Support.vue?vue&type=script&lang=js&":
 /*!**************************************************************!*\
-  !*** ./src/admin/pages/Payment.vue?vue&type=script&lang=js& ***!
+  !*** ./src/admin/pages/Support.vue?vue&type=script&lang=js& ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -75035,30 +74411,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Payment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Support.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js&":
-/*!********************************************************************!*\
-  !*** ./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js& ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Subscriptions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&":
+/***/ "./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&":
 /*!**********************************************************************************************!*\
-  !*** ./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& ***!
+  !*** ./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& ***!
   \**********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -75067,72 +74427,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=style&index=0&id=23880812&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=style&index=0&id=1100495b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_style_index_0_id_23880812_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_style_index_0_id_1100495b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
-/***/ "./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&":
-/*!****************************************************************************************************!*\
-  !*** ./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& ***!
-  \****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=style&index=0&id=9755fbfc&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_style_index_0_id_9755fbfc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
-
-/***/ }),
-
-/***/ "./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true&":
+/***/ "./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true&":
 /*!********************************************************************************!*\
-  !*** ./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true& ***!
+  !*** ./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true& ***!
   \********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payment_vue_vue_type_template_id_23880812_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Payment.vue?vue&type=template&id=23880812&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Support_vue_vue_type_template_id_1100495b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Support.vue?vue&type=template&id=1100495b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true&");
 
 
 /***/ }),
 
-/***/ "./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true&":
-/*!**************************************************************************************!*\
-  !*** ./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true& ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Subscriptions_vue_vue_type_template_id_9755fbfc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Payment.vue?vue&type=template&id=23880812&scoped=true& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Support.vue?vue&type=template&id=1100495b&scoped=true& ***!
   \***********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -75146,1155 +74469,185 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "cpm-page" },
-    [
+  return _c("div", { staticClass: "csup-page" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "csup-links" }, [
+      _c(
+        "a",
+        { staticClass: "csup-link-card", attrs: { href: _vm.mailtoHref } },
+        [
+          _c("span", {
+            staticClass: "csup-link-card__icon dashicons dashicons-email-alt"
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3)
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "csup-columns" }, [
       _c(
         "div",
-        { staticClass: "cpm-header" },
+        { staticClass: "csup-card csup-card--faq" },
         [
-          _c("div", { staticClass: "cpm-header__left" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", [
-              _c("h1", { staticClass: "cpm-header__title" }, [
-                _vm._v(
-                  _vm._s(
-                    _vm.activeTab === "subscriptions"
-                      ? "Subscriptions"
-                      : "Payment Transactions"
-                  )
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "cpm-header__sub" }, [
-                _vm._v(
-                  "\n          " +
-                    _vm._s(
-                      _vm.activeTab === "subscriptions"
-                        ? "Track and manage recurring subscriptions"
-                        : "Track and manage all customer payments"
-                    ) +
-                    "\n        "
-                )
-              ])
-            ])
+          _c("h2", { staticClass: "csup-card__title" }, [
+            _vm._v("Frequently Asked Questions")
           ]),
           _vm._v(" "),
           _c(
-            "el-radio-group",
+            "el-collapse",
             {
-              attrs: { size: "small" },
+              attrs: { accordion: "" },
               model: {
-                value: _vm.activeTab,
+                value: _vm.openFaq,
                 callback: function($$v) {
-                  _vm.activeTab = $$v
+                  _vm.openFaq = $$v
                 },
-                expression: "activeTab"
+                expression: "openFaq"
               }
             },
-            [
-              _c("el-radio-button", { attrs: { label: "transactions" } }, [
-                _vm._v("Transactions")
-              ]),
-              _vm._v(" "),
-              _c("el-radio-button", { attrs: { label: "subscriptions" } }, [
-                _vm._v("Subscriptions")
-              ])
-            ],
+            _vm._l(_vm.faqs, function(item, index) {
+              return _c(
+                "el-collapse-item",
+                { key: index, attrs: { name: index, title: item.q } },
+                [
+                  _c("p", { staticClass: "csup-faq__answer" }, [
+                    _vm._v(_vm._s(item.a))
+                  ])
+                ]
+              )
+            }),
             1
           )
         ],
         1
       ),
       _vm._v(" "),
-      _vm.activeTab === "transactions"
-        ? [
-            _c("div", { staticClass: "cpm-stats" }, [
-              _c("div", { staticClass: "cpm-stat cpm-stat--blue" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "cpm-stat__body" }, [
-                  _c("div", { staticClass: "cpm-stat__val" }, [
-                    _vm._v(
-                      "$" + _vm._s(_vm.formatAmount(_vm.stats.total_revenue))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cpm-stat__lbl" }, [
-                    _vm._v("Total Revenue")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "cpm-stat" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "cpm-stat__body" }, [
-                  _c("div", { staticClass: "cpm-stat__val" }, [
-                    _vm._v(_vm._s(_vm.stats.total))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cpm-stat__lbl" }, [
-                    _vm._v("All Payments")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "cpm-stat cpm-stat--green" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("div", { staticClass: "cpm-stat__body" }, [
-                  _c("div", { staticClass: "cpm-stat__val" }, [
-                    _vm._v(_vm._s(_vm.stats.completed))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cpm-stat__lbl" }, [
-                    _vm._v("Completed")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "cpm-stat cpm-stat--amber" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "cpm-stat__body" }, [
-                  _c("div", { staticClass: "cpm-stat__val" }, [
-                    _vm._v(_vm._s(_vm.stats.pending))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cpm-stat__lbl" }, [
-                    _vm._v("Pending")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "cpm-stat cpm-stat--red" }, [
-                _vm._m(5),
-                _vm._v(" "),
-                _c("div", { staticClass: "cpm-stat__body" }, [
-                  _c("div", { staticClass: "cpm-stat__val" }, [
-                    _vm._v(_vm._s(_vm.stats.failed))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cpm-stat__lbl" }, [
-                    _vm._v("Failed")
-                  ])
-                ])
-              ])
+      _c("div", { staticClass: "csup-card csup-card--info" }, [
+        _c(
+          "div",
+          { staticClass: "csup-card__head" },
+          [
+            _c("h2", { staticClass: "csup-card__title" }, [
+              _vm._v("System Information")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "cpm-card" }, [
-              _c(
-                "div",
-                { staticClass: "cpm-toolbar" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "cpm-toolbar__filters" },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          staticClass: "cpm-toolbar__sel",
-                          attrs: {
-                            clearable: "",
-                            placeholder: "All Forms",
-                            size: "small",
-                            loading: _vm.formsLoading
-                          },
-                          on: { change: _vm.onFilterChange },
-                          model: {
-                            value: _vm.filterForm,
-                            callback: function($$v) {
-                              _vm.filterForm = $$v
-                            },
-                            expression: "filterForm"
-                          }
-                        },
-                        _vm._l(_vm.availableForms, function(f) {
-                          return _c("el-option", {
-                            key: f.id,
-                            attrs: { label: f.name, value: f.id }
-                          })
-                        }),
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-select",
-                        {
-                          staticClass: "cpm-toolbar__sel",
-                          attrs: {
-                            clearable: "",
-                            placeholder: "All Statuses",
-                            size: "small"
-                          },
-                          on: { change: _vm.onFilterChange },
-                          model: {
-                            value: _vm.filterStatus,
-                            callback: function($$v) {
-                              _vm.filterStatus = $$v
-                            },
-                            expression: "filterStatus"
-                          }
-                        },
-                        [
-                          _c("el-option", {
-                            attrs: { label: "Completed", value: "completed" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Pending", value: "pending" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Failed", value: "failed" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Refunded", value: "refunded" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-select",
-                        {
-                          staticClass: "cpm-toolbar__sel",
-                          attrs: {
-                            clearable: "",
-                            placeholder: "All Gateways",
-                            size: "small"
-                          },
-                          on: { change: _vm.onFilterChange },
-                          model: {
-                            value: _vm.filterGateway,
-                            callback: function($$v) {
-                              _vm.filterGateway = $$v
-                            },
-                            expression: "filterGateway"
-                          }
-                        },
-                        [
-                          _c("el-option", {
-                            attrs: { label: "Stripe", value: "stripe" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "PayPal", value: "paypal" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Razorpay", value: "razorpay" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Mollie", value: "mollie" }
-                          }),
-                          _vm._v(" "),
-                          _c("el-option", {
-                            attrs: { label: "Square", value: "square" }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    staticClass: "cpm-toolbar__search",
-                    attrs: {
-                      placeholder: "Search transactions…",
-                      "prefix-icon": "el-icon-search",
-                      clearable: "",
-                      size: "small"
-                    },
-                    on: { clear: _vm.onFilterChange },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.onFilterChange($event)
-                      }
-                    },
-                    model: {
-                      value: _vm.search,
-                      callback: function($$v) {
-                        _vm.search = $$v
-                      },
-                      expression: "search"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "loading",
-                      rawName: "v-loading",
-                      value: _vm.loading,
-                      expression: "loading"
-                    }
-                  ]
-                },
-                [
-                  _c(
-                    "el-table",
-                    {
-                      staticClass: "cpm-table",
-                      attrs: { data: _vm.payments, stripe: "" }
-                    },
-                    [
-                      _c("el-table-column", {
-                        attrs: { label: "Transaction", width: "160" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c("span", { staticClass: "cpm-txn" }, [
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(
-                                          row.transaction_id
-                                            ? "#" + row.transaction_id
-                                            : "ID-" + row.id
-                                        ) +
-                                        "\n            "
-                                    )
-                                  ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          1013357624
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: {
-                          label: "Form",
-                          "min-width": "160",
-                          "show-overflow-tooltip": ""
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c("span", { staticClass: "cpm-form-name" }, [
-                                    _vm._v(_vm._s(row.form_title || "—"))
-                                  ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          2141849104
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { label: "Customer", "min-width": "130" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c("span", { staticClass: "cpm-customer" }, [
-                                    _c("i", { staticClass: "el-icon-user" }),
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(row.customer_name || "Guest") +
-                                        "\n            "
-                                    )
-                                  ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          3298529460
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: {
-                          label: "Gateway",
-                          width: "110",
-                          align: "center"
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  row.gateway
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass: "cpm-gw",
-                                          class:
-                                            "cpm-gw--" +
-                                            row.gateway.toLowerCase()
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.capitalize(row.gateway))
-                                          )
-                                        ]
-                                      )
-                                    : _c("span", { staticClass: "cpm-gw" }, [
-                                        _vm._v("—")
-                                      ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          1301478617
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { label: "Amount", width: "110" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c("strong", { staticClass: "cpm-amount" }, [
-                                    _vm._v(
-                                      "$" + _vm._s(_vm.formatAmount(row.total))
-                                    )
-                                  ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          3717934529
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: {
-                          label: "Status",
-                          width: "120",
-                          align: "center"
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass: "cpm-status",
-                                      class:
-                                        "cpm-status--" +
-                                        (row.status || "unknown")
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(
-                                            _vm.capitalize(
-                                              row.status || "unknown"
-                                            )
-                                          ) +
-                                          "\n            "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          2684382049
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { label: "Date", width: "150" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c("span", { staticClass: "cpm-date" }, [
-                                    _c("i", { staticClass: "el-icon-time" }),
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(_vm.formatDate(row.created_at)) +
-                                        "\n            "
-                                    )
-                                  ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          2965126704
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { width: "52", align: "center" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(ref) {
-                                var row = ref.row
-                                return [
-                                  _c(
-                                    "el-tooltip",
-                                    {
-                                      attrs: {
-                                        content: "Delete",
-                                        placement: "top"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "cpm-del",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.confirmDelete(row)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("span", {
-                                            staticClass:
-                                              "dashicons dashicons-trash"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          235071853
-                        )
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  !_vm.loading && _vm.payments.length === 0
-                    ? _c(
-                        "div",
-                        { staticClass: "cpm-empty" },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "dashicons dashicons-money-alt cpm-empty__icon"
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "cpm-empty__title" }, [
-                            _vm._v("No payments found")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "cpm-empty__sub" }, [
-                            _vm._v(
-                              "\n          " +
-                                _vm._s(
-                                  _vm.filterForm ||
-                                    _vm.filterStatus ||
-                                    _vm.filterGateway ||
-                                    _vm.search
-                                    ? "No payments match the current filters."
-                                    : "Payment records will appear here once customers complete transactions."
-                                ) +
-                                "\n        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm.filterForm ||
-                          _vm.filterStatus ||
-                          _vm.filterGateway ||
-                          _vm.search
-                            ? _c(
-                                "el-button",
-                                {
-                                  attrs: { size: "small" },
-                                  on: { click: _vm.clearFilters }
-                                },
-                                [_vm._v("\n          Clear Filters\n        ")]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.total > 0
-                ? _c(
-                    "div",
-                    { staticClass: "cpm-footer" },
-                    [
-                      _c("span", { staticClass: "cpm-footer__count" }, [
-                        _vm._v(
-                          _vm._s(_vm.total) +
-                            " payment" +
-                            _vm._s(_vm.total !== 1 ? "s" : "")
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm.totalPages > 1
-                        ? _c("el-pagination", {
-                            attrs: {
-                              background: "",
-                              layout: "prev, pager, next",
-                              total: _vm.total,
-                              "page-size": _vm.perPage,
-                              "current-page": _vm.page
-                            },
-                            on: {
-                              "update:currentPage": function($event) {
-                                _vm.page = $event
-                              },
-                              "update:current-page": function($event) {
-                                _vm.page = $event
-                              },
-                              "current-change": _vm.fetchPayments
-                            }
-                          })
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ])
-          ]
-        : _c("Subscriptions")
-    ],
-    2
-  )
+            _c(
+              "el-tooltip",
+              { attrs: { content: "Copy to clipboard", placement: "top" } },
+              [
+                _c(
+                  "button",
+                  { staticClass: "csup-copy-btn", on: { click: _vm.copyInfo } },
+                  [_c("span", { staticClass: "dashicons dashicons-clipboard" })]
+                )
+              ]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("p", { staticClass: "csup-hint" }, [
+          _vm._v("Include this when contacting support.")
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "csup-info-table" }, [
+          _c(
+            "tbody",
+            _vm._l(_vm.infoRows, function(row) {
+              return _c("tr", { key: row.label }, [
+                _c("td", { staticClass: "csup-info-table__label" }, [
+                  _vm._v(_vm._s(row.label))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "csup-info-table__value" }, [
+                  _vm._v(_vm._s(row.value))
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-header__icon" }, [
-      _c("span", { staticClass: "dashicons dashicons-money-alt" })
+    return _c("div", { staticClass: "csup-header" }, [
+      _c("div", { staticClass: "csup-header__icon" }, [
+        _c("span", { staticClass: "dashicons dashicons-sos" })
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("h1", { staticClass: "csup-header__title" }, [
+          _vm._v("Help & Support")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "csup-header__sub" }, [
+          _vm._v("Find answers, check your environment, or get in touch")
+        ])
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-stat__icon-wrap" }, [
-      _c("span", { staticClass: "dashicons dashicons-chart-line" })
+    return _c("div", [
+      _c("strong", [_vm._v("Contact Support")]),
+      _vm._v(" "),
+      _c("span", [_vm._v("Email the site administrator")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-stat__icon-wrap" }, [
-      _c("span", { staticClass: "dashicons dashicons-list-view" })
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "csup-link-card",
+        attrs: { href: "https://wpcontactum.com/docs/" }
+      },
+      [
+        _c("span", {
+          staticClass: "csup-link-card__icon dashicons dashicons-book"
+        }),
+        _vm._v(" "),
+        _c("div", [
+          _c("strong", [_vm._v("Documentation")]),
+          _vm._v(" "),
+          _c("span", [_vm._v("Guides for building forms & payments")])
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-stat__icon-wrap" }, [
-      _c("span", { staticClass: "dashicons dashicons-yes-alt" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-stat__icon-wrap" }, [
-      _c("span", { staticClass: "dashicons dashicons-clock" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cpm-stat__icon-wrap" }, [
-      _c("span", { staticClass: "dashicons dashicons-dismiss" })
+    return _c("a", { staticClass: "csup-link-card", attrs: { href: "#" } }, [
+      _c("span", {
+        staticClass: "csup-link-card__icon dashicons dashicons-video-alt3"
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c("strong", [_vm._v("Video Tutorials")]),
+        _vm._v(" "),
+        _c("span", [_vm._v("Step-by-step walkthroughs")])
+      ])
     ])
   }
 ]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Subscriptions.vue?vue&type=template&id=9755fbfc&scoped=true& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* binding */ render),
-/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "cpm-card" }, [
-    _c("div", { staticClass: "cpm-toolbar" }, [
-      _c(
-        "div",
-        { staticClass: "cpm-toolbar__filters" },
-        [
-          _c(
-            "el-select",
-            {
-              staticClass: "cpm-toolbar__sel",
-              attrs: {
-                clearable: "",
-                placeholder: "All Forms",
-                size: "small",
-                loading: _vm.formsLoading
-              },
-              on: { change: _vm.onFilterChange },
-              model: {
-                value: _vm.filterForm,
-                callback: function($$v) {
-                  _vm.filterForm = $$v
-                },
-                expression: "filterForm"
-              }
-            },
-            _vm._l(_vm.availableForms, function(f) {
-              return _c("el-option", {
-                key: f.id,
-                attrs: { label: f.name, value: f.id }
-              })
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-select",
-            {
-              staticClass: "cpm-toolbar__sel",
-              attrs: {
-                clearable: "",
-                placeholder: "All Statuses",
-                size: "small"
-              },
-              on: { change: _vm.onFilterChange },
-              model: {
-                value: _vm.filterStatus,
-                callback: function($$v) {
-                  _vm.filterStatus = $$v
-                },
-                expression: "filterStatus"
-              }
-            },
-            [
-              _c("el-option", { attrs: { label: "Active", value: "active" } }),
-              _vm._v(" "),
-              _c("el-option", {
-                attrs: { label: "Trialing", value: "trialing" }
-              }),
-              _vm._v(" "),
-              _c("el-option", {
-                attrs: { label: "Past Due", value: "past_due" }
-              }),
-              _vm._v(" "),
-              _c("el-option", {
-                attrs: { label: "Canceled", value: "canceled" }
-              }),
-              _vm._v(" "),
-              _c("el-option", {
-                attrs: { label: "Pending", value: "pending" }
-              }),
-              _vm._v(" "),
-              _c("el-option", { attrs: { label: "Failed", value: "failed" } })
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "loading",
-            rawName: "v-loading",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      },
-      [
-        _c(
-          "el-table",
-          {
-            staticClass: "cpm-table",
-            attrs: { data: _vm.subscriptions, stripe: "" }
-          },
-          [
-            _c("el-table-column", {
-              attrs: {
-                label: "Plan",
-                "min-width": "150",
-                "show-overflow-tooltip": ""
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("span", { staticClass: "cpm-form-name" }, [
-                        _vm._v(_vm._s(row.plan_name || "—"))
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: {
-                label: "Form",
-                "min-width": "160",
-                "show-overflow-tooltip": ""
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("span", { staticClass: "cpm-form-name" }, [
-                        _vm._v(_vm._s(row.form_title || "—"))
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: {
-                label: "Customer",
-                "min-width": "160",
-                "show-overflow-tooltip": ""
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("span", { staticClass: "cpm-customer" }, [
-                        _c("i", { staticClass: "el-icon-user" }),
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(row.customer_email || "Guest") +
-                            "\n          "
-                        )
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { label: "Amount", width: "140" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("strong", { staticClass: "cpm-amount" }, [
-                        _vm._v("$" + _vm._s(_vm.formatAmount(row.amount)))
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "csub-interval" }, [
-                        _vm._v("/ " + _vm._s(_vm.intervalLabel(row)))
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { label: "Billing Cycles", width: "120", align: "center" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("span", { staticClass: "csub-cycles" }, [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(row.times_billed) +
-                            _vm._s(
-                              row.billing_times > 0
-                                ? " / " + row.billing_times
-                                : ""
-                            ) +
-                            "\n          "
-                        )
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { label: "Status", width: "120", align: "center" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c(
-                        "span",
-                        {
-                          staticClass: "cpm-status",
-                          class: "cpm-status--" + _vm.statusClass(row.status)
-                        },
-                        [
-                          _vm._v(
-                            "\n            " +
-                              _vm._s(
-                                _vm.capitalize(
-                                  (row.status || "unknown").replace("_", " ")
-                                )
-                              ) +
-                              "\n          "
-                          )
-                        ]
-                      )
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { label: "Started", width: "150" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _c("span", { staticClass: "cpm-date" }, [
-                        _c("i", { staticClass: "el-icon-time" }),
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(_vm.formatDate(row.created_at)) +
-                            "\n          "
-                        )
-                      ])
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { width: "90", align: "center" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return [
-                      _vm.isCancelable(row.status)
-                        ? _c(
-                            "el-tooltip",
-                            {
-                              attrs: {
-                                content: "Cancel subscription",
-                                placement: "top"
-                              }
-                            },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "cpm-del",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.confirmCancel(row)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("span", {
-                                    staticClass: "dashicons dashicons-no-alt"
-                                  })
-                                ]
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ]
-                  }
-                }
-              ])
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        !_vm.loading && _vm.subscriptions.length === 0
-          ? _c(
-              "div",
-              { staticClass: "cpm-empty" },
-              [
-                _c("span", {
-                  staticClass: "dashicons dashicons-update cpm-empty__icon"
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "cpm-empty__title" }, [
-                  _vm._v("No subscriptions found")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "cpm-empty__sub" }, [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(
-                        _vm.filterForm || _vm.filterStatus
-                          ? "No subscriptions match the current filters."
-                          : "Subscriptions will appear here once customers sign up for a recurring plan."
-                      ) +
-                      "\n      "
-                  )
-                ]),
-                _vm._v(" "),
-                _vm.filterForm || _vm.filterStatus
-                  ? _c(
-                      "el-button",
-                      {
-                        attrs: { size: "small" },
-                        on: { click: _vm.clearFilters }
-                      },
-                      [_vm._v("\n        Clear Filters\n      ")]
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
-          : _vm._e()
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm.total > 0
-      ? _c(
-          "div",
-          { staticClass: "cpm-footer" },
-          [
-            _c("span", { staticClass: "cpm-footer__count" }, [
-              _vm._v(
-                _vm._s(_vm.total) +
-                  " subscription" +
-                  _vm._s(_vm.total !== 1 ? "s" : "")
-              )
-            ]),
-            _vm._v(" "),
-            _vm.totalPages > 1
-              ? _c("el-pagination", {
-                  attrs: {
-                    background: "",
-                    layout: "prev, pager, next",
-                    total: _vm.total,
-                    "page-size": _vm.perPage,
-                    "current-page": _vm.page
-                  },
-                  on: {
-                    "update:currentPage": function($event) {
-                      _vm.page = $event
-                    },
-                    "update:current-page": function($event) {
-                      _vm.page = $event
-                    },
-                    "current-change": _vm.fetchSubscriptions
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
 render._withStripped = true
 
 
@@ -88538,9 +86891,9 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*******************************!*\
-  !*** ./src/admin/payments.js ***!
-  \*******************************/
+/*!******************************!*\
+  !*** ./src/admin/support.js ***!
+  \******************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
@@ -88551,45 +86904,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var element_ui_lib_locale__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! element-ui/lib/locale */ "./node_modules/element-ui/lib/locale/index.js");
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _pages_Payment_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Payment.vue */ "./src/admin/pages/Payment.vue");
+/* harmony import */ var _pages_Support_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Support.vue */ "./src/admin/pages/Support.vue");
 
 
 
 
- // configure language
 
 element_ui_lib_locale__WEBPACK_IMPORTED_MODULE_3__["default"].use(element_ui_lib_locale_lang_en__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Row);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Col);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Button);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.ButtonGroup);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Input);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Switch);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Checkbox);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Pagination);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Select);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Option);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.RadioGroup);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.RadioButton);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Radio);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Table);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.TableColumn);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Collapse);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.CollapseItem);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Tooltip);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Loading);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.DatePicker);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Skeleton);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.SkeletonItem);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$message = element_ui__WEBPACK_IMPORTED_MODULE_4__.Message;
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$confirm = element_ui__WEBPACK_IMPORTED_MODULE_4__.MessageBox.confirm;
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].prototype.$msgbox = element_ui__WEBPACK_IMPORTED_MODULE_4__.MessageBox;
 
-let app = new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
-  el: '#contactum-admin-payment-entries',
-  render: h => h(_pages_Payment_vue__WEBPACK_IMPORTED_MODULE_6__["default"])
+new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
+  el: '#contactum-admin-support',
+  render: h => h(_pages_Support_vue__WEBPACK_IMPORTED_MODULE_6__["default"])
 });
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=payments.js.map
+//# sourceMappingURL=support.js.map

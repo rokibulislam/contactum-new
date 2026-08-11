@@ -41,8 +41,7 @@ class TemplateManager {
             'event'       => new Template_Event_Registration(),
             'leave'       => new Template_Leave_Request(),
             'support'     => new Template_Support(),
-            'volunteer'   => new Template_Volunteer_Application(),
-            'conversational' => new Template_Conversational()
+            'volunteer'   => new Template_Volunteer_Application()
         ];
 
         $this->templates = apply_filters( 'contactum-form-templates', $templates );

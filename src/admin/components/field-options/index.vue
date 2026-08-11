@@ -170,6 +170,13 @@ export default {
       // return field[0];
     },
     editfieldsetiing: function() {
+        // Defensive fallback: the selected field's type can be unregistered
+        // (its plugin/module got deactivated after the field was added to
+        // the form) — the builder canvas already prevents opening this
+        // panel for such fields, but guard here too rather than throwing.
+        if ( !this.editfield || !this.field_settings[this.editfield.template] ) {
+            return [];
+        }
         return this.field_settings[this.editfield.template].settings.sort((a,b) =>  a.priority - b.priority );
     },
 

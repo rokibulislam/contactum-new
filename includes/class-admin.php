@@ -92,6 +92,8 @@ class Admin {
 
         $analytics = add_submenu_page( $slug, __( 'Analytics', 'contactum' ), esc_html__( 'Analytics', 'contactum' ), $capability, 'contactum-analytics', [ $this, 'analytics_page' ] );
 
+        $support = add_submenu_page( $slug, __( 'Support', 'contactum' ), esc_html__( 'Support', 'contactum' ), $capability, 'contactum-support', [ $this, 'support_page' ] );
+
         do_action( 'contactum_admin_menu', $slug );
 
 //         add_action( 'load-' . $integration, array( $this, 'load_addon_scripts' ) );
@@ -100,6 +102,8 @@ class Admin {
         add_action( 'load-' . $analytics,         array( $this, 'load_analytics_scripts' ) );
 
         add_action( 'load-' . $tools, array( $this, 'load_tools_scripts' ) );
+
+        add_action( 'load-' . $support, array( $this, 'load_support_scripts' ) );
 
         add_action( 'load-' . $settings, array( $this, 'load_settings_scripts' ) );
 
@@ -185,6 +189,13 @@ class Admin {
       include __DIR__ . '/html/menu.php';
         ?>
         <div id="contactum-admin-tools"> </div>
+        <?php
+    }
+
+    public function support_page() {
+        include __DIR__ . '/html/menu.php';
+        ?>
+        <div id="contactum-admin-support"> </div>
         <?php
     }
 
@@ -519,6 +530,31 @@ class Admin {
             'forms'   => contactum()->forms->all(),
             'entries' => contactum_get_all_entries(),
             'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
+        ] );
+    }
+
+    public function load_support_scripts() {
+        wp_register_script( 'contactum-support', CONTACTUM_ASSETS . '/js/support.js', ['jquery'], CONTACTUM_VERSION, true );
+        wp_enqueue_script( 'contactum-support' );
+
+        wp_enqueue_style( 'contactum-admin' );
+        wp_enqueue_style( 'contactum-admin-extra' );
+
+        global $wpdb;
+
+        wp_localize_script( 'contactum-support', 'contactum', [
+            'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+            'nonce'             => wp_create_nonce( 'contactum-form-builder-nonce' ),
+            'contactum_version' => CONTACTUM_VERSION,
+            'contactum_pro'     => defined( 'CONTACTUM_PRO_VERSION' ) ? CONTACTUM_PRO_VERSION : '',
+            'wp_version'        => get_bloginfo( 'version' ),
+            'php_version'       => PHP_VERSION,
+            'mysql_version'     => $wpdb->db_version(),
+            'memory_limit'      => ini_get( 'memory_limit' ),
+            'max_upload_size'   => size_format( wp_max_upload_size() ),
+            'theme'             => wp_get_theme()->get( 'Name' ),
+            'is_multisite'      => is_multisite(),
+            'admin_email'       => get_bloginfo( 'admin_email' ),
         ] );
     }
 

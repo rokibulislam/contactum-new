@@ -11,9 +11,9 @@
         <div class="ctm-webhook-settings__header">
             <span class="ctm-webhook-settings__icon dashicons dashicons-rest-api"></span>
             <div>
-                <h2 class="ctm-webhook-settings__title">Webhook / Zapier</h2>
+                <h2 class="ctm-webhook-settings__title">Webhook</h2>
                 <p class="ctm-webhook-settings__desc">
-                    POST form submissions to any URL — Zapier, Make, n8n, or your own endpoint.
+                    POST form submissions to any URL  Make, n8n, or your own endpoint.
                     Configure a default URL here; each form can also set its own URL.
                 </p>
             </div>

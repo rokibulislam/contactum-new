@@ -86,6 +86,8 @@ class Frontend {
                     } else {
                         $this->submit_button( $form->id );
                     }
+
+                    contactum()->honeypot->render( $form->id );
                ?>
             </ul>
         </form>
