@@ -2,7 +2,7 @@
 /*
 Plugin Name: Contactum
 Description: WordPress contact form plugin. Use Drag & Drop form builder to create your WordPress forms.
-Version:     4.1.5
+Version:     4.1.6
 Author:      Md Kamrul islam
 Author URI:  https://profiles.wordpress.org/rajib00002/
 License:     GPL2
@@ -17,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 final class Contactum {
 
-    public $version    = '4.1.5';
+    public $version    = '4.1.6';
     private $container = [];
 
     public function __construct() {

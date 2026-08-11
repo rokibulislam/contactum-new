@@ -5,7 +5,7 @@ Contributors:      rajib00002, syedraju, rokibul-islam
 Tags:              Contact, contact us, contactum, forms, form builder,custom form
 Requires at least: 5.6
 Tested up to:      6.8.2
-Stable tag:        4.1.5
+Stable tag:        4.1.6
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,7 +75,7 @@ Contactum is drag and drop contact form builder plugin which will allow showing 
 
 == Changelog ==
 
-= v4.1.5(11 Aug, 2026) =
+= v4.1.6(11 Aug, 2026) =
 * **update:** Add Amazon s3
 * **update:** Add Webhook
 * **update:** update form fields
