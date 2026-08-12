@@ -526,10 +526,14 @@ class Admin {
         wp_enqueue_style('contactum-admin-extra');
 
         wp_localize_script( 'contactum-tools', 'contactum', [
-            'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'forms'   => contactum()->forms->all(),
-            'entries' => contactum_get_all_entries(),
-            'nonce'   => wp_create_nonce( 'contactum-form-builder-nonce' ),
+            'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+            'forms'        => contactum()->forms->all(),
+            'entries'      => contactum_get_all_entries(),
+            'nonce'        => wp_create_nonce( 'contactum-form-builder-nonce' ),
+            'importers'    => contactum()->importer->get_importer_summary(),
+            // The per-importer AJAX actions (contactum_import_xforms_{id}, etc.)
+            // predate `nonce` above and check a differently-named nonce action.
+            'import_nonce' => wp_create_nonce( 'contactum' ),
         ] );
     }
 

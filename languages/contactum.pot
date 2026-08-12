@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/contactum-new\n"
-"POT-Creation-Date: 2026-08-11 06:17:42+00:00\n"
+"POT-Creation-Date: 2026-08-12 06:52:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -771,7 +771,7 @@ msgid "Your Turnstile settings is saved."
 msgstr ""
 
 #: includes/fields/class-abstract-fields.php:77
-#: includes/importer/class-importer-abstract.php:567
+#: includes/importer/class-importer-abstract.php:596
 msgid "- select -"
 msgstr ""
 
@@ -1204,16 +1204,19 @@ msgid "Select format to use for the name field"
 msgstr ""
 
 #: includes/fields/class-field-name.php:196
+#: includes/importer/class-importer-fluentform.php:331
 #: includes/importer/class-importer-wpforms.php:164
 msgid "First"
 msgstr ""
 
 #: includes/fields/class-field-name.php:205
+#: includes/importer/class-importer-fluentform.php:336
 #: includes/importer/class-importer-wpforms.php:169
 msgid "Middle"
 msgstr ""
 
 #: includes/fields/class-field-name.php:214
+#: includes/importer/class-importer-fluentform.php:341
 #: includes/importer/class-importer-wpforms.php:174
 msgid "Last"
 msgstr ""
@@ -1572,19 +1575,19 @@ msgstr ""
 msgid "Thanks for contact us! We will get in touch with you shortly."
 msgstr ""
 
-#: includes/functions.php:67 includes/importer/class-importer-abstract.php:906
+#: includes/functions.php:67 includes/importer/class-importer-abstract.php:935
 msgid "Form submission hasn't been started yet"
 msgstr ""
 
-#: includes/functions.php:68 includes/importer/class-importer-abstract.php:907
+#: includes/functions.php:68 includes/importer/class-importer-abstract.php:936
 msgid "Form submission is now closed."
 msgstr ""
 
-#: includes/functions.php:70 includes/importer/class-importer-abstract.php:909
+#: includes/functions.php:70 includes/importer/class-importer-abstract.php:938
 msgid "You need to login to submit a query."
 msgstr ""
 
-#: includes/functions.php:73 includes/importer/class-importer-abstract.php:912
+#: includes/functions.php:73 includes/importer/class-importer-abstract.php:941
 msgid "Sorry, we have reached the maximum number of submissions."
 msgstr ""
 
@@ -1875,7 +1878,7 @@ msgid "Replace Shortcodes"
 msgstr ""
 
 #: includes/importer/class-importer-abstract.php:263
-#: includes/importer/class-importer-abstract.php:274
+#: includes/importer/class-importer-abstract.php:277
 msgid "Uh oh!"
 msgstr ""
 
@@ -1883,52 +1886,70 @@ msgstr ""
 msgid "%s is not installed."
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:275
+#: includes/importer/class-importer-abstract.php:278
 msgid "No forms found!"
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:317
+#: includes/importer/class-importer-abstract.php:334
 msgid "%s form imported"
 msgid_plural "%s forms imported"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/importer/class-importer-abstract.php:318
+#: includes/importer/class-importer-abstract.php:337
+msgid "(%s already imported)"
+msgid_plural "(%s already imported)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/importer/class-importer-abstract.php:340
+msgid "Nothing new to import"
+msgstr ""
+
+#: includes/importer/class-importer-abstract.php:346
 msgid ""
 "We have successfully imported these forms into contactum. You could check "
 "and edit in-case anything weird happended."
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:319
+#: includes/importer/class-importer-abstract.php:347
+msgid "All %s forms have already been imported."
+msgstr ""
+
+#: includes/importer/class-importer-abstract.php:348
 msgid "Do you want to <strong>replace</strong> %s shortcodes with contactum?"
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:335
+#: includes/importer/class-importer-abstract.php:364
 msgid "Not a valid action type."
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:349
+#: includes/importer/class-importer-abstract.php:378
 msgid "No pages found with shortcode. Skipped!"
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:381
+#: includes/importer/class-importer-abstract.php:410
 msgid "Replaced %d form"
 msgid_plural "Replaced %d forms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/importer/class-importer-abstract.php:391
+#: includes/importer/class-importer-abstract.php:420
 msgid "You are not allowed."
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:898
+#: includes/importer/class-importer-abstract.php:927
 #: includes/importer/class-importer-gf.php:273
 msgid "Thanks for contacting us! We will get in touch with you shortly."
 msgstr ""
 
-#: includes/importer/class-importer-abstract.php:901
+#: includes/importer/class-importer-abstract.php:930
 #: includes/importer/class-importer-gf.php:276
 msgid "Submit Query"
+msgstr ""
+
+#: includes/importer/class-importer-fluentform.php:425
+msgid "New submission on %s"
 msgstr ""
 
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:13

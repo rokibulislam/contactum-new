@@ -142,6 +142,10 @@ published wp.org slug, which isn't necessarily "contactum-new".)*
 
 == Changelog ==
 
+
+= v4.1.7(12 Aug, 2026) =
+* **update:** Add Import from other plugin
+
 = v4.1.6(11 Aug, 2026) =
 * **update:** Add Amazon S3 integration
 * **update:** Add Webhook integration
