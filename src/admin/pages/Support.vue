@@ -21,14 +21,14 @@
           <span>Email the site administrator</span>
         </div>
       </a>
-      <a class="csup-link-card" href="https://wpcontactum.com/docs/">
+      <a class="csup-link-card" target="_blank" href="https://wpcontactum.com/docs/">
         <span class="csup-link-card__icon dashicons dashicons-book"></span>
         <div>
           <strong>Documentation</strong>
           <span>Guides for building forms &amp; payments</span>
         </div>
       </a>
-      <a class="csup-link-card" href="#">
+      <a class="csup-link-card"  target="_blank" href="https://www.youtube.com/@wpspicy-hh8tn">
         <span class="csup-link-card__icon dashicons dashicons-video-alt3"></span>
         <div>
           <strong>Video Tutorials</strong>

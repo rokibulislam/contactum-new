@@ -265,9 +265,12 @@ abstract class Importer_Abstract {
             ] );
         }
 
-        $imported = 0;
-        $refs     = [];
-        $forms    = $this->get_forms();
+        $imported      = 0;
+        $skipped       = 0;
+        $existing_refs = $this->get_refs();
+        $refs          = $existing_refs;
+        $new_refs      = [];
+        $forms         = $this->get_forms();
 
         if ( !$forms ) {
             wp_send_json_error( [
@@ -280,6 +283,17 @@ abstract class Importer_Abstract {
 
         if ( $forms ) {
             foreach ( $forms as $form ) {
+                $source_id = $this->get_form_id( $form );
+
+                // Already imported in a previous run, and that form still
+                // exists — skip it rather than creating a duplicate. If the
+                // previously-imported form was since deleted, its post
+                // status comes back empty/false and it's fair game again.
+                if ( isset( $existing_refs[ $source_id ] ) && get_post_status( $existing_refs[ $source_id ]['contactum_id'] ) ) {
+                    $skipped++;
+                    continue;
+                }
+
                 $form_name     = $this->get_form_name( $form );
                 $form_fields   = $this->get_form_fields( $form );
                 $settings      = $this->get_form_settings( $form );
@@ -301,11 +315,14 @@ abstract class Importer_Abstract {
 
                     $imported++;
 
-                    $refs[ $this->get_form_id( $form ) ] = [
-                        'imported_id' => $this->get_form_id( $form ),
+                    $ref = [
+                        'imported_id' => $source_id,
                         'contactum_id'  => $form_id,
                         'title'       => $form_name,
                     ];
+
+                    $refs[ $source_id ]     = $ref;
+                    $new_refs[ $source_id ] = $ref;
                 }
             }
         }
@@ -313,11 +330,23 @@ abstract class Importer_Abstract {
         $this->dismiss_prompt();
         $this->update_refs( $refs );
 
+        if ( $imported ) {
+            $title = sprintf( _n( '%s form imported', '%s forms imported', $imported, 'contactum' ), $imported );
+
+            if ( $skipped ) {
+                $title .= ' ' . sprintf( _n( '(%s already imported)', '(%s already imported)', $skipped, 'contactum' ), $skipped );
+            }
+        } else {
+            $title = __( 'Nothing new to import', 'contactum' );
+        }
+
         wp_send_json_success( [
-            'title'   => sprintf( _n( '%s form imported', '%s forms imported', $imported, 'contactum' ), $imported ),
-            'message' => __( 'We have successfully imported these forms into contactum. You could check and edit in-case anything weird happended.', 'contactum' ),
+            'title'   => $title,
+            'message' => $imported
+                ? __( 'We have successfully imported these forms into contactum. You could check and edit in-case anything weird happended.', 'contactum' )
+                : sprintf( __( 'All %s forms have already been imported.', 'contactum' ), $skipped ),
             'action'  => sprintf( __( 'Do you want to <strong>replace</strong> %s shortcodes with contactum?', 'contactum' ), $this->get_importer_name() ),
-            'refs'    => $refs,
+            'refs'    => $new_refs,
         ] );
     }
 
@@ -926,7 +955,7 @@ abstract class Importer_Abstract {
     public function insert_form( $form_name ) {
         $contactum_form = [
             'post_title'  => sprintf( '[%s] %s', strtoupper( $this->id ), $form_name ),
-            'post_type'   => 'wpuf_contact_form',
+            'post_type'   => 'contactum_forms',
             'post_status' => 'publish',
             'post_author' => get_current_user_id(),
         ];
@@ -964,7 +993,7 @@ abstract class Importer_Abstract {
      * @return void
      */
     public function update_settings( $form_id, $settings ) {
-        update_post_meta( $form_id, 'wpuf_form_settings', $settings );
+        update_post_meta( $form_id, 'form_settings', $settings );
     }
 
     /**

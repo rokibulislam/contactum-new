@@ -74616,7 +74616,7 @@ var staticRenderFns = [
       "a",
       {
         staticClass: "csup-link-card",
-        attrs: { href: "https://wpcontactum.com/docs/" }
+        attrs: { target: "_blank", href: "https://wpcontactum.com/docs/" }
       },
       [
         _c("span", {
@@ -74635,17 +74635,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "csup-link-card", attrs: { href: "#" } }, [
-      _c("span", {
-        staticClass: "csup-link-card__icon dashicons dashicons-video-alt3"
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c("strong", [_vm._v("Video Tutorials")]),
+    return _c(
+      "a",
+      {
+        staticClass: "csup-link-card",
+        attrs: {
+          target: "_blank",
+          href: "https://www.youtube.com/@wpspicy-hh8tn"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "csup-link-card__icon dashicons dashicons-video-alt3"
+        }),
         _vm._v(" "),
-        _c("span", [_vm._v("Step-by-step walkthroughs")])
-      ])
-    ])
+        _c("div", [
+          _c("strong", [_vm._v("Video Tutorials")]),
+          _vm._v(" "),
+          _c("span", [_vm._v("Step-by-step walkthroughs")])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true

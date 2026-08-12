@@ -15,6 +15,10 @@
           <span slot="label"><i class="el-icon-upload2"></i> Import Forms</span>
           <importforms />
         </el-tab-pane>
+        <el-tab-pane name="migrate">
+          <span slot="label"><i class="el-icon-refresh-right"></i> Migrate from Other Plugins</span>
+          <migrator />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -23,10 +27,11 @@
 <script>
 import exportforms from './tools/ExportForms.vue'
 import importforms from './tools/ImportForms.vue'
+import migrator from './tools/Migrator.vue'
 
 export default {
   name: "NewTools",
-  components: { exportforms, importforms },
+  components: { exportforms, importforms, migrator },
   data() {
     return { activeTab: 'export' };
   }
