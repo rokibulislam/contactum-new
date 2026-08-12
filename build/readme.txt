@@ -4,8 +4,8 @@ Author URI:        https://profiles.wordpress.org/rajib00002/
 Contributors:      rajib00002, syedraju, rokibul-islam
 Tags:              form builder, contact form, drag and drop, payment form, spam protection
 Requires at least: 5.6
-Tested up to:      6.8.2
-Stable tag:        4.1.7
+Tested up to:      7.0.3
+Stable tag:        4.1.8
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,8 @@ so switching doesn't mean rebuilding from scratch.
 * Email marketing integration with Mailchimp
 * Elementor form widget
 * WordPress widget
+* AI Form Generation
+
 
 [youtube https://www.youtube.com/watch?v=lsgwE3A_IAI]
 
@@ -142,6 +144,8 @@ published wp.org slug, which isn't necessarily "contactum-new".)*
 
 == Changelog ==
 
+= v4.1.8(12 Aug, 2026) =
+* **update:** AI Form Generation
 
 = v4.1.7(12 Aug, 2026) =
 * **update:** Add Import from other plugin

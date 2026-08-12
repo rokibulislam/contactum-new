@@ -530,7 +530,7 @@ abstract class Importer_Abstract {
             case 'email':
                 $field_content = [
                     'input_type'       => 'email',
-                    'template'         => 'email_address',
+                    'template'         => 'email_field',
                     'required'         => $args['required'],
                     'label'            => $args['label'],
                     'name'             => $args['name'],
@@ -621,7 +621,7 @@ abstract class Importer_Abstract {
 
                 $field_content = [
                     'input_type'      => 'numeric_text',
-                    'template'        => 'numeric_text_field',
+                    'template'        => 'number_field',
                     'required'        => $args['required'],
                     'label'           => $args['label'],
                     'name'            => $args['name'],
@@ -642,7 +642,7 @@ abstract class Importer_Abstract {
             case 'url':
                 $field_content = [
                     'input_type'       => 'url',
-                    'template'         => 'website_url',
+                    'template'         => 'url_field',
                     'required'         => $args['required'],
                     'label'            => $args['label'],
                     'name'             => $args['name'],
@@ -695,7 +695,7 @@ abstract class Importer_Abstract {
             case 'hidden':
                 $field_content = [
                     'input_type'       => 'hidden',
-                    'template'         => 'custom_hidden_field',
+                    'template'         => 'hidden_field',
                     'label'            => $args['label'],
                     'name'             => $args['name'],
                     'is_meta'          => 'yes',
@@ -716,7 +716,7 @@ abstract class Importer_Abstract {
             case 'html':
                 $field_content = [
                     'input_type'       => 'html',
-                    'template'         => 'custom_html',
+                    'template'         => 'html_field',
                     'label'            => $args['label'],
                     'name'             => $args['name'],
                     'html'             => $args['default'],
@@ -759,7 +759,7 @@ abstract class Importer_Abstract {
             case 'file':
                 $field_content = [
                     'input_type' => 'file_upload',
-                    'template'   => 'file_upload',
+                    'template'   => 'file_field',
                     'required'   => $args['required'],
                     'label'      => $args['label'],
                     'name'       => $args['name'],

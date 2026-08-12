@@ -330,7 +330,8 @@ class Admin {
 
         <?php endif; ?>
 
-        <!-- Payments -->
+        <!-- Payments (Contactum Pro only) -->
+        <?php if ( class_exists( 'ContactumPro' ) ) : ?>
         <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
           <span class="contactum-settings__group-label">
             <span class="dashicons dashicons-money-alt"></span>
@@ -347,6 +348,29 @@ class Admin {
               >
                 <span class="dashicons dashicons-category"></span>
                 <?php esc_html_e( 'Payment Method', 'contactum' ); ?>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php endif; ?>
+
+        <!-- AI -->
+        <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
+          <span class="contactum-settings__group-label">
+            <span class="dashicons dashicons-superhero-alt"></span>
+            <?php esc_html_e( 'AI', 'contactum' ); ?>
+          </span>
+
+          <ul class="contactum-settings__submenu">
+            <li class="contactum-settings__menu-item">
+              <a
+                data-hash="ai_form_generator"
+                href="<?php echo esc_url( admin_url( 'admin.php?page=contactum-settings#ai_form_generator' ) ); ?>"
+                data-component="AiFormSettings"
+                data-settings_key="ai_form_generator"
+              >
+                <span class="dashicons dashicons-superhero-alt"></span>
+                <?php esc_html_e( 'AI Form Generator', 'contactum' ); ?>
               </a>
             </li>
           </ul>

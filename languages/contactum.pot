@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/contactum-new\n"
-"POT-Creation-Date: 2026-08-12 06:52:18+00:00\n"
+"POT-Creation-Date: 2026-08-12 10:28:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Total Field"
 msgstr ""
 
-#: includes/admin/class-pro-upgrade-fields.php:186 includes/class-admin.php:349
+#: includes/admin/class-pro-upgrade-fields.php:186 includes/class-admin.php:350
 msgid "Payment Method"
 msgstr ""
 
@@ -215,6 +215,7 @@ msgstr ""
 #: includes/class-abandonment-manager.php:163
 #: includes/class-abandonment-manager.php:173 includes/class-ajax.php:55
 #: includes/class-ajax.php:486 includes/class-ajax.php:521
+#: includes/class-generative-form.php:53
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:122
 #: includes/integrations/s3/class-s3-integration.php:169
 #: includes/integrations/webhook/class-webhook-integration.php:149
@@ -342,8 +343,16 @@ msgstr ""
 msgid "Abandonment"
 msgstr ""
 
-#: includes/class-admin.php:337
+#: includes/class-admin.php:338
 msgid "Payments"
+msgstr ""
+
+#: includes/class-admin.php:361
+msgid "AI"
+msgstr ""
+
+#: includes/class-admin.php:373
+msgid "AI Form Generator"
 msgstr ""
 
 #: includes/class-ajax.php:64
@@ -580,6 +589,64 @@ msgstr ""
 msgid "Could not create an entry"
 msgstr ""
 
+#: includes/class-field-builder.php:144
+#: includes/fields/class-abstract-fields.php:77
+#: includes/importer/class-importer-abstract.php:596
+msgid "- select -"
+msgstr ""
+
+#: includes/class-field-builder.php:312
+#: includes/fields/class-field-name.php:196
+#: includes/importer/class-importer-fluentform.php:331
+#: includes/importer/class-importer-wpforms.php:164
+msgid "First"
+msgstr ""
+
+#: includes/class-field-builder.php:313
+#: includes/fields/class-field-name.php:205
+#: includes/importer/class-importer-fluentform.php:336
+#: includes/importer/class-importer-wpforms.php:169
+msgid "Middle"
+msgstr ""
+
+#: includes/class-field-builder.php:314
+#: includes/fields/class-field-name.php:214
+#: includes/importer/class-importer-fluentform.php:341
+#: includes/importer/class-importer-wpforms.php:174
+msgid "Last"
+msgstr ""
+
+#: includes/class-field-builder.php:334
+#: includes/importer/class-importer-abstract.php:927
+#: includes/importer/class-importer-gf.php:273
+msgid "Thanks for contacting us! We will get in touch with you shortly."
+msgstr ""
+
+#: includes/class-field-builder.php:337
+#: includes/fields/class-field-submit.php:9 includes/functions.php:63
+msgid "Submit"
+msgstr ""
+
+#: includes/class-field-builder.php:342 includes/functions.php:67
+#: includes/importer/class-importer-abstract.php:935
+msgid "Form submission hasn't been started yet"
+msgstr ""
+
+#: includes/class-field-builder.php:343 includes/functions.php:68
+#: includes/importer/class-importer-abstract.php:936
+msgid "Form submission is now closed."
+msgstr ""
+
+#: includes/class-field-builder.php:345 includes/functions.php:70
+#: includes/importer/class-importer-abstract.php:938
+msgid "You need to login to submit a query."
+msgstr ""
+
+#: includes/class-field-builder.php:348 includes/functions.php:73
+#: includes/importer/class-importer-abstract.php:941
+msgid "Sorry, we have reached the maximum number of submissions."
+msgstr ""
+
 #: includes/class-field-manager.php:135
 msgid "Custom Fields"
 msgstr ""
@@ -602,6 +669,47 @@ msgstr ""
 
 #: includes/class-frontend.php:27
 msgid "The form couldn't be found."
+msgstr ""
+
+#: includes/class-generative-form.php:59
+msgid "Add your OpenAI API key under Settings → AI Form Generator first."
+msgstr ""
+
+#: includes/class-generative-form.php:67
+msgid "Please describe the form you want to create."
+msgstr ""
+
+#: includes/class-generative-form.php:71
+msgid "Please keep the description shorter and try again."
+msgstr ""
+
+#: includes/class-generative-form.php:95
+msgid "Form generated successfully."
+msgstr ""
+
+#: includes/class-generative-form.php:115
+#. translators: %d: max generations allowed per day
+msgid "You've reached today's limit of %d AI form generations. Try again tomorrow."
+msgstr ""
+
+#: includes/class-generative-form.php:167
+msgid "OpenAI request failed. Please check your API key and try again."
+msgstr ""
+
+#: includes/class-generative-form.php:182
+msgid ""
+"Could not understand the AI response. Please try rephrasing your "
+"description."
+msgstr ""
+
+#: includes/class-generative-form.php:261
+msgid ""
+"The AI didn't return any usable fields. Please try again with a more "
+"specific description."
+msgstr ""
+
+#: includes/class-generative-form.php:264
+msgid "AI Generated Form"
 msgstr ""
 
 #: includes/class-honeypot.php:38
@@ -698,81 +806,92 @@ msgstr ""
 msgid "Lost Password URL"
 msgstr ""
 
-#: includes/class-settings-manager.php:84
+#: includes/class-settings-manager.php:86
 msgid "Your reCAPTCHA settings are deleted."
 msgstr ""
 
-#: includes/class-settings-manager.php:120
+#: includes/class-settings-manager.php:122
 msgid "Your reCAPTCHA is valid and saved."
 msgstr ""
 
-#: includes/class-settings-manager.php:125
+#: includes/class-settings-manager.php:127
 msgid "Sorry, Your reCAPTCHA is not valid. Please try again"
 msgstr ""
 
-#: includes/class-settings-manager.php:130
+#: includes/class-settings-manager.php:132
 msgid "Please validate your reCAPTCHA first and then hit save. test"
 msgstr ""
 
-#: includes/class-settings-manager.php:135
+#: includes/class-settings-manager.php:137
 msgid "Your reCAPTCHA details are already valid. So no need to save again."
 msgstr ""
 
-#: includes/class-settings-manager.php:159
+#: includes/class-settings-manager.php:161
 msgid "Your hCaptcha settings are deleted."
 msgstr ""
 
-#: includes/class-settings-manager.php:184
+#: includes/class-settings-manager.php:186
 msgid "Your hCaptcha is valid and saved."
 msgstr ""
 
-#: includes/class-settings-manager.php:188
+#: includes/class-settings-manager.php:190
 msgid "Sorry, Your hCaptcha is not valid, Please try again"
 msgstr ""
 
-#: includes/class-settings-manager.php:192
+#: includes/class-settings-manager.php:194
 msgid "Please validate your hCaptcha first and then hit save."
 msgstr ""
 
-#: includes/class-settings-manager.php:196
+#: includes/class-settings-manager.php:198
 msgid "Your hCaptcha details are already valid, So no need to save again."
 msgstr ""
 
-#: includes/class-settings-manager.php:218
+#: includes/class-settings-manager.php:220
 msgid "Your CleanTalk settings are deleted."
 msgstr ""
 
-#: includes/class-settings-manager.php:245
+#: includes/class-settings-manager.php:247
 msgid "Your CleanTalk is valid and saved."
 msgstr ""
 
-#: includes/class-settings-manager.php:251
+#: includes/class-settings-manager.php:253
 msgid "Sorry, Your CleanTalk is not valid, Please try again"
 msgstr ""
 
-#: includes/class-settings-manager.php:278
+#: includes/class-settings-manager.php:280
 msgid "Your Turnstile settings are deleted."
 msgstr ""
 
-#: includes/class-settings-manager.php:306
+#: includes/class-settings-manager.php:308
 msgid "Your Turnstile Keys are valid. and saved"
 msgstr ""
 
-#: includes/class-settings-manager.php:311
+#: includes/class-settings-manager.php:313
 msgid "Sorry, Your Turnstile Keys are not valid. Please try again!"
 msgstr ""
 
-#: includes/class-settings-manager.php:315
+#: includes/class-settings-manager.php:317
 msgid "Please validate your Turnstile first and then hit save."
 msgstr ""
 
-#: includes/class-settings-manager.php:323
+#: includes/class-settings-manager.php:325
 msgid "Your Turnstile settings is saved."
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:77
-#: includes/importer/class-importer-abstract.php:596
-msgid "- select -"
+#: includes/class-settings-manager.php:348
+msgid "Your AI Form Generator settings are deleted."
+msgstr ""
+
+#: includes/class-settings-manager.php:359
+msgid "API key removed."
+msgstr ""
+
+#: includes/class-settings-manager.php:380
+msgid "Your OpenAI API key is valid and saved."
+msgstr ""
+
+#: includes/class-settings-manager.php:386
+msgid "Saved, but the API key could not be verified. Double-check it and try again."
 msgstr ""
 
 #: includes/fields/class-abstract-fields.php:110
@@ -1203,24 +1322,6 @@ msgstr ""
 msgid "Select format to use for the name field"
 msgstr ""
 
-#: includes/fields/class-field-name.php:196
-#: includes/importer/class-importer-fluentform.php:331
-#: includes/importer/class-importer-wpforms.php:164
-msgid "First"
-msgstr ""
-
-#: includes/fields/class-field-name.php:205
-#: includes/importer/class-importer-fluentform.php:336
-#: includes/importer/class-importer-wpforms.php:169
-msgid "Middle"
-msgstr ""
-
-#: includes/fields/class-field-name.php:214
-#: includes/importer/class-importer-fluentform.php:341
-#: includes/importer/class-importer-wpforms.php:174
-msgid "Last"
-msgstr ""
-
 #: includes/fields/class-field-number.php:9
 msgid "Numeric"
 msgstr ""
@@ -1369,10 +1470,6 @@ msgstr ""
 
 #: includes/fields/class-field-sectionbreak.php:63
 msgid "Some description about this section"
-msgstr ""
-
-#: includes/fields/class-field-submit.php:9 includes/functions.php:63
-msgid "Submit"
 msgstr ""
 
 #: includes/fields/class-field-submit.php:67
@@ -1573,22 +1670,6 @@ msgstr ""
 
 #: includes/functions.php:59
 msgid "Thanks for contact us! We will get in touch with you shortly."
-msgstr ""
-
-#: includes/functions.php:67 includes/importer/class-importer-abstract.php:935
-msgid "Form submission hasn't been started yet"
-msgstr ""
-
-#: includes/functions.php:68 includes/importer/class-importer-abstract.php:936
-msgid "Form submission is now closed."
-msgstr ""
-
-#: includes/functions.php:70 includes/importer/class-importer-abstract.php:938
-msgid "You need to login to submit a query."
-msgstr ""
-
-#: includes/functions.php:73 includes/importer/class-importer-abstract.php:941
-msgid "Sorry, we have reached the maximum number of submissions."
 msgstr ""
 
 #: includes/functions.php:1343
@@ -1936,11 +2017,6 @@ msgstr[1] ""
 
 #: includes/importer/class-importer-abstract.php:420
 msgid "You are not allowed."
-msgstr ""
-
-#: includes/importer/class-importer-abstract.php:927
-#: includes/importer/class-importer-gf.php:273
-msgid "Thanks for contacting us! We will get in touch with you shortly."
 msgstr ""
 
 #: includes/importer/class-importer-abstract.php:930
