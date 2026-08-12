@@ -24,8 +24,18 @@
           />
           <el-button
             size="small"
+            :type="showAiGenerate ? 'info' : 'default'"
+            @click="showAiGenerate = !showAiGenerate; showFormsImport = false;"
+            class="cnf-import-btn"
+          >
+            <i :class="showAiGenerate ? 'el-icon-circle-close' : 'el-icon-magic-stick'"></i>
+            Generate with AI
+          </el-button>
+
+          <el-button
+            size="small"
             :type="showFormsImport ? 'info' : 'default'"
-            @click="showFormsImport = !showFormsImport"
+            @click="showFormsImport = !showFormsImport; showAiGenerate = false;"
             class="cnf-import-btn"
           >
             <i :class="showFormsImport ? 'el-icon-circle-close' : 'el-icon-upload2'"></i>
@@ -33,6 +43,49 @@
           </el-button>
         </div>
       </div>
+
+      <transition name="cnf-slide">
+        <div v-if="showAiGenerate" class="cnf-ai-section">
+          <p class="cnf-ai-desc">Describe the form you need — Contactum will build it for you.</p>
+
+          <el-input
+            v-model="aiPrompt"
+            type="textarea"
+            :rows="3"
+            placeholder="e.g. A contact form for a photography business with name, email, phone, and preferred shoot date"
+            :disabled="aiGenerating"
+          />
+
+          <el-input
+            v-model="aiAdditional"
+            placeholder="Anything else to include? (optional)"
+            :disabled="aiGenerating"
+            style="margin-top: 8px;"
+          />
+
+          <el-alert
+            v-if="aiError"
+            :title="aiError"
+            type="error"
+            :closable="false"
+            show-icon
+            style="margin-top: 10px;"
+          />
+
+          <div class="cnf-ai-actions">
+            <el-button
+              type="primary"
+              size="small"
+              :loading="aiGenerating"
+              :disabled="!aiPrompt.trim()"
+              @click="generateWithAi"
+            >
+              <i v-if="!aiGenerating" class="el-icon-magic-stick"></i>
+              {{ aiGenerating ? 'Generating…' : 'Generate Form' }}
+            </el-button>
+          </div>
+        </div>
+      </transition>
 
       <transition name="cnf-slide">
         <import-forms
@@ -106,6 +159,11 @@ export default {
       formsImported: false,
       searchQuery: '',
       templates: window.contactum.templates,
+      showAiGenerate: false,
+      aiPrompt: '',
+      aiAdditional: '',
+      aiGenerating: false,
+      aiError: '',
     };
   },
 
@@ -146,6 +204,31 @@ export default {
       url.searchParams.set('template', templateSlug);
       url.searchParams.set('_wpnonce', contactum.nonce);
       return url.toString();
+    },
+
+    generateWithAi() {
+      if (!this.aiPrompt.trim() || this.aiGenerating) return;
+
+      this.aiGenerating = true;
+      this.aiError      = '';
+
+      jQuery.post(contactum.ajaxurl, {
+        action:             'contactum_generate_ai_form',
+        _ajax_nonce:        contactum.nonce,
+        prompt:             this.aiPrompt,
+        additional_prompt:  this.aiAdditional,
+      }, (response) => {
+        this.aiGenerating = false;
+
+        if (response.success) {
+          window.location.href = 'admin.php?page=contactum&route=builder#/forms/' + response.data.form_id;
+        } else {
+          this.aiError = (response.data && response.data.message) || 'Could not generate the form. Please try again.';
+        }
+      }).fail(() => {
+        this.aiGenerating = false;
+        this.aiError      = 'Request failed. Please try again.';
+      });
     },
   },
 };
@@ -221,6 +304,27 @@ export default {
 /* ── Import section slide ── */
 .cnf-import-section {
   margin-top: 16px;
+}
+
+/* ── AI generate section ── */
+.cnf-ai-section {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  border-radius: 8px;
+}
+
+.cnf-ai-desc {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #5b21b6;
+}
+
+.cnf-ai-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 .cnf-slide-enter-active,

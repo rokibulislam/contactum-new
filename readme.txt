@@ -4,7 +4,7 @@ Author URI:        https://profiles.wordpress.org/rajib00002/
 Contributors:      rajib00002, syedraju, rokibul-islam
 Tags:              form builder, contact form, drag and drop, payment form, spam protection
 Requires at least: 5.6
-Tested up to:      6.8.2
+Tested up to:      7.0.3
 Stable tag:        4.1.7
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html

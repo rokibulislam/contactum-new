@@ -80,6 +80,7 @@ import WebhookSettings from './components/settings/WebhookSettings.vue'
 import CleanTalkSettings from './components/settings/CleanTalkSettings.vue'
 import AbandonmentSettings from './components/settings/AbandonmentSettings.vue'
 import S3Settings from './components/settings/S3Settings.vue'
+import AiFormSettings from './components/settings/AiFormSettings.vue'
 import store from './store';
 
 const components = {
@@ -94,6 +95,7 @@ const components = {
     CleanTalkSettings: CleanTalkSettings,
     AbandonmentSettings: AbandonmentSettings,
     S3Settings: S3Settings,
+    AiFormSettings: AiFormSettings,
 };
 
 import { scrollTop, handleSidebarActiveLink, handleSidebarSettingsActiveLink } from './helpers';

@@ -19,6 +19,8 @@ class SettingsManager {
         add_action( 'contactum_save_global_settings_hCaptcha', [ $this, 'storeHCaptcha' ] );
 
         add_action( 'contactum_save_global_settings_turnstile', [ $this, 'storeTurnstile' ] );
+
+        add_action( 'contactum_save_global_settings_ai_form_generator', [ $this, 'storeAiFormGenerator' ] );
     }
 
     public function getGlobalSetting()
@@ -333,5 +335,56 @@ class SettingsManager {
             'message' => $message,
             'status'  => $status,
         ]);
+    }
+
+    public function storeAiFormGenerator( $settings ) {
+        $action = isset( $_POST['action_type'] ) ? sanitize_text_field( $_POST['action_type'] ) : '';
+        $data   = $settings;
+
+        if ( 'clear-settings' == $action ) {
+            delete_option( '_contactum_ai_form_generator_details' );
+
+            return wp_send_json_success( [
+                'message' => __( 'Your AI Form Generator settings are deleted.', 'contactum' ),
+                'status'  => false,
+            ] );
+        }
+
+        $api_key = isset( $data['api_key'] ) ? sanitize_text_field( $data['api_key'] ) : '';
+
+        if ( ! $api_key ) {
+            delete_option( '_contactum_ai_form_generator_details' );
+
+            return wp_send_json_success( [
+                'message' => __( 'API key removed.', 'contactum' ),
+                'status'  => false,
+            ] );
+        }
+
+        // Lightweight, low-cost validation call — confirms the key works
+        // before saving it, same as the CleanTalk/reCAPTCHA flows do.
+        $response = wp_remote_get( 'https://api.openai.com/v1/models', [
+            'headers' => [ 'Authorization' => 'Bearer ' . $api_key ],
+            'timeout' => 15,
+        ] );
+
+        $status = ! is_wp_error( $response ) && 200 === (int) wp_remote_retrieve_response_code( $response );
+
+        update_option( '_contactum_ai_form_generator_details', [
+            'api_key' => $api_key,
+            'status'  => $status,
+        ], 'no' );
+
+        if ( $status ) {
+            return wp_send_json_success( [
+                'message' => __( 'Your OpenAI API key is valid and saved.', 'contactum' ),
+                'status'  => true,
+            ] );
+        }
+
+        return wp_send_json_success( [
+            'message' => __( 'Saved, but the API key could not be verified. Double-check it and try again.', 'contactum' ),
+            'status'  => false,
+        ] );
     }
 }

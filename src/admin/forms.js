@@ -39,9 +39,11 @@ import {
     Card,
     Popover,
     InputNumber,
-    Tag
+    Tag,
+    Alert
 } from 'element-ui';
 
+Vue.use(Alert);
 Vue.use(Popover);
 Vue.use(Card);
 Vue.use(Tooltip)
