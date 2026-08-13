@@ -2,7 +2,7 @@
 /*
 Plugin Name: Contactum
 Description: WordPress contact form plugin. Use Drag & Drop form builder to create your WordPress forms.
-Version:     4.1.8
+Version:     4.2.0
 Author:      Md Kamrul islam
 Author URI:  https://profiles.wordpress.org/rajib00002/
 License:     GPL2
@@ -17,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 final class Contactum {
 
-    public $version    = '4.1.8';
+    public $version    = '4.2.0';
     private $container = [];
 
     public function __construct() {
@@ -184,6 +184,8 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-rate-limiter.php';
         require_once CONTACTUM_INCLUDES . '/class-field-builder.php';
         require_once CONTACTUM_INCLUDES . '/class-generative-form.php';
+        require_once CONTACTUM_INCLUDES . '/class-form-styler-generator.php';
+        require_once CONTACTUM_INCLUDES . '/class-form-styler.php';
         require_once CONTACTUM_INCLUDES . '/class-installer.php';
         require_once CONTACTUM_INCLUDES . '/class-notification.php';
         require_once CONTACTUM_INCLUDES . '/class-smart-tags.php';
@@ -231,6 +233,7 @@ final class Contactum {
         $this->container['honeypot']  = new Contactum\Honeypot();
         $this->container['rate_limiter'] = new Contactum\RateLimiter();
         $this->container['generative_form'] = new Contactum\GenerativeForm();
+        $this->container['form_styler'] = new Contactum\FormStyler();
         $this->container['smarttags'] = new Contactum\SmartTags();
         $this->container['integrations'] = new Contactum\IntegrationManager();
 

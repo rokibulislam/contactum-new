@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/contactum-new\n"
-"POT-Creation-Date: 2026-08-13 02:34:07+00:00\n"
+"POT-Creation-Date: 2026-08-13 04:24:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -215,7 +215,7 @@ msgstr ""
 #: includes/class-abandonment-manager.php:163
 #: includes/class-abandonment-manager.php:173 includes/class-ajax.php:55
 #: includes/class-ajax.php:486 includes/class-ajax.php:521
-#: includes/class-generative-form.php:53
+#: includes/class-form-styler.php:79 includes/class-generative-form.php:53
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:122
 #: includes/integrations/s3/class-s3-integration.php:169
 #: includes/integrations/webhook/class-webhook-integration.php:149
@@ -661,6 +661,23 @@ msgstr ""
 
 #: includes/class-form-preview.php:56
 msgid "You must be logged in to preview this form."
+msgstr ""
+
+#: includes/class-form-styler.php:39
+msgid "Modern"
+msgstr ""
+
+#: includes/class-form-styler.php:43
+msgid "Minimal"
+msgstr ""
+
+#: includes/class-form-styler.php:88 includes/class-form-styler.php:111
+#: includes/class-form-styler.php:143
+msgid "Invalid form ID"
+msgstr ""
+
+#: includes/class-form-styler.php:128
+msgid "Styles saved."
 msgstr ""
 
 #: includes/class-form.php:118

@@ -5,7 +5,7 @@ Contributors:      rajib00002, syedraju, rokibul-islam
 Tags:              form builder, contact form, drag and drop, payment form, spam protection
 Requires at least: 5.6
 Tested up to:      7.0.3
-Stable tag:        4.1.8
+Stable tag:        4.2.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,8 @@ so switching doesn't mean rebuilding from scratch.
 * Elementor form widget
 * WordPress widget
 * AI Form Generation
+* Advanced Form Styler — customize colors, borders, spacing, shadows, and typography for every part of a
+  form (labels, inputs, buttons, and more), with built-in style presets and a live preview
 
 
 [youtube https://www.youtube.com/watch?v=lsgwE3A_IAI]
@@ -143,6 +145,9 @@ published wp.org slug, which isn't necessarily "contactum-new".)*
 5. A payment form field with Contactum Pro's gateway options.
 
 == Changelog ==
+
+= v4.2.0(13 Aug, 2026) =
+* **update:** Add Advanced Form Styler
 
 = v4.1.8(12 Aug, 2026) =
 * **update:** AI Form Generation

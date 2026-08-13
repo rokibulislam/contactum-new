@@ -62,6 +62,17 @@ class Form_Preview {
     }
 
     public function template_include( $template ) {
-        return locate_template( [ 'page.php', 'single.php', 'index.php' ] );
+        $theme_template = locate_template( [ 'page.php', 'single.php', 'index.php' ] );
+
+        if ( $theme_template ) {
+            return $theme_template;
+        }
+
+        // Block/FSE themes (e.g. Twenty Twenty-Five) ship no classic PHP
+        // templates, so locate_template() above finds nothing and the page
+        // would render blank. Fall back to a minimal bundled template that
+        // still fires wp_head()/the_content()/wp_footer() so the form (and
+        // any styler CSS injected via wp_add_inline_style) always shows up.
+        return CONTACTUM_INCLUDES . '/html/preview.php';
     }
 }

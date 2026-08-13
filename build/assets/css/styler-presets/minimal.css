@@ -1,0 +1,84 @@
+/* Contactum Styler — "Minimal" preset: flat, sharp edges, high-contrast monochrome. */
+
+.contactum-form-add .contactum-label label {
+    font-weight: 500;
+    font-size: 13px;
+    color: #18181b;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.contactum-form-add .contactum-el-form-control {
+    border: none;
+    border-bottom: 1.5px solid #d4d4d8;
+    border-radius: 0;
+    padding: 10px 2px;
+    font-size: 14px;
+    color: #18181b;
+    background: transparent;
+    box-shadow: none;
+    transition: border-color .15s;
+}
+
+.contactum-form-add .contactum-el-form-control:focus {
+    border-bottom-color: #18181b;
+    outline: none;
+    box-shadow: none;
+}
+
+.contactum-form-add .contactum-el-form-control::placeholder {
+    color: #a1a1aa;
+}
+
+.contactum-form-add .required {
+    color: #18181b;
+}
+
+.contactum-form-add .contactum-submit .btn-submit,
+.contactum-form-add .contactum-step-nav__next {
+    background: #18181b;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.contactum-form-add .contactum-submit .btn-submit:hover,
+.contactum-form-add .contactum-step-nav__next:hover {
+    background: #3f3f46;
+}
+
+.contactum-form-add .contactum-step-nav__prev {
+    background: transparent;
+    color: #18181b;
+    border: 1.5px solid #18181b;
+    border-radius: 0;
+}
+
+.contactum-form-add .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #18181b;
+    border-bottom: 1.5px solid #18181b;
+    padding-bottom: 6px;
+}
+
+.contactum-form-add .contactum-error-msg {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.contactum-success {
+    background: #fafafa;
+    color: #18181b;
+    border: 1.5px solid #18181b;
+    border-radius: 0;
+    padding: 14px 18px;
+}
