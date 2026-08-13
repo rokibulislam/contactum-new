@@ -98,7 +98,7 @@ export default {
         },
         {
           q: 'How do I stop spam submissions without adding a CAPTCHA?',
-          a: 'Every form already includes an invisible honeypot field and a minimum-time-to-submit check — both run automatically and reject obvious bot submissions before they\'re saved as entries.',
+          a: 'Every form already includes an invisible honeypot field and a minimum-time-to-submit check — both run automatically and reject obvious bot submissions before they\'re saved as entries. A per-IP rate limit (5 submissions per 10 minutes by default) also blocks rapid repeat submissions regardless of whether they look automated.',
         },
         {
           q: 'Where do I enable a payment gateway?',

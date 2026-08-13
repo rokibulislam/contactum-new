@@ -8,6 +8,7 @@ abstract class Contactum_Field {
     protected $input_type = '';
     protected $icon       = 'header';
     protected $description = '';
+    protected $multiple   = false;
 
 	public function get_name() {
 		return $this->name;
@@ -213,6 +214,13 @@ abstract class Contactum_Field {
 
         printf( 'class="contactum-el contactum-%s%s%s" data-label="%s" data-errormessage="%s"', esc_attr( $el_name ), esc_attr( $class_name ), esc_attr( $field_size ),
         esc_attr( $label ), esc_attr( $message )   );
+
+        // Set by FieldManager::render_fields() for multi-step forms — lets
+        // the frontend group fields into pages purely via CSS/JS without
+        // restructuring the rendered HTML into nested containers.
+        if ( isset( $field['_runtime_step'] ) ) {
+            printf( ' data-step="%d"', (int) $field['_runtime_step'] );
+        }
     }
 
     public function required( $field ) {

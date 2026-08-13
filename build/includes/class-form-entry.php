@@ -116,7 +116,46 @@ class Entry {
                         else{
                             $value = sprintf( '<img src="%s">', $url );
                         }
-                    } 
+                    } else {
+                        // Catch-all for any field storing a structured value
+                        // (Address, or any array-returning field type without
+                        // a case above) — add_metadata() PHP-serializes an
+                        // array before storing it, but this query reads the
+                        // raw column directly, so without this it would
+                        // display as a raw serialized/JSON blob instead of
+                        // readable text.
+                        $structured = maybe_unserialize( $value );
+
+                        if ( ! is_array( $structured ) && is_string( $value ) && isset( $value[0] ) && in_array( $value[0], [ '{', '[' ], true ) ) {
+                            $decoded = json_decode( $value, true );
+                            if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) ) {
+                                $structured = $decoded;
+                            }
+                        }
+
+                        if ( is_array( $structured ) ) {
+                            $parts = [];
+
+                            foreach ( $structured as $sub_key => $sub_value ) {
+                                if ( is_array( $sub_value ) ) {
+                                    $sub_value = implode( ', ', $sub_value );
+                                }
+
+                                $sub_value = trim( (string) $sub_value );
+
+                                if ( '' === $sub_value ) {
+                                    continue;
+                                }
+
+                                $label   = is_string( $sub_key ) ? ucwords( str_replace( '_', ' ', $sub_key ) ) : '';
+                                $parts[] = $label !== '' ? "{$label}: {$sub_value}" : $sub_value;
+                            }
+
+                            if ( $parts ) {
+                                $value = implode( ' | ', $parts );
+                            }
+                        }
+                    }
 
                     $this->fields[ $result->meta_key ]['value'] = apply_filters( 'contactum_entry_meta_field', $value, $field );
                 }

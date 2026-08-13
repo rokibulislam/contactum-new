@@ -183,10 +183,26 @@ class FieldManager {
             return;
         }
 
+        // Track which multi-step "page" each field belongs to, purely by
+        // counting step_field markers seen so far. Every field carries this
+        // forward as `_runtime_step` so print_list_attributes() can emit a
+        // `data-step` attribute — a step_field marker bumps the counter
+        // *before* being rendered, so it carries the step it starts. Forms
+        // without any step_field are entirely unaffected (every field just
+        // gets data-step="1", which the multi-step frontend JS ignores when
+        // there's no marker present).
+        $step = 1;
+
         foreach ($fields as $field ) {
             if ( !$field_object = $this->getField( $field['template'] ) ) {
                 continue;
             }
+
+            if ( 'step_field' === $field['template'] ) {
+                $step++;
+            }
+
+            $field['_runtime_step'] = $step;
 
             $field_object->render( $field, $form_id );
         }

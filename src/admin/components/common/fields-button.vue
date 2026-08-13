@@ -83,7 +83,9 @@ export default {
   methods: {
 
     is_pro_feature(field) {
-      return !!this.field_settings[field]?.is_pro;
+      console.log('is pro feature');
+      console.log(this.field_settings[field]);
+      return !!this.field_settings[field]?.pro_feature;
     },
 
     is_failed_to_validate(field) {

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/contactum-new\n"
-"POT-Creation-Date: 2026-08-12 10:28:18+00:00\n"
+"POT-Creation-Date: 2026-08-13 02:34:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -150,7 +150,7 @@ msgid "No items selected yet."
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:227
-#: includes/fields/class-abstract-fields.php:106
+#: includes/fields/class-abstract-fields.php:107
 msgid "Field Label"
 msgstr ""
 
@@ -163,30 +163,30 @@ msgid "Summary Options"
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:243
-#: includes/fields/class-abstract-fields.php:141
+#: includes/fields/class-abstract-fields.php:142
 msgid "Field Size"
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:246
-#: includes/fields/class-abstract-fields.php:144
+#: includes/fields/class-abstract-fields.php:145
 #: includes/fields/class-field-submit.php:79
 msgid "Small"
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:247
-#: includes/fields/class-abstract-fields.php:145
+#: includes/fields/class-abstract-fields.php:146
 #: includes/fields/class-field-submit.php:80
 msgid "Medium"
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:248
-#: includes/fields/class-abstract-fields.php:146
+#: includes/fields/class-abstract-fields.php:147
 #: includes/fields/class-field-submit.php:81
 msgid "Large"
 msgstr ""
 
 #: includes/admin/class-pro-upgrade-fields.php:257
-#: includes/fields/class-abstract-fields.php:156
+#: includes/fields/class-abstract-fields.php:157
 #: includes/fields/class-field-column.php:63
 #: includes/fields/class-field-submit.php:221
 msgid "CSS Class Name"
@@ -590,7 +590,7 @@ msgid "Could not create an entry"
 msgstr ""
 
 #: includes/class-field-builder.php:144
-#: includes/fields/class-abstract-fields.php:77
+#: includes/fields/class-abstract-fields.php:78
 #: includes/importer/class-importer-abstract.php:596
 msgid "- select -"
 msgstr ""
@@ -806,6 +806,12 @@ msgstr ""
 msgid "Lost Password URL"
 msgstr ""
 
+#: includes/class-rate-limiter.php:64
+msgid ""
+"Too many submissions from your network. Please wait a few minutes and try "
+"again."
+msgstr ""
+
 #: includes/class-settings-manager.php:86
 msgid "Your reCAPTCHA settings are deleted."
 msgstr ""
@@ -894,44 +900,44 @@ msgstr ""
 msgid "Saved, but the API key could not be verified. Double-check it and try again."
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:110
+#: includes/fields/class-abstract-fields.php:111
 #: includes/fields/class-field-submit.php:71
 msgid "Enter a title of this field"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:115
+#: includes/fields/class-abstract-fields.php:116
 msgid "Help text"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:119
+#: includes/fields/class-abstract-fields.php:120
 msgid "Give the user some information about this field"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:124
+#: includes/fields/class-abstract-fields.php:125
 msgid "Required"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:128
+#: includes/fields/class-abstract-fields.php:129
 #: includes/widgets/class-form-elementor-widget.php:375
 msgid "Yes"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:129
+#: includes/fields/class-abstract-fields.php:130
 #: includes/widgets/class-form-elementor-widget.php:376
 msgid "No"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:135
+#: includes/fields/class-abstract-fields.php:136
 msgid "This Field is Required"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:136
+#: includes/fields/class-abstract-fields.php:137
 msgid ""
 "Check this option to mark the field required. A form will not submit unless "
 "all required fields are provided."
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:160
+#: includes/fields/class-abstract-fields.php:161
 #: includes/fields/class-field-column.php:67
 msgid ""
 "Provide a container class name for this field. Available classes: "
@@ -939,7 +945,7 @@ msgid ""
 "contactum-col-one-third-last"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:169
+#: includes/fields/class-abstract-fields.php:170
 #: includes/fields/class-field-hidden.php:28
 #: includes/fields/class-field-html.php:33
 #: includes/fields/class-field-sectionbreak.php:40
@@ -947,7 +953,7 @@ msgstr ""
 msgid "Meta Key"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:174
+#: includes/fields/class-abstract-fields.php:175
 #: includes/fields/class-field-hidden.php:32
 #: includes/fields/class-field-html.php:38
 #: includes/fields/class-field-sectionbreak.php:44
@@ -955,7 +961,7 @@ msgstr ""
 msgid "Name of the meta key this field will save to"
 msgstr ""
 
-#: includes/fields/class-abstract-fields.php:192
+#: includes/fields/class-abstract-fields.php:193
 #: includes/fields/class-field-html.php:42
 msgid "Conditional Logic"
 msgstr ""
@@ -991,20 +997,20 @@ msgstr ""
 msgid "Checkbox"
 msgstr ""
 
-#: includes/fields/class-field-checkbox.php:81
+#: includes/fields/class-field-checkbox.php:82
 msgid "Layout"
 msgstr ""
 
-#: includes/fields/class-field-checkbox.php:84
+#: includes/fields/class-field-checkbox.php:85
 #: includes/fields/class-field-submit.php:94
 msgid "Default"
 msgstr ""
 
-#: includes/fields/class-field-checkbox.php:85
+#: includes/fields/class-field-checkbox.php:86
 msgid "Inline"
 msgstr ""
 
-#: includes/fields/class-field-checkbox.php:91
+#: includes/fields/class-field-checkbox.php:92
 msgid "Show this option in an inline list"
 msgstr ""
 

@@ -33,9 +33,9 @@ class Field_MultiDropdown extends Field_Dropdown {
                                 foreach ( $field_settings['options'] as  $option ) {
                                     $current_select = selected( in_array( $option['value'], $selected ), true, false );
                                 if( isset($field_settings['calc_value']) && $field_settings['calc_value'] == true ) {
-                                    printf('<option value="%s" %s  data-calc_value="%s"> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ),  esc_attr( $option['calc_value'] ), esc_attr( $option['value'] ) );
+                                   printf('<option value="%s" %s  data-calc_value="%s"> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ),  esc_attr( $option['calc_value'] ), esc_attr( $option['value'] ) );
                                 } else {
-                                    printf('<option value="%s" %s data-calc_value="%s"> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ), esc_attr( $option['value'] ) );
+                                   printf('<option value="%s" %s data-calc_value="%s"> %s </option>', esc_attr( $option['value'] ), esc_attr( $current_select ), esc_attr( $option['calc_value'] ?? 0 ), esc_attr( $option['value'] ) );
                                 }
                             }
                         }

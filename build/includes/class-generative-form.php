@@ -284,7 +284,14 @@ class GenerativeForm {
             ] );
         }
 
-        update_post_meta( $form_id, 'wpuf_form_settings', FieldBuilder::default_form_settings() );
+        // Match the meta keys FormManager::save() writes for a normally
+        // saved form exactly, so an AI-generated form behaves identically
+        // in Settings/Notifications rather than silently falling back to
+        // defaults because a key it actually reads was never written.
+        update_post_meta( $form_id, 'form_settings', FieldBuilder::default_form_settings() );
+        update_post_meta( $form_id, 'notifications', [ contactum_get_default_form_notification() ] );
+        update_post_meta( $form_id, 'integrations', [] );
+        update_post_meta( $form_id, 'contactum_version', CONTACTUM_VERSION );
 
         return $form_id;
     }

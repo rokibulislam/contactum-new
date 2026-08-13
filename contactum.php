@@ -181,6 +181,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-form-preview.php';
         require_once CONTACTUM_INCLUDES . '/class-frontend.php';
         require_once CONTACTUM_INCLUDES . '/class-honeypot.php';
+        require_once CONTACTUM_INCLUDES . '/class-rate-limiter.php';
         require_once CONTACTUM_INCLUDES . '/class-field-builder.php';
         require_once CONTACTUM_INCLUDES . '/class-generative-form.php';
         require_once CONTACTUM_INCLUDES . '/class-installer.php';
@@ -228,6 +229,7 @@ final class Contactum {
         $this->container['preview']   = new Contactum\Form_Preview();
         $this->container['frontend']  = new Contactum\Frontend();
         $this->container['honeypot']  = new Contactum\Honeypot();
+        $this->container['rate_limiter'] = new Contactum\RateLimiter();
         $this->container['generative_form'] = new Contactum\GenerativeForm();
         $this->container['smarttags'] = new Contactum\SmartTags();
         $this->container['integrations'] = new Contactum\IntegrationManager();

@@ -46,11 +46,12 @@ class Field_Checkbox extends Contactum_Field {
                                 );
                             } else {
 
-                                printf( '<input name="%s[]" class="%s" type="checkbox" value="%s" %s %s/>',
+                                printf( '<input name="%s[]" class="%s" type="checkbox" value="%s" %s data-calc_value="%s"/>',
                                     esc_attr( $field_settings['name'] ),
                                     esc_attr( $field_settings['name'] ). '_'. esc_attr( $form_id ),
                                     esc_attr( $option['value'] ),
                                     in_array( $option['value'], $selected ) ? ' checked="checked"' : '',
+                                    esc_attr( $option['calc_value'] ?? 0 )
                                 );
                             }
 
