@@ -13,36 +13,38 @@
       </div>
 
       <div class="styler-topbar__actions">
-        <a v-if="previewUrl" :href="previewUrl" target="_blank" class="styler-topbar__preview">
-          <i class="el-icon-view"></i> Preview
+        <a v-if="previewUrl" :href="previewUrl" target="_blank" class="styler-topbar__preview" title="Open preview in a new tab">
+          <i class="el-icon-full-screen"></i>
         </a>
         <el-button type="primary" size="small" :loading="saving" @click="save">Save Styles</el-button>
       </div>
     </div>
 
-    <div v-if="selectedStyle !== 'ctm_custom'" class="styler-locked">
-      <i class="el-icon-info"></i>
-      <span v-if="!selectedStyle">Using default styling. Choose <strong>Custom</strong> above to fine-tune every part of the form, or pick a preset.</span>
-      <span v-else>Using the <strong>{{ (presets[selectedStyle] || {}).label }}</strong> preset. Choose <strong>Custom</strong> above to fine-tune every part of the form yourself.</span>
-    </div>
+    <div class="styler-workspace">
+      <div class="styler-controls">
+        <div v-if="selectedStyle !== 'ctm_custom'" class="styler-locked">
+          <i class="el-icon-info"></i>
+          <span v-if="!selectedStyle">Using default styling. Choose <strong>Custom</strong> above to fine-tune every part of the form, or pick a preset — the preview on the right updates either way.</span>
+          <span v-else>Using the <strong>{{ (presets[selectedStyle] || {}).label }}</strong> preset. Choose <strong>Custom</strong> above to fine-tune every part of the form yourself.</span>
+        </div>
 
-    <div v-else class="styler-body">
-      <aside class="styler-sidebar">
-        <button
-          v-for="cat in categories"
-          :key="cat.key"
-          type="button"
-          class="styler-sidebar__item"
-          :class="{ 'is-active': activeCategory === cat.key }"
-          @click="activeCategory = cat.key"
-        >
-          <i :class="cat.icon"></i>
-          {{ cat.label }}
-        </button>
-      </aside>
+        <div v-else class="styler-body">
+          <aside class="styler-sidebar">
+            <button
+              v-for="cat in categories"
+              :key="cat.key"
+              type="button"
+              class="styler-sidebar__item"
+              :class="{ 'is-active': activeCategory === cat.key }"
+              @click="activeCategory = cat.key"
+            >
+              <i :class="cat.icon"></i>
+              {{ cat.label }}
+            </button>
+          </aside>
 
-      <div class="styler-panel">
-        <h3 class="styler-panel__title">{{ activeCategoryLabel }}</h3>
+          <div class="styler-panel">
+            <h3 class="styler-panel__title">{{ activeCategoryLabel }}</h3>
 
         <!-- Container ─────────────────────────────────────────────────── -->
         <StylerBoxGroup v-if="activeCategory === 'container'" :with-text="false" v-model="styles.container" />
@@ -147,6 +149,21 @@
           <StylerColor label="Text Color" v-model="styles.success_message.color" />
           <StylerTypography label="Typography" v-model="styles.success_message.typography" />
         </template>
+          </div>
+        </div>
+      </div>
+
+      <div class="styler-preview">
+        <div class="styler-preview__head">
+          <span><i class="el-icon-view"></i> Live Preview</span>
+          <span v-if="previewLoading" class="styler-preview__status">Updating…</span>
+        </div>
+        <iframe
+          ref="previewFrame"
+          class="styler-preview__frame"
+          :src="previewFrameUrl"
+          @load="onFrameLoad"
+        ></iframe>
       </div>
     </div>
   </div>
@@ -205,12 +222,24 @@ export default {
         has_range_slider: false,
         has_checkable: false,
       },
+      frameReady: false,
+      previewLoading: false,
+      previewDebounce: null,
+      previewBaseUrl: '',
     };
   },
 
   computed: {
+    // `window.contactum.preview_url` is only ever set for whatever form the
+    // server happened to render on the last full page load — stale/wrong
+    // once you're routed here client-side. The styler's own "get" AJAX call
+    // returns the correct per-form URL instead; see load().
     previewUrl() {
-      return cpm.preview_url || '';
+      return this.previewBaseUrl ? this.previewBaseUrl + '&new_window=1' : '';
+    },
+
+    previewFrameUrl() {
+      return this.previewBaseUrl || '';
     },
 
     categories() {
@@ -261,11 +290,82 @@ export default {
     },
   },
 
+  watch: {
+    styles: {
+      handler() {
+        this.schedulePreview();
+      },
+      deep: true,
+    },
+    selectedStyle() {
+      this.schedulePreview();
+    },
+  },
+
   mounted() {
     this.load();
   },
 
   methods: {
+    onFrameLoad() {
+      this.frameReady = true;
+      this.schedulePreview();
+    },
+
+    schedulePreview() {
+      if (!this.frameReady || this.loading) return;
+
+      clearTimeout(this.previewDebounce);
+      this.previewDebounce = setTimeout(() => {
+        this.pushPreview();
+      }, 400);
+    },
+
+    pushPreview() {
+      this.previewLoading = true;
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_preview_form_styler',
+        _ajax_nonce: cpm.nonce,
+        form_id: this.id,
+        selected_style: this.selectedStyle,
+        styles: JSON.stringify(this.styles),
+      }, (res) => {
+        this.previewLoading = false;
+        if (res.success) {
+          this.applyPreviewCss(res.data.css, res.data.preset_url);
+        }
+      }).fail(() => {
+        this.previewLoading = false;
+      });
+    },
+
+    applyPreviewCss(css, presetUrl) {
+      const frame = this.$refs.previewFrame;
+      const doc = frame && frame.contentDocument;
+      if (!doc || !doc.head) return; // cross-origin or not yet loaded — nothing safe to do
+
+      let presetLink = doc.getElementById('contactum-styler-preset');
+      if (presetUrl) {
+        if (!presetLink) {
+          presetLink = doc.createElement('link');
+          presetLink.id = 'contactum-styler-preset';
+          presetLink.rel = 'stylesheet';
+          doc.head.appendChild(presetLink);
+        }
+        presetLink.href = presetUrl;
+      } else if (presetLink) {
+        presetLink.remove();
+      }
+
+      let styleTag = doc.getElementById('contactum-styler-preview');
+      if (!styleTag) {
+        styleTag = doc.createElement('style');
+        styleTag.id = 'contactum-styler-preview';
+        doc.head.appendChild(styleTag);
+      }
+      styleTag.textContent = css || '';
+    },
+
     goBack() {
       this.$router.push({ name: 'form-edit', params: { id: this.id } });
     },
@@ -283,6 +383,7 @@ export default {
         const data = res.data;
         this.presets = data.presets || {};
         this.selectedStyle = data.selected_style || '';
+        this.previewBaseUrl = data.preview_url || '';
 
         const merged = emptyStyles();
         const saved = (data.styles && typeof data.styles === 'object') ? data.styles : {};
@@ -300,6 +401,8 @@ export default {
           has_range_slider: !!data.has_range_slider,
           has_checkable: !!data.has_checkable,
         };
+
+        this.$nextTick(() => this.schedulePreview());
       });
     },
 
@@ -375,6 +478,59 @@ export default {
 }
 .styler-topbar__preview:hover {
   text-decoration: underline;
+}
+
+.styler-workspace {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.styler-controls {
+  flex: 1;
+  min-width: 0;
+}
+.styler-preview {
+  position: sticky;
+  top: 20px;
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.styler-preview__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ebeef5;
+  font-size: 13px;
+  color: #606266;
+  flex-shrink: 0;
+}
+.styler-preview__status {
+  font-size: 12px;
+  color: #409eff;
+}
+.styler-preview__frame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #fff;
+}
+@media (max-width: 1200px) {
+  .styler-workspace {
+    flex-direction: column;
+  }
+  .styler-preview {
+    position: static;
+    width: 100%;
+    height: 60vh;
+  }
 }
 
 .styler-locked {

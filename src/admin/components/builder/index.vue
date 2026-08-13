@@ -55,7 +55,7 @@
                 @click.prevent="makeActive('integrations')"
               >Integration</a>
             </li>
-            <li v-if="isProActive">
+            <li>
               <a
                 href="#"
                 :class="[ isActiveTab( 'styler' ) ? 'nav-tab-active' : '']"
@@ -371,9 +371,6 @@ export default {
     };
   },
   computed: {
-    isProActive: function () {
-      return !!( window.contactum && window.contactum.is_pro );
-    },
     panel_sections: function () {
       return this.$store.getters.panel_sections;
     },

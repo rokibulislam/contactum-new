@@ -25959,9 +25959,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
-    isProActive: function () {
-      return !!(window.contactum && window.contactum.is_pro);
-    },
     panel_sections: function () {
       return this.$store.getters.panel_sections;
     },
@@ -37697,6 +37694,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* global jQuery */
 const $ = window.jQuery;
@@ -37801,13 +37815,25 @@ function emptyStyles() {
         has_grid: false,
         has_range_slider: false,
         has_checkable: false
-      }
+      },
+      frameReady: false,
+      previewLoading: false,
+      previewDebounce: null,
+      previewBaseUrl: ''
     };
   },
 
   computed: {
+    // `window.contactum.preview_url` is only ever set for whatever form the
+    // server happened to render on the last full page load — stale/wrong
+    // once you're routed here client-side. The styler's own "get" AJAX call
+    // returns the correct per-form URL instead; see load().
     previewUrl() {
-      return cpm.preview_url || '';
+      return this.previewBaseUrl ? this.previewBaseUrl + '&new_window=1' : '';
+    },
+
+    previewFrameUrl() {
+      return this.previewBaseUrl || '';
     },
 
     categories() {
@@ -37903,12 +37929,89 @@ function emptyStyles() {
     }
 
   },
+  watch: {
+    styles: {
+      handler() {
+        this.schedulePreview();
+      },
+
+      deep: true
+    },
+
+    selectedStyle() {
+      this.schedulePreview();
+    }
+
+  },
 
   mounted() {
     this.load();
   },
 
   methods: {
+    onFrameLoad() {
+      this.frameReady = true;
+      this.schedulePreview();
+    },
+
+    schedulePreview() {
+      if (!this.frameReady || this.loading) return;
+      clearTimeout(this.previewDebounce);
+      this.previewDebounce = setTimeout(() => {
+        this.pushPreview();
+      }, 400);
+    },
+
+    pushPreview() {
+      this.previewLoading = true;
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_preview_form_styler',
+        _ajax_nonce: cpm.nonce,
+        form_id: this.id,
+        selected_style: this.selectedStyle,
+        styles: JSON.stringify(this.styles)
+      }, res => {
+        this.previewLoading = false;
+
+        if (res.success) {
+          this.applyPreviewCss(res.data.css, res.data.preset_url);
+        }
+      }).fail(() => {
+        this.previewLoading = false;
+      });
+    },
+
+    applyPreviewCss(css, presetUrl) {
+      const frame = this.$refs.previewFrame;
+      const doc = frame && frame.contentDocument;
+      if (!doc || !doc.head) return; // cross-origin or not yet loaded — nothing safe to do
+
+      let presetLink = doc.getElementById('contactum-styler-preset');
+
+      if (presetUrl) {
+        if (!presetLink) {
+          presetLink = doc.createElement('link');
+          presetLink.id = 'contactum-styler-preset';
+          presetLink.rel = 'stylesheet';
+          doc.head.appendChild(presetLink);
+        }
+
+        presetLink.href = presetUrl;
+      } else if (presetLink) {
+        presetLink.remove();
+      }
+
+      let styleTag = doc.getElementById('contactum-styler-preview');
+
+      if (!styleTag) {
+        styleTag = doc.createElement('style');
+        styleTag.id = 'contactum-styler-preview';
+        doc.head.appendChild(styleTag);
+      }
+
+      styleTag.textContent = css || '';
+    },
+
     goBack() {
       this.$router.push({
         name: 'form-edit',
@@ -37930,6 +38033,7 @@ function emptyStyles() {
         const data = res.data;
         this.presets = data.presets || {};
         this.selectedStyle = data.selected_style || '';
+        this.previewBaseUrl = data.preview_url || '';
         const merged = emptyStyles();
         const saved = data.styles && typeof data.styles === 'object' ? data.styles : {};
         Object.keys(merged).forEach(key => {
@@ -37945,6 +38049,7 @@ function emptyStyles() {
           has_range_slider: !!data.has_range_slider,
           has_checkable: !!data.has_checkable
         };
+        this.$nextTick(() => this.schedulePreview());
       });
     },
 
@@ -42147,7 +42252,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.styler-page[data-v-485483f6] {\n  padding: 20px 24px;\n  min-height: 70vh;\n}\n.styler-topbar[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  padding-bottom: 16px;\n  border-bottom: 1px solid #ebeef5;\n  margin-bottom: 20px;\n}\n.styler-topbar__preset[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 13px;\n  color: #606266;\n}\n.styler-topbar__actions[data-v-485483f6] {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.styler-topbar__preview[data-v-485483f6] {\n  font-size: 13px;\n  color: #409eff;\n  text-decoration: none;\n}\n.styler-topbar__preview[data-v-485483f6]:hover {\n  text-decoration: underline;\n}\n.styler-locked[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: #f4f4f5;\n  border-radius: 8px;\n  padding: 16px 20px;\n  font-size: 13.5px;\n  color: #606266;\n}\n.styler-locked i[data-v-485483f6] {\n  color: #909399;\n  font-size: 16px;\n}\n.styler-body[data-v-485483f6] {\n  display: flex;\n  gap: 20px;\n  align-items: flex-start;\n}\n.styler-sidebar[data-v-485483f6] {\n  width: 200px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  padding: 8px;\n}\n.styler-sidebar__item[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  text-align: left;\n  padding: 9px 10px;\n  border-radius: 6px;\n  font-size: 13px;\n  color: #606266;\n  cursor: pointer;\n}\n.styler-sidebar__item[data-v-485483f6]:hover {\n  background: #f5f7fa;\n}\n.styler-sidebar__item.is-active[data-v-485483f6] {\n  background: #ecf5ff;\n  color: #409eff;\n  font-weight: 600;\n}\n.styler-panel[data-v-485483f6] {\n  flex: 1;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  padding: 20px 24px;\n  max-width: 520px;\n}\n.styler-panel__title[data-v-485483f6] {\n  margin: 0 0 16px;\n  font-size: 15px;\n  font-weight: 600;\n  color: #303133;\n}\n.styler-field[data-v-485483f6] {\n  margin-bottom: 14px;\n}\n.styler-field__label[data-v-485483f6] {\n  display: block;\n  font-size: 12px;\n  color: #606266;\n  margin-bottom: 6px;\n}\n", ""]);
+exports.push([module.id, "\n.styler-page[data-v-485483f6] {\n  padding: 20px 24px;\n  min-height: 70vh;\n}\n.styler-topbar[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  padding-bottom: 16px;\n  border-bottom: 1px solid #ebeef5;\n  margin-bottom: 20px;\n}\n.styler-topbar__preset[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 13px;\n  color: #606266;\n}\n.styler-topbar__actions[data-v-485483f6] {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.styler-topbar__preview[data-v-485483f6] {\n  font-size: 13px;\n  color: #409eff;\n  text-decoration: none;\n}\n.styler-topbar__preview[data-v-485483f6]:hover {\n  text-decoration: underline;\n}\n.styler-workspace[data-v-485483f6] {\n  display: flex;\n  gap: 20px;\n  align-items: flex-start;\n}\n.styler-controls[data-v-485483f6] {\n  flex: 1;\n  min-width: 0;\n}\n.styler-preview[data-v-485483f6] {\n  position: sticky;\n  top: 20px;\n  width: 420px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  height: calc(100vh - 160px);\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.styler-preview__head[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 10px 14px;\n  border-bottom: 1px solid #ebeef5;\n  font-size: 13px;\n  color: #606266;\n  flex-shrink: 0;\n}\n.styler-preview__status[data-v-485483f6] {\n  font-size: 12px;\n  color: #409eff;\n}\n.styler-preview__frame[data-v-485483f6] {\n  flex: 1;\n  width: 100%;\n  border: 0;\n  background: #fff;\n}\n@media (max-width: 1200px) {\n.styler-workspace[data-v-485483f6] {\n    flex-direction: column;\n}\n.styler-preview[data-v-485483f6] {\n    position: static;\n    width: 100%;\n    height: 60vh;\n}\n}\n.styler-locked[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: #f4f4f5;\n  border-radius: 8px;\n  padding: 16px 20px;\n  font-size: 13.5px;\n  color: #606266;\n}\n.styler-locked i[data-v-485483f6] {\n  color: #909399;\n  font-size: 16px;\n}\n.styler-body[data-v-485483f6] {\n  display: flex;\n  gap: 20px;\n  align-items: flex-start;\n}\n.styler-sidebar[data-v-485483f6] {\n  width: 200px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  padding: 8px;\n}\n.styler-sidebar__item[data-v-485483f6] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  text-align: left;\n  padding: 9px 10px;\n  border-radius: 6px;\n  font-size: 13px;\n  color: #606266;\n  cursor: pointer;\n}\n.styler-sidebar__item[data-v-485483f6]:hover {\n  background: #f5f7fa;\n}\n.styler-sidebar__item.is-active[data-v-485483f6] {\n  background: #ecf5ff;\n  color: #409eff;\n  font-weight: 600;\n}\n.styler-panel[data-v-485483f6] {\n  flex: 1;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  padding: 20px 24px;\n  max-width: 520px;\n}\n.styler-panel__title[data-v-485483f6] {\n  margin: 0 0 16px;\n  font-size: 15px;\n  font-weight: 600;\n  color: #303133;\n}\n.styler-field[data-v-485483f6] {\n  margin-bottom: 14px;\n}\n.styler-field__label[data-v-485483f6] {\n  display: block;\n  font-size: 12px;\n  color: #606266;\n  margin-bottom: 6px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -132297,26 +132402,22 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm.isProActive
-                ? _c("li", [
-                    _c(
-                      "a",
-                      {
-                        class: [
-                          _vm.isActiveTab("styler") ? "nav-tab-active" : ""
-                        ],
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.makeActive("styler")
-                          }
-                        }
-                      },
-                      [_vm._v("Styler")]
-                    )
-                  ])
-                : _vm._e()
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    class: [_vm.isActiveTab("styler") ? "nav-tab-active" : ""],
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.makeActive("styler")
+                      }
+                    }
+                  },
+                  [_vm._v("Styler")]
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -148481,12 +148582,13 @@ var render = function() {
                     "a",
                     {
                       staticClass: "styler-topbar__preview",
-                      attrs: { href: _vm.previewUrl, target: "_blank" }
+                      attrs: {
+                        href: _vm.previewUrl,
+                        target: "_blank",
+                        title: "Open preview in a new tab"
+                      }
                     },
-                    [
-                      _c("i", { staticClass: "el-icon-view" }),
-                      _vm._v(" Preview\n      ")
-                    ]
+                    [_c("i", { staticClass: "el-icon-full-screen" })]
                   )
                 : _vm._e(),
               _vm._v(" "),
@@ -148509,656 +148611,745 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.selectedStyle !== "ctm_custom"
-        ? _c("div", { staticClass: "styler-locked" }, [
-            _c("i", { staticClass: "el-icon-info" }),
-            _vm._v(" "),
-            !_vm.selectedStyle
-              ? _c("span", [
-                  _vm._v("Using default styling. Choose "),
-                  _c("strong", [_vm._v("Custom")]),
-                  _vm._v(
-                    " above to fine-tune every part of the form, or pick a preset."
-                  )
-                ])
-              : _c("span", [
-                  _vm._v("Using the "),
-                  _c("strong", [
-                    _vm._v(_vm._s((_vm.presets[_vm.selectedStyle] || {}).label))
-                  ]),
-                  _vm._v(" preset. Choose "),
-                  _c("strong", [_vm._v("Custom")]),
-                  _vm._v(" above to fine-tune every part of the form yourself.")
-                ])
-          ])
-        : _c("div", { staticClass: "styler-body" }, [
-            _c(
-              "aside",
-              { staticClass: "styler-sidebar" },
-              _vm._l(_vm.categories, function(cat) {
-                return _c(
-                  "button",
-                  {
-                    key: cat.key,
-                    staticClass: "styler-sidebar__item",
-                    class: { "is-active": _vm.activeCategory === cat.key },
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.activeCategory = cat.key
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { class: cat.icon }),
-                    _vm._v("\n        " + _vm._s(cat.label) + "\n      ")
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "styler-panel" },
-              [
-                _c("h3", { staticClass: "styler-panel__title" }, [
-                  _vm._v(_vm._s(_vm.activeCategoryLabel))
-                ]),
+      _c("div", { staticClass: "styler-workspace" }, [
+        _c("div", { staticClass: "styler-controls" }, [
+          _vm.selectedStyle !== "ctm_custom"
+            ? _c("div", { staticClass: "styler-locked" }, [
+                _c("i", { staticClass: "el-icon-info" }),
                 _vm._v(" "),
-                _vm.activeCategory === "container"
-                  ? _c("StylerBoxGroup", {
-                      attrs: { "with-text": false },
-                      model: {
-                        value: _vm.styles.container,
-                        callback: function($$v) {
-                          _vm.$set(_vm.styles, "container", $$v)
-                        },
-                        expression: "styles.container"
-                      }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "label"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Text Color" },
-                        model: {
-                          value: _vm.styles.label.color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.label, "color", $$v)
-                          },
-                          expression: "styles.label.color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerTypography", {
-                        attrs: { label: "Typography" },
-                        model: {
-                          value: _vm.styles.label.typography,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.label, "typography", $$v)
-                          },
-                          expression: "styles.label.typography"
-                        }
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "placeholder"
-                  ? _c("StylerColor", {
-                      attrs: { label: "Placeholder Color" },
-                      model: {
-                        value: _vm.styles.placeholder.color,
-                        callback: function($$v) {
-                          _vm.$set(_vm.styles.placeholder, "color", $$v)
-                        },
-                        expression: "styles.placeholder.color"
-                      }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "asterisk"
-                  ? _c("StylerColor", {
-                      attrs: { label: "Required Asterisk Color" },
-                      model: {
-                        value: _vm.styles.asterisk.color,
-                        callback: function($$v) {
-                          _vm.$set(_vm.styles.asterisk, "color", $$v)
-                        },
-                        expression: "styles.asterisk.color"
-                      }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "input"
-                  ? [
-                      _c(
-                        "el-collapse",
-                        {
-                          model: {
-                            value: _vm.inputCollapse,
-                            callback: function($$v) {
-                              _vm.inputCollapse = $$v
-                            },
-                            expression: "inputCollapse"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-collapse-item",
-                            {
-                              attrs: { title: "Normal State", name: "normal" }
-                            },
-                            [
-                              _c("StylerBoxGroup", {
-                                attrs: { "with-text": true },
-                                model: {
-                                  value: _vm.styles.input.normal,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.styles.input, "normal", $$v)
-                                  },
-                                  expression: "styles.input.normal"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-collapse-item",
-                            { attrs: { title: "Focus State", name: "focus" } },
-                            [
-                              _c("StylerBoxGroup", {
-                                attrs: {
-                                  "with-text": true,
-                                  "with-spacing": false
-                                },
-                                model: {
-                                  value: _vm.styles.input.focus,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.styles.input, "focus", $$v)
-                                  },
-                                  expression: "styles.input.focus"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
+                !_vm.selectedStyle
+                  ? _c("span", [
+                      _vm._v("Using default styling. Choose "),
+                      _c("strong", [_vm._v("Custom")]),
+                      _vm._v(
+                        " above to fine-tune every part of the form, or pick a preset — the preview on the right updates either way."
                       )
-                    ]
-                  : _vm._e(),
+                    ])
+                  : _c("span", [
+                      _vm._v("Using the "),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s((_vm.presets[_vm.selectedStyle] || {}).label)
+                        )
+                      ]),
+                      _vm._v(" preset. Choose "),
+                      _c("strong", [_vm._v("Custom")]),
+                      _vm._v(
+                        " above to fine-tune every part of the form yourself."
+                      )
+                    ])
+              ])
+            : _c("div", { staticClass: "styler-body" }, [
+                _c(
+                  "aside",
+                  { staticClass: "styler-sidebar" },
+                  _vm._l(_vm.categories, function(cat) {
+                    return _c(
+                      "button",
+                      {
+                        key: cat.key,
+                        staticClass: "styler-sidebar__item",
+                        class: { "is-active": _vm.activeCategory === cat.key },
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.activeCategory = cat.key
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { class: cat.icon }),
+                        _vm._v(
+                          "\n            " + _vm._s(cat.label) + "\n          "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                ),
                 _vm._v(" "),
-                ["submit_button", "next_button", "prev_button"].includes(
-                  _vm.activeCategory
-                )
-                  ? [
-                      _vm.activeCategory === "submit_button"
-                        ? _c(
-                            "div",
-                            { staticClass: "styler-field" },
+                _c(
+                  "div",
+                  { staticClass: "styler-panel" },
+                  [
+                    _c("h3", { staticClass: "styler-panel__title" }, [
+                      _vm._v(_vm._s(_vm.activeCategoryLabel))
+                    ]),
+                    _vm._v(" "),
+                    _vm.activeCategory === "container"
+                      ? _c("StylerBoxGroup", {
+                          attrs: { "with-text": false },
+                          model: {
+                            value: _vm.styles.container,
+                            callback: function($$v) {
+                              _vm.$set(_vm.styles, "container", $$v)
+                            },
+                            expression: "styles.container"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "label"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Text Color" },
+                            model: {
+                              value: _vm.styles.label.color,
+                              callback: function($$v) {
+                                _vm.$set(_vm.styles.label, "color", $$v)
+                              },
+                              expression: "styles.label.color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerTypography", {
+                            attrs: { label: "Typography" },
+                            model: {
+                              value: _vm.styles.label.typography,
+                              callback: function($$v) {
+                                _vm.$set(_vm.styles.label, "typography", $$v)
+                              },
+                              expression: "styles.label.typography"
+                            }
+                          })
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "placeholder"
+                      ? _c("StylerColor", {
+                          attrs: { label: "Placeholder Color" },
+                          model: {
+                            value: _vm.styles.placeholder.color,
+                            callback: function($$v) {
+                              _vm.$set(_vm.styles.placeholder, "color", $$v)
+                            },
+                            expression: "styles.placeholder.color"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "asterisk"
+                      ? _c("StylerColor", {
+                          attrs: { label: "Required Asterisk Color" },
+                          model: {
+                            value: _vm.styles.asterisk.color,
+                            callback: function($$v) {
+                              _vm.$set(_vm.styles.asterisk, "color", $$v)
+                            },
+                            expression: "styles.asterisk.color"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "input"
+                      ? [
+                          _c(
+                            "el-collapse",
+                            {
+                              model: {
+                                value: _vm.inputCollapse,
+                                callback: function($$v) {
+                                  _vm.inputCollapse = $$v
+                                },
+                                expression: "inputCollapse"
+                              }
+                            },
                             [
                               _c(
-                                "label",
-                                { staticClass: "styler-field__label" },
-                                [_vm._v("Alignment")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-radio-group",
+                                "el-collapse-item",
                                 {
                                   attrs: {
-                                    value:
-                                      _vm.styles[_vm.activeCategory].alignment,
-                                    size: "small"
-                                  },
-                                  on: {
-                                    input: function(v) {
-                                      return _vm.$set(
-                                        _vm.styles[_vm.activeCategory],
-                                        "alignment",
-                                        v
-                                      )
-                                    }
+                                    title: "Normal State",
+                                    name: "normal"
                                   }
                                 },
                                 [
-                                  _c(
-                                    "el-radio-button",
-                                    { attrs: { label: "left" } },
-                                    [_vm._v("Left")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-radio-button",
-                                    { attrs: { label: "center" } },
-                                    [_vm._v("Center")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-radio-button",
-                                    { attrs: { label: "right" } },
-                                    [_vm._v("Right")]
-                                  )
+                                  _c("StylerBoxGroup", {
+                                    attrs: { "with-text": true },
+                                    model: {
+                                      value: _vm.styles.input.normal,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.input,
+                                          "normal",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "styles.input.normal"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: { title: "Focus State", name: "focus" }
+                                },
+                                [
+                                  _c("StylerBoxGroup", {
+                                    attrs: {
+                                      "with-text": true,
+                                      "with-spacing": false
+                                    },
+                                    model: {
+                                      value: _vm.styles.input.focus,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.styles.input, "focus", $$v)
+                                      },
+                                      expression: "styles.input.focus"
+                                    }
+                                  })
                                 ],
                                 1
                               )
                             ],
                             1
                           )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "el-collapse",
-                        {
-                          model: {
-                            value: _vm.buttonCollapse,
-                            callback: function($$v) {
-                              _vm.buttonCollapse = $$v
-                            },
-                            expression: "buttonCollapse"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-collapse-item",
-                            {
-                              attrs: { title: "Normal State", name: "normal" }
-                            },
-                            [
-                              _c("StylerBoxGroup", {
-                                attrs: { "with-text": true },
-                                model: {
-                                  value: _vm.styles[_vm.activeCategory].normal,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles[_vm.activeCategory],
-                                      "normal",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "styles[activeCategory].normal"
-                                }
-                              })
-                            ],
-                            1
-                          ),
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    ["submit_button", "next_button", "prev_button"].includes(
+                      _vm.activeCategory
+                    )
+                      ? [
+                          _vm.activeCategory === "submit_button"
+                            ? _c(
+                                "div",
+                                { staticClass: "styler-field" },
+                                [
+                                  _c(
+                                    "label",
+                                    { staticClass: "styler-field__label" },
+                                    [_vm._v("Alignment")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-radio-group",
+                                    {
+                                      attrs: {
+                                        value:
+                                          _vm.styles[_vm.activeCategory]
+                                            .alignment,
+                                        size: "small"
+                                      },
+                                      on: {
+                                        input: function(v) {
+                                          return _vm.$set(
+                                            _vm.styles[_vm.activeCategory],
+                                            "alignment",
+                                            v
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "left" } },
+                                        [_vm._v("Left")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "center" } },
+                                        [_vm._v("Center")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "el-radio-button",
+                                        { attrs: { label: "right" } },
+                                        [_vm._v("Right")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
-                            "el-collapse-item",
-                            { attrs: { title: "Hover State", name: "hover" } },
-                            [
-                              _c("StylerBoxGroup", {
-                                attrs: {
-                                  "with-text": true,
-                                  "with-spacing": false
+                            "el-collapse",
+                            {
+                              model: {
+                                value: _vm.buttonCollapse,
+                                callback: function($$v) {
+                                  _vm.buttonCollapse = $$v
                                 },
-                                model: {
-                                  value: _vm.styles[_vm.activeCategory].hover,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles[_vm.activeCategory],
-                                      "hover",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "styles[activeCategory].hover"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "section_break"
-                  ? [
-                      _c(
-                        "el-collapse",
-                        {
-                          model: {
-                            value: _vm.sectionCollapse,
-                            callback: function($$v) {
-                              _vm.sectionCollapse = $$v
-                            },
-                            expression: "sectionCollapse"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-collapse-item",
-                            { attrs: { title: "Title", name: "title" } },
-                            [
-                              _c("StylerColor", {
-                                attrs: { label: "Text Color" },
-                                model: {
-                                  value: _vm.styles.section_break.title.color,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles.section_break.title,
-                                      "color",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "styles.section_break.title.color"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("StylerTypography", {
-                                attrs: { label: "Typography" },
-                                model: {
-                                  value:
-                                    _vm.styles.section_break.title.typography,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles.section_break.title,
-                                      "typography",
-                                      $$v
-                                    )
-                                  },
-                                  expression:
-                                    "styles.section_break.title.typography"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-collapse-item",
-                            {
-                              attrs: {
-                                title: "Description",
-                                name: "description"
+                                expression: "buttonCollapse"
                               }
                             },
                             [
-                              _c("StylerColor", {
-                                attrs: { label: "Text Color" },
-                                model: {
-                                  value:
-                                    _vm.styles.section_break.description.color,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles.section_break.description,
-                                      "color",
-                                      $$v
-                                    )
-                                  },
-                                  expression:
-                                    "styles.section_break.description.color"
-                                }
-                              }),
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: {
+                                    title: "Normal State",
+                                    name: "normal"
+                                  }
+                                },
+                                [
+                                  _c("StylerBoxGroup", {
+                                    attrs: { "with-text": true },
+                                    model: {
+                                      value:
+                                        _vm.styles[_vm.activeCategory].normal,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles[_vm.activeCategory],
+                                          "normal",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "styles[activeCategory].normal"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
                               _vm._v(" "),
-                              _c("StylerTypography", {
-                                attrs: { label: "Typography" },
-                                model: {
-                                  value:
-                                    _vm.styles.section_break.description
-                                      .typography,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.styles.section_break.description,
-                                      "typography",
-                                      $$v
-                                    )
-                                  },
-                                  expression:
-                                    "styles.section_break.description.typography"
-                                }
-                              })
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: { title: "Hover State", name: "hover" }
+                                },
+                                [
+                                  _c("StylerBoxGroup", {
+                                    attrs: {
+                                      "with-text": true,
+                                      "with-spacing": false
+                                    },
+                                    model: {
+                                      value:
+                                        _vm.styles[_vm.activeCategory].hover,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles[_vm.activeCategory],
+                                          "hover",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "styles[activeCategory].hover"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
-                        ],
-                        1
-                      )
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "grid_table"
-                  ? [
-                      _c(
-                        "el-collapse",
-                        {
-                          model: {
-                            value: _vm.gridCollapse,
-                            callback: function($$v) {
-                              _vm.gridCollapse = $$v
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "section_break"
+                      ? [
+                          _c(
+                            "el-collapse",
+                            {
+                              model: {
+                                value: _vm.sectionCollapse,
+                                callback: function($$v) {
+                                  _vm.sectionCollapse = $$v
+                                },
+                                expression: "sectionCollapse"
+                              }
                             },
-                            expression: "gridCollapse"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-collapse-item",
-                            { attrs: { title: "Header Row", name: "head" } },
                             [
-                              _c("StylerBoxGroup", {
-                                attrs: { "with-text": true },
-                                model: {
-                                  value: _vm.styles.grid_table.head,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.styles.grid_table, "head", $$v)
-                                  },
-                                  expression: "styles.grid_table.head"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-collapse-item",
-                            { attrs: { title: "Body Cells", name: "body" } },
-                            [
-                              _c("StylerBoxGroup", {
-                                attrs: { "with-text": true },
-                                model: {
-                                  value: _vm.styles.grid_table.body,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.styles.grid_table, "body", $$v)
-                                  },
-                                  expression: "styles.grid_table.body"
-                                }
-                              })
+                              _c(
+                                "el-collapse-item",
+                                { attrs: { title: "Title", name: "title" } },
+                                [
+                                  _c("StylerColor", {
+                                    attrs: { label: "Text Color" },
+                                    model: {
+                                      value:
+                                        _vm.styles.section_break.title.color,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.section_break.title,
+                                          "color",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "styles.section_break.title.color"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("StylerTypography", {
+                                    attrs: { label: "Typography" },
+                                    model: {
+                                      value:
+                                        _vm.styles.section_break.title
+                                          .typography,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.section_break.title,
+                                          "typography",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "styles.section_break.title.typography"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: {
+                                    title: "Description",
+                                    name: "description"
+                                  }
+                                },
+                                [
+                                  _c("StylerColor", {
+                                    attrs: { label: "Text Color" },
+                                    model: {
+                                      value:
+                                        _vm.styles.section_break.description
+                                          .color,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.section_break.description,
+                                          "color",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "styles.section_break.description.color"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("StylerTypography", {
+                                    attrs: { label: "Typography" },
+                                    model: {
+                                      value:
+                                        _vm.styles.section_break.description
+                                          .typography,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.section_break.description,
+                                          "typography",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "styles.section_break.description.typography"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
-                        ],
-                        1
-                      )
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "step_header"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Active Color" },
-                        model: {
-                          value: _vm.styles.step_header.active_color,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.step_header,
-                              "active_color",
-                              $$v
-                            )
-                          },
-                          expression: "styles.step_header.active_color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerColor", {
-                        attrs: { label: "Inactive Color" },
-                        model: {
-                          value: _vm.styles.step_header.inactive_color,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.step_header,
-                              "inactive_color",
-                              $$v
-                            )
-                          },
-                          expression: "styles.step_header.inactive_color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerColor", {
-                        attrs: { label: "Text Color" },
-                        model: {
-                          value: _vm.styles.step_header.text_color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.step_header, "text_color", $$v)
-                          },
-                          expression: "styles.step_header.text_color"
-                        }
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "range_slider"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Active Color" },
-                        model: {
-                          value: _vm.styles.range_slider.active_color,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.range_slider,
-                              "active_color",
-                              $$v
-                            )
-                          },
-                          expression: "styles.range_slider.active_color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerColor", {
-                        attrs: { label: "Inactive Color" },
-                        model: {
-                          value: _vm.styles.range_slider.inactive_color,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.range_slider,
-                              "inactive_color",
-                              $$v
-                            )
-                          },
-                          expression: "styles.range_slider.inactive_color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerColor", {
-                        attrs: { label: "Text Color" },
-                        model: {
-                          value: _vm.styles.range_slider.text_color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.range_slider, "text_color", $$v)
-                          },
-                          expression: "styles.range_slider.text_color"
-                        }
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "checkable"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Label Color" },
-                        model: {
-                          value: _vm.styles.checkable.color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.checkable, "color", $$v)
-                          },
-                          expression: "styles.checkable.color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerColor", {
-                        attrs: { label: "Checked Color" },
-                        model: {
-                          value: _vm.styles.checkable.active_color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.checkable, "active_color", $$v)
-                          },
-                          expression: "styles.checkable.active_color"
-                        }
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "error_message"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Text Color" },
-                        model: {
-                          value: _vm.styles.error_message.color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.error_message, "color", $$v)
-                          },
-                          expression: "styles.error_message.color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerTypography", {
-                        attrs: { label: "Typography" },
-                        model: {
-                          value: _vm.styles.error_message.typography,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.error_message,
-                              "typography",
-                              $$v
-                            )
-                          },
-                          expression: "styles.error_message.typography"
-                        }
-                      })
-                    ]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeCategory === "success_message"
-                  ? [
-                      _c("StylerColor", {
-                        attrs: { label: "Text Color" },
-                        model: {
-                          value: _vm.styles.success_message.color,
-                          callback: function($$v) {
-                            _vm.$set(_vm.styles.success_message, "color", $$v)
-                          },
-                          expression: "styles.success_message.color"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("StylerTypography", {
-                        attrs: { label: "Typography" },
-                        model: {
-                          value: _vm.styles.success_message.typography,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.styles.success_message,
-                              "typography",
-                              $$v
-                            )
-                          },
-                          expression: "styles.success_message.typography"
-                        }
-                      })
-                    ]
-                  : _vm._e()
-              ],
-              2
-            )
-          ])
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "grid_table"
+                      ? [
+                          _c(
+                            "el-collapse",
+                            {
+                              model: {
+                                value: _vm.gridCollapse,
+                                callback: function($$v) {
+                                  _vm.gridCollapse = $$v
+                                },
+                                expression: "gridCollapse"
+                              }
+                            },
+                            [
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: { title: "Header Row", name: "head" }
+                                },
+                                [
+                                  _c("StylerBoxGroup", {
+                                    attrs: { "with-text": true },
+                                    model: {
+                                      value: _vm.styles.grid_table.head,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.grid_table,
+                                          "head",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "styles.grid_table.head"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-collapse-item",
+                                {
+                                  attrs: { title: "Body Cells", name: "body" }
+                                },
+                                [
+                                  _c("StylerBoxGroup", {
+                                    attrs: { "with-text": true },
+                                    model: {
+                                      value: _vm.styles.grid_table.body,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.styles.grid_table,
+                                          "body",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "styles.grid_table.body"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "step_header"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Active Color" },
+                            model: {
+                              value: _vm.styles.step_header.active_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.step_header,
+                                  "active_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.step_header.active_color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerColor", {
+                            attrs: { label: "Inactive Color" },
+                            model: {
+                              value: _vm.styles.step_header.inactive_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.step_header,
+                                  "inactive_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.step_header.inactive_color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerColor", {
+                            attrs: { label: "Text Color" },
+                            model: {
+                              value: _vm.styles.step_header.text_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.step_header,
+                                  "text_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.step_header.text_color"
+                            }
+                          })
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "range_slider"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Active Color" },
+                            model: {
+                              value: _vm.styles.range_slider.active_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.range_slider,
+                                  "active_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.range_slider.active_color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerColor", {
+                            attrs: { label: "Inactive Color" },
+                            model: {
+                              value: _vm.styles.range_slider.inactive_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.range_slider,
+                                  "inactive_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.range_slider.inactive_color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerColor", {
+                            attrs: { label: "Text Color" },
+                            model: {
+                              value: _vm.styles.range_slider.text_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.range_slider,
+                                  "text_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.range_slider.text_color"
+                            }
+                          })
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "checkable"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Label Color" },
+                            model: {
+                              value: _vm.styles.checkable.color,
+                              callback: function($$v) {
+                                _vm.$set(_vm.styles.checkable, "color", $$v)
+                              },
+                              expression: "styles.checkable.color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerColor", {
+                            attrs: { label: "Checked Color" },
+                            model: {
+                              value: _vm.styles.checkable.active_color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.checkable,
+                                  "active_color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.checkable.active_color"
+                            }
+                          })
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "error_message"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Text Color" },
+                            model: {
+                              value: _vm.styles.error_message.color,
+                              callback: function($$v) {
+                                _vm.$set(_vm.styles.error_message, "color", $$v)
+                              },
+                              expression: "styles.error_message.color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerTypography", {
+                            attrs: { label: "Typography" },
+                            model: {
+                              value: _vm.styles.error_message.typography,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.error_message,
+                                  "typography",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.error_message.typography"
+                            }
+                          })
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeCategory === "success_message"
+                      ? [
+                          _c("StylerColor", {
+                            attrs: { label: "Text Color" },
+                            model: {
+                              value: _vm.styles.success_message.color,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.success_message,
+                                  "color",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.success_message.color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("StylerTypography", {
+                            attrs: { label: "Typography" },
+                            model: {
+                              value: _vm.styles.success_message.typography,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.styles.success_message,
+                                  "typography",
+                                  $$v
+                                )
+                              },
+                              expression: "styles.success_message.typography"
+                            }
+                          })
+                        ]
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "styler-preview" }, [
+          _c("div", { staticClass: "styler-preview__head" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.previewLoading
+              ? _c("span", { staticClass: "styler-preview__status" }, [
+                  _vm._v("Updating…")
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("iframe", {
+            ref: "previewFrame",
+            staticClass: "styler-preview__frame",
+            attrs: { src: _vm.previewFrameUrl },
+            on: { load: _vm.onFrameLoad }
+          })
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("i", { staticClass: "el-icon-view" }),
+      _vm._v(" Live Preview")
+    ])
+  }
+]
 render._withStripped = true
 
 
