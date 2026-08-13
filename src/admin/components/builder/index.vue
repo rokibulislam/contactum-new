@@ -55,6 +55,13 @@
                 @click.prevent="makeActive('integrations')"
               >Integration</a>
             </li>
+            <li v-if="isProActive">
+              <a
+                href="#"
+                :class="[ isActiveTab( 'styler' ) ? 'nav-tab-active' : '']"
+                @click.prevent="makeActive('styler')"
+              >Styler</a>
+            </li>
           </ul>
         </div>
 
@@ -205,6 +212,10 @@
           <form_settings :id="id" />
         </div>
 
+        <div class="form-builder-styler" v-if="isActiveTab('styler')">
+          <Styler :id="id" />
+        </div>
+
         <div class="form-builder-notifications" v-show="isActiveTab('notifications')">
           <form_notifications @save-notification="save_form_builder"/>
         </div>
@@ -231,6 +242,7 @@ import { v4 as uuidv4 } from "uuid";
 import draggable from "vuedraggable";
 import form_notifications from "../form-notifications/index.vue";
 import form_settings from "../form-settings/index.vue";
+import Styler from "../../pages/Styler.vue";
 import Intergrations from "../intergration/index.vue";
 import form_fields from "../form-fields/index.vue";
 import field_options from "../field-options/index.vue";
@@ -293,6 +305,7 @@ export default {
     draggable,
     form_notifications,
     form_settings,
+    Styler,
     Intergrations,
     form_text_field,
     form_textarea_field,
@@ -358,6 +371,9 @@ export default {
     };
   },
   computed: {
+    isProActive: function () {
+      return !!( window.contactum && window.contactum.is_pro );
+    },
     panel_sections: function () {
       return this.$store.getters.panel_sections;
     },

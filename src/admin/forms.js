@@ -40,10 +40,16 @@ import {
     Popover,
     InputNumber,
     Tag,
-    Alert
+    Alert,
+    ColorPicker,
+    Collapse,
+    CollapseItem
 } from 'element-ui';
 
 Vue.use(Alert);
+Vue.use(ColorPicker);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 Vue.use(Popover);
 Vue.use(Card);
 Vue.use(Tooltip)
@@ -88,6 +94,7 @@ import AllForms from './pages/Form.vue'
 import FormEntry from './pages/FormEntry.vue'
 import FormSettings from './pages/FormSettings.vue'
 import FormNotification from './pages/FormNotification.vue'
+import Styler from './pages/Styler.vue'
 import Builder from './components/builder/index.vue'
 import store from './store';
 import menuFix from './utils/admin-menu-fix';
@@ -199,6 +206,12 @@ const routes = [
         path: '/forms/entries/:form_id',
         name: 'form-entry',
         component: FormEntry,
+        props: true
+    },
+    {
+        path: '/forms/styler/:id',
+        name: 'form-styler',
+        component: Styler,
         props: true
     }
 ];
