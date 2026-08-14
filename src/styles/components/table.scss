@@ -1,17 +1,17 @@
 .contactum_table {
-    background-color: #fff;
+    background-color: var(--card);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(30,31,33,.08);
     padding: 10px 24px
 }
 
 .contactum_table .cell strong {
-    color: #1e1f21;
+    color: var(--foreground);
     font-weight: 500
 }
 
 .contactum-table-container thead {
-    color: #1e1f21
+    color: var(--foreground)
 }
 
 
@@ -32,7 +32,7 @@
 }
 
 .contactum_table thead {
-    color: #1e1f21
+    color: var(--foreground)
 }
 
 .contactum_table thead .el-table__cell,.ff_table thead th {
@@ -59,12 +59,12 @@
 }
 
 .contactum_table .cell strong {
-    color: #1e1f21;
+    color: var(--foreground);
     font-weight: 500
 }
 
 .contactum_table td.el-table__cell,.ff_table th.el-table__cell.is-leaf {
-    border-bottom-color: #ececec
+    border-bottom-color: var(--border)
 }
 
 .contactum_table tbody tr:last-child td.el-table__cell,.ff_table tbody tr:last-child th.el-table__cell.is-leaf {

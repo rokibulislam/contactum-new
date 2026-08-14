@@ -8,13 +8,13 @@
 }
 
 .contactum_card_head {
-    border-bottom: 1px solid #ececec;
+    border-bottom: 1px solid var(--border);
     margin-bottom: 26px;
     padding-bottom: 16px;
 }
 
 .contactum_card_head .title {
-    color: #1e1f21 !important;
+    color: var(--foreground) !important;
     margin: 0;
 }
 

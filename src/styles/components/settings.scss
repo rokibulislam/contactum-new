@@ -4,7 +4,7 @@
   display: flex;
   min-height: calc(100vh - 92px);
   margin: 0;
-  background: #f4f6fa;
+  background: var(--background);
 
   // ── Sidebar wrap ─────────────────────────────────────────────────────────
   &__sidebar-wrap {
@@ -16,8 +16,8 @@
   &__sidebar {
     width: 220px;
     min-height: 100%;
-    background: #fff;
-    border-right: 1px solid #e5e7eb;
+    background: var(--card);
+    border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     position: sticky;
@@ -32,7 +32,7 @@
     padding: 18px 16px 14px;
     font-size: 14px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: var(--foreground);
     border-bottom: 1px solid #f0f2f5;
     letter-spacing: -.2px;
     flex-shrink: 0;
@@ -41,7 +41,7 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: #409eff;
+      color: var(--primary);
     }
   }
 
@@ -173,7 +173,7 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: var(--primary);
       flex-shrink: 0;
     }
   }
@@ -208,7 +208,7 @@
 
     &:hover {
       background: #f5f7ff;
-      color: #1d4ed8;
+      color: var(--primary);
       border-left-color: #bfdbfe;
 
       > .dashicons { opacity: .8; }
@@ -216,14 +216,14 @@
 
     // Active — added by settings.js
     &.active {
-      background: linear-gradient(90deg, #eff6ff 0%, #f8fbff 100%);
-      color: #1d4ed8;
+      background: linear-gradient(90deg, var(--accent) 0%, #f8fbff 100%);
+      color: var(--primary);
       font-weight: 600;
-      border-left-color: #3b82f6;
+      border-left-color: var(--primary);
 
       > .dashicons {
         opacity: 1;
-        color: #3b82f6;
+        color: var(--primary);
       }
     }
   }

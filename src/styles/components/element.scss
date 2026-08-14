@@ -3,11 +3,11 @@
 }
 
 .el-button--danger {
-  background-color: #DC2727  !important;
+  background-color: var(--destructive) !important;
 }
 
 .el-table thead .cell {
-    color: hsl(var(--foreground)) !important;
+    color: var(--foreground) !important;
 }
 
 .el-table .el-table__cell {
