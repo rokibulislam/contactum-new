@@ -150,6 +150,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/templates/class-template-leave-request.php';
         require_once CONTACTUM_INCLUDES . '/templates/class-template-contact.php';
         require_once CONTACTUM_INCLUDES . '/templates/class-template-blank.php';
+        require_once CONTACTUM_INCLUDES . '/templates/class-template-conversational.php';
 
         //widgets
         require_once CONTACTUM_INCLUDES . '/widgets/class-form-widget.php';

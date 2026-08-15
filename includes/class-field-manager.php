@@ -178,9 +178,21 @@ class FieldManager {
         return $js_array;
     }
 
-    public function render_fields( $fields, $form_id, $atts = [] ) {
+    public function render_fields( $fields, $form_id, $atts = [], $conversational = false ) {
         if ( empty( $fields ) ) {
             return;
+        }
+
+        // Conversational mode auto-paginates one field per step and is
+        // mutually exclusive with manually-placed Step fields — only apply
+        // it when the form doesn't already define its own step boundaries.
+        if ( $conversational ) {
+            foreach ( $fields as $field ) {
+                if ( 'step_field' === $field['template'] ) {
+                    $conversational = false;
+                    break;
+                }
+            }
         }
 
         // Track which multi-step "page" each field belongs to, purely by
@@ -205,6 +217,12 @@ class FieldManager {
             $field['_runtime_step'] = $step;
 
             $field_object->render( $field, $form_id );
+
+            // In conversational mode every field is its own step, so bump
+            // *after* rendering instead of waiting for a step_field marker.
+            if ( $conversational ) {
+                $step++;
+            }
         }
     }
 

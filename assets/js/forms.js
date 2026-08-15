@@ -27061,6 +27061,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CreateNewFormModal',
@@ -27081,7 +27085,8 @@ __webpack_require__.r(__webpack_exports__);
       aiPrompt: '',
       aiAdditional: '',
       aiGenerating: false,
-      aiError: ''
+      aiError: '',
+      startConversational: false
     };
   },
 
@@ -27097,6 +27102,11 @@ __webpack_require__.r(__webpack_exports__);
       url.searchParams.set('action', 'create_template');
       url.searchParams.set('template', 'blank');
       url.searchParams.set('_wpnonce', contactum.nonce);
+
+      if (this.startConversational) {
+        url.searchParams.set('conversational', '1');
+      }
+
       return url.toString();
     }
 
@@ -27105,6 +27115,10 @@ __webpack_require__.r(__webpack_exports__);
     cancelNewForm() {
       this.searchQuery = '';
       this.$emit('close');
+    },
+
+    goToBlankForm() {
+      window.location.href = this.blankFormUrl;
     },
 
     updateFormsImported(value) {
@@ -30257,6 +30271,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30356,8 +30382,23 @@ __webpack_require__.r(__webpack_exports__);
 
     zapierFeeds() {
       return this.settings && this.settings.zapier_feeds || [];
-    }
+    },
 
+    // Saved as the string 'true' by the Conversational Form template / the
+    // Blank Form "Start as Conversational" checkbox, but as a real boolean
+    // once this switch itself saves it (JSON.stringify'd, not form-encoded,
+    // on the builder's Save Form path) — el-switch only lights up for a
+    // strict boolean, so accept and always write back the real thing.
+    isConversational: {
+      get() {
+        return this.settings.conversational_mode === true || this.settings.conversational_mode === 'true';
+      },
+
+      set(value) {
+        this.$set(this.settings, 'conversational_mode', value);
+      }
+
+    }
   },
   methods: {
     updateSetting(key, value) {
@@ -37427,6 +37468,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -37512,7 +37563,8 @@ __webpack_require__.r(__webpack_exports__);
           self.settings = { ...response.data,
             schedule_form: response.data.schedule_form === 'true',
             require_login: response.data.require_login === 'true',
-            limit_entries: response.data.require_login === 'true' // use_theme_css:  response.data.use_theme_css === 'true',
+            limit_entries: response.data.require_login === 'true',
+            conversational_mode: response.data.conversational_mode === 'true' // use_theme_css:  response.data.use_theme_css === 'true',
 
           };
         }
@@ -41130,7 +41182,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "@charset \"UTF-8\";\n/* ── Dialog override ── */\n[data-v-5ab28e0c] .cnf-dialog {\n  border-radius: 12px;\n  overflow: hidden;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__header {\n  padding: 20px 24px 0;\n  border-bottom: none;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__body {\n  padding: 0;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__headerbtn {\n  top: 20px;\n  right: 20px;\n}\n\n/* ── Header ── */\n.cnf-header[data-v-5ab28e0c] {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 16px;\n  flex-wrap: wrap;\n  padding-bottom: 16px;\n  border-bottom: 1px solid #f0f0f0;\n}\n.cnf-header-left[data-v-5ab28e0c] {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.cnf-title[data-v-5ab28e0c] {\n  margin: 0;\n  font-size: 18px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1.2;\n}\n.cnf-subtitle[data-v-5ab28e0c] {\n  font-size: 13px;\n  color: #6b7280;\n}\n.cnf-header-right[data-v-5ab28e0c] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  flex-wrap: wrap;\n}\n.cnf-search[data-v-5ab28e0c] {\n  width: 220px;\n}\n.cnf-import-btn[data-v-5ab28e0c] {\n  white-space: nowrap;\n}\n\n/* ── Import section slide ── */\n.cnf-import-section[data-v-5ab28e0c] {\n  margin-top: 16px;\n}\n\n/* ── AI generate section ── */\n.cnf-ai-section[data-v-5ab28e0c] {\n  margin-top: 16px;\n  padding: 16px;\n  background: #f5f3ff;\n  border: 1px solid #ddd6fe;\n  border-radius: 8px;\n}\n.cnf-ai-desc[data-v-5ab28e0c] {\n  margin: 0 0 10px;\n  font-size: 13px;\n  color: #5b21b6;\n}\n.cnf-ai-actions[data-v-5ab28e0c] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n.cnf-slide-enter-active[data-v-5ab28e0c],\n.cnf-slide-leave-active[data-v-5ab28e0c] {\n  transition: all 0.25s ease;\n  overflow: hidden;\n}\n.cnf-slide-enter[data-v-5ab28e0c],\n.cnf-slide-leave-to[data-v-5ab28e0c] {\n  opacity: 0;\n  max-height: 0;\n}\n.cnf-slide-enter-to[data-v-5ab28e0c],\n.cnf-slide-leave[data-v-5ab28e0c] {\n  opacity: 1;\n  max-height: 400px;\n}\n\n/* ── Body ── */\n.cnf-body[data-v-5ab28e0c] {\n  padding: 20px 24px 24px;\n  max-height: calc(90vh - 140px);\n  overflow-y: auto;\n}\n\n/* ── Grid ── */\n.cnf-grid[data-v-5ab28e0c] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n\n/* ── Card base ── */\n.cnf-card[data-v-5ab28e0c] {\n  display: flex;\n  flex-direction: column;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  overflow: hidden;\n  text-decoration: none;\n  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;\n  background: #fff;\n  cursor: pointer;\n}\n.cnf-card[data-v-5ab28e0c]:hover {\n  border-color: #3b82f6;\n  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);\n  transform: translateY(-2px);\n  text-decoration: none;\n}\n.cnf-card--disabled[data-v-5ab28e0c] {\n  opacity: 0.55;\n  pointer-events: none;\n}\n\n/* ── Blank card ── */\n.cnf-card--blank[data-v-5ab28e0c] {\n  border: 2px dashed #d1d5db;\n  min-height: 180px;\n  background: #fafafa;\n}\n.cnf-card--blank[data-v-5ab28e0c]:hover {\n  border-color: #3b82f6;\n  background: #eff6ff;\n}\n.cnf-card-blank-inner[data-v-5ab28e0c] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 10px;\n  padding: 20px;\n}\n.cnf-card-blank-icon[data-v-5ab28e0c] {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  background: #e0e7ff;\n  color: #3b82f6;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 22px;\n  transition: background 0.15s, color 0.15s;\n}\n.cnf-card--blank:hover .cnf-card-blank-icon[data-v-5ab28e0c] {\n  background: #3b82f6;\n  color: #fff;\n}\n.cnf-card-blank-label[data-v-5ab28e0c] {\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n}\n\n/* ── Image wrap ── */\n.cnf-card-img-wrap[data-v-5ab28e0c] {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 4/3;\n  background: #f3f4f6;\n}\n.cnf-card-img[data-v-5ab28e0c] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.25s ease;\n}\n.cnf-card:hover .cnf-card-img[data-v-5ab28e0c] {\n  transform: scale(1.04);\n}\n\n/* ── Hover overlay ── */\n.cnf-card-overlay[data-v-5ab28e0c] {\n  position: absolute;\n  inset: 0;\n  background: rgba(17, 24, 39, 0.55);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  opacity: 0;\n  transition: opacity 0.2s ease;\n}\n.cnf-card:hover .cnf-card-overlay[data-v-5ab28e0c] {\n  opacity: 1;\n}\n.cnf-card-use-btn[data-v-5ab28e0c] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  background: #fff;\n  color: #111827;\n  font-size: 13px;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 6px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\n  transition: background 0.15s, color 0.15s;\n}\n.cnf-card-use-btn i[data-v-5ab28e0c] {\n  color: #10b981;\n  font-size: 14px;\n}\n\n/* ── Card footer ── */\n.cnf-card-footer[data-v-5ab28e0c] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 10px 12px;\n  gap: 6px;\n  border-top: 1px solid #f3f4f6;\n}\n.cnf-card-title[data-v-5ab28e0c] {\n  font-size: 12.5px;\n  font-weight: 600;\n  color: #374151;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cnf-card-pro-badge[data-v-5ab28e0c] {\n  flex-shrink: 0;\n  font-size: 10px;\n  font-weight: 700;\n  padding: 2px 6px;\n  border-radius: 4px;\n  background: #fef3c7;\n  color: #92400e;\n  text-transform: uppercase;\n  letter-spacing: 0.4px;\n}\n\n/* ── Empty state ── */\n.cnf-empty[data-v-5ab28e0c] {\n  text-align: center;\n  padding: 48px 20px;\n  color: #9ca3af;\n}\n.cnf-empty p[data-v-5ab28e0c] {\n  margin: 10px 0 0;\n  font-size: 14px;\n}\n.cnf-empty strong[data-v-5ab28e0c] {\n  color: #374151;\n}\n.cnf-empty-icon[data-v-5ab28e0c] {\n  font-size: 36px;\n  color: #d1d5db;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n/* ── Dialog override ── */\n[data-v-5ab28e0c] .cnf-dialog {\n  border-radius: 12px;\n  overflow: hidden;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__header {\n  padding: 20px 24px 0;\n  border-bottom: none;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__body {\n  padding: 0;\n}\n[data-v-5ab28e0c] .cnf-dialog .el-dialog__headerbtn {\n  top: 20px;\n  right: 20px;\n}\n\n/* ── Header ── */\n.cnf-header[data-v-5ab28e0c] {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 16px;\n  flex-wrap: wrap;\n  padding-bottom: 16px;\n  border-bottom: 1px solid #f0f0f0;\n}\n.cnf-header-left[data-v-5ab28e0c] {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.cnf-title[data-v-5ab28e0c] {\n  margin: 0;\n  font-size: 18px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1.2;\n}\n.cnf-subtitle[data-v-5ab28e0c] {\n  font-size: 13px;\n  color: #6b7280;\n}\n.cnf-header-right[data-v-5ab28e0c] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  flex-wrap: wrap;\n}\n.cnf-search[data-v-5ab28e0c] {\n  width: 220px;\n}\n.cnf-import-btn[data-v-5ab28e0c] {\n  white-space: nowrap;\n}\n\n/* ── Import section slide ── */\n.cnf-import-section[data-v-5ab28e0c] {\n  margin-top: 16px;\n}\n\n/* ── AI generate section ── */\n.cnf-ai-section[data-v-5ab28e0c] {\n  margin-top: 16px;\n  padding: 16px;\n  background: #f5f3ff;\n  border: 1px solid #ddd6fe;\n  border-radius: 8px;\n}\n.cnf-ai-desc[data-v-5ab28e0c] {\n  margin: 0 0 10px;\n  font-size: 13px;\n  color: #5b21b6;\n}\n.cnf-ai-actions[data-v-5ab28e0c] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n.cnf-slide-enter-active[data-v-5ab28e0c],\n.cnf-slide-leave-active[data-v-5ab28e0c] {\n  transition: all 0.25s ease;\n  overflow: hidden;\n}\n.cnf-slide-enter[data-v-5ab28e0c],\n.cnf-slide-leave-to[data-v-5ab28e0c] {\n  opacity: 0;\n  max-height: 0;\n}\n.cnf-slide-enter-to[data-v-5ab28e0c],\n.cnf-slide-leave[data-v-5ab28e0c] {\n  opacity: 1;\n  max-height: 400px;\n}\n\n/* ── Body ── */\n.cnf-body[data-v-5ab28e0c] {\n  padding: 20px 24px 24px;\n  max-height: calc(90vh - 140px);\n  overflow-y: auto;\n}\n\n/* ── Grid ── */\n.cnf-grid[data-v-5ab28e0c] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n\n/* ── Card base ── */\n.cnf-card[data-v-5ab28e0c] {\n  display: flex;\n  flex-direction: column;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  overflow: hidden;\n  text-decoration: none;\n  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;\n  background: #fff;\n  cursor: pointer;\n}\n.cnf-card[data-v-5ab28e0c]:hover {\n  border-color: #3b82f6;\n  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);\n  transform: translateY(-2px);\n  text-decoration: none;\n}\n.cnf-card--disabled[data-v-5ab28e0c] {\n  opacity: 0.55;\n  pointer-events: none;\n}\n\n/* ── Blank card ── */\n.cnf-card--blank[data-v-5ab28e0c] {\n  border: 2px dashed #d1d5db;\n  min-height: 180px;\n  background: #fafafa;\n}\n.cnf-card--blank[data-v-5ab28e0c]:hover {\n  border-color: #3b82f6;\n  background: #eff6ff;\n}\n.cnf-card-blank-inner[data-v-5ab28e0c] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 10px;\n  padding: 20px;\n}\n.cnf-card-blank-icon[data-v-5ab28e0c] {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  background: #e0e7ff;\n  color: #3b82f6;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 22px;\n  transition: background 0.15s, color 0.15s;\n}\n.cnf-card--blank:hover .cnf-card-blank-icon[data-v-5ab28e0c] {\n  background: #3b82f6;\n  color: #fff;\n}\n.cnf-card-blank-label[data-v-5ab28e0c] {\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n}\n.cnf-card-blank-option[data-v-5ab28e0c] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 4px;\n  font-size: 11.5px;\n  font-weight: 400;\n  color: #6b7280;\n  cursor: pointer;\n}\n\n/* ── Image wrap ── */\n.cnf-card-img-wrap[data-v-5ab28e0c] {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 4/3;\n  background: #f3f4f6;\n}\n.cnf-card-img[data-v-5ab28e0c] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.25s ease;\n}\n.cnf-card:hover .cnf-card-img[data-v-5ab28e0c] {\n  transform: scale(1.04);\n}\n\n/* ── Hover overlay ── */\n.cnf-card-overlay[data-v-5ab28e0c] {\n  position: absolute;\n  inset: 0;\n  background: rgba(17, 24, 39, 0.55);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  opacity: 0;\n  transition: opacity 0.2s ease;\n}\n.cnf-card:hover .cnf-card-overlay[data-v-5ab28e0c] {\n  opacity: 1;\n}\n.cnf-card-use-btn[data-v-5ab28e0c] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  background: #fff;\n  color: #111827;\n  font-size: 13px;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 6px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\n  transition: background 0.15s, color 0.15s;\n}\n.cnf-card-use-btn i[data-v-5ab28e0c] {\n  color: #10b981;\n  font-size: 14px;\n}\n\n/* ── Card footer ── */\n.cnf-card-footer[data-v-5ab28e0c] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 10px 12px;\n  gap: 6px;\n  border-top: 1px solid #f3f4f6;\n}\n.cnf-card-title[data-v-5ab28e0c] {\n  font-size: 12.5px;\n  font-weight: 600;\n  color: #374151;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cnf-card-pro-badge[data-v-5ab28e0c] {\n  flex-shrink: 0;\n  font-size: 10px;\n  font-weight: 700;\n  padding: 2px 6px;\n  border-radius: 4px;\n  background: #fef3c7;\n  color: #92400e;\n  text-transform: uppercase;\n  letter-spacing: 0.4px;\n}\n\n/* ── Empty state ── */\n.cnf-empty[data-v-5ab28e0c] {\n  text-align: center;\n  padding: 48px 20px;\n  color: #9ca3af;\n}\n.cnf-empty p[data-v-5ab28e0c] {\n  margin: 10px 0 0;\n  font-size: 14px;\n}\n.cnf-empty strong[data-v-5ab28e0c] {\n  color: #374151;\n}\n.cnf-empty-icon[data-v-5ab28e0c] {\n  font-size: 36px;\n  color: #d1d5db;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -133507,10 +133559,10 @@ var render = function() {
           { staticClass: "cnf-grid" },
           [
             _c(
-              "a",
+              "div",
               {
                 staticClass: "cnf-card cnf-card--blank",
-                attrs: { href: _vm.blankFormUrl }
+                on: { click: _vm.goToBlankForm }
               },
               [
                 _c("div", { staticClass: "cnf-card-blank-inner" }, [
@@ -133520,7 +133572,34 @@ var render = function() {
                   _vm._v(" "),
                   _c("span", { staticClass: "cnf-card-blank-label" }, [
                     _vm._v("Blank Form")
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "cnf-card-blank-option",
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                        }
+                      }
+                    },
+                    [
+                      _c("el-checkbox", {
+                        model: {
+                          value: _vm.startConversational,
+                          callback: function($$v) {
+                            _vm.startConversational = $$v
+                          },
+                          expression: "startConversational"
+                        }
+                      }),
+                      _vm._v(
+                        "\n            Start as Conversational Form\n          "
+                      )
+                    ],
+                    1
+                  )
                 ])
               ]
             ),
@@ -138230,6 +138309,39 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._m(0)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cfs-field" }, [
+            _c("label", { staticClass: "cfs-label" }, [
+              _vm._v("Conversational Form")
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "cfs-toggle" },
+              [
+                _c("el-switch", {
+                  model: {
+                    value: _vm.isConversational,
+                    callback: function($$v) {
+                      _vm.isConversational = $$v
+                    },
+                    expression: "isConversational"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v("Show one question at a time, Typeform-style")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "cfs-description" }, [
+              _vm._v(
+                "\n          Visitors answer a single field per screen and move on automatically. Not available if the form\n          already uses manually-added Step fields.\n        "
+              )
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -147783,6 +147895,40 @@ var render = function() {
                   ],
                   1
                 )
+              ]),
+              _vm._v(" "),
+              _c("tr", { staticClass: "contactum-conversational-mode" }, [
+                _c("th", [_vm._v(" Conversational Form ")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "label",
+                    { staticClass: "contactum-switch" },
+                    [
+                      _c("el-checkbox", {
+                        model: {
+                          value: _vm.settings.conversational_mode,
+                          callback: function($$v) {
+                            _vm.$set(_vm.settings, "conversational_mode", $$v)
+                          },
+                          expression: "settings.conversational_mode"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "switch-slider round" }),
+                      _vm._v(
+                        " Show one question at a time, Typeform-style\n              "
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "description" }, [
+                    _vm._v(
+                      " Visitors answer a single field per screen and move on automatically — good for longer forms. Not available if the form already uses manually-added Step fields. "
+                    )
+                  ])
+                ])
               ])
             ])
           ])

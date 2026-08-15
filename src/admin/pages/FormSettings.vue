@@ -40,6 +40,16 @@
                 <p class="description"> Where the labels of the form should display </p>
               </td>
             </tr>
+            <tr class="contactum-conversational-mode">
+              <th> Conversational Form </th>
+              <td>
+                <label class="contactum-switch">
+                  <el-checkbox v-model="settings.conversational_mode"></el-checkbox>
+                  <span class="switch-slider round"></span> Show one question at a time, Typeform-style
+                </label>
+                <p class="description"> Visitors answer a single field per screen and move on automatically — good for longer forms. Not available if the form already uses manually-added Step fields. </p>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -303,6 +313,7 @@ export default {
                     schedule_form: response.data.schedule_form === 'true',
                     require_login:  response.data.require_login === 'true',
                     limit_entries:  response.data.require_login === 'true',
+                    conversational_mode: response.data.conversational_mode === 'true',
                    // use_theme_css:  response.data.use_theme_css === 'true',
                 }
             }

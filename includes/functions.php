@@ -72,6 +72,7 @@ function contactum_get_default_form_settings() {
             'limit_number'       => '100',
             'limit_message'      => __( 'Sorry, we have reached the maximum number of submissions.', 'contactum' ),
             'label_position'             => 'above',
+            'conversational_mode'        => 'false',
             'use_theme_css'              => 'contactum-style',
             'custom_css' => '',
             'custom_js'  => ''

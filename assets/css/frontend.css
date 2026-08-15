@@ -366,3 +366,9 @@ ul.contactum-form.form-label-right li div.contactum-fields {
     padding: 0 !important;
     border: 0 !important;
 }
+
+
+
+.is_conversation {
+    flex-direction: column;
+}

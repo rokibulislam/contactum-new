@@ -142,6 +142,18 @@
             Selecting <strong>Yes</strong> will use your theme's style for form fields.
           </p>
         </div>
+
+        <div class="cfs-field">
+          <label class="cfs-label">Conversational Form</label>
+          <label class="cfs-toggle">
+            <el-switch v-model="isConversational" />
+            <span>Show one question at a time, Typeform-style</span>
+          </label>
+          <p class="cfs-description">
+            Visitors answer a single field per screen and move on automatically. Not available if the form
+            already uses manually-added Step fields.
+          </p>
+        </div>
       </section>
 
       <!-- Scheduling & Restrictions -->
@@ -447,6 +459,20 @@ export default {
 
     zapierFeeds() {
       return (this.settings && this.settings.zapier_feeds) || [];
+    },
+
+    // Saved as the string 'true' by the Conversational Form template / the
+    // Blank Form "Start as Conversational" checkbox, but as a real boolean
+    // once this switch itself saves it (JSON.stringify'd, not form-encoded,
+    // on the builder's Save Form path) — el-switch only lights up for a
+    // strict boolean, so accept and always write back the real thing.
+    isConversational: {
+      get() {
+        return this.settings.conversational_mode === true || this.settings.conversational_mode === 'true';
+      },
+      set(value) {
+        this.$set(this.settings, 'conversational_mode', value);
+      },
     },
   },
 

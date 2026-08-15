@@ -102,12 +102,16 @@
       <div class="cnf-grid">
 
         <!-- Blank form card -->
-        <a :href="blankFormUrl" class="cnf-card cnf-card--blank">
+        <div class="cnf-card cnf-card--blank" @click="goToBlankForm">
           <div class="cnf-card-blank-inner">
             <span class="cnf-card-blank-icon"><i class="el-icon-plus"></i></span>
             <span class="cnf-card-blank-label">Blank Form</span>
+            <label class="cnf-card-blank-option" @click.stop>
+              <el-checkbox v-model="startConversational"></el-checkbox>
+              Start as Conversational Form
+            </label>
           </div>
-        </a>
+        </div>
 
         <!-- Template cards -->
         <template v-for="(template, key) in filteredTemplates">
@@ -164,6 +168,7 @@ export default {
       aiAdditional: '',
       aiGenerating: false,
       aiError: '',
+      startConversational: false,
     };
   },
 
@@ -184,6 +189,9 @@ export default {
       url.searchParams.set('action', 'create_template');
       url.searchParams.set('template', 'blank');
       url.searchParams.set('_wpnonce', contactum.nonce);
+      if (this.startConversational) {
+        url.searchParams.set('conversational', '1');
+      }
       return url.toString();
     },
   },
@@ -192,6 +200,10 @@ export default {
     cancelNewForm() {
       this.searchQuery = '';
       this.$emit('close');
+    },
+
+    goToBlankForm() {
+      window.location.href = this.blankFormUrl;
     },
 
     updateFormsImported(value) {
@@ -428,6 +440,17 @@ export default {
   font-size: 13px;
   font-weight: 600;
   color: #374151;
+}
+
+.cnf-card-blank-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #6b7280;
+  cursor: pointer;
 }
 
 /* ── Image wrap ── */
