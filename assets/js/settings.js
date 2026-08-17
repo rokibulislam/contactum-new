@@ -2991,6 +2991,109 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'PaymentSettings',
 
@@ -3056,6 +3159,14 @@ __webpack_require__.r(__webpack_exports__);
         key: 'sslcommerz',
         label: 'SSLCommerz',
         icon: 'dashicons-shield-alt'
+      }, {
+        key: 'paddle',
+        label: 'Paddle',
+        icon: 'dashicons-money'
+      }, {
+        key: 'offline',
+        label: 'Offline Payment',
+        icon: 'dashicons-money-alt'
       }],
       currencies: [{
         code: 'USD',
@@ -3144,6 +3255,10 @@ __webpack_require__.r(__webpack_exports__);
         sslcommerz: {
           test: ['test_store_id', 'test_store_password'],
           live: ['live_store_id', 'live_store_password']
+        },
+        paddle: {
+          test: ['test_api_key', 'test_client_token'],
+          live: ['live_api_key', 'live_client_token']
         }
       },
       settings: {
@@ -3252,6 +3367,19 @@ __webpack_require__.r(__webpack_exports__);
           test_store_password: '',
           live_store_id: '',
           live_store_password: ''
+        },
+        paddle: {
+          enabled: false,
+          test_mode: true,
+          test_api_key: '',
+          test_client_token: '',
+          live_api_key: '',
+          live_client_token: '',
+          webhook_secret: ''
+        },
+        offline: {
+          enabled: false,
+          instructions: ''
         }
       }
     };
@@ -4175,6 +4303,16 @@ __webpack_require__.r(__webpack_exports__);
         this.saving = false;
 
         if (res.success) {
+          // OAuth-based integrations (Zoho, Google Drive, …) hand back a
+          // redirect_url instead of a final status — the credentials are
+          // only saved as a pending step, and the real 'status' isn't
+          // known until the provider's callback completes the token
+          // exchange, so navigate there instead of showing a toast.
+          if (res.data.redirect_url) {
+            window.location.href = res.data.redirect_url;
+            return;
+          }
+
           const ok = res.data.status === true || res.data.status === '1' || res.data.status === 'success';
           this.$set(this.integration, 'status', ok);
           this.$notify({
@@ -6055,7 +6193,8 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     editfield: 0,
     notifications: null,
     globalintegrations: null,
-    smarttags: null
+    smarttags: null,
+    landing_page_fields: null
   },
   getters: {
     field_settings(state) {
@@ -6100,6 +6239,10 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
     smart_tags(state) {
       return state.smart_tags;
+    },
+
+    landing_page_fields(state) {
+      return state.landing_page_fields;
     }
 
   },
@@ -6117,6 +6260,7 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.settings = payload.settings;
       state.notifications = payload.notifications;
       state.smart_tags = payload.smart_tags;
+      state.landing_page_fields = payload.landing_page_fields;
     },
 
     // add new form field element to column field
@@ -8425,7 +8569,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrap ────────────────────────────────────────────── */\n.pms-wrap[data-v-35821388] { max-width: 900px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.pms-header[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.pms-header__left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.pms-header__icon[data-v-35821388] {\n  width: 44px;\n  height: 44px;\n  border-radius: 8px;\n  background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.pms-header__icon .dashicons[data-v-35821388] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.pms-header__title[data-v-35821388] {\n  margin: 0 0 2px;\n  font-size: 18px;\n  font-weight: 700;\n  color: #303133;\n}\n.pms-header__sub[data-v-35821388] { margin: 0; font-size: 13px; color: #909399;\n}\n\n/* ── Body layout (sidebar + content) ──────────────────── */\n.pms-body[data-v-35821388] {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n}\n.pms-content[data-v-35821388] {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar (tabs) ─────────────────────────────────────── */\n.pms-sidebar[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 190px;\n  padding-right: 16px;\n  border-right: 1px solid #dcdfe6;\n}\n.pms-tabs[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.pms-tab[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  width: 100%;\n  padding: 9px 12px;\n  font-size: 13px;\n  font-weight: 500;\n  color: #909399;\n  background: none;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  text-align: left;\n  transition: color .15s, background-color .15s;\n}\n.pms-tab .dashicons[data-v-35821388] { font-size: 15px; width: 15px; height: 15px; flex-shrink: 0;\n}\n.pms-tab[data-v-35821388]:hover { color: #606266; background: #f5f7fa;\n}\n.pms-tab--active[data-v-35821388] { color: #409eff; background: #ecf5ff;\n}\n.pms-tab__dot[data-v-35821388] {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: #67c23a;\n  margin-left: auto;\n  flex-shrink: 0;\n}\n.pms-loading[data-v-35821388] { padding: 20px 0;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.pms-card[data-v-35821388] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n  margin-bottom: 16px;\n}\n.pms-card__head[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  border-bottom: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n.pms-card__head-left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.pms-card__title[data-v-35821388] {\n  margin: 0;\n  font-size: 14px;\n  font-weight: 600;\n  color: #303133;\n}\n.pms-card__body[data-v-35821388] { padding: 20px;\n}\n\n/* Gateway badges */\n.pms-gw-badge[data-v-35821388] {\n  display: inline-block;\n  font-size: 12px;\n  font-weight: 700;\n  padding: 3px 10px;\n  border-radius: 4px;\n}\n.pms-gw-badge--stripe[data-v-35821388]   { background: #f0eeff; color: #6e4bcc;\n}\n.pms-gw-badge--paypal[data-v-35821388]   { background: #fdf6ec; color: #e6a23c;\n}\n.pms-gw-badge--razorpay[data-v-35821388] { background: #ecf5ff; color: #409eff;\n}\n.pms-gw-badge--mollie[data-v-35821388]   { background: #f0f9eb; color: #67c23a;\n}\n.pms-gw-badge--authorizenet[data-v-35821388] { background: #fef0f0; color: #f56c6c;\n}\n.pms-gw-badge--square[data-v-35821388] { background: #eafaf1; color: #2f9e44;\n}\n.pms-gw-badge--paystack[data-v-35821388] { background: #e8f5e9; color: #00a86b;\n}\n.pms-gw-badge--payrexx[data-v-35821388] { background: #fff4e6; color: #e8590c;\n}\n.pms-gw-badge--moneris[data-v-35821388] { background: #e7f5ff; color: #1971c2;\n}\n.pms-gw-badge--xendit[data-v-35821388] { background: #edf2ff; color: #4263eb;\n}\n.pms-gw-badge--flutterwave[data-v-35821388] { background: #fff9db; color: #f08c00;\n}\n.pms-gw-badge--billplz[data-v-35821388] { background: #e6fcf5; color: #0ca678;\n}\n.pms-gw-badge--sslcommerz[data-v-35821388] { background: #eef2ff; color: #4338ca;\n}\n\n/* Status label */\n.pms-status[data-v-35821388] {\n  font-size: 12px;\n  font-weight: 600;\n}\n.pms-status--on[data-v-35821388]  { color: #67c23a;\n}\n.pms-status--off[data-v-35821388] { color: #909399;\n}\n\n/* ── Form fields ─────────────────────────────────────── */\n.pms-field[data-v-35821388] { margin-bottom: 18px;\n}\n.pms-field[data-v-35821388]:last-child { margin-bottom: 0;\n}\n.pms-label[data-v-35821388] {\n  display: block;\n  font-size: 13px;\n  font-weight: 500;\n  color: #606266;\n  margin-bottom: 6px;\n}\n.pms-hint[data-v-35821388] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n.pms-code[data-v-35821388] {\n  display: inline-block;\n  font-size: 11px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f5f7fa;\n  color: #606266;\n  padding: 2px 6px;\n  border-radius: 3px;\n  word-break: break-all;\n}\n\n/* ── Mode toggle ─────────────────────────────────────── */\n.pms-mode-toggle[data-v-35821388] {\n  display: inline-flex;\n  border: 1px solid #dcdfe6;\n  border-radius: 7px;\n  overflow: hidden;\n}\n.pms-mode-btn[data-v-35821388] {\n  padding: 6px 16px;\n  font-size: 13px;\n  font-weight: 500;\n  background: #fff;\n  border: none;\n  color: #606266;\n  cursor: pointer;\n  transition: background .12s, color .12s;\n}\n.pms-mode-btn + .pms-mode-btn[data-v-35821388] { border-left: 1px solid #dcdfe6;\n}\n.pms-mode-btn--active[data-v-35821388] {\n  background: #409eff;\n  color: #fff;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrap ────────────────────────────────────────────── */\n.pms-wrap[data-v-35821388] { max-width: 900px;\n}\n\n/* ── Header ──────────────────────────────────────────── */\n.pms-header[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 14px;\n  margin-bottom: 24px;\n}\n.pms-header__left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.pms-header__icon[data-v-35821388] {\n  width: 44px;\n  height: 44px;\n  border-radius: 8px;\n  background: linear-gradient(135deg, #409eff 0%, #337ecc 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.pms-header__icon .dashicons[data-v-35821388] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.pms-header__title[data-v-35821388] {\n  margin: 0 0 2px;\n  font-size: 18px;\n  font-weight: 700;\n  color: #303133;\n}\n.pms-header__sub[data-v-35821388] { margin: 0; font-size: 13px; color: #909399;\n}\n\n/* ── Body layout (sidebar + content) ──────────────────── */\n.pms-body[data-v-35821388] {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n}\n.pms-content[data-v-35821388] {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar (tabs) ─────────────────────────────────────── */\n.pms-sidebar[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 190px;\n  padding-right: 16px;\n  border-right: 1px solid #dcdfe6;\n}\n.pms-tabs[data-v-35821388] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.pms-tab[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  width: 100%;\n  padding: 9px 12px;\n  font-size: 13px;\n  font-weight: 500;\n  color: #909399;\n  background: none;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  text-align: left;\n  transition: color .15s, background-color .15s;\n}\n.pms-tab .dashicons[data-v-35821388] { font-size: 15px; width: 15px; height: 15px; flex-shrink: 0;\n}\n.pms-tab[data-v-35821388]:hover { color: #606266; background: #f5f7fa;\n}\n.pms-tab--active[data-v-35821388] { color: #409eff; background: #ecf5ff;\n}\n.pms-tab__dot[data-v-35821388] {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: #67c23a;\n  margin-left: auto;\n  flex-shrink: 0;\n}\n.pms-loading[data-v-35821388] { padding: 20px 0;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.pms-card[data-v-35821388] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n  margin-bottom: 16px;\n}\n.pms-card__head[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  border-bottom: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n.pms-card__head-left[data-v-35821388] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.pms-card__title[data-v-35821388] {\n  margin: 0;\n  font-size: 14px;\n  font-weight: 600;\n  color: #303133;\n}\n.pms-card__body[data-v-35821388] { padding: 20px;\n}\n\n/* Gateway badges */\n.pms-gw-badge[data-v-35821388] {\n  display: inline-block;\n  font-size: 12px;\n  font-weight: 700;\n  padding: 3px 10px;\n  border-radius: 4px;\n}\n.pms-gw-badge--stripe[data-v-35821388]   { background: #f0eeff; color: #6e4bcc;\n}\n.pms-gw-badge--paypal[data-v-35821388]   { background: #fdf6ec; color: #e6a23c;\n}\n.pms-gw-badge--razorpay[data-v-35821388] { background: #ecf5ff; color: #409eff;\n}\n.pms-gw-badge--mollie[data-v-35821388]   { background: #f0f9eb; color: #67c23a;\n}\n.pms-gw-badge--authorizenet[data-v-35821388] { background: #fef0f0; color: #f56c6c;\n}\n.pms-gw-badge--square[data-v-35821388] { background: #eafaf1; color: #2f9e44;\n}\n.pms-gw-badge--paystack[data-v-35821388] { background: #e8f5e9; color: #00a86b;\n}\n.pms-gw-badge--payrexx[data-v-35821388] { background: #fff4e6; color: #e8590c;\n}\n.pms-gw-badge--moneris[data-v-35821388] { background: #e7f5ff; color: #1971c2;\n}\n.pms-gw-badge--xendit[data-v-35821388] { background: #edf2ff; color: #4263eb;\n}\n.pms-gw-badge--flutterwave[data-v-35821388] { background: #fff9db; color: #f08c00;\n}\n.pms-gw-badge--billplz[data-v-35821388] { background: #e6fcf5; color: #0ca678;\n}\n.pms-gw-badge--sslcommerz[data-v-35821388] { background: #eef2ff; color: #4338ca;\n}\n.pms-gw-badge--paddle[data-v-35821388] { background: #f4f4f5; color: #18181b;\n}\n.pms-gw-badge--offline[data-v-35821388] { background: #f3f4f6; color: #4b5563;\n}\n\n/* Status label */\n.pms-status[data-v-35821388] {\n  font-size: 12px;\n  font-weight: 600;\n}\n.pms-status--on[data-v-35821388]  { color: #67c23a;\n}\n.pms-status--off[data-v-35821388] { color: #909399;\n}\n\n/* ── Form fields ─────────────────────────────────────── */\n.pms-field[data-v-35821388] { margin-bottom: 18px;\n}\n.pms-field[data-v-35821388]:last-child { margin-bottom: 0;\n}\n.pms-label[data-v-35821388] {\n  display: block;\n  font-size: 13px;\n  font-weight: 500;\n  color: #606266;\n  margin-bottom: 6px;\n}\n.pms-hint[data-v-35821388] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n.pms-code[data-v-35821388] {\n  display: inline-block;\n  font-size: 11px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f5f7fa;\n  color: #606266;\n  padding: 2px 6px;\n  border-radius: 3px;\n  word-break: break-all;\n}\n\n/* ── Mode toggle ─────────────────────────────────────── */\n.pms-mode-toggle[data-v-35821388] {\n  display: inline-flex;\n  border: 1px solid #dcdfe6;\n  border-radius: 7px;\n  overflow: hidden;\n}\n.pms-mode-btn[data-v-35821388] {\n  padding: 6px 16px;\n  font-size: 13px;\n  font-weight: 500;\n  background: #fff;\n  border: none;\n  color: #606266;\n  cursor: pointer;\n  transition: background .12s, color .12s;\n}\n.pms-mode-btn + .pms-mode-btn[data-v-35821388] { border-left: 1px solid #dcdfe6;\n}\n.pms-mode-btn--active[data-v-35821388] {\n  background: #409eff;\n  color: #fff;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -8442,7 +8586,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrapper ─────────────────────────────────────────── */\n.gis-wrap[data-v-6713783b] {\n  max-width: 680px;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.gis-card[data-v-6713783b] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.gis-card__head[data-v-6713783b] {\n  padding: 20px 24px 18px;\n  border-bottom: 1px solid #ebeef5;\n}\n.gis-card__head-row[data-v-6713783b] {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 16px;\n}\n.gis-card__title[data-v-6713783b] {\n  margin: 0 0 4px;\n  font-size: 16px;\n  font-weight: 700;\n  color: #303133;\n}\n.gis-card__desc[data-v-6713783b] {\n  margin: 0;\n  font-size: 13px;\n  color: #909399;\n  line-height: 1.5;\n}\n\n/* Status badge */\n.gis-status-badge[data-v-6713783b] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 12px;\n  font-weight: 600;\n  padding: 4px 10px;\n  border-radius: 20px;\n  white-space: nowrap;\n  flex-shrink: 0;\n}\n.gis-status-badge .dashicons[data-v-6713783b] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.gis-status-badge--on[data-v-6713783b] {\n  background: #f0f9eb;\n  color: #67c23a;\n}\n.gis-status-badge--off[data-v-6713783b] {\n  background: #fdf6ec;\n  color: #e6a23c;\n}\n\n/* ── Form ────────────────────────────────────────────── */\n.gis-form[data-v-6713783b] {\n  padding: 20px 24px 4px;\n}\n.gis-form__item[data-v-6713783b] {\n  margin-bottom: 18px;\n}\n.gis-form__tip[data-v-6713783b] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n\n/* Validation row */\n.gis-validation[data-v-6713783b] {\n  margin-bottom: 8px;\n  font-size: 13px;\n}\n.gis-validation--ok[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #67c23a;\n}\n.gis-validation--err[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #e6a23c;\n}\n.gis-validation .dashicons[data-v-6713783b] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n}\n.gis-error[data-v-6713783b] {\n  font-size: 13px;\n  color: #f56c6c;\n  margin: 4px 0 12px;\n}\n\n/* Card footer */\n.gis-card__footer[data-v-6713783b] {\n  padding: 14px 24px;\n  border-top: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n\n/* ── Connected state ─────────────────────────────────── */\n.gis-connected[data-v-6713783b] {\n  padding: 40px 24px;\n  text-align: center;\n}\n.gis-connected__icon[data-v-6713783b] {\n  width: 56px;\n  height: 56px;\n  border-radius: 50%;\n  background: #f0f9eb;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 0 auto 16px;\n}\n.gis-connected__icon .dashicons[data-v-6713783b] {\n  font-size: 28px;\n  width: 28px;\n  height: 28px;\n  color: #67c23a;\n}\n.gis-connected__title[data-v-6713783b] {\n  font-size: 15px;\n  font-weight: 600;\n  color: #606266;\n  margin: 0 0 20px;\n  line-height: 1.4;\n}\n.gis-connected__actions[data-v-6713783b] {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\n/* Override element-ui label color */\n[data-v-6713783b]:deep(label) {\n  color: #606266 !important;\n  font-size: 13px !important;\n  font-weight: 500 !important;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Wrapper ─────────────────────────────────────────── */\n.gis-wrap[data-v-6713783b] {\n  max-width: 680px;\n}\n\n/* ── Card ────────────────────────────────────────────── */\n.gis-card[data-v-6713783b] {\n  background: #fff;\n  border: 1px solid #dcdfe6;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.gis-card__head[data-v-6713783b] {\n  padding: 20px 24px 18px;\n  border-bottom: 1px solid #ebeef5;\n}\n.gis-card__head-row[data-v-6713783b] {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 16px;\n}\n.gis-card__title[data-v-6713783b] {\n  margin: 0 0 4px;\n  font-size: 16px;\n  font-weight: 700;\n  color: #303133;\n}\n.gis-card__desc[data-v-6713783b] {\n  margin: 0;\n  font-size: 13px;\n  color: #909399;\n  line-height: 1.5;\n}\n\n/* Status badge */\n.gis-status-badge[data-v-6713783b] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 12px;\n  font-weight: 600;\n  padding: 4px 10px;\n  border-radius: 20px;\n  white-space: nowrap;\n  flex-shrink: 0;\n}\n.gis-status-badge .dashicons[data-v-6713783b] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.gis-status-badge--on[data-v-6713783b] {\n  background: #f0f9eb;\n  color: #67c23a;\n}\n.gis-status-badge--off[data-v-6713783b] {\n  background: #fdf6ec;\n  color: #e6a23c;\n}\n\n/* ── Form ────────────────────────────────────────────── */\n.gis-form[data-v-6713783b] {\n  padding: 20px 24px 4px;\n}\n.gis-form__item[data-v-6713783b] {\n  margin-bottom: 18px;\n}\n.gis-form__tip[data-v-6713783b] {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #909399;\n  line-height: 1.4;\n}\n\n/* Validation row */\n.gis-validation[data-v-6713783b] {\n  margin-bottom: 8px;\n  font-size: 13px;\n}\n.gis-validation--ok[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #67c23a;\n}\n.gis-validation--err[data-v-6713783b] {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n  color: #e6a23c;\n}\n.gis-validation .dashicons[data-v-6713783b] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n}\n.gis-error[data-v-6713783b] {\n  font-size: 13px;\n  color: #f56c6c;\n  margin: 4px 0 12px;\n}\n\n/* Card footer */\n.gis-card__footer[data-v-6713783b] {\n  padding: 14px 24px;\n  border-top: 1px solid #ebeef5;\n  background: #f5f7fa;\n}\n\n/* ── Connected state ─────────────────────────────────── */\n.gis-connected[data-v-6713783b] {\n  padding: 40px 24px;\n  text-align: center;\n}\n.gis-connected__icon[data-v-6713783b] {\n  width: 56px;\n  height: 56px;\n  border-radius: 50%;\n  background: #f0f9eb;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 0 auto 16px;\n}\n.gis-connected__icon .dashicons[data-v-6713783b] {\n  font-size: 28px;\n  width: 28px;\n  height: 28px;\n  color: #67c23a;\n}\n.gis-connected__title[data-v-6713783b] {\n  font-size: 15px;\n  font-weight: 600;\n  color: #606266;\n  margin: 0 0 20px;\n  line-height: 1.4;\n}\n.gis-connected__actions[data-v-6713783b] {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\n/* Override element-ui label color */\n[data-v-6713783b]:deep(label) {\n  color: #606266 !important;\n  font-size: 13px !important;\n  font-weight: 500 !important;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -84878,6 +85022,430 @@ var render = function() {
                       )
                     ])
                   ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "paddle",
+                        expression: "activeTab === 'paddle'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-gw-badge pms-gw-badge--paddle"
+                              },
+                              [_vm._v("Paddle")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.paddle.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.paddle.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.paddle.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.paddle, "enabled", $$v)
+                              },
+                              expression: "settings.paddle.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__body" },
+                        [
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Mode")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pms-mode-toggle" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active":
+                                      _vm.settings.paddle.test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paddle.test_mode = true
+                                    }
+                                  }
+                                },
+                                [_vm._v("Sandbox")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "pms-mode-btn",
+                                  class: {
+                                    "pms-mode-btn--active": !_vm.settings.paddle
+                                      .test_mode
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.settings.paddle.test_mode = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Live")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.settings.paddle.test_mode
+                            ? [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox API Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Sandbox API Key"
+                                      },
+                                      model: {
+                                        value: _vm.settings.paddle.test_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paddle,
+                                            "test_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paddle.test_api_key"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Paddle sandbox dashboard → Developer Tools → Authentication."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Sandbox Client-side Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "test_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.paddle.test_client_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paddle,
+                                            "test_client_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paddle.test_client_token"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Same Authentication page — safe to expose in the browser, used to open the checkout overlay."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live API Key")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: {
+                                        type: "password",
+                                        "show-password": "",
+                                        placeholder: "Live API Key"
+                                      },
+                                      model: {
+                                        value: _vm.settings.paddle.live_api_key,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paddle,
+                                            "live_api_key",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paddle.live_api_key"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Paddle dashboard → Developer Tools → Authentication."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "pms-field" },
+                                  [
+                                    _c("label", { staticClass: "pms-label" }, [
+                                      _vm._v("Live Client-side Token")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      attrs: { placeholder: "live_..." },
+                                      model: {
+                                        value:
+                                          _vm.settings.paddle.live_client_token,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.settings.paddle,
+                                            "live_client_token",
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "settings.paddle.live_client_token"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "pms-hint" }, [
+                                      _vm._v(
+                                        "Same Authentication page — safe to expose in the browser, used to open the checkout overlay."
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ],
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "pms-field" },
+                            [
+                              _c("label", { staticClass: "pms-label" }, [
+                                _vm._v("Webhook Secret")
+                              ]),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                attrs: {
+                                  type: "password",
+                                  "show-password": "",
+                                  placeholder: "ntfset_..."
+                                },
+                                model: {
+                                  value: _vm.settings.paddle.webhook_secret,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings.paddle,
+                                      "webhook_secret",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.paddle.webhook_secret"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "pms-hint" }, [
+                                _vm._v(
+                                  "Create a Notification destination in Paddle pointed at the URL below, then paste its signing secret here."
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pms-field" }, [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Webhook URL")
+                            ]),
+                            _vm._v(" "),
+                            _c("code", { staticClass: "pms-code" }, [
+                              _vm._v(
+                                _vm._s(_vm.ajaxUrl) +
+                                  "?action=contactum_paddle_webhook"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Add this as a Notification destination URL in your Paddle dashboard, subscribed to transaction.completed, transaction.payment_failed, and transaction.canceled."
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(7)
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.activeTab === "offline",
+                        expression: "activeTab === 'offline'"
+                      }
+                    ],
+                    staticClass: "pms-section"
+                  },
+                  [
+                    _c("div", { staticClass: "pms-card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "pms-card__head" },
+                        [
+                          _c("div", { staticClass: "pms-card__head-left" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pms-gw-badge pms-gw-badge--offline"
+                              },
+                              [_vm._v("Offline Payment")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "pms-status",
+                                class: _vm.settings.offline.enabled
+                                  ? "pms-status--on"
+                                  : "pms-status--off"
+                              },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(
+                                      _vm.settings.offline.enabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    ) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.offline.enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings.offline, "enabled", $$v)
+                              },
+                              expression: "settings.offline.enabled"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pms-card__body" }, [
+                        _c(
+                          "div",
+                          { staticClass: "pms-field" },
+                          [
+                            _c("label", { staticClass: "pms-label" }, [
+                              _vm._v("Instructions")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: {
+                                type: "textarea",
+                                rows: 5,
+                                placeholder:
+                                  "e.g. Please transfer the total to Account #1234-5678, Bank of Example, and reference your order number. Your order will be processed once payment is received."
+                              },
+                              model: {
+                                value: _vm.settings.offline.instructions,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.settings.offline,
+                                    "instructions",
+                                    $$v
+                                  )
+                                },
+                                expression: "settings.offline.instructions"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "pms-hint" }, [
+                              _vm._v(
+                                "Shown to the buyer immediately after submitting the form — no payment is collected online. Mark the entry paid manually from the Payments list once you've received it."
+                              )
+                            ])
+                          ],
+                          1
+                        )
+                      ])
+                    ])
+                  ]
                 )
               ]
         ],
@@ -84976,6 +85544,18 @@ var staticRenderFns = [
       _c("p", { staticClass: "pms-hint" }, [
         _vm._v(
           "\n              SSLCommerz requires customer name, email, phone, and address details. Name/Email/Phone/Country\n              fields on the form are used automatically where present; address details this plugin can't\n              reliably detect are sent as placeholder values, which SSLCommerz accepts as long as they're non-empty.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pms-field" }, [
+      _c("p", { staticClass: "pms-hint" }, [
+        _vm._v(
+          "\n              Checkout opens as an overlay on your site (Paddle.js) rather than a redirect — no Product/Price\n              needs to be pre-created in the Paddle dashboard, the price is set per-submission from the form.\n            "
         )
       ])
     ])
@@ -86009,9 +86589,9 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            field.tips
+                            field.desc
                               ? _c("p", { staticClass: "gis-form__tip" }, [
-                                  _vm._v(_vm._s(field.tips))
+                                  _vm._v(_vm._s(field.desc))
                                 ])
                               : _vm._e()
                           ],

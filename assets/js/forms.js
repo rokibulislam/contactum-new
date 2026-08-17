@@ -25532,63 +25532,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _dialog_ProFeature_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dialog/ProFeature.vue */ "./src/admin/components/dialog/ProFeature.vue");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _form_notifications_index_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../form-notifications/index.vue */ "./src/admin/components/form-notifications/index.vue");
 /* harmony import */ var _form_settings_index_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../form-settings/index.vue */ "./src/admin/components/form-settings/index.vue");
 /* harmony import */ var _pages_Styler_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../pages/Styler.vue */ "./src/admin/pages/Styler.vue");
-/* harmony import */ var _intergration_index_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../intergration/index.vue */ "./src/admin/components/intergration/index.vue");
-/* harmony import */ var _form_fields_index_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../form-fields/index.vue */ "./src/admin/components/form-fields/index.vue");
-/* harmony import */ var _field_options_index_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../field-options/index.vue */ "./src/admin/components/field-options/index.vue");
-/* harmony import */ var _form_templates_text_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../form-templates/text.vue */ "./src/admin/components/form-templates/text.vue");
-/* harmony import */ var _form_templates_textarea_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../form-templates/textarea.vue */ "./src/admin/components/form-templates/textarea.vue");
-/* harmony import */ var _form_templates_url_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../form-templates/url.vue */ "./src/admin/components/form-templates/url.vue");
-/* harmony import */ var _form_templates_name_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../form-templates/name.vue */ "./src/admin/components/form-templates/name.vue");
-/* harmony import */ var _form_templates_email_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../form-templates/email.vue */ "./src/admin/components/form-templates/email.vue");
-/* harmony import */ var _form_templates_checkbox_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../form-templates/checkbox.vue */ "./src/admin/components/form-templates/checkbox.vue");
-/* harmony import */ var _form_templates_radio_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../form-templates/radio.vue */ "./src/admin/components/form-templates/radio.vue");
-/* harmony import */ var _form_templates_image_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../form-templates/image.vue */ "./src/admin/components/form-templates/image.vue");
-/* harmony import */ var _form_templates_date_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../form-templates/date.vue */ "./src/admin/components/form-templates/date.vue");
-/* harmony import */ var _form_templates_dropdown_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../form-templates/dropdown.vue */ "./src/admin/components/form-templates/dropdown.vue");
-/* harmony import */ var _form_templates_multiselect_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../form-templates/multiselect.vue */ "./src/admin/components/form-templates/multiselect.vue");
-/* harmony import */ var _form_templates_html_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../form-templates/html.vue */ "./src/admin/components/form-templates/html.vue");
-/* harmony import */ var _form_templates_hidden_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../form-templates/hidden.vue */ "./src/admin/components/form-templates/hidden.vue");
-/* harmony import */ var _form_templates_section_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../form-templates/section.vue */ "./src/admin/components/form-templates/section.vue");
-/* harmony import */ var _form_templates_number_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../form-templates/number.vue */ "./src/admin/components/form-templates/number.vue");
-/* harmony import */ var _form_templates_recaptcha_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../form-templates/recaptcha.vue */ "./src/admin/components/form-templates/recaptcha.vue");
-/* harmony import */ var _form_templates_math_captcha_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../form-templates/math-captcha.vue */ "./src/admin/components/form-templates/math-captcha.vue");
-/* harmony import */ var _form_templates_submit_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../form-templates/submit.vue */ "./src/admin/components/form-templates/submit.vue");
-/* harmony import */ var _form_templates_password_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../form-templates/password.vue */ "./src/admin/components/form-templates/password.vue");
-/* harmony import */ var _form_templates_hcaptcha_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../form-templates/hcaptcha.vue */ "./src/admin/components/form-templates/hcaptcha.vue");
-/* harmony import */ var _form_templates_turnstile_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../form-templates/turnstile.vue */ "./src/admin/components/form-templates/turnstile.vue");
-/* harmony import */ var _pro_form_template_phone_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../pro/form-template/phone.vue */ "./src/admin/components/pro/form-template/phone.vue");
-/* harmony import */ var _pro_form_template_address_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../pro/form-template/address.vue */ "./src/admin/components/pro/form-template/address.vue");
-/* harmony import */ var _pro_form_template_country_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../pro/form-template/country.vue */ "./src/admin/components/pro/form-template/country.vue");
-/* harmony import */ var _pro_form_template_file_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../pro/form-template/file.vue */ "./src/admin/components/pro/form-template/file.vue");
-/* harmony import */ var _pro_form_template_gmap_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../pro/form-template/gmap.vue */ "./src/admin/components/pro/form-template/gmap.vue");
-/* harmony import */ var _pro_form_template_shortcode_vue__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../pro/form-template/shortcode.vue */ "./src/admin/components/pro/form-template/shortcode.vue");
-/* harmony import */ var _pro_form_template_hook_vue__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../pro/form-template/hook.vue */ "./src/admin/components/pro/form-template/hook.vue");
-/* harmony import */ var _pro_form_template_multistep_vue__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../pro/form-template/multistep.vue */ "./src/admin/components/pro/form-template/multistep.vue");
-/* harmony import */ var _pro_form_template_checkbox_grid_vue__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../pro/form-template/checkbox-grid.vue */ "./src/admin/components/pro/form-template/checkbox-grid.vue");
-/* harmony import */ var _pro_form_template_multiple_choice_grid_vue__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../pro/form-template/multiple-choice-grid.vue */ "./src/admin/components/pro/form-template/multiple-choice-grid.vue");
-/* harmony import */ var _pro_form_template_linear_vue__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../pro/form-template/linear.vue */ "./src/admin/components/pro/form-template/linear.vue");
-/* harmony import */ var _pro_form_template_terms_vue__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../pro/form-template/terms.vue */ "./src/admin/components/pro/form-template/terms.vue");
-/* harmony import */ var _pro_form_template_signature_vue__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../pro/form-template/signature.vue */ "./src/admin/components/pro/form-template/signature.vue");
-/* harmony import */ var _pro_form_template_total_vue__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../pro/form-template/total.vue */ "./src/admin/components/pro/form-template/total.vue");
-/* harmony import */ var _pro_form_template_single_product_vue__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../pro/form-template/single-product.vue */ "./src/admin/components/pro/form-template/single-product.vue");
-/* harmony import */ var _pro_form_template_multiple_product_vue__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../pro/form-template/multiple-product.vue */ "./src/admin/components/pro/form-template/multiple-product.vue");
-/* harmony import */ var _pro_form_template_payment_method_vue__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../pro/form-template/payment-method.vue */ "./src/admin/components/pro/form-template/payment-method.vue");
-/* harmony import */ var _pro_form_template_payment_summary_vue__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../pro/form-template/payment-summary.vue */ "./src/admin/components/pro/form-template/payment-summary.vue");
-/* harmony import */ var _pro_form_template_rating_vue__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../pro/form-template/rating.vue */ "./src/admin/components/pro/form-template/rating.vue");
-/* harmony import */ var _pro_form_template_repeat_vue__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../pro/form-template/repeat.vue */ "./src/admin/components/pro/form-template/repeat.vue");
-/* harmony import */ var _form_templates_column_vue__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../form-templates/column.vue */ "./src/admin/components/form-templates/column.vue");
-/* harmony import */ var _form_templates_range_slider_vue__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../form-templates/range-slider.vue */ "./src/admin/components/form-templates/range-slider.vue");
-/* harmony import */ var _form_templates_color_vue__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../form-templates/color.vue */ "./src/admin/components/form-templates/color.vue");
-/* harmony import */ var _pro_form_template_subscription_vue__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../pro/form-template/subscription.vue */ "./src/admin/components/pro/form-template/subscription.vue");
-/* harmony import */ var _pro_form_template_coupon_vue__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../pro/form-template/coupon.vue */ "./src/admin/components/pro/form-template/coupon.vue");
-/* harmony import */ var _dialog_RenameForm_vue__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../dialog/RenameForm.vue */ "./src/admin/components/dialog/RenameForm.vue");
-/* harmony import */ var _dialog_EmbedModal_vue__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../dialog/EmbedModal.vue */ "./src/admin/components/dialog/EmbedModal.vue");
+/* harmony import */ var _pages_LandingPage_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../pages/LandingPage.vue */ "./src/admin/pages/LandingPage.vue");
+/* harmony import */ var _intergration_index_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../intergration/index.vue */ "./src/admin/components/intergration/index.vue");
+/* harmony import */ var _form_fields_index_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../form-fields/index.vue */ "./src/admin/components/form-fields/index.vue");
+/* harmony import */ var _field_options_index_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../field-options/index.vue */ "./src/admin/components/field-options/index.vue");
+/* harmony import */ var _form_templates_text_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../form-templates/text.vue */ "./src/admin/components/form-templates/text.vue");
+/* harmony import */ var _form_templates_textarea_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../form-templates/textarea.vue */ "./src/admin/components/form-templates/textarea.vue");
+/* harmony import */ var _form_templates_url_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../form-templates/url.vue */ "./src/admin/components/form-templates/url.vue");
+/* harmony import */ var _form_templates_name_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../form-templates/name.vue */ "./src/admin/components/form-templates/name.vue");
+/* harmony import */ var _form_templates_email_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../form-templates/email.vue */ "./src/admin/components/form-templates/email.vue");
+/* harmony import */ var _form_templates_checkbox_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../form-templates/checkbox.vue */ "./src/admin/components/form-templates/checkbox.vue");
+/* harmony import */ var _form_templates_radio_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../form-templates/radio.vue */ "./src/admin/components/form-templates/radio.vue");
+/* harmony import */ var _form_templates_image_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../form-templates/image.vue */ "./src/admin/components/form-templates/image.vue");
+/* harmony import */ var _form_templates_date_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../form-templates/date.vue */ "./src/admin/components/form-templates/date.vue");
+/* harmony import */ var _form_templates_dropdown_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../form-templates/dropdown.vue */ "./src/admin/components/form-templates/dropdown.vue");
+/* harmony import */ var _form_templates_multiselect_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../form-templates/multiselect.vue */ "./src/admin/components/form-templates/multiselect.vue");
+/* harmony import */ var _form_templates_html_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../form-templates/html.vue */ "./src/admin/components/form-templates/html.vue");
+/* harmony import */ var _form_templates_hidden_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../form-templates/hidden.vue */ "./src/admin/components/form-templates/hidden.vue");
+/* harmony import */ var _form_templates_section_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../form-templates/section.vue */ "./src/admin/components/form-templates/section.vue");
+/* harmony import */ var _form_templates_number_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../form-templates/number.vue */ "./src/admin/components/form-templates/number.vue");
+/* harmony import */ var _form_templates_recaptcha_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../form-templates/recaptcha.vue */ "./src/admin/components/form-templates/recaptcha.vue");
+/* harmony import */ var _form_templates_math_captcha_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../form-templates/math-captcha.vue */ "./src/admin/components/form-templates/math-captcha.vue");
+/* harmony import */ var _form_templates_submit_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../form-templates/submit.vue */ "./src/admin/components/form-templates/submit.vue");
+/* harmony import */ var _form_templates_password_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../form-templates/password.vue */ "./src/admin/components/form-templates/password.vue");
+/* harmony import */ var _form_templates_hcaptcha_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../form-templates/hcaptcha.vue */ "./src/admin/components/form-templates/hcaptcha.vue");
+/* harmony import */ var _form_templates_turnstile_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../form-templates/turnstile.vue */ "./src/admin/components/form-templates/turnstile.vue");
+/* harmony import */ var _pro_form_template_phone_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../pro/form-template/phone.vue */ "./src/admin/components/pro/form-template/phone.vue");
+/* harmony import */ var _pro_form_template_address_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../pro/form-template/address.vue */ "./src/admin/components/pro/form-template/address.vue");
+/* harmony import */ var _pro_form_template_country_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../pro/form-template/country.vue */ "./src/admin/components/pro/form-template/country.vue");
+/* harmony import */ var _pro_form_template_file_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../pro/form-template/file.vue */ "./src/admin/components/pro/form-template/file.vue");
+/* harmony import */ var _pro_form_template_gmap_vue__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../pro/form-template/gmap.vue */ "./src/admin/components/pro/form-template/gmap.vue");
+/* harmony import */ var _pro_form_template_shortcode_vue__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../pro/form-template/shortcode.vue */ "./src/admin/components/pro/form-template/shortcode.vue");
+/* harmony import */ var _pro_form_template_hook_vue__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../pro/form-template/hook.vue */ "./src/admin/components/pro/form-template/hook.vue");
+/* harmony import */ var _pro_form_template_multistep_vue__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../pro/form-template/multistep.vue */ "./src/admin/components/pro/form-template/multistep.vue");
+/* harmony import */ var _pro_form_template_checkbox_grid_vue__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../pro/form-template/checkbox-grid.vue */ "./src/admin/components/pro/form-template/checkbox-grid.vue");
+/* harmony import */ var _pro_form_template_multiple_choice_grid_vue__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../pro/form-template/multiple-choice-grid.vue */ "./src/admin/components/pro/form-template/multiple-choice-grid.vue");
+/* harmony import */ var _pro_form_template_linear_vue__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../pro/form-template/linear.vue */ "./src/admin/components/pro/form-template/linear.vue");
+/* harmony import */ var _pro_form_template_terms_vue__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../pro/form-template/terms.vue */ "./src/admin/components/pro/form-template/terms.vue");
+/* harmony import */ var _pro_form_template_signature_vue__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../pro/form-template/signature.vue */ "./src/admin/components/pro/form-template/signature.vue");
+/* harmony import */ var _pro_form_template_total_vue__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../pro/form-template/total.vue */ "./src/admin/components/pro/form-template/total.vue");
+/* harmony import */ var _pro_form_template_single_product_vue__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../pro/form-template/single-product.vue */ "./src/admin/components/pro/form-template/single-product.vue");
+/* harmony import */ var _pro_form_template_multiple_product_vue__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../pro/form-template/multiple-product.vue */ "./src/admin/components/pro/form-template/multiple-product.vue");
+/* harmony import */ var _pro_form_template_payment_method_vue__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../pro/form-template/payment-method.vue */ "./src/admin/components/pro/form-template/payment-method.vue");
+/* harmony import */ var _pro_form_template_payment_summary_vue__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../pro/form-template/payment-summary.vue */ "./src/admin/components/pro/form-template/payment-summary.vue");
+/* harmony import */ var _pro_form_template_rating_vue__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../pro/form-template/rating.vue */ "./src/admin/components/pro/form-template/rating.vue");
+/* harmony import */ var _pro_form_template_repeat_vue__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../pro/form-template/repeat.vue */ "./src/admin/components/pro/form-template/repeat.vue");
+/* harmony import */ var _form_templates_column_vue__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../form-templates/column.vue */ "./src/admin/components/form-templates/column.vue");
+/* harmony import */ var _form_templates_range_slider_vue__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../form-templates/range-slider.vue */ "./src/admin/components/form-templates/range-slider.vue");
+/* harmony import */ var _form_templates_color_vue__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../form-templates/color.vue */ "./src/admin/components/form-templates/color.vue");
+/* harmony import */ var _pro_form_template_subscription_vue__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../pro/form-template/subscription.vue */ "./src/admin/components/pro/form-template/subscription.vue");
+/* harmony import */ var _pro_form_template_coupon_vue__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../pro/form-template/coupon.vue */ "./src/admin/components/pro/form-template/coupon.vue");
+/* harmony import */ var _dialog_RenameForm_vue__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../dialog/RenameForm.vue */ "./src/admin/components/dialog/RenameForm.vue");
+/* harmony import */ var _dialog_EmbedModal_vue__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../dialog/EmbedModal.vue */ "./src/admin/components/dialog/EmbedModal.vue");
 //
 //
 //
@@ -25827,6 +25828,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -25892,57 +25905,58 @@ __webpack_require__.r(__webpack_exports__);
     form_notifications: _form_notifications_index_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     form_settings: _form_settings_index_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     Styler: _pages_Styler_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Intergrations: _intergration_index_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    form_text_field: _form_templates_text_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    form_textarea_field: _form_templates_textarea_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    form_url_field: _form_templates_url_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    form_name_field: _form_templates_name_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    form_email_field: _form_templates_email_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    form_checkbox_field: _form_templates_checkbox_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    form_radio_field: _form_templates_radio_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    form_image_field: _form_templates_image_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    form_date_field: _form_templates_date_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-    form_dropdown_field: _form_templates_dropdown_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-    form_multiple_select: _form_templates_multiselect_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-    form_html_field: _form_templates_html_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
-    form_hidden_field: _form_templates_hidden_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-    form_section_break: _form_templates_section_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
-    form_number_field: _form_templates_number_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
-    form_recaptcha: _form_templates_recaptcha_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
-    field_options: _field_options_index_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    form_fields: _form_fields_index_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    form_phone_field: _pro_form_template_phone_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
-    form_address_field: _pro_form_template_address_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
-    form_country_field: _pro_form_template_country_vue__WEBPACK_IMPORTED_MODULE_31__["default"],
-    form_file_field: _pro_form_template_file_vue__WEBPACK_IMPORTED_MODULE_32__["default"],
-    form_gmap_field: _pro_form_template_gmap_vue__WEBPACK_IMPORTED_MODULE_33__["default"],
-    form_shortcode_field: _pro_form_template_shortcode_vue__WEBPACK_IMPORTED_MODULE_34__["default"],
-    form_hook_field: _pro_form_template_hook_vue__WEBPACK_IMPORTED_MODULE_35__["default"],
-    form_step_field: _pro_form_template_multistep_vue__WEBPACK_IMPORTED_MODULE_36__["default"],
-    form_checkbox_grid: _pro_form_template_checkbox_grid_vue__WEBPACK_IMPORTED_MODULE_37__["default"],
-    form_multiple_choice_grid: _pro_form_template_multiple_choice_grid_vue__WEBPACK_IMPORTED_MODULE_38__["default"],
-    form_linear_scale: _pro_form_template_linear_vue__WEBPACK_IMPORTED_MODULE_39__["default"],
-    form_toc: _pro_form_template_terms_vue__WEBPACK_IMPORTED_MODULE_40__["default"],
-    form_signature_field: _pro_form_template_signature_vue__WEBPACK_IMPORTED_MODULE_41__["default"],
-    form_total: _pro_form_template_total_vue__WEBPACK_IMPORTED_MODULE_42__["default"],
-    form_single_product: _pro_form_template_single_product_vue__WEBPACK_IMPORTED_MODULE_43__["default"],
-    form_multiple_product: _pro_form_template_multiple_product_vue__WEBPACK_IMPORTED_MODULE_44__["default"],
-    form_payment_method: _pro_form_template_payment_method_vue__WEBPACK_IMPORTED_MODULE_45__["default"],
-    form_payment_summary: _pro_form_template_payment_summary_vue__WEBPACK_IMPORTED_MODULE_46__["default"],
-    form_rating_field: _pro_form_template_rating_vue__WEBPACK_IMPORTED_MODULE_47__["default"],
-    form_math_captcha: _form_templates_math_captcha_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
-    form_submit_field: _form_templates_submit_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
-    form_repeat_field: _pro_form_template_repeat_vue__WEBPACK_IMPORTED_MODULE_48__["default"],
-    form_column_field: _form_templates_column_vue__WEBPACK_IMPORTED_MODULE_49__["default"],
-    form_password_field: _form_templates_password_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
-    form_hcaptcha: _form_templates_hcaptcha_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
-    form_turnstile: _form_templates_turnstile_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
-    form_subscription_field: _pro_form_template_subscription_vue__WEBPACK_IMPORTED_MODULE_52__["default"],
-    form_coupon_field: _pro_form_template_coupon_vue__WEBPACK_IMPORTED_MODULE_53__["default"],
-    form_range_slider_field: _form_templates_range_slider_vue__WEBPACK_IMPORTED_MODULE_50__["default"],
-    form_color_picker: _form_templates_color_vue__WEBPACK_IMPORTED_MODULE_51__["default"],
-    RenameForm: _dialog_RenameForm_vue__WEBPACK_IMPORTED_MODULE_54__["default"],
-    EmbedModal: _dialog_EmbedModal_vue__WEBPACK_IMPORTED_MODULE_55__["default"],
+    LandingPage: _pages_LandingPage_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Intergrations: _intergration_index_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    form_text_field: _form_templates_text_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    form_textarea_field: _form_templates_textarea_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    form_url_field: _form_templates_url_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    form_name_field: _form_templates_name_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    form_email_field: _form_templates_email_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    form_checkbox_field: _form_templates_checkbox_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    form_radio_field: _form_templates_radio_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    form_image_field: _form_templates_image_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    form_date_field: _form_templates_date_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    form_dropdown_field: _form_templates_dropdown_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    form_multiple_select: _form_templates_multiselect_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+    form_html_field: _form_templates_html_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+    form_hidden_field: _form_templates_hidden_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+    form_section_break: _form_templates_section_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
+    form_number_field: _form_templates_number_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
+    form_recaptcha: _form_templates_recaptcha_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
+    field_options: _field_options_index_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    form_fields: _form_fields_index_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    form_phone_field: _pro_form_template_phone_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
+    form_address_field: _pro_form_template_address_vue__WEBPACK_IMPORTED_MODULE_31__["default"],
+    form_country_field: _pro_form_template_country_vue__WEBPACK_IMPORTED_MODULE_32__["default"],
+    form_file_field: _pro_form_template_file_vue__WEBPACK_IMPORTED_MODULE_33__["default"],
+    form_gmap_field: _pro_form_template_gmap_vue__WEBPACK_IMPORTED_MODULE_34__["default"],
+    form_shortcode_field: _pro_form_template_shortcode_vue__WEBPACK_IMPORTED_MODULE_35__["default"],
+    form_hook_field: _pro_form_template_hook_vue__WEBPACK_IMPORTED_MODULE_36__["default"],
+    form_step_field: _pro_form_template_multistep_vue__WEBPACK_IMPORTED_MODULE_37__["default"],
+    form_checkbox_grid: _pro_form_template_checkbox_grid_vue__WEBPACK_IMPORTED_MODULE_38__["default"],
+    form_multiple_choice_grid: _pro_form_template_multiple_choice_grid_vue__WEBPACK_IMPORTED_MODULE_39__["default"],
+    form_linear_scale: _pro_form_template_linear_vue__WEBPACK_IMPORTED_MODULE_40__["default"],
+    form_toc: _pro_form_template_terms_vue__WEBPACK_IMPORTED_MODULE_41__["default"],
+    form_signature_field: _pro_form_template_signature_vue__WEBPACK_IMPORTED_MODULE_42__["default"],
+    form_total: _pro_form_template_total_vue__WEBPACK_IMPORTED_MODULE_43__["default"],
+    form_single_product: _pro_form_template_single_product_vue__WEBPACK_IMPORTED_MODULE_44__["default"],
+    form_multiple_product: _pro_form_template_multiple_product_vue__WEBPACK_IMPORTED_MODULE_45__["default"],
+    form_payment_method: _pro_form_template_payment_method_vue__WEBPACK_IMPORTED_MODULE_46__["default"],
+    form_payment_summary: _pro_form_template_payment_summary_vue__WEBPACK_IMPORTED_MODULE_47__["default"],
+    form_rating_field: _pro_form_template_rating_vue__WEBPACK_IMPORTED_MODULE_48__["default"],
+    form_math_captcha: _form_templates_math_captcha_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
+    form_submit_field: _form_templates_submit_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
+    form_repeat_field: _pro_form_template_repeat_vue__WEBPACK_IMPORTED_MODULE_49__["default"],
+    form_column_field: _form_templates_column_vue__WEBPACK_IMPORTED_MODULE_50__["default"],
+    form_password_field: _form_templates_password_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
+    form_hcaptcha: _form_templates_hcaptcha_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
+    form_turnstile: _form_templates_turnstile_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
+    form_subscription_field: _pro_form_template_subscription_vue__WEBPACK_IMPORTED_MODULE_53__["default"],
+    form_coupon_field: _pro_form_template_coupon_vue__WEBPACK_IMPORTED_MODULE_54__["default"],
+    form_range_slider_field: _form_templates_range_slider_vue__WEBPACK_IMPORTED_MODULE_51__["default"],
+    form_color_picker: _form_templates_color_vue__WEBPACK_IMPORTED_MODULE_52__["default"],
+    RenameForm: _dialog_RenameForm_vue__WEBPACK_IMPORTED_MODULE_55__["default"],
+    EmbedModal: _dialog_EmbedModal_vue__WEBPACK_IMPORTED_MODULE_56__["default"],
     ProFeature: _dialog_ProFeature_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
 
@@ -25959,6 +25973,9 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
+    landingPageEnabled: function () {
+      return !!(window.contactum_pro && window.contactum_pro.landing_page_enabled);
+    },
     panel_sections: function () {
       return this.$store.getters.panel_sections;
     },
@@ -26078,7 +26095,7 @@ __webpack_require__.r(__webpack_exports__);
 
     duplicate_field(field, index) {
       let payload = { ...field,
-        id: (0,uuid__WEBPACK_IMPORTED_MODULE_56__["default"])(),
+        id: (0,uuid__WEBPACK_IMPORTED_MODULE_57__["default"])(),
         is_new: true,
         index: index
       };
@@ -26159,7 +26176,7 @@ __webpack_require__.r(__webpack_exports__);
 
     add_field(field_template, toIndex) {
       var payload = { ...this.field_settings[field_template].field_props,
-        id: (0,uuid__WEBPACK_IMPORTED_MODULE_56__["default"])(),
+        id: (0,uuid__WEBPACK_IMPORTED_MODULE_57__["default"])(),
         toIndex: toIndex
       };
 
@@ -29893,12 +29910,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_wp_editor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/wp-editor.vue */ "./src/admin/components/common/wp-editor.vue");
 /* harmony import */ var _common_ace_editor_js_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/ace-editor-js.vue */ "./src/admin/components/common/ace-editor-js.vue");
 /* harmony import */ var _common_ace_editor_css_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/ace-editor-css.vue */ "./src/admin/components/common/ace-editor-css.vue");
-/* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-javascript */ "./node_modules/ace-builds/src-noconflict/mode-javascript.js");
-/* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ace-builds/src-noconflict/theme-monokai */ "./node_modules/ace-builds/src-noconflict/theme-monokai.js");
-/* harmony import */ var ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-css */ "./node_modules/ace-builds/src-noconflict/mode-css.js");
-/* harmony import */ var ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _pages_LandingPage_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../pages/LandingPage.vue */ "./src/admin/pages/LandingPage.vue");
+/* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-javascript */ "./node_modules/ace-builds/src-noconflict/mode-javascript.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ace-builds/src-noconflict/theme-monokai */ "./node_modules/ace-builds/src-noconflict/theme-monokai.js");
+/* harmony import */ var ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_theme_monokai__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-css */ "./node_modules/ace-builds/src-noconflict/mode-css.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_css__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -30283,6 +30301,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -30295,7 +30363,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     wp_editor: _common_wp_editor_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     AceJSEditor: _common_ace_editor_js_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    AceCSSEditor: _common_ace_editor_css_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    AceCSSEditor: _common_ace_editor_css_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LandingPage: _pages_LandingPage_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
 
   data() {
@@ -30355,6 +30424,14 @@ __webpack_require__.r(__webpack_exports__);
       return !!(window.contactum_pro && window.contactum_pro.zapier_enabled);
     },
 
+    landingPageEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.landing_page_enabled);
+    },
+
+    pdfSubmissionEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.pdf_submission_enabled);
+    },
+
     navSections() {
       const sections = [...this.baseNavSections];
 
@@ -30372,6 +30449,17 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
+      if (this.landingPageEnabled && window.contactum_pro.landing_page_settings_item) {
+        sections.push(window.contactum_pro.landing_page_settings_item);
+      }
+
+      if (this.pdfSubmissionEnabled) {
+        sections.push({
+          id: 'pdf_submission',
+          label: 'PDF Submission'
+        });
+      }
+
       return sections;
     },
 
@@ -30382,6 +30470,18 @@ __webpack_require__.r(__webpack_exports__);
 
     zapierFeeds() {
       return this.settings && this.settings.zapier_feeds || [];
+    },
+
+    pdfFeeds() {
+      return this.settings && this.settings.pdf_submission_feeds || [];
+    },
+
+    formFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name).map(f => ({
+        name: f.name,
+        label: f.label || f.name
+      }));
     },
 
     // Saved as the string 'true' by the Conversational Form template / the
@@ -30408,15 +30508,20 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     goToSection(id) {
-      this.activeSection = id;
-      const el = document.getElementById(id);
+      this.activeSection = id; // Switching away from the Landing Page pane swaps a whole element out
+      // of the DOM (v-if/v-else), so wait for that render before looking up
+      // the target section's anchor.
 
-      if (el) {
-        el.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
+      this.$nextTick(() => {
+        const el = document.getElementById(id);
+
+        if (el) {
+          el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     },
 
     onContentScroll() {
@@ -30467,6 +30572,25 @@ __webpack_require__.r(__webpack_exports__);
 
     removeZapierFeed(index) {
       this.settings.zapier_feeds.splice(index, 1);
+    },
+
+    addPdfFeed() {
+      if (!this.settings.pdf_submission_feeds) {
+        this.$set(this.settings, 'pdf_submission_feeds', []);
+      }
+
+      this.settings.pdf_submission_feeds.push({
+        id: `pdf_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        name: '',
+        status: true,
+        title: '{form_name} — Submission #{entry_id}',
+        field_names: [],
+        attach_email: true
+      });
+    },
+
+    removePdfFeed(index) {
+      this.settings.pdf_submission_feeds.splice(index, 1);
     },
 
     sendZapierTest(feed) {
@@ -35885,6 +36009,103 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Same technique as components/field-template/photoUploader.vue: use
+// wp.media.editor — WordPress core's own already-managed singleton — rather
+// than building a wp.media({...}) frame by hand. Constructing more than one
+// hand-built frame on the same page trips a WP core Backbone-view bug
+// ("this.activateMode is not a function"); wp.media.editor sidesteps that
+// entirely since core itself owns the single frame instance.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'ImagePicker',
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
+
+  mounted() {
+    // Matches mixin/media.js's guard — wp.media.editor.open() expects
+    // window.wpActiveEditor to exist even when no real TinyMCE editor is
+    // present on the page.
+    if (!window.wpActiveEditor) {
+      window.wpActiveEditor = null;
+    }
+  },
+
+  methods: {
+    isLodash: function () {
+      let isLodash = false; // If _ is defined and the function _.forEach exists then we know underscore OR lodash are in place
+
+      if ('undefined' != typeof _ && 'function' == typeof _.forEach) {
+        // A small sample of some of the functions that exist in lodash but not underscore
+        const funcs = ['get', 'set', 'at', 'cloneDeep']; // Simplest if assume exists to start
+
+        isLodash = true;
+        funcs.forEach(function (func) {
+          // If just one of the functions do not exist, then not lodash
+          isLodash = 'function' != typeof _[func] ? false : isLodash;
+        });
+      }
+
+      if (isLodash) {
+        // We know that lodash is loaded in the _ variable
+        return true;
+      } else {
+        // We know that lodash is NOT loaded
+        return false;
+      }
+    },
+
+    openMediaLibrary(e) {
+      e.preventDefault();
+
+      if (this.isLodash()) {
+        _.noConflict();
+      }
+
+      if (typeof wp === 'undefined' || !wp.media || !wp.media.editor) return;
+      const sendAttachmentBackup = wp.media.editor.send.attachment;
+
+      wp.media.editor.send.attachment = (props, attachment) => {
+        this.$emit('input', attachment.url);
+        wp.media.editor.send.attachment = sendAttachmentBackup;
+      };
+
+      wp.media.editor.open();
+      return false;
+    }
+
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=script&lang=js& ***!
@@ -37578,6 +37799,332 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_common_wp_editor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/common/wp-editor.vue */ "./src/admin/components/common/wp-editor.vue");
+/* harmony import */ var _components_pro_landing_page_ImagePicker_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/pro/landing-page/ImagePicker.vue */ "./src/admin/components/pro/landing-page/ImagePicker.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+const cpm = window.contactum || {};
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'LandingPage',
+  components: {
+    wp_editor: _components_common_wp_editor_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ImagePicker: _components_pro_landing_page_ImagePicker_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    id: [String, Number],
+    embedded: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data() {
+    return {
+      loading: true,
+      formTitle: '',
+      // Populated from PHP (LandingPage::get_ui_strings()) once load()
+      // resolves — no client-side copy, so this plugin has no English
+      // string of its own to fall out of sync with the PHP source.
+      strings: {
+        enable_label: 'Enable Landing Page',
+        locked_message: ''
+      },
+      activeTab: 'design'
+    };
+  },
+
+  computed: {
+    // Landing page settings live inside the SAME shared form-settings
+    // object every other tab (Settings/Quiz/Zapier) reads and writes —
+    // LandingPage::extend_default_settings() merges landing_page_* keys
+    // into contactum_get_default_form_settings() on the PHP side, so this
+    // just works without a dedicated fetch/save round-trip. Saved together
+    // with everything else on the main "Save Form" click.
+    settings() {
+      return this.$store.getters.settings;
+    },
+
+    // Saved as the string 'true'/'false' via jQuery-encoded requests, but
+    // as a real boolean when this same object rides along in the builder's
+    // JSON.stringify()'d Save Form payload — el-switch only lights up for a
+    // strict boolean, so normalize on read and always write back a real one.
+    isLandingPageEnabled: {
+      get() {
+        return this.settings.landing_page_status === true || this.settings.landing_page_status === 'true';
+      },
+
+      set(value) {
+        this.$set(this.settings, 'landing_page_status', value);
+      }
+
+    },
+
+    shortcode() {
+      return '[contactum id="' + this.id + '"]';
+    },
+
+    // Matches LandingPage::get_landing_url() on the PHP side — a fixed,
+    // predictable shape (home url + ?contactum_landing=<id>), so there's no
+    // reason to round-trip to the server just to read it back. When a
+    // Private Share Link token is set, LandingPage::render() only grants
+    // access if `?form=<token>` is present (see unprefix_settings()'s
+    // share_url_salt check) — appended here so the URL shown/copied above
+    // that field is the one that actually works, matching its tooltip.
+    landingUrl() {
+      if (!this.id) return '';
+      let url = window.location.origin + '/?contactum_landing=' + this.id;
+
+      if (this.settings.landing_page_share_url_salt) {
+        url += '&form=' + encodeURIComponent(this.settings.landing_page_share_url_salt);
+      }
+
+      return url;
+    },
+
+    // Field definitions (label/type/tooltip/options) come from PHP —
+    // LandingPage::get_settings_fields(), localized into the same builder
+    // bootstrap payload as `settings`/`field_settings` (see
+    // LandingPage::localize_settings_fields()) rather than a dedicated
+    // per-form AJAX call — the template below just renders whatever it's
+    // given rather than hardcoding labels/field types itself.
+    fieldSchema() {
+      return this.$store.getters.landing_page_fields || [];
+    },
+
+    designFields() {
+      return this.fieldSchema.filter(field => field.tab === 'design');
+    },
+
+    shareFields() {
+      return this.fieldSchema.filter(field => field.tab === 'share');
+    },
+
+    // Read live from the same Vuex store the Editor tab edits — reflects
+    // fields you've just added/renamed even before hitting Save, unlike a
+    // fetch of the saved-in-the-database field list.
+    formFields() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.map(field => ({
+        name: field.name || field.template,
+        label: field.label || '',
+        required: field.required === 'yes' || field.required === true,
+        placeholder: field.placeholder || ''
+      }));
+    },
+
+    // Reactive, client-side-only mock of the page background — bound
+    // directly from `settings`, so the preview updates the instant a
+    // field changes, no server round-trip or iframe involved.
+    mockWrapperStyle() {
+      const style = {
+        backgroundColor: this.settings.landing_page_custom_color || '#4286c4'
+      };
+
+      if (this.settings.landing_page_background_image) {
+        style.backgroundImage = 'url(' + this.settings.landing_page_background_image + ')';
+        style.backgroundSize = 'cover';
+        style.backgroundPosition = 'center';
+      }
+
+      return style;
+    }
+
+  },
+
+  mounted() {
+    this.load();
+  },
+
+  methods: {
+    // Only the piece that isn't already part of the shared settings/field
+    // schema bootstrap or computable client-side: chrome text.
+    load() {
+      this.loading = true;
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_get_landing_page_settings',
+        _ajax_nonce: cpm.nonce
+      }, res => {
+        this.loading = false;
+
+        if (!res.success) {
+          console.error('contactum_get_landing_page_settings failed', res);
+          return;
+        }
+
+        this.formTitle = cpm.post && cpm.post.post_title || '';
+        this.strings = res.data.strings || this.strings;
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        this.loading = false;
+        console.error('contactum_get_landing_page_settings request failed', textStatus, errorThrown, jqXHR.responseText);
+      });
+    },
+
+    copyUrl() {
+      if (!this.landingUrl) return; // navigator.clipboard needs a secure context (HTTPS/localhost) and can
+      // still reject on permission — fall back to the classic textarea +
+      // execCommand trick so the button also works on plain-HTTP local dev
+      // and older browsers, and always gives feedback either way.
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(this.landingUrl).then(() => {
+          this.$message.success('Landing page URL copied.');
+        }).catch(() => {
+          this.$message.error('Could not copy the URL — please copy it manually.');
+        });
+        return;
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = this.landingUrl;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand('copy');
+        this.$message.success('Landing page URL copied.');
+      } catch (e) {
+        this.$message.error('Could not copy the URL — please copy it manually.');
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Styler.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/Styler.vue?vue&type=script&lang=js& ***!
@@ -38802,7 +39349,8 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     editfield: 0,
     notifications: null,
     globalintegrations: null,
-    smarttags: null
+    smarttags: null,
+    landing_page_fields: null
   },
   getters: {
     field_settings(state) {
@@ -38847,6 +39395,10 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
     smart_tags(state) {
       return state.smart_tags;
+    },
+
+    landing_page_fields(state) {
+      return state.landing_page_fields;
     }
 
   },
@@ -38864,6 +39416,7 @@ const store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.settings = payload.settings;
       state.notifications = payload.notifications;
       state.smart_tags = payload.smart_tags;
+      state.landing_page_fields = payload.landing_page_fields;
     },
 
     // add new form field element to column field
@@ -41284,7 +41837,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "@charset \"UTF-8\";\n/* ── Layout ──────────────────────────────────── */\n.cfs-wrap {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  min-height: calc(100vh - 170px);\n}\n.cfs-content {\n  flex: 1;\n  overflow-y: auto;\n  max-height: calc(100vh - 170px);\n  padding-right: 4px;\n}\n\n/* ── Sidebar ─────────────────────────────────── */\n.cfs-sidebar {\n  width: 230px;\n  flex-shrink: 0;\n  position: sticky;\n  top: 0;\n}\n.cfs-sidebar-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: #3c3e42;\n  color: #fff;\n  padding: 12px 16px;\n  border-radius: 6px;\n  font-size: 14px;\n  font-weight: 600;\n  cursor: pointer;\n  user-select: none;\n}\n.cfs-nav {\n  margin: 0;\n  padding: 6px 0;\n  list-style: none;\n}\n.cfs-nav li a {\n  display: block;\n  padding: 9px 16px;\n  font-size: 14px;\n  color: #374151;\n  text-decoration: none;\n  border-radius: 5px;\n  transition: background 0.15s, color 0.15s;\n}\n.cfs-nav li a:hover {\n  background: #f3f4f6;\n  color: var(--primary);\n}\n.cfs-nav li a.active {\n  color: var(--primary);\n  font-weight: 600;\n  background: rgba(99, 102, 241, 0.06);\n}\n\n/* ── Sections ────────────────────────────────── */\n.cfs-section {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  padding: 24px;\n  margin-bottom: 20px;\n}\n.cfs-section-title {\n  margin: 0 0 20px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #111827;\n  padding-bottom: 14px;\n  border-bottom: 1px solid #f3f4f6;\n}\n\n/* ── Field wrapper ───────────────────────────── */\n.cfs-field {\n  margin-bottom: 22px;\n}\n.cfs-field:last-child {\n  margin-bottom: 0;\n}\n.cfs-label {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n  margin-bottom: 8px;\n}\n.cfs-info {\n  font-size: 14px;\n  color: #9ca3af;\n  cursor: default;\n}\n.cfs-info:hover {\n  color: var(--primary);\n}\n.cfs-description {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n\n/* ── Radio pill buttons ──────────────────────── */\n.cfs-radio-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-radio-pill {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 16px;\n  border: 1.5px solid #d1d5db;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 13px;\n  font-weight: 500;\n  color: #374151;\n  background: #fff;\n  transition: border-color 0.15s, color 0.15s;\n  user-select: none;\n}\n.cfs-radio-pill input[type=radio] {\n  display: none;\n}\n.cfs-radio-pill .cfs-radio-dot {\n  width: 15px;\n  height: 15px;\n  border-radius: 50%;\n  border: 2px solid #d1d5db;\n  flex-shrink: 0;\n  position: relative;\n  transition: border-color 0.15s, background 0.15s;\n}\n.cfs-radio-pill.active {\n  border-color: var(--primary);\n  color: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot {\n  border-color: var(--primary);\n  background: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot::after {\n  content: \"\";\n  position: absolute;\n  width: 5px;\n  height: 5px;\n  background: #fff;\n  border-radius: 50%;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n.cfs-radio-pill:hover:not(.active) {\n  border-color: #9ca3af;\n}\n\n/* ── Toggle row ──────────────────────────────── */\n.cfs-toggle {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}\n\n/* ── Date row ────────────────────────────────── */\n.cfs-date-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-date-label {\n  font-size: 13px;\n  color: #6b7280;\n  font-weight: 500;\n}\n\n/* ── Quiz question list ──────────────────────── */\n.cfs-quiz-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-quiz-question {\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 12px 14px;\n  background: #f9fafb;\n}\n.cfs-quiz-question__label {\n  font-size: 13px;\n  font-weight: 600;\n  color: #111827;\n  margin-bottom: 8px;\n}\n.cfs-quiz-question__row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-quiz-question__score {\n  max-width: 110px;\n  flex-shrink: 0;\n}\n.cfs-quiz-question__answer {\n  flex: 1;\n  min-width: 220px;\n}\n\n/* ── Zapier feed list ─────────────────────────── */\n.cfs-zap-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.cfs-zap-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 8px;\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 10px 12px;\n  background: #f9fafb;\n}\n.cfs-zap-row__name {\n  flex: 0 0 220px;\n}\n.cfs-zap-row__url {\n  flex: 1;\n  min-width: 220px;\n}\n.cfs-zap-row__remove {\n  font-size: 16px;\n  color: #9ca3af;\n  cursor: pointer;\n  padding: 4px;\n}\n.cfs-zap-row__remove:hover {\n  color: #ef4444;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n/* ── Layout ──────────────────────────────────── */\n.cfs-wrap {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  min-height: calc(100vh - 170px);\n}\n.cfs-content {\n  flex: 1;\n  overflow-y: auto;\n  max-height: calc(100vh - 170px);\n  padding-right: 4px;\n}\n.cfs-landing-content {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar ─────────────────────────────────── */\n.cfs-sidebar {\n  width: 230px;\n  flex-shrink: 0;\n  position: sticky;\n  top: 0;\n}\n.cfs-sidebar-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: #3c3e42;\n  color: #fff;\n  padding: 12px 16px;\n  border-radius: 6px;\n  font-size: 14px;\n  font-weight: 600;\n  cursor: pointer;\n  user-select: none;\n}\n.cfs-nav {\n  margin: 0;\n  padding: 6px 0;\n  list-style: none;\n}\n.cfs-nav li a {\n  display: block;\n  padding: 9px 16px;\n  font-size: 14px;\n  color: #374151;\n  text-decoration: none;\n  border-radius: 5px;\n  transition: background 0.15s, color 0.15s;\n}\n.cfs-nav li a:hover {\n  background: #f3f4f6;\n  color: var(--primary);\n}\n.cfs-nav li a.active {\n  color: var(--primary);\n  font-weight: 600;\n  background: rgba(99, 102, 241, 0.06);\n}\n\n/* ── Sections ────────────────────────────────── */\n.cfs-section {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  padding: 24px;\n  margin-bottom: 20px;\n}\n.cfs-section-title {\n  margin: 0 0 20px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #111827;\n  padding-bottom: 14px;\n  border-bottom: 1px solid #f3f4f6;\n}\n\n/* ── Field wrapper ───────────────────────────── */\n.cfs-field {\n  margin-bottom: 22px;\n}\n.cfs-field:last-child {\n  margin-bottom: 0;\n}\n.cfs-label {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n  margin-bottom: 8px;\n}\n.cfs-info {\n  font-size: 14px;\n  color: #9ca3af;\n  cursor: default;\n}\n.cfs-info:hover {\n  color: var(--primary);\n}\n.cfs-description {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n\n/* ── Radio pill buttons ──────────────────────── */\n.cfs-radio-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-radio-pill {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 16px;\n  border: 1.5px solid #d1d5db;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 13px;\n  font-weight: 500;\n  color: #374151;\n  background: #fff;\n  transition: border-color 0.15s, color 0.15s;\n  user-select: none;\n}\n.cfs-radio-pill input[type=radio] {\n  display: none;\n}\n.cfs-radio-pill .cfs-radio-dot {\n  width: 15px;\n  height: 15px;\n  border-radius: 50%;\n  border: 2px solid #d1d5db;\n  flex-shrink: 0;\n  position: relative;\n  transition: border-color 0.15s, background 0.15s;\n}\n.cfs-radio-pill.active {\n  border-color: var(--primary);\n  color: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot {\n  border-color: var(--primary);\n  background: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot::after {\n  content: \"\";\n  position: absolute;\n  width: 5px;\n  height: 5px;\n  background: #fff;\n  border-radius: 50%;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n.cfs-radio-pill:hover:not(.active) {\n  border-color: #9ca3af;\n}\n\n/* ── Toggle row ──────────────────────────────── */\n.cfs-toggle {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}\n\n/* ── Date row ────────────────────────────────── */\n.cfs-date-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-date-label {\n  font-size: 13px;\n  color: #6b7280;\n  font-weight: 500;\n}\n\n/* ── Quiz question list ──────────────────────── */\n.cfs-quiz-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-quiz-question {\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 12px 14px;\n  background: #f9fafb;\n}\n.cfs-quiz-question__label {\n  font-size: 13px;\n  font-weight: 600;\n  color: #111827;\n  margin-bottom: 8px;\n}\n.cfs-quiz-question__row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-quiz-question__score {\n  max-width: 110px;\n  flex-shrink: 0;\n}\n.cfs-quiz-question__answer {\n  flex: 1;\n  min-width: 220px;\n}\n\n/* ── Zapier feed list ─────────────────────────── */\n.cfs-zap-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.cfs-zap-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 8px;\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 10px 12px;\n  background: #f9fafb;\n}\n.cfs-zap-row__name {\n  flex: 0 0 220px;\n}\n.cfs-zap-row__url {\n  flex: 1;\n  min-width: 220px;\n}\n.cfs-zap-row__remove {\n  font-size: 16px;\n  color: #9ca3af;\n  cursor: pointer;\n  padding: 4px;\n}\n.cfs-zap-row__remove:hover {\n  color: #ef4444;\n}\n\n/* ── PDF feed list ─────────────────────────────── */\n.cfs-pdf-feed-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  margin-bottom: 12px;\n}\n.cfs-pdf-feed {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 12px 14px;\n  background: #f9fafb;\n}\n.cfs-pdf-feed__head {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.cfs-pdf-feed__name {\n  flex: 1;\n}\n.cfs-pdf-feed__row {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.cfs-pdf-feed__label {\n  font-size: 12px;\n  font-weight: 500;\n  color: #6b7280;\n}\n.cfs-pdf-feed__checkbox {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -42158,6 +42711,23 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.ctm-image-picker[data-v-4bdb145e] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.ctm-image-picker__preview[data-v-4bdb145e] {\n  position: relative;\n  width: 56px;\n  height: 56px;\n  border-radius: 6px;\n  overflow: hidden;\n  border: 1px solid #e5e7eb;\n  flex-shrink: 0;\n}\n.ctm-image-picker__preview img[data-v-4bdb145e] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.ctm-image-picker__remove[data-v-4bdb145e] {\n  position: absolute;\n  top: 2px;\n  right: 2px;\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  border: none;\n  background: rgba(0, 0, 0, 0.55);\n  color: #fff;\n  font-size: 11px;\n  line-height: 1;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.ctm-image-picker__remove[data-v-4bdb145e]:hover {\n  background: rgba(0, 0, 0, 0.8);\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css& ***!
@@ -42288,6 +42858,23 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.id, "\n.notification-toolbar[data-v-cd0d5baa] {\n    display: flex;\n    justify-content: space-between;\n}\n.form-settings[data-v-cd0d5baa] {\n    padding-left: 20px;\n}\n.schedule-field[data-v-cd0d5baa] {\n    display: flex;\nlabel {\n        margin-right: 5px;\n}\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.id, "\n.lp-page[data-v-6375ed5c] {\n  padding: 20px 24px;\n  min-height: 70vh;\n}\n.lp-topbar[data-v-6375ed5c] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  padding-bottom: 16px;\n  border-bottom: 1px solid #ebeef5;\n  margin-bottom: 20px;\n}\n.lp-topbar__enable[data-v-6375ed5c] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 13px;\n  color: #606266;\n  cursor: pointer;\n}\n.lp-topbar__actions[data-v-6375ed5c] {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.lp-topbar__open[data-v-6375ed5c] {\n  font-size: 16px;\n  color: #409eff;\n}\n.lp-locked[data-v-6375ed5c] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: #f4f4f5;\n  border-radius: 8px;\n  padding: 16px 20px;\n  font-size: 13.5px;\n  color: #606266;\n}\n.lp-locked i[data-v-6375ed5c] {\n  color: #909399;\n  font-size: 16px;\n}\n.lp-workspace[data-v-6375ed5c] {\n  display: flex;\n  gap: 20px;\n  align-items: flex-start;\n}\n.lp-controls[data-v-6375ed5c] {\n  flex: 1;\n  min-width: 0;\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  padding: 8px 20px 20px;\n}\n.lp-save-note[data-v-6375ed5c] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  margin: 4px 0 12px;\n  font-size: 12px;\n  color: #909399;\n}\n.lp-preview[data-v-6375ed5c] {\n  position: sticky;\n  top: 20px;\n  width: 420px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  height: calc(100vh - 160px);\n  background: #fff;\n  border: 1px solid #ebeef5;\n  border-radius: 8px;\n  overflow: hidden;\n}\n.lp-preview__head[data-v-6375ed5c] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 10px 14px;\n  border-bottom: 1px solid #ebeef5;\n  font-size: 13px;\n  color: #606266;\n  flex-shrink: 0;\n}\n.lp-preview__viewport[data-v-6375ed5c] {\n  flex: 1;\n  overflow-y: auto;\n  padding: 16px;\n  background: #f4f4f5;\n}\n\n/* ── Reactive mock — mirrors the real landing page's classes/structure at\n   preview scale, driven directly by `settings` (see mockWrapperStyle and\n   the template above) — no server round-trip or iframe. ── */\n.lp-mock[data-v-6375ed5c] {\n  min-height: 100%;\n  border-radius: 6px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 16px;\n  box-sizing: border-box;\n}\n.lp-mock__card[data-v-6375ed5c] {\n  width: 100%;\n}\n.lp-mock--modern .lp-mock__card[data-v-6375ed5c] {\n  background: #fff;\n  border-radius: 8px;\n  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.16);\n  padding: 22px 20px;\n}\n.lp-mock--classic .lp-mock__card[data-v-6375ed5c] {\n  background: transparent;\n  padding: 10px 0;\n}\n.lp-mock__header[data-v-6375ed5c] {\n  text-align: center;\n  margin-bottom: 16px;\n}\n.lp-mock__logo img[data-v-6375ed5c] {\n  max-height: 32px;\n  max-width: 140px;\n  margin-bottom: 8px;\n}\n.lp-mock__title[data-v-6375ed5c] {\n  margin: 0 0 6px;\n  font-size: 16px;\n  font-weight: 700;\n  color: #111827;\n}\n.lp-mock__desc[data-v-6375ed5c] {\n  font-size: 12px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n.lp-mock__field[data-v-6375ed5c] {\n  margin-bottom: 10px;\n}\n.lp-mock__field-label[data-v-6375ed5c] {\n  display: block;\n  font-size: 11px;\n  font-weight: 600;\n  color: #374151;\n  margin-bottom: 4px;\n}\n.lp-mock__required[data-v-6375ed5c] {\n  color: #f56c6c;\n  margin-left: 2px;\n}\n.lp-mock__field-input[data-v-6375ed5c] {\n  border: 1px solid #dcdfe6;\n  border-radius: 4px;\n  padding: 7px 10px;\n  font-size: 11px;\n  color: #c0c4cc;\n  background: #fff;\n}\n.lp-mock__empty[data-v-6375ed5c] {\n  font-size: 12px;\n  color: #9ca3af;\n  text-align: center;\n  margin: 10px 0;\n}\n.lp-mock__submit[data-v-6375ed5c] {\n  margin-top: 14px;\n  display: inline-block;\n  background: var(--primary, #409eff);\n  color: #fff;\n  font-size: 12px;\n  font-weight: 600;\n  padding: 8px 18px;\n  border-radius: 4px;\n}\n@media (max-width: 1200px) {\n.lp-workspace[data-v-6375ed5c] {\n    flex-direction: column;\n}\n.lp-preview[data-v-6375ed5c] {\n    position: static;\n    width: 100%;\n    height: 60vh;\n}\n}\n.lp-field[data-v-6375ed5c] {\n  margin-bottom: 18px;\n}\n.lp-field__label[data-v-6375ed5c] {\n  display: block;\n  font-size: 12px;\n  font-weight: 600;\n  color: #606266;\n  margin-bottom: 8px;\n}\n.lp-share-url[data-v-6375ed5c] {\n  display: flex;\n  gap: 8px;\n}\n.lp-share-url .el-input[data-v-6375ed5c] {\n  flex: 1;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -118393,6 +118980,34 @@ module.exports = content.locals || {};
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var api = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css& ***!
@@ -118597,6 +119212,34 @@ module.exports = content.locals || {};
 
 var api = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
             var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormSettings.vue?vue&type=style&index=0&id=cd0d5baa&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/FormSettings.vue?vue&type=style&index=0&id=cd0d5baa&scoped=true&lang=css&");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.id, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var api = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&");
 
             content = content.__esModule ? content.default : content;
 
@@ -126536,6 +127179,47 @@ component.options.__file = "src/admin/components/pro/form-template/total.vue"
 
 /***/ }),
 
+/***/ "./src/admin/components/pro/landing-page/ImagePicker.vue":
+/*!***************************************************************!*\
+  !*** ./src/admin/components/pro/landing-page/ImagePicker.vue ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true& */ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true&");
+/* harmony import */ var _ImagePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ImagePicker.vue?vue&type=script&lang=js& */ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& */ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ImagePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "4bdb145e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/admin/components/pro/landing-page/ImagePicker.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./src/admin/components/pro/styler/StylerBorder.vue":
 /*!**********************************************************!*\
   !*** ./src/admin/components/pro/styler/StylerBorder.vue ***!
@@ -126942,6 +127626,47 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "src/admin/pages/FormSettings.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./src/admin/pages/LandingPage.vue":
+/*!*****************************************!*\
+  !*** ./src/admin/pages/LandingPage.vue ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true& */ "./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true&");
+/* harmony import */ var _LandingPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LandingPage.vue?vue&type=script&lang=js& */ "./src/admin/pages/LandingPage.vue?vue&type=script&lang=js&");
+/* harmony import */ var _LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& */ "./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _LandingPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "6375ed5c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/admin/pages/LandingPage.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -128701,6 +129426,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ImagePicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./src/admin/components/pro/styler/StylerBorder.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
   !*** ./src/admin/components/pro/styler/StylerBorder.vue?vue&type=script&lang=js& ***!
@@ -128858,6 +129599,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormSettings.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/FormSettings.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/admin/pages/LandingPage.vue?vue&type=script&lang=js&":
+/*!******************************************************************!*\
+  !*** ./src/admin/pages/LandingPage.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LandingPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -129569,6 +130326,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&":
+/*!************************************************************************************************************************!*\
+  !*** ./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& ***!
+  \************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=style&index=0&id=4bdb145e&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_style_index_0_id_4bdb145e_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+
+/***/ }),
+
 /***/ "./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css&":
 /*!*******************************************************************************************************************!*\
   !*** ./src/admin/components/pro/styler/StylerBorder.vue?vue&type=style&index=0&id=39b2fc39&scoped=true&lang=css& ***!
@@ -129726,6 +130503,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_style_index_0_id_cd0d5baa_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_style_index_0_id_cd0d5baa_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_style_index_0_id_cd0d5baa_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
+
+/***/ }),
+
+/***/ "./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&":
+/*!**************************************************************************************************!*\
+  !*** ./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=style&index=0&id=6375ed5c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_style_index_0_id_6375ed5c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
@@ -131503,6 +132300,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true& ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImagePicker_vue_vue_type_template_id_4bdb145e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./src/admin/components/pro/styler/StylerBorder.vue?vue&type=template&id=39b2fc39&scoped=true&":
 /*!*****************************************************************************************************!*\
   !*** ./src/admin/components/pro/styler/StylerBorder.vue?vue&type=template&id=39b2fc39&scoped=true& ***!
@@ -131669,6 +132483,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_template_id_cd0d5baa_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormSettings_vue_vue_type_template_id_cd0d5baa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormSettings.vue?vue&type=template&id=cd0d5baa&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/FormSettings.vue?vue&type=template&id=cd0d5baa&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true&":
+/*!************************************************************************************!*\
+  !*** ./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LandingPage_vue_vue_type_template_id_6375ed5c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true&");
 
 
 /***/ }),
@@ -132469,7 +133300,28 @@ var render = function() {
                   },
                   [_vm._v("Styler")]
                 )
-              ])
+              ]),
+              _vm._v(" "),
+              _vm.landingPageEnabled
+                ? _c("li", [
+                    _c(
+                      "a",
+                      {
+                        class: [
+                          _vm.isActiveTab("landing") ? "nav-tab-active" : ""
+                        ],
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.makeActive("landing")
+                          }
+                        }
+                      },
+                      [_vm._v("Landing Page")]
+                    )
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -132901,6 +133753,15 @@ var render = function() {
               "div",
               { staticClass: "form-builder-styler" },
               [_c("Styler", { attrs: { id: _vm.id } })],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.landingPageEnabled && _vm.isActiveTab("landing")
+          ? _c(
+              "div",
+              { staticClass: "form-builder-landing" },
+              [_c("LandingPage", { attrs: { id: _vm.id } })],
               1
             )
           : _vm._e(),
@@ -137837,840 +138698,520 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        ref: "content",
-        staticClass: "cfs-content",
-        on: { scroll: _vm.onContentScroll }
-      },
-      [
-        _c(
-          "section",
-          { staticClass: "cfs-section", attrs: { id: "confirmation" } },
+    _vm.activeSection === "landing_page"
+      ? _c(
+          "div",
+          { staticClass: "cfs-landing-content" },
+          [_c("LandingPage", { attrs: { id: _vm.id, embedded: "" } })],
+          1
+        )
+      : _c(
+          "div",
+          {
+            ref: "content",
+            staticClass: "cfs-content",
+            on: { scroll: _vm.onContentScroll }
+          },
           [
-            _c("h2", { staticClass: "cfs-section-title" }, [
-              _vm._v("Confirmation Settings")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-field" }, [
-              _c(
-                "label",
-                { staticClass: "cfs-label" },
-                [
-                  _vm._v("\n          Confirmation Type\n          "),
+            _c(
+              "section",
+              { staticClass: "cfs-section", attrs: { id: "confirmation" } },
+              [
+                _c("h2", { staticClass: "cfs-section-title" }, [
+                  _vm._v("Confirmation Settings")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
                   _c(
-                    "el-tooltip",
-                    {
-                      attrs: {
-                        content:
-                          "Choose what happens after a successful submission",
-                        placement: "top"
-                      }
-                    },
-                    [_c("i", { staticClass: "el-icon-info cfs-info" })]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "cfs-radio-group" },
-                _vm._l(_vm.redirects_to, function(opt) {
-                  return _c(
                     "label",
-                    {
-                      key: opt.value,
-                      staticClass: "cfs-radio-pill",
-                      class: { active: _vm.settings.redirect_to === opt.value }
-                    },
+                    { staticClass: "cfs-label" },
                     [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.settings.redirect_to,
-                            expression: "settings.redirect_to"
+                      _vm._v("\n          Confirmation Type\n          "),
+                      _c(
+                        "el-tooltip",
+                        {
+                          attrs: {
+                            content:
+                              "Choose what happens after a successful submission",
+                            placement: "top"
                           }
-                        ],
-                        attrs: { type: "radio" },
-                        domProps: {
-                          value: opt.value,
-                          checked: _vm._q(_vm.settings.redirect_to, opt.value)
                         },
-                        on: {
-                          change: function($event) {
-                            return _vm.$set(
-                              _vm.settings,
-                              "redirect_to",
-                              opt.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "cfs-radio-dot" }),
-                      _vm._v(
-                        "\n            " + _vm._s(opt.label) + "\n          "
+                        [_c("i", { staticClass: "el-icon-info cfs-info" })]
                       )
-                    ]
-                  )
-                }),
-                0
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.settings.redirect_to === "same",
-                    expression: "settings.redirect_to === 'same'"
-                  }
-                ],
-                staticClass: "cfs-field"
-              },
-              [
-                _c(
-                  "label",
-                  { staticClass: "cfs-label" },
-                  [
-                    _vm._v("\n          Message to show\n          "),
-                    _c(
-                      "el-tooltip",
-                      {
-                        attrs: {
-                          content:
-                            "This message is shown to the user after a successful submission",
-                          placement: "top"
-                        }
-                      },
-                      [_c("i", { staticClass: "el-icon-info cfs-info" })]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("wp_editor", {
-                  attrs: { value: _vm.settings.message },
-                  on: {
-                    "content-changed": function(val) {
-                      return _vm.updateSetting("message", val)
-                    }
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.settings.redirect_to === "page",
-                    expression: "settings.redirect_to === 'page'"
-                  }
-                ],
-                staticClass: "cfs-field"
-              },
-              [
-                _c("label", { staticClass: "cfs-label" }, [_vm._v("Page")]),
-                _vm._v(" "),
-                _c(
-                  "el-select",
-                  {
-                    attrs: { placeholder: "Select a page" },
-                    model: {
-                      value: _vm.settings.page_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.settings, "page_id", $$v)
-                      },
-                      expression: "settings.page_id"
-                    }
-                  },
-                  _vm._l(_vm.settings.pages, function(page, index) {
-                    return _c("el-option", {
-                      key: index,
-                      attrs: { label: index, value: page }
-                    })
-                  }),
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.settings.redirect_to === "url",
-                    expression: "settings.redirect_to === 'url'"
-                  }
-                ],
-                staticClass: "cfs-field"
-              },
-              [
-                _c("label", { staticClass: "cfs-label" }, [
-                  _vm._v("Custom URL")
-                ]),
-                _vm._v(" "),
-                _c("el-input", {
-                  attrs: {
-                    type: "url",
-                    placeholder: "https://example.com/thank-you"
-                  },
-                  model: {
-                    value: _vm.settings.url,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "url", $$v)
-                    },
-                    expression: "settings.url"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-field" }, [
-              _c(
-                "label",
-                { staticClass: "cfs-label" },
-                [
-                  _vm._v("\n          After Form Submission\n          "),
-                  _c(
-                    "el-tooltip",
-                    {
-                      attrs: {
-                        content:
-                          "Choose whether to hide or reset the form after submission",
-                        placement: "top"
-                      }
-                    },
-                    [_c("i", { staticClass: "el-icon-info cfs-info" })]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "cfs-radio-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "cfs-radio-pill",
-                    class: { active: _vm.settings.after_submit !== "reset" }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.settings.after_submit,
-                          expression: "settings.after_submit"
-                        }
-                      ],
-                      attrs: { type: "radio", value: "hide" },
-                      domProps: {
-                        checked: _vm._q(_vm.settings.after_submit, "hide")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.settings, "after_submit", "hide")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "cfs-radio-dot" }),
-                    _vm._v("\n            Hide Form\n          ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "cfs-radio-pill",
-                    class: { active: _vm.settings.after_submit === "reset" }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.settings.after_submit,
-                          expression: "settings.after_submit"
-                        }
-                      ],
-                      attrs: { type: "radio", value: "reset" },
-                      domProps: {
-                        checked: _vm._q(_vm.settings.after_submit, "reset")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.settings, "after_submit", "reset")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "cfs-radio-dot" }),
-                    _vm._v("\n            Reset Form\n          ")
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "cfs-field" },
-              [
-                _c("label", { staticClass: "cfs-label" }, [
-                  _vm._v("Submit Button Text")
-                ]),
-                _vm._v(" "),
-                _c("el-input", {
-                  staticStyle: { "max-width": "320px" },
-                  attrs: { type: "text" },
-                  model: {
-                    value: _vm.settings.submit_text,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "submit_text", $$v)
-                    },
-                    expression: "settings.submit_text"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("section", { staticClass: "cfs-section", attrs: { id: "layout" } }, [
-          _c("h2", { staticClass: "cfs-section-title" }, [
-            _vm._v("Form Layout")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "cfs-field" }, [
-            _c("label", { staticClass: "cfs-label" }, [
-              _vm._v("Label Position")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "cfs-radio-group" },
-              _vm._l(_vm.label_positions, function(pos) {
-                return _c(
-                  "label",
-                  {
-                    key: pos.value,
-                    staticClass: "cfs-radio-pill",
-                    class: { active: _vm.settings.label_position === pos.value }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.settings.label_position,
-                          expression: "settings.label_position"
-                        }
-                      ],
-                      attrs: { type: "radio" },
-                      domProps: {
-                        value: pos.value,
-                        checked: _vm._q(_vm.settings.label_position, pos.value)
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(
-                            _vm.settings,
-                            "label_position",
-                            pos.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "cfs-radio-dot" }),
-                    _vm._v(
-                      "\n            " + _vm._s(pos.label) + "\n          "
-                    )
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "cfs-description" }, [
-              _vm._v("Where the labels of the form should display.")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "cfs-field" }, [
-            _c("label", { staticClass: "cfs-label" }, [
-              _vm._v("Use Theme CSS")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-radio-group" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "cfs-radio-pill",
-                  class: {
-                    active:
-                      _vm.settings.use_theme_css === "contactum-theme-style"
-                  }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.settings.use_theme_css,
-                        expression: "settings.use_theme_css"
-                      }
-                    ],
-                    attrs: { type: "radio", value: "contactum-theme-style" },
-                    domProps: {
-                      checked: _vm._q(
-                        _vm.settings.use_theme_css,
-                        "contactum-theme-style"
-                      )
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(
-                          _vm.settings,
-                          "use_theme_css",
-                          "contactum-theme-style"
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "cfs-radio-dot" }),
-                  _vm._v("\n            Yes\n          ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "cfs-radio-pill",
-                  class: {
-                    active: _vm.settings.use_theme_css === "contactum-style"
-                  }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.settings.use_theme_css,
-                        expression: "settings.use_theme_css"
-                      }
-                    ],
-                    attrs: { type: "radio", value: "contactum-style" },
-                    domProps: {
-                      checked: _vm._q(
-                        _vm.settings.use_theme_css,
-                        "contactum-style"
-                      )
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(
-                          _vm.settings,
-                          "use_theme_css",
-                          "contactum-style"
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "cfs-radio-dot" }),
-                  _vm._v("\n            No\n          ")
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "cfs-field" }, [
-            _c("label", { staticClass: "cfs-label" }, [
-              _vm._v("Conversational Form")
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              { staticClass: "cfs-toggle" },
-              [
-                _c("el-switch", {
-                  model: {
-                    value: _vm.isConversational,
-                    callback: function($$v) {
-                      _vm.isConversational = $$v
-                    },
-                    expression: "isConversational"
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [
-                  _vm._v("Show one question at a time, Typeform-style")
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "cfs-description" }, [
-              _vm._v(
-                "\n          Visitors answer a single field per screen and move on automatically. Not available if the form\n          already uses manually-added Step fields.\n        "
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "section",
-          { staticClass: "cfs-section", attrs: { id: "scheduling" } },
-          [
-            _c("h2", { staticClass: "cfs-section-title" }, [
-              _vm._v("Scheduling & Restrictions")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-field" }, [
-              _c("label", { staticClass: "cfs-label" }, [
-                _vm._v("Schedule Form")
-              ]),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "cfs-toggle" },
-                [
-                  _c("el-switch", {
-                    model: {
-                      value: _vm.settings.schedule_form,
-                      callback: function($$v) {
-                        _vm.$set(_vm.settings, "schedule_form", $$v)
-                      },
-                      expression: "settings.schedule_form"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Schedule form for a time period")])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "cfs-description" }, [
-                _vm._v("Restrict when the form accepts submissions.")
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.settings.schedule_form
-              ? [
-                  _c("div", { staticClass: "cfs-field" }, [
-                    _c("label", { staticClass: "cfs-label" }, [
-                      _vm._v("Schedule Period")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "cfs-date-row" },
-                      [
-                        _c("span", { staticClass: "cfs-date-label" }, [
-                          _vm._v("From")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: { type: "date", placeholder: "Start date" },
-                          model: {
-                            value: _vm.settings.schedule_start,
-                            callback: function($$v) {
-                              _vm.$set(_vm.settings, "schedule_start", $$v)
-                            },
-                            expression: "settings.schedule_start"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "cfs-date-label" }, [
-                          _vm._v("To")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: { type: "date", placeholder: "End date" },
-                          model: {
-                            value: _vm.settings.schedule_end,
-                            callback: function($$v) {
-                              _vm.$set(_vm.settings, "schedule_end", $$v)
-                            },
-                            expression: "settings.schedule_end"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "cfs-field" },
-                    [
-                      _c("label", { staticClass: "cfs-label" }, [
-                        _vm._v("Form Pending Message")
-                      ]),
-                      _vm._v(" "),
-                      _c("wp_editor", {
-                        attrs: { value: _vm.settings.sc_pending_message },
-                        on: {
-                          "content-changed": function(val) {
-                            return _vm.updateSetting("sc_pending_message", val)
-                          }
-                        }
-                      })
                     ],
                     1
                   ),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "cfs-field" },
-                    [
-                      _c("label", { staticClass: "cfs-label" }, [
-                        _vm._v("Form Expired Message")
-                      ]),
-                      _vm._v(" "),
-                      _c("wp_editor", {
-                        attrs: { value: _vm.settings.sc_expired_message },
-                        on: {
-                          "content-changed": function(val) {
-                            return _vm.updateSetting("sc_expired_message", val)
+                    { staticClass: "cfs-radio-group" },
+                    _vm._l(_vm.redirects_to, function(opt) {
+                      return _c(
+                        "label",
+                        {
+                          key: opt.value,
+                          staticClass: "cfs-radio-pill",
+                          class: {
+                            active: _vm.settings.redirect_to === opt.value
                           }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.settings.redirect_to,
+                                expression: "settings.redirect_to"
+                              }
+                            ],
+                            attrs: { type: "radio" },
+                            domProps: {
+                              value: opt.value,
+                              checked: _vm._q(
+                                _vm.settings.redirect_to,
+                                opt.value
+                              )
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.$set(
+                                  _vm.settings,
+                                  "redirect_to",
+                                  opt.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "cfs-radio-dot" }),
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(opt.label) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.settings.redirect_to === "same",
+                        expression: "settings.redirect_to === 'same'"
+                      }
+                    ],
+                    staticClass: "cfs-field"
+                  },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "cfs-label" },
+                      [
+                        _vm._v("\n          Message to show\n          "),
+                        _c(
+                          "el-tooltip",
+                          {
+                            attrs: {
+                              content:
+                                "This message is shown to the user after a successful submission",
+                              placement: "top"
+                            }
+                          },
+                          [_c("i", { staticClass: "el-icon-info cfs-info" })]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("wp_editor", {
+                      attrs: { value: _vm.settings.message },
+                      on: {
+                        "content-changed": function(val) {
+                          return _vm.updateSetting("message", val)
                         }
-                      })
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.settings.redirect_to === "page",
+                        expression: "settings.redirect_to === 'page'"
+                      }
+                    ],
+                    staticClass: "cfs-field"
+                  },
+                  [
+                    _c("label", { staticClass: "cfs-label" }, [_vm._v("Page")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-select",
+                      {
+                        attrs: { placeholder: "Select a page" },
+                        model: {
+                          value: _vm.settings.page_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.settings, "page_id", $$v)
+                          },
+                          expression: "settings.page_id"
+                        }
+                      },
+                      _vm._l(_vm.settings.pages, function(page, index) {
+                        return _c("el-option", {
+                          key: index,
+                          attrs: { label: index, value: page }
+                        })
+                      }),
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.settings.redirect_to === "url",
+                        expression: "settings.redirect_to === 'url'"
+                      }
+                    ],
+                    staticClass: "cfs-field"
+                  },
+                  [
+                    _c("label", { staticClass: "cfs-label" }, [
+                      _vm._v("Custom URL")
+                    ]),
+                    _vm._v(" "),
+                    _c("el-input", {
+                      attrs: {
+                        type: "url",
+                        placeholder: "https://example.com/thank-you"
+                      },
+                      model: {
+                        value: _vm.settings.url,
+                        callback: function($$v) {
+                          _vm.$set(_vm.settings, "url", $$v)
+                        },
+                        expression: "settings.url"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c(
+                    "label",
+                    { staticClass: "cfs-label" },
+                    [
+                      _vm._v("\n          After Form Submission\n          "),
+                      _c(
+                        "el-tooltip",
+                        {
+                          attrs: {
+                            content:
+                              "Choose whether to hide or reset the form after submission",
+                            placement: "top"
+                          }
+                        },
+                        [_c("i", { staticClass: "el-icon-info cfs-info" })]
+                      )
                     ],
                     1
-                  )
-                ]
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-field" }, [
-              _c("label", { staticClass: "cfs-label" }, [
-                _vm._v("Require Login")
-              ]),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "cfs-toggle" },
-                [
-                  _c("el-switch", {
-                    model: {
-                      value: _vm.settings.require_login,
-                      callback: function($$v) {
-                        _vm.$set(_vm.settings, "require_login", $$v)
-                      },
-                      expression: "settings.require_login"
-                    }
-                  }),
+                  ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Require user to be logged in to submit")])
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _vm.settings.require_login
-              ? _c(
+                  _c("div", { staticClass: "cfs-radio-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "cfs-radio-pill",
+                        class: { active: _vm.settings.after_submit !== "reset" }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.settings.after_submit,
+                              expression: "settings.after_submit"
+                            }
+                          ],
+                          attrs: { type: "radio", value: "hide" },
+                          domProps: {
+                            checked: _vm._q(_vm.settings.after_submit, "hide")
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.settings,
+                                "after_submit",
+                                "hide"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "cfs-radio-dot" }),
+                        _vm._v("\n            Hide Form\n          ")
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "cfs-radio-pill",
+                        class: { active: _vm.settings.after_submit === "reset" }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.settings.after_submit,
+                              expression: "settings.after_submit"
+                            }
+                          ],
+                          attrs: { type: "radio", value: "reset" },
+                          domProps: {
+                            checked: _vm._q(_vm.settings.after_submit, "reset")
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.settings,
+                                "after_submit",
+                                "reset"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "cfs-radio-dot" }),
+                        _vm._v("\n            Reset Form\n          ")
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
                   "div",
                   { staticClass: "cfs-field" },
                   [
                     _c("label", { staticClass: "cfs-label" }, [
-                      _vm._v("Require Login Message")
+                      _vm._v("Submit Button Text")
                     ]),
                     _vm._v(" "),
-                    _c("wp_editor", {
-                      attrs: { value: _vm.settings.req_login_message },
-                      on: {
-                        "content-changed": function(val) {
-                          return _vm.updateSetting("req_login_message", val)
-                        }
+                    _c("el-input", {
+                      staticStyle: { "max-width": "320px" },
+                      attrs: { type: "text" },
+                      model: {
+                        value: _vm.settings.submit_text,
+                        callback: function($$v) {
+                          _vm.$set(_vm.settings, "submit_text", $$v)
+                        },
+                        expression: "settings.submit_text"
                       }
                     })
                   ],
                   1
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "cfs-field" }, [
-              _c("label", { staticClass: "cfs-label" }, [
-                _vm._v("Limit Entries")
-              ]),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "cfs-toggle" },
-                [
-                  _c("el-switch", {
-                    model: {
-                      value: _vm.settings.limit_entries,
-                      callback: function($$v) {
-                        _vm.$set(_vm.settings, "limit_entries", $$v)
-                      },
-                      expression: "settings.limit_entries"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Enable form entry limit")])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "cfs-description" }, [
-                _vm._v("Limit the number of entries allowed for this form.")
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.settings.limit_entries
-              ? [
-                  _c(
-                    "div",
-                    { staticClass: "cfs-field" },
-                    [
-                      _c("label", { staticClass: "cfs-label" }, [
-                        _vm._v("Number of Entries")
-                      ]),
-                      _vm._v(" "),
-                      _c("el-input", {
-                        staticStyle: { "max-width": "180px" },
-                        attrs: { type: "number" },
-                        model: {
-                          value: _vm.settings.limit_number,
-                          callback: function($$v) {
-                            _vm.$set(_vm.settings, "limit_number", $$v)
-                          },
-                          expression: "settings.limit_number"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "cfs-field" },
-                    [
-                      _c("label", { staticClass: "cfs-label" }, [
-                        _vm._v("Limit Reached Message")
-                      ]),
-                      _vm._v(" "),
-                      _c("wp_editor", {
-                        attrs: { value: _vm.settings.limit_message },
-                        on: {
-                          "content-changed": function(val) {
-                            return _vm.updateSetting("limit_message", val)
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ]
-              : _vm._e()
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "section",
-          { staticClass: "cfs-section", attrs: { id: "custom-css-js" } },
-          [
-            _c("h2", { staticClass: "cfs-section-title" }, [
-              _vm._v("Custom CSS & JS")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "cfs-field" },
-              [
-                _c("label", { staticClass: "cfs-label" }, [
-                  _vm._v("Custom CSS")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "cfs-description" }, [
-                  _vm._v("\n          Applies only to this form. Use "),
-                  _c("code", [_vm._v("#contactum_form_" + _vm._s(_vm.id))]),
-                  _vm._v(" as a selector prefix.\n          Do not include "),
-                  _c("code", [_vm._v("<style>")]),
-                  _vm._v(" tags.\n        ")
-                ]),
-                _vm._v(" "),
-                _c("AceCSSEditor", {
-                  attrs: { mode: "css" },
-                  model: {
-                    value: _vm.settings.custom_css,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "custom_css", $$v)
-                    },
-                    expression: "settings.custom_css"
-                  }
-                })
-              ],
-              1
+              ]
             ),
             _vm._v(" "),
             _c(
-              "div",
-              { staticClass: "cfs-field" },
-              [
-                _c("label", { staticClass: "cfs-label" }, [
-                  _vm._v("Custom JS")
-                ]),
-                _vm._v(" "),
-                _vm._m(1),
-                _vm._v(" "),
-                _c("AceJSEditor", {
-                  attrs: { mode: "javascript" },
-                  model: {
-                    value: _vm.settings.custom_js,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "custom_js", $$v)
-                    },
-                    expression: "settings.custom_js"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _vm.quizEnabled
-          ? _c(
               "section",
-              { staticClass: "cfs-section", attrs: { id: "quiz" } },
+              { staticClass: "cfs-section", attrs: { id: "layout" } },
               [
                 _c("h2", { staticClass: "cfs-section-title" }, [
-                  _vm._v("Quiz Settings")
+                  _vm._v("Form Layout")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "cfs-field" }, [
                   _c("label", { staticClass: "cfs-label" }, [
-                    _vm._v("Enable Quiz")
+                    _vm._v("Label Position")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "cfs-radio-group" },
+                    _vm._l(_vm.label_positions, function(pos) {
+                      return _c(
+                        "label",
+                        {
+                          key: pos.value,
+                          staticClass: "cfs-radio-pill",
+                          class: {
+                            active: _vm.settings.label_position === pos.value
+                          }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.settings.label_position,
+                                expression: "settings.label_position"
+                              }
+                            ],
+                            attrs: { type: "radio" },
+                            domProps: {
+                              value: pos.value,
+                              checked: _vm._q(
+                                _vm.settings.label_position,
+                                pos.value
+                              )
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.$set(
+                                  _vm.settings,
+                                  "label_position",
+                                  pos.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "cfs-radio-dot" }),
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(pos.label) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "cfs-description" }, [
+                    _vm._v("Where the labels of the form should display.")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c("label", { staticClass: "cfs-label" }, [
+                    _vm._v("Use Theme CSS")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "cfs-radio-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "cfs-radio-pill",
+                        class: {
+                          active:
+                            _vm.settings.use_theme_css ===
+                            "contactum-theme-style"
+                        }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.settings.use_theme_css,
+                              expression: "settings.use_theme_css"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            value: "contactum-theme-style"
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.settings.use_theme_css,
+                              "contactum-theme-style"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.settings,
+                                "use_theme_css",
+                                "contactum-theme-style"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "cfs-radio-dot" }),
+                        _vm._v("\n            Yes\n          ")
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "cfs-radio-pill",
+                        class: {
+                          active:
+                            _vm.settings.use_theme_css === "contactum-style"
+                        }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.settings.use_theme_css,
+                              expression: "settings.use_theme_css"
+                            }
+                          ],
+                          attrs: { type: "radio", value: "contactum-style" },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.settings.use_theme_css,
+                              "contactum-style"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.settings,
+                                "use_theme_css",
+                                "contactum-style"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "cfs-radio-dot" }),
+                        _vm._v("\n            No\n          ")
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c("label", { staticClass: "cfs-label" }, [
+                    _vm._v("Conversational Form")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -138679,36 +139220,620 @@ var render = function() {
                     [
                       _c("el-switch", {
                         model: {
-                          value: _vm.settings.quiz_enabled,
+                          value: _vm.isConversational,
                           callback: function($$v) {
-                            _vm.$set(_vm.settings, "quiz_enabled", $$v)
+                            _vm.isConversational = $$v
                           },
-                          expression: "settings.quiz_enabled"
+                          expression: "isConversational"
                         }
                       }),
                       _vm._v(" "),
-                      _c("span", [_vm._v("Grade this form as a quiz")])
+                      _c("span", [
+                        _vm._v("Show one question at a time, Typeform-style")
+                      ])
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _c("p", { staticClass: "cfs-description" }, [
+                    _vm._v(
+                      "\n          Visitors answer a single field per screen and move on automatically. Not available if the form\n          already uses manually-added Step fields.\n        "
+                    )
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "section",
+              { staticClass: "cfs-section", attrs: { id: "scheduling" } },
+              [
+                _c("h2", { staticClass: "cfs-section-title" }, [
+                  _vm._v("Scheduling & Restrictions")
                 ]),
                 _vm._v(" "),
-                _vm.settings.quiz_enabled
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c("label", { staticClass: "cfs-label" }, [
+                    _vm._v("Schedule Form")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "cfs-toggle" },
+                    [
+                      _c("el-switch", {
+                        model: {
+                          value: _vm.settings.schedule_form,
+                          callback: function($$v) {
+                            _vm.$set(_vm.settings, "schedule_form", $$v)
+                          },
+                          expression: "settings.schedule_form"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("Schedule form for a time period")])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "cfs-description" }, [
+                    _vm._v("Restrict when the form accepts submissions.")
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.settings.schedule_form
                   ? [
                       _c("div", { staticClass: "cfs-field" }, [
+                        _c("label", { staticClass: "cfs-label" }, [
+                          _vm._v("Schedule Period")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "cfs-date-row" },
+                          [
+                            _c("span", { staticClass: "cfs-date-label" }, [
+                              _vm._v("From")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-date-picker", {
+                              attrs: {
+                                type: "date",
+                                placeholder: "Start date"
+                              },
+                              model: {
+                                value: _vm.settings.schedule_start,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.settings, "schedule_start", $$v)
+                                },
+                                expression: "settings.schedule_start"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "cfs-date-label" }, [
+                              _vm._v("To")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-date-picker", {
+                              attrs: { type: "date", placeholder: "End date" },
+                              model: {
+                                value: _vm.settings.schedule_end,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.settings, "schedule_end", $$v)
+                                },
+                                expression: "settings.schedule_end"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "cfs-field" },
+                        [
+                          _c("label", { staticClass: "cfs-label" }, [
+                            _vm._v("Form Pending Message")
+                          ]),
+                          _vm._v(" "),
+                          _c("wp_editor", {
+                            attrs: { value: _vm.settings.sc_pending_message },
+                            on: {
+                              "content-changed": function(val) {
+                                return _vm.updateSetting(
+                                  "sc_pending_message",
+                                  val
+                                )
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "cfs-field" },
+                        [
+                          _c("label", { staticClass: "cfs-label" }, [
+                            _vm._v("Form Expired Message")
+                          ]),
+                          _vm._v(" "),
+                          _c("wp_editor", {
+                            attrs: { value: _vm.settings.sc_expired_message },
+                            on: {
+                              "content-changed": function(val) {
+                                return _vm.updateSetting(
+                                  "sc_expired_message",
+                                  val
+                                )
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c("label", { staticClass: "cfs-label" }, [
+                    _vm._v("Require Login")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "cfs-toggle" },
+                    [
+                      _c("el-switch", {
+                        model: {
+                          value: _vm.settings.require_login,
+                          callback: function($$v) {
+                            _vm.$set(_vm.settings, "require_login", $$v)
+                          },
+                          expression: "settings.require_login"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v("Require user to be logged in to submit")
+                      ])
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.settings.require_login
+                  ? _c(
+                      "div",
+                      { staticClass: "cfs-field" },
+                      [
+                        _c("label", { staticClass: "cfs-label" }, [
+                          _vm._v("Require Login Message")
+                        ]),
+                        _vm._v(" "),
+                        _c("wp_editor", {
+                          attrs: { value: _vm.settings.req_login_message },
+                          on: {
+                            "content-changed": function(val) {
+                              return _vm.updateSetting("req_login_message", val)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "cfs-field" }, [
+                  _c("label", { staticClass: "cfs-label" }, [
+                    _vm._v("Limit Entries")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "cfs-toggle" },
+                    [
+                      _c("el-switch", {
+                        model: {
+                          value: _vm.settings.limit_entries,
+                          callback: function($$v) {
+                            _vm.$set(_vm.settings, "limit_entries", $$v)
+                          },
+                          expression: "settings.limit_entries"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("Enable form entry limit")])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "cfs-description" }, [
+                    _vm._v("Limit the number of entries allowed for this form.")
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.settings.limit_entries
+                  ? [
+                      _c(
+                        "div",
+                        { staticClass: "cfs-field" },
+                        [
+                          _c("label", { staticClass: "cfs-label" }, [
+                            _vm._v("Number of Entries")
+                          ]),
+                          _vm._v(" "),
+                          _c("el-input", {
+                            staticStyle: { "max-width": "180px" },
+                            attrs: { type: "number" },
+                            model: {
+                              value: _vm.settings.limit_number,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings, "limit_number", $$v)
+                              },
+                              expression: "settings.limit_number"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "cfs-field" },
+                        [
+                          _c("label", { staticClass: "cfs-label" }, [
+                            _vm._v("Limit Reached Message")
+                          ]),
+                          _vm._v(" "),
+                          _c("wp_editor", {
+                            attrs: { value: _vm.settings.limit_message },
+                            on: {
+                              "content-changed": function(val) {
+                                return _vm.updateSetting("limit_message", val)
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]
+                  : _vm._e()
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "section",
+              { staticClass: "cfs-section", attrs: { id: "custom-css-js" } },
+              [
+                _c("h2", { staticClass: "cfs-section-title" }, [
+                  _vm._v("Custom CSS & JS")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "cfs-field" },
+                  [
+                    _c("label", { staticClass: "cfs-label" }, [
+                      _vm._v("Custom CSS")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "cfs-description" }, [
+                      _vm._v("\n          Applies only to this form. Use "),
+                      _c("code", [_vm._v("#contactum_form_" + _vm._s(_vm.id))]),
+                      _vm._v(
+                        " as a selector prefix.\n          Do not include "
+                      ),
+                      _c("code", [_vm._v("<style>")]),
+                      _vm._v(" tags.\n        ")
+                    ]),
+                    _vm._v(" "),
+                    _c("AceCSSEditor", {
+                      attrs: { mode: "css" },
+                      model: {
+                        value: _vm.settings.custom_css,
+                        callback: function($$v) {
+                          _vm.$set(_vm.settings, "custom_css", $$v)
+                        },
+                        expression: "settings.custom_css"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "cfs-field" },
+                  [
+                    _c("label", { staticClass: "cfs-label" }, [
+                      _vm._v("Custom JS")
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("AceJSEditor", {
+                      attrs: { mode: "javascript" },
+                      model: {
+                        value: _vm.settings.custom_js,
+                        callback: function($$v) {
+                          _vm.$set(_vm.settings, "custom_js", $$v)
+                        },
+                        expression: "settings.custom_js"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.quizEnabled
+              ? _c(
+                  "section",
+                  { staticClass: "cfs-section", attrs: { id: "quiz" } },
+                  [
+                    _c("h2", { staticClass: "cfs-section-title" }, [
+                      _vm._v("Quiz Settings")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "cfs-field" }, [
+                      _c("label", { staticClass: "cfs-label" }, [
+                        _vm._v("Enable Quiz")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        { staticClass: "cfs-toggle" },
+                        [
+                          _c("el-switch", {
+                            model: {
+                              value: _vm.settings.quiz_enabled,
+                              callback: function($$v) {
+                                _vm.$set(_vm.settings, "quiz_enabled", $$v)
+                              },
+                              expression: "settings.quiz_enabled"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Grade this form as a quiz")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ]),
+                    _vm._v(" "),
+                    _vm.settings.quiz_enabled
+                      ? [
+                          _c("div", { staticClass: "cfs-field" }, [
+                            _c(
+                              "label",
+                              { staticClass: "cfs-label" },
+                              [
+                                _vm._v("\n            Questions\n            "),
+                                _c(
+                                  "el-tooltip",
+                                  {
+                                    attrs: {
+                                      content:
+                                        "Every Radio, Checkbox, and Select field on this form, fetched automatically",
+                                      placement: "top"
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "el-icon-info cfs-info"
+                                    })
+                                  ]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            !_vm.scorableFields.length
+                              ? _c("p", { staticClass: "cfs-description" }, [
+                                  _vm._v(
+                                    "\n            No Radio, Checkbox, or Select fields found on this form yet. Add one to the form to grade it here.\n          "
+                                  )
+                                ])
+                              : _c(
+                                  "div",
+                                  { staticClass: "cfs-quiz-list" },
+                                  _vm._l(_vm.scorableFields, function(field) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        key: field.name,
+                                        staticClass: "cfs-quiz-question"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "cfs-quiz-question__label"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(field.label || field.name)
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "cfs-quiz-question__row"
+                                          },
+                                          [
+                                            _c("el-input", {
+                                              staticClass:
+                                                "cfs-quiz-question__score",
+                                              attrs: {
+                                                type: "number",
+                                                placeholder: "Points"
+                                              },
+                                              model: {
+                                                value:
+                                                  _vm.settings.quiz_questions[
+                                                    field.name
+                                                  ].score,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.settings.quiz_questions[
+                                                      field.name
+                                                    ],
+                                                    "score",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "settings.quiz_questions[field.name].score"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "el-select",
+                                              {
+                                                staticClass:
+                                                  "cfs-quiz-question__answer",
+                                                attrs: {
+                                                  multiple: "",
+                                                  placeholder:
+                                                    "Correct answer(s)"
+                                                },
+                                                model: {
+                                                  value:
+                                                    _vm.settings.quiz_questions[
+                                                      field.name
+                                                    ].correct_answer,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.settings
+                                                        .quiz_questions[
+                                                        field.name
+                                                      ],
+                                                      "correct_answer",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "settings.quiz_questions[field.name].correct_answer"
+                                                }
+                                              },
+                                              _vm._l(
+                                                field.options || [],
+                                                function(opt) {
+                                                  return _c("el-option", {
+                                                    key: opt.value,
+                                                    attrs: {
+                                                      label: opt.label,
+                                                      value: opt.value
+                                                    }
+                                                  })
+                                                }
+                                              ),
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "cfs-field" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "cfs-label" },
+                                [
+                                  _vm._v(
+                                    "\n            Passing Score\n            "
+                                  ),
+                                  _c(
+                                    "el-tooltip",
+                                    {
+                                      attrs: {
+                                        content:
+                                          "Entries scoring at or above this many points are marked as a pass",
+                                        placement: "top"
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "el-icon-info cfs-info"
+                                      })
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("el-input", {
+                                staticStyle: { "max-width": "180px" },
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "e.g. 5"
+                                },
+                                model: {
+                                  value: _vm.settings.quiz_passing_score,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.settings,
+                                      "quiz_passing_score",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "settings.quiz_passing_score"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(3)
+                            ],
+                            1
+                          )
+                        ]
+                      : _vm._e()
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.zapierEnabled
+              ? _c(
+                  "section",
+                  { staticClass: "cfs-section", attrs: { id: "zapier" } },
+                  [
+                    _c("h2", { staticClass: "cfs-section-title" }, [
+                      _vm._v("Zapier")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "cfs-field" },
+                      [
                         _c(
                           "label",
                           { staticClass: "cfs-label" },
                           [
-                            _vm._v("\n            Questions\n            "),
+                            _vm._v("\n          Zaps\n          "),
                             _c(
                               "el-tooltip",
                               {
                                 attrs: {
                                   content:
-                                    "Every Radio, Checkbox, and Select field on this form, fetched automatically",
+                                    "Every submission is sent as JSON to each URL below",
                                   placement: "top"
                                 }
                               },
@@ -138722,104 +139847,301 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        !_vm.scorableFields.length
+                        _c("p", { staticClass: "cfs-description" }, [
+                          _vm._v(
+                            "\n          Send every submission on this form to one or more Zapier catch hooks. Each Zap gets the full entry.\n          Need just one destination? The free Webhook integration on the Integrations page also works with Zapier.\n        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        !_vm.zapierFeeds.length
                           ? _c("p", { staticClass: "cfs-description" }, [
-                              _vm._v(
-                                "\n            No Radio, Checkbox, or Select fields found on this form yet. Add one to the form to grade it here.\n          "
-                              )
+                              _vm._v("No Zaps added yet.")
                             ])
                           : _c(
                               "div",
-                              { staticClass: "cfs-quiz-list" },
-                              _vm._l(_vm.scorableFields, function(field) {
+                              { staticClass: "cfs-zap-list" },
+                              _vm._l(_vm.zapierFeeds, function(feed, index) {
                                 return _c(
                                   "div",
-                                  {
-                                    key: field.name,
-                                    staticClass: "cfs-quiz-question"
-                                  },
+                                  { key: feed.id, staticClass: "cfs-zap-row" },
+                                  [
+                                    _c("el-input", {
+                                      staticClass: "cfs-zap-row__name",
+                                      attrs: {
+                                        placeholder:
+                                          "Zap name (e.g. Send to Slack)"
+                                      },
+                                      model: {
+                                        value: feed.name,
+                                        callback: function($$v) {
+                                          _vm.$set(feed, "name", $$v)
+                                        },
+                                        expression: "feed.name"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("el-input", {
+                                      staticClass: "cfs-zap-row__url",
+                                      attrs: {
+                                        placeholder:
+                                          "https://hooks.zapier.com/hooks/catch/..."
+                                      },
+                                      model: {
+                                        value: feed.url,
+                                        callback: function($$v) {
+                                          _vm.$set(feed, "url", $$v)
+                                        },
+                                        expression: "feed.url"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-button",
+                                      {
+                                        attrs: {
+                                          size: "small",
+                                          loading: feed.testing
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.sendZapierTest(feed)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Send Test")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("i", {
+                                      staticClass:
+                                        "el-icon-close cfs-zap-row__remove",
+                                      attrs: { title: "Remove" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removeZapierFeed(index)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              }),
+                              0
+                            ),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { size: "small", icon: "el-icon-plus" },
+                            on: { click: _vm.addZapierFeed }
+                          },
+                          [_vm._v("Add Zap")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.pdfSubmissionEnabled
+              ? _c(
+                  "section",
+                  {
+                    staticClass: "cfs-section",
+                    attrs: { id: "pdf_submission" }
+                  },
+                  [
+                    _c("h2", { staticClass: "cfs-section-title" }, [
+                      _vm._v("PDF Submission")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "cfs-field" },
+                      [
+                        _c(
+                          "label",
+                          { staticClass: "cfs-label" },
+                          [
+                            _vm._v("\n          PDF Feeds\n          "),
+                            _c(
+                              "el-tooltip",
+                              {
+                                attrs: {
+                                  content:
+                                    "Generate a PDF summary of every submission — add multiple feeds for different documents (e.g. an Invoice and a Packing Slip).",
+                                  placement: "top"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "el-icon-info cfs-info"
+                                })
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "cfs-description" }, [
+                          _vm._v(
+                            "Each feed generates its own PDF for every submission on this form."
+                          )
+                        ]),
+                        _vm._v(" "),
+                        !_vm.pdfFeeds.length
+                          ? _c("p", { staticClass: "cfs-description" }, [
+                              _vm._v("No PDF feeds added yet.")
+                            ])
+                          : _c(
+                              "div",
+                              { staticClass: "cfs-pdf-feed-list" },
+                              _vm._l(_vm.pdfFeeds, function(feed, index) {
+                                return _c(
+                                  "div",
+                                  { key: feed.id, staticClass: "cfs-pdf-feed" },
                                   [
                                     _c(
                                       "div",
-                                      {
-                                        staticClass: "cfs-quiz-question__label"
-                                      },
+                                      { staticClass: "cfs-pdf-feed__head" },
                                       [
-                                        _vm._v(
-                                          _vm._s(field.label || field.name)
-                                        )
-                                      ]
+                                        _c("el-input", {
+                                          staticClass: "cfs-pdf-feed__name",
+                                          attrs: {
+                                            placeholder:
+                                              "Feed name (e.g. Invoice PDF)"
+                                          },
+                                          model: {
+                                            value: feed.name,
+                                            callback: function($$v) {
+                                              _vm.$set(feed, "name", $$v)
+                                            },
+                                            expression: "feed.name"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("el-switch", {
+                                          model: {
+                                            value: feed.status,
+                                            callback: function($$v) {
+                                              _vm.$set(feed, "status", $$v)
+                                            },
+                                            expression: "feed.status"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("i", {
+                                          staticClass:
+                                            "el-icon-close cfs-zap-row__remove",
+                                          attrs: { title: "Remove" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.removePdfFeed(index)
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
                                     _c(
                                       "div",
-                                      { staticClass: "cfs-quiz-question__row" },
+                                      { staticClass: "cfs-pdf-feed__row" },
                                       [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "cfs-pdf-feed__label"
+                                          },
+                                          [_vm._v("PDF Title")]
+                                        ),
+                                        _vm._v(" "),
                                         _c("el-input", {
-                                          staticClass:
-                                            "cfs-quiz-question__score",
                                           attrs: {
-                                            type: "number",
-                                            placeholder: "Points"
+                                            placeholder:
+                                              "{form_name} — Submission #{entry_id}"
                                           },
                                           model: {
-                                            value:
-                                              _vm.settings.quiz_questions[
-                                                field.name
-                                              ].score,
+                                            value: feed.title,
                                             callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.settings.quiz_questions[
-                                                  field.name
-                                                ],
-                                                "score",
-                                                $$v
-                                              )
+                                              _vm.$set(feed, "title", $$v)
                                             },
-                                            expression:
-                                              "settings.quiz_questions[field.name].score"
+                                            expression: "feed.title"
                                           }
-                                        }),
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "cfs-pdf-feed__row" },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "cfs-pdf-feed__label"
+                                          },
+                                          [_vm._v("Fields to Include")]
+                                        ),
                                         _vm._v(" "),
                                         _c(
                                           "el-select",
                                           {
-                                            staticClass:
-                                              "cfs-quiz-question__answer",
+                                            staticStyle: { width: "100%" },
                                             attrs: {
                                               multiple: "",
-                                              placeholder: "Correct answer(s)"
+                                              filterable: "",
+                                              placeholder: "All fields"
                                             },
                                             model: {
-                                              value:
-                                                _vm.settings.quiz_questions[
-                                                  field.name
-                                                ].correct_answer,
+                                              value: feed.field_names,
                                               callback: function($$v) {
                                                 _vm.$set(
-                                                  _vm.settings.quiz_questions[
-                                                    field.name
-                                                  ],
-                                                  "correct_answer",
+                                                  feed,
+                                                  "field_names",
                                                   $$v
                                                 )
                                               },
-                                              expression:
-                                                "settings.quiz_questions[field.name].correct_answer"
+                                              expression: "feed.field_names"
                                             }
                                           },
-                                          _vm._l(field.options || [], function(
-                                            opt
+                                          _vm._l(_vm.formFieldOptions, function(
+                                            f
                                           ) {
                                             return _c("el-option", {
-                                              key: opt.value,
+                                              key: f.name,
                                               attrs: {
-                                                label: opt.label,
-                                                value: opt.value
+                                                label: f.label,
+                                                value: f.name
                                               }
                                             })
                                           }),
                                           1
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      { staticClass: "cfs-pdf-feed__checkbox" },
+                                      [
+                                        _c("el-checkbox", {
+                                          model: {
+                                            value: feed.attach_email,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                feed,
+                                                "attach_email",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "feed.attach_email"
+                                          }
+                                        }),
+                                        _vm._v(
+                                          " Attach to email notifications\n            "
                                         )
                                       ],
                                       1
@@ -138828,195 +140150,24 @@ var render = function() {
                                 )
                               }),
                               0
-                            )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "cfs-field" },
-                        [
-                          _c(
-                            "label",
-                            { staticClass: "cfs-label" },
-                            [
-                              _vm._v(
-                                "\n            Passing Score\n            "
-                              ),
-                              _c(
-                                "el-tooltip",
-                                {
-                                  attrs: {
-                                    content:
-                                      "Entries scoring at or above this many points are marked as a pass",
-                                    placement: "top"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "el-icon-info cfs-info"
-                                  })
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            staticStyle: { "max-width": "180px" },
-                            attrs: { type: "number", placeholder: "e.g. 5" },
-                            model: {
-                              value: _vm.settings.quiz_passing_score,
-                              callback: function($$v) {
-                                _vm.$set(
-                                  _vm.settings,
-                                  "quiz_passing_score",
-                                  $$v
-                                )
-                              },
-                              expression: "settings.quiz_passing_score"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(3)
-                        ],
-                        1
-                      )
-                    ]
-                  : _vm._e()
-              ],
-              2
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.zapierEnabled
-          ? _c(
-              "section",
-              { staticClass: "cfs-section", attrs: { id: "zapier" } },
-              [
-                _c("h2", { staticClass: "cfs-section-title" }, [
-                  _vm._v("Zapier")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "cfs-field" },
-                  [
-                    _c(
-                      "label",
-                      { staticClass: "cfs-label" },
-                      [
-                        _vm._v("\n          Zaps\n          "),
+                            ),
+                        _vm._v(" "),
                         _c(
-                          "el-tooltip",
+                          "el-button",
                           {
-                            attrs: {
-                              content:
-                                "Every submission is sent as JSON to each URL below",
-                              placement: "top"
-                            }
+                            attrs: { size: "small", icon: "el-icon-plus" },
+                            on: { click: _vm.addPdfFeed }
                           },
-                          [_c("i", { staticClass: "el-icon-info cfs-info" })]
+                          [_vm._v("Add PDF Feed")]
                         )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "cfs-description" }, [
-                      _vm._v(
-                        "\n          Send every submission on this form to one or more Zapier catch hooks. Each Zap gets the full entry.\n          Need just one destination? The free Webhook integration on the Integrations page also works with Zapier.\n        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    !_vm.zapierFeeds.length
-                      ? _c("p", { staticClass: "cfs-description" }, [
-                          _vm._v("No Zaps added yet.")
-                        ])
-                      : _c(
-                          "div",
-                          { staticClass: "cfs-zap-list" },
-                          _vm._l(_vm.zapierFeeds, function(feed, index) {
-                            return _c(
-                              "div",
-                              { key: feed.id, staticClass: "cfs-zap-row" },
-                              [
-                                _c("el-input", {
-                                  staticClass: "cfs-zap-row__name",
-                                  attrs: {
-                                    placeholder: "Zap name (e.g. Send to Slack)"
-                                  },
-                                  model: {
-                                    value: feed.name,
-                                    callback: function($$v) {
-                                      _vm.$set(feed, "name", $$v)
-                                    },
-                                    expression: "feed.name"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("el-input", {
-                                  staticClass: "cfs-zap-row__url",
-                                  attrs: {
-                                    placeholder:
-                                      "https://hooks.zapier.com/hooks/catch/..."
-                                  },
-                                  model: {
-                                    value: feed.url,
-                                    callback: function($$v) {
-                                      _vm.$set(feed, "url", $$v)
-                                    },
-                                    expression: "feed.url"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "el-button",
-                                  {
-                                    attrs: {
-                                      size: "small",
-                                      loading: feed.testing
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.sendZapierTest(feed)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Send Test")]
-                                ),
-                                _vm._v(" "),
-                                _c("i", {
-                                  staticClass:
-                                    "el-icon-close cfs-zap-row__remove",
-                                  attrs: { title: "Remove" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.removeZapierFeed(index)
-                                    }
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          }),
-                          0
-                        ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "small", icon: "el-icon-plus" },
-                        on: { click: _vm.addZapierFeed }
-                      },
-                      [_vm._v("Add Zap")]
                     )
-                  ],
-                  1
+                  ]
                 )
-              ]
-            )
-          : _vm._e()
-      ]
-    )
+              : _vm._e()
+          ]
+        )
   ])
 }
 var staticRenderFns = [
@@ -145863,6 +147014,67 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/landing-page/ImagePicker.vue?vue&type=template&id=4bdb145e&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ctm-image-picker" },
+    [
+      _vm.value
+        ? _c("div", { staticClass: "ctm-image-picker__preview" }, [
+            _c("img", { attrs: { src: _vm.value, alt: "" } }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "ctm-image-picker__remove",
+                attrs: { type: "button", title: "Remove" },
+                on: {
+                  click: function($event) {
+                    return _vm.$emit("input", "")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "el-icon-close" })]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "el-button",
+        { attrs: { size: "small" }, on: { click: _vm.openMediaLibrary } },
+        [
+          _c("i", { staticClass: "el-icon-upload" }),
+          _vm._v(
+            " " + _vm._s(_vm.value ? "Replace Image" : "Select Image") + "\n  "
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=template&id=39b2fc39&scoped=true&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/components/pro/styler/StylerBorder.vue?vue&type=template&id=39b2fc39&scoped=true& ***!
@@ -148629,6 +149841,457 @@ var staticRenderFns = [
       _vm._v(" Selecting "),
       _c("strong", [_vm._v("Yes")]),
       _vm._v(" will use your theme's style for form fields. ")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/admin/pages/LandingPage.vue?vue&type=template&id=6375ed5c&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading",
+          value: _vm.loading,
+          expression: "loading"
+        }
+      ],
+      staticClass: "lp-page"
+    },
+    [
+      _c("div", { staticClass: "lp-topbar" }, [
+        _c(
+          "label",
+          { staticClass: "lp-topbar__enable" },
+          [
+            _c("el-switch", {
+              model: {
+                value: _vm.isLandingPageEnabled,
+                callback: function($$v) {
+                  _vm.isLandingPageEnabled = $$v
+                },
+                expression: "isLandingPageEnabled"
+              }
+            }),
+            _vm._v("\n      " + _vm._s(_vm.strings.enable_label) + "\n    ")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "lp-topbar__actions" }, [
+          _vm.isLandingPageEnabled && _vm.landingUrl
+            ? _c(
+                "a",
+                {
+                  staticClass: "lp-topbar__open",
+                  attrs: {
+                    href: _vm.landingUrl,
+                    target: "_blank",
+                    title: "Open landing page in a new tab"
+                  }
+                },
+                [_c("i", { staticClass: "el-icon-full-screen" })]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      !_vm.isLandingPageEnabled
+        ? _c("div", { staticClass: "lp-locked" }, [
+            _c("i", { staticClass: "el-icon-info" }),
+            _vm._v(" "),
+            _c("span", {
+              domProps: { innerHTML: _vm._s(_vm.strings.locked_message) }
+            })
+          ])
+        : _c("div", { staticClass: "lp-workspace" }, [
+            _c(
+              "div",
+              { staticClass: "lp-controls" },
+              [
+                _c(
+                  "el-tabs",
+                  {
+                    model: {
+                      value: _vm.activeTab,
+                      callback: function($$v) {
+                        _vm.activeTab = $$v
+                      },
+                      expression: "activeTab"
+                    }
+                  },
+                  [
+                    _c(
+                      "el-tab-pane",
+                      { attrs: { label: "Design", name: "design" } },
+                      _vm._l(_vm.designFields, function(field) {
+                        return _c(
+                          "div",
+                          { key: field.key, staticClass: "lp-field" },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "lp-field__label" },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(field.label) +
+                                    "\n              "
+                                ),
+                                field.tooltip
+                                  ? _c(
+                                      "el-tooltip",
+                                      {
+                                        attrs: {
+                                          content: field.tooltip,
+                                          placement: "top"
+                                        }
+                                      },
+                                      [_c("i", { staticClass: "el-icon-info" })]
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            field.type === "radio"
+                              ? _c(
+                                  "el-radio-group",
+                                  {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.settings[field.key],
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.settings, field.key, $$v)
+                                      },
+                                      expression: "settings[field.key]"
+                                    }
+                                  },
+                                  _vm._l(field.options, function(opt) {
+                                    return _c(
+                                      "el-radio-button",
+                                      {
+                                        key: opt.value,
+                                        attrs: { label: opt.value }
+                                      },
+                                      [_vm._v(_vm._s(opt.label))]
+                                    )
+                                  }),
+                                  1
+                                )
+                              : field.type === "color"
+                              ? _c("el-color-picker", {
+                                  model: {
+                                    value: _vm.settings[field.key],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.settings, field.key, $$v)
+                                    },
+                                    expression: "settings[field.key]"
+                                  }
+                                })
+                              : field.type === "image"
+                              ? _c("ImagePicker", {
+                                  model: {
+                                    value: _vm.settings[field.key],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.settings, field.key, $$v)
+                                    },
+                                    expression: "settings[field.key]"
+                                  }
+                                })
+                              : field.type === "text"
+                              ? _c("el-input", {
+                                  attrs: {
+                                    placeholder:
+                                      field.key === "landing_page_title"
+                                        ? _vm.formTitle
+                                        : field.placeholder
+                                  },
+                                  model: {
+                                    value: _vm.settings[field.key],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.settings, field.key, $$v)
+                                    },
+                                    expression: "settings[field.key]"
+                                  }
+                                })
+                              : field.type === "richtext"
+                              ? _c("wp_editor", {
+                                  attrs: { value: _vm.settings[field.key] },
+                                  on: {
+                                    "content-changed": function(val) {
+                                      return (_vm.settings[field.key] = val)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-tab-pane",
+                      { attrs: { label: "Share", name: "share" } },
+                      [
+                        _c("div", { staticClass: "lp-field" }, [
+                          _c("label", { staticClass: "lp-field__label" }, [
+                            _vm._v("Landing Page URL")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "lp-share-url" },
+                            [
+                              _c("el-input", {
+                                attrs: { value: _vm.landingUrl, readonly: "" }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "el-button",
+                                {
+                                  attrs: { size: "small" },
+                                  on: { click: _vm.copyUrl }
+                                },
+                                [_vm._v("Copy")]
+                              )
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.shareFields, function(field) {
+                          return _c(
+                            "div",
+                            { key: field.key, staticClass: "lp-field" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "lp-field__label" },
+                                [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(field.label) +
+                                      "\n              "
+                                  ),
+                                  field.tooltip
+                                    ? _c(
+                                        "el-tooltip",
+                                        {
+                                          attrs: {
+                                            content: field.tooltip,
+                                            placement: "top"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "el-icon-info"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              field.type === "text"
+                                ? _c("el-input", {
+                                    attrs: { placeholder: field.placeholder },
+                                    model: {
+                                      value: _vm.settings[field.key],
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.settings, field.key, $$v)
+                                      },
+                                      expression: "settings[field.key]"
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "lp-field" },
+                          [
+                            _c("label", { staticClass: "lp-field__label" }, [
+                              _vm._v("Shortcode")
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: { value: _vm.shortcode, readonly: "" }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "lp-preview" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "lp-preview__viewport" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "lp-mock",
+                    class: "lp-mock--" + _vm.settings.landing_page_design_style,
+                    style: _vm.mockWrapperStyle
+                  },
+                  [
+                    _c("div", { staticClass: "lp-mock__card" }, [
+                      _vm.settings.landing_page_logo ||
+                      _vm.settings.landing_page_title ||
+                      _vm.formTitle ||
+                      _vm.settings.landing_page_description
+                        ? _c("div", { staticClass: "lp-mock__header" }, [
+                            _vm.settings.landing_page_logo
+                              ? _c("div", { staticClass: "lp-mock__logo" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: _vm.settings.landing_page_logo,
+                                      alt: ""
+                                    }
+                                  })
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("h1", { staticClass: "lp-mock__title" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.settings.landing_page_title ||
+                                    _vm.formTitle
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm.settings.landing_page_description
+                              ? _c("div", {
+                                  staticClass: "lp-mock__desc",
+                                  domProps: {
+                                    innerHTML: _vm._s(
+                                      _vm.settings.landing_page_description
+                                    )
+                                  }
+                                })
+                              : _vm._e()
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "lp-mock__body" },
+                        [
+                          _vm._l(_vm.formFields, function(field) {
+                            return _c(
+                              "div",
+                              {
+                                key: field.name,
+                                staticClass: "lp-mock__field"
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  { staticClass: "lp-mock__field-label" },
+                                  [
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(field.label)
+                                    ),
+                                    field.required
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "lp-mock__required" },
+                                          [_vm._v("*")]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "lp-mock__field-input" },
+                                  [_vm._v(_vm._s(field.placeholder || "—"))]
+                                )
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          !_vm.formFields.length
+                            ? _c("p", { staticClass: "lp-mock__empty" }, [
+                                _vm._v("This form has no fields yet.")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "lp-mock__submit" }, [
+                            _vm._v("Submit")
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "lp-save-note" }, [
+      _c("i", { staticClass: "el-icon-info" }),
+      _vm._v("\n        Saved together with the rest of the form — click "),
+      _c("strong", [_vm._v("Save Form")]),
+      _vm._v(" above when you're done.\n      ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "lp-preview__head" }, [
+      _c("span", [
+        _c("i", { staticClass: "el-icon-view" }),
+        _vm._v(" Live Preview")
+      ])
     ])
   }
 ]
@@ -251375,6 +253038,8 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.ColorPicker);
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.Collapse);
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.CollapseItem);
+vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.Tabs);
+vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.TabPane);
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.Popover);
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.Card);
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5__.Tooltip);

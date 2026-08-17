@@ -1936,6 +1936,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* global jQuery */
 
@@ -2037,6 +2054,23 @@ const cpm = window.contactum || {};
       this.search = '';
       this.page = 1;
       this.fetchPayments();
+    },
+
+    markAsPaid(row) {
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_update_payment_status',
+        nonce: cpm.nonce,
+        id: row.id,
+        status: 'completed'
+      }, res => {
+        if (res.success) {
+          this.$message.success('Payment marked as paid');
+          this.fetchPayments();
+          this.fetchStats();
+        } else {
+          this.$message.error(res.data && res.data.message || 'Failed to update payment status');
+        }
+      });
     },
 
     confirmDelete(row) {
@@ -4185,7 +4219,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Page ─────────────────────────────────────────────── */\n.cpm-page[data-v-23880812] {\n  padding: 24px;\n  background: #f8f9fa;\n  min-height: 100vh;\n}\n\n/* ── Header ───────────────────────────────────────────── */\n.cpm-header[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 24px;\n  flex-wrap: wrap;\n}\n.cpm-header__left[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.cpm-header__icon[data-v-23880812] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-header__icon .dashicons[data-v-23880812] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.cpm-header__title[data-v-23880812] {\n  margin: 0 0 2px;\n  font-size: 22px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1.3;\n}\n.cpm-header__sub[data-v-23880812] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Stats ────────────────────────────────────────────── */\n.cpm-stats[data-v-23880812] {\n  display: flex;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.cpm-stat[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-left: 3px solid #e5e7eb;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .06);\n  padding: 16px 18px;\n  flex: 1;\n  min-width: 140px;\n}\n.cpm-stat__icon-wrap[data-v-23880812] {\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  background: #f3f4f6;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-stat .dashicons[data-v-23880812] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: #9ca3af;\n}\n.cpm-stat__val[data-v-23880812] {\n  font-size: 20px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1;\n}\n.cpm-stat__lbl[data-v-23880812] {\n  font-size: 12px;\n  color: #6b7280;\n  margin-top: 3px;\n}\n\n/* stat variants */\n.cpm-stat--blue[data-v-23880812]  { border-left-color: #409eff;\n}\n.cpm-stat--blue  .cpm-stat__icon-wrap[data-v-23880812] { background: #ecf5ff;\n}\n.cpm-stat--blue  .dashicons[data-v-23880812] { color: #409eff;\n}\n.cpm-stat--green[data-v-23880812] { border-left-color: #059669;\n}\n.cpm-stat--green .cpm-stat__icon-wrap[data-v-23880812] { background: #ecfdf5;\n}\n.cpm-stat--green .dashicons[data-v-23880812] { color: #059669;\n}\n.cpm-stat--amber[data-v-23880812] { border-left-color: #d97706;\n}\n.cpm-stat--amber .cpm-stat__icon-wrap[data-v-23880812] { background: #fffbeb;\n}\n.cpm-stat--amber .dashicons[data-v-23880812] { color: #d97706;\n}\n.cpm-stat--red[data-v-23880812]   { border-left-color: #dc2626;\n}\n.cpm-stat--red   .cpm-stat__icon-wrap[data-v-23880812] { background: #fef2f2;\n}\n.cpm-stat--red   .dashicons[data-v-23880812] { color: #dc2626;\n}\n\n/* ── Table card ───────────────────────────────────────── */\n.cpm-card[data-v-23880812] {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);\n  overflow: hidden;\n}\n\n/* Toolbar */\n.cpm-toolbar[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 20px;\n  border-bottom: 1px solid #f0f0f0;\n  flex-wrap: wrap;\n}\n.cpm-toolbar__filters[data-v-23880812] {\n  display: flex;\n  gap: 10px;\n  flex-wrap: wrap;\n  flex: 1;\n}\n.cpm-toolbar__sel[data-v-23880812] { width: 160px;\n}\n.cpm-toolbar__search[data-v-23880812] {\n  width: 240px;\n  flex-shrink: 0;\n}\n\n/* Table */\n.cpm-table[data-v-23880812] { width: 100%;\n}\n\n/* Footer */\n.cpm-footer[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 20px;\n  border-top: 1px solid #f0f0f0;\n}\n.cpm-footer__count[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n}\n\n/* ── Cells ────────────────────────────────────────────── */\n.cpm-txn[data-v-23880812] {\n  font-size: 12px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f3f4f6;\n  color: #374151;\n  padding: 2px 7px;\n  border-radius: 4px;\n}\n.cpm-form-name[data-v-23880812] {\n  font-weight: 500;\n  color: #374151;\n}\n.cpm-customer[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 13px;\n  color: #374151;\n}\n.cpm-customer .el-icon-user[data-v-23880812] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n.cpm-amount[data-v-23880812] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.cpm-date[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12.5px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cpm-date .el-icon-time[data-v-23880812] { color: #9ca3af;\n}\n\n/* Gateway badges */\n.cpm-gw[data-v-23880812] {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 2px 8px;\n  border-radius: 4px;\n  text-transform: capitalize;\n  background: #f3f4f6;\n  color: #6b7280;\n}\n.cpm-gw--stripe[data-v-23880812]   { background: #ede9fe; color: #7c3aed;\n}\n.cpm-gw--paypal[data-v-23880812]   { background: #fef9c3; color: #854d0e;\n}\n.cpm-gw--razorpay[data-v-23880812] { background: #dbeafe; color: #1d4ed8;\n}\n.cpm-gw--mollie[data-v-23880812]   { background: #fce7f3; color: #9d174d;\n}\n.cpm-gw--square[data-v-23880812]   { background: #dcfce7; color: #166534;\n}\n\n/* Status pills */\n.cpm-status[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 3px 9px;\n  border-radius: 20px;\n  text-transform: capitalize;\n  white-space: nowrap;\n}\n.cpm-status[data-v-23880812]::before {\n  content: '';\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n.cpm-status--completed[data-v-23880812] { background: #ecfdf5; color: #059669;\n}\n.cpm-status--pending[data-v-23880812]   { background: #fef3c7; color: #d97706;\n}\n.cpm-status--failed[data-v-23880812]    { background: #fef2f2; color: #dc2626;\n}\n.cpm-status--refunded[data-v-23880812]  { background: #eff6ff; color: #2563eb;\n}\n.cpm-status--unknown[data-v-23880812]   { background: #f3f4f6; color: #6b7280;\n}\n\n/* Delete button */\n.cpm-del[data-v-23880812] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  color: #d1d5db;\n  transition: color .15s;\n  line-height: 1;\n}\n.cpm-del[data-v-23880812]:hover { color: #dc2626;\n}\n.cpm-del .dashicons[data-v-23880812] { font-size: 16px; width: 16px; height: 16px;\n}\n\n/* ── Empty state ──────────────────────────────────────── */\n.cpm-empty[data-v-23880812] {\n  text-align: center;\n  padding: 56px 24px;\n}\n.cpm-empty__icon[data-v-23880812] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.cpm-empty__title[data-v-23880812] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.cpm-empty__sub[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n  max-width: 400px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Page ─────────────────────────────────────────────── */\n.cpm-page[data-v-23880812] {\n  padding: 24px;\n  background: #f8f9fa;\n  min-height: 100vh;\n}\n\n/* ── Header ───────────────────────────────────────────── */\n.cpm-header[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 24px;\n  flex-wrap: wrap;\n}\n.cpm-header__left[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.cpm-header__icon[data-v-23880812] {\n  width: 44px;\n  height: 44px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #409eff 0%, #1a7efb 100%);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-header__icon .dashicons[data-v-23880812] {\n  font-size: 22px;\n  width: 22px;\n  height: 22px;\n  color: #fff;\n}\n.cpm-header__title[data-v-23880812] {\n  margin: 0 0 2px;\n  font-size: 22px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1.3;\n}\n.cpm-header__sub[data-v-23880812] {\n  margin: 0;\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Stats ────────────────────────────────────────────── */\n.cpm-stats[data-v-23880812] {\n  display: flex;\n  gap: 12px;\n  margin-bottom: 20px;\n  flex-wrap: wrap;\n}\n.cpm-stat[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-left: 3px solid #e5e7eb;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .06);\n  padding: 16px 18px;\n  flex: 1;\n  min-width: 140px;\n}\n.cpm-stat__icon-wrap[data-v-23880812] {\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  background: #f3f4f6;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n}\n.cpm-stat .dashicons[data-v-23880812] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: #9ca3af;\n}\n.cpm-stat__val[data-v-23880812] {\n  font-size: 20px;\n  font-weight: 600;\n  color: #1e1f21;\n  line-height: 1;\n}\n.cpm-stat__lbl[data-v-23880812] {\n  font-size: 12px;\n  color: #6b7280;\n  margin-top: 3px;\n}\n\n/* stat variants */\n.cpm-stat--blue[data-v-23880812]  { border-left-color: #409eff;\n}\n.cpm-stat--blue  .cpm-stat__icon-wrap[data-v-23880812] { background: #ecf5ff;\n}\n.cpm-stat--blue  .dashicons[data-v-23880812] { color: #409eff;\n}\n.cpm-stat--green[data-v-23880812] { border-left-color: #059669;\n}\n.cpm-stat--green .cpm-stat__icon-wrap[data-v-23880812] { background: #ecfdf5;\n}\n.cpm-stat--green .dashicons[data-v-23880812] { color: #059669;\n}\n.cpm-stat--amber[data-v-23880812] { border-left-color: #d97706;\n}\n.cpm-stat--amber .cpm-stat__icon-wrap[data-v-23880812] { background: #fffbeb;\n}\n.cpm-stat--amber .dashicons[data-v-23880812] { color: #d97706;\n}\n.cpm-stat--red[data-v-23880812]   { border-left-color: #dc2626;\n}\n.cpm-stat--red   .cpm-stat__icon-wrap[data-v-23880812] { background: #fef2f2;\n}\n.cpm-stat--red   .dashicons[data-v-23880812] { color: #dc2626;\n}\n\n/* ── Table card ───────────────────────────────────────── */\n.cpm-card[data-v-23880812] {\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 1px 4px rgba(30, 31, 33, .08);\n  overflow: hidden;\n}\n\n/* Toolbar */\n.cpm-toolbar[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 20px;\n  border-bottom: 1px solid #f0f0f0;\n  flex-wrap: wrap;\n}\n.cpm-toolbar__filters[data-v-23880812] {\n  display: flex;\n  gap: 10px;\n  flex-wrap: wrap;\n  flex: 1;\n}\n.cpm-toolbar__sel[data-v-23880812] { width: 160px;\n}\n.cpm-toolbar__search[data-v-23880812] {\n  width: 240px;\n  flex-shrink: 0;\n}\n\n/* Table */\n.cpm-table[data-v-23880812] { width: 100%;\n}\n\n/* Footer */\n.cpm-footer[data-v-23880812] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 20px;\n  border-top: 1px solid #f0f0f0;\n}\n.cpm-footer__count[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n}\n\n/* ── Cells ────────────────────────────────────────────── */\n.cpm-txn[data-v-23880812] {\n  font-size: 12px;\n  font-family: 'SFMono-Regular', Consolas, monospace;\n  background: #f3f4f6;\n  color: #374151;\n  padding: 2px 7px;\n  border-radius: 4px;\n}\n.cpm-form-name[data-v-23880812] {\n  font-weight: 500;\n  color: #374151;\n}\n.cpm-customer[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 13px;\n  color: #374151;\n}\n.cpm-customer .el-icon-user[data-v-23880812] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n.cpm-amount[data-v-23880812] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #1e1f21;\n}\n.cpm-date[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 12.5px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cpm-date .el-icon-time[data-v-23880812] { color: #9ca3af;\n}\n\n/* Gateway badges */\n.cpm-gw[data-v-23880812] {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 2px 8px;\n  border-radius: 4px;\n  text-transform: capitalize;\n  background: #f3f4f6;\n  color: #6b7280;\n}\n.cpm-gw--stripe[data-v-23880812]   { background: #ede9fe; color: #7c3aed;\n}\n.cpm-gw--paypal[data-v-23880812]   { background: #fef9c3; color: #854d0e;\n}\n.cpm-gw--razorpay[data-v-23880812] { background: #dbeafe; color: #1d4ed8;\n}\n.cpm-gw--mollie[data-v-23880812]   { background: #fce7f3; color: #9d174d;\n}\n.cpm-gw--square[data-v-23880812]   { background: #dcfce7; color: #166534;\n}\n.cpm-gw--authorizenet[data-v-23880812] { background: #e0e7ff; color: #3730a3;\n}\n.cpm-gw--paystack[data-v-23880812] { background: #cffafe; color: #0e7490;\n}\n.cpm-gw--payrexx[data-v-23880812]  { background: #ffe4e6; color: #be123c;\n}\n.cpm-gw--moneris[data-v-23880812]  { background: #e7f5ff; color: #1971c2;\n}\n.cpm-gw--xendit[data-v-23880812]   { background: #edf2ff; color: #4263eb;\n}\n.cpm-gw--flutterwave[data-v-23880812] { background: #fff9db; color: #f08c00;\n}\n.cpm-gw--billplz[data-v-23880812]  { background: #e6fcf5; color: #0ca678;\n}\n.cpm-gw--sslcommerz[data-v-23880812] { background: #eef2ff; color: #4338ca;\n}\n.cpm-gw--paddle[data-v-23880812]   { background: #f4f4f5; color: #18181b;\n}\n.cpm-gw--offline[data-v-23880812]  { background: #f3f4f6; color: #4b5563;\n}\n\n/* Status pills */\n.cpm-status[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  font-size: 11px;\n  font-weight: 600;\n  padding: 3px 9px;\n  border-radius: 20px;\n  text-transform: capitalize;\n  white-space: nowrap;\n}\n.cpm-status[data-v-23880812]::before {\n  content: '';\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: currentColor;\n  flex-shrink: 0;\n}\n.cpm-status--completed[data-v-23880812] { background: #ecfdf5; color: #059669;\n}\n.cpm-status--pending[data-v-23880812]   { background: #fef3c7; color: #d97706;\n}\n.cpm-status--failed[data-v-23880812]    { background: #fef2f2; color: #dc2626;\n}\n.cpm-status--refunded[data-v-23880812]  { background: #eff6ff; color: #2563eb;\n}\n.cpm-status--unknown[data-v-23880812]   { background: #f3f4f6; color: #6b7280;\n}\n\n/* Row actions */\n.cpm-actions[data-v-23880812] {\n  display: inline-flex;\n  align-items: center;\n  gap: 2px;\n}\n.cpm-action[data-v-23880812] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  color: #d1d5db;\n  transition: color .15s;\n  line-height: 1;\n}\n.cpm-action .dashicons[data-v-23880812] { font-size: 16px; width: 16px; height: 16px;\n}\n.cpm-del[data-v-23880812]:hover { color: #dc2626;\n}\n.cpm-action--paid[data-v-23880812]:hover { color: #059669;\n}\n\n/* ── Empty state ──────────────────────────────────────── */\n.cpm-empty[data-v-23880812] {\n  text-align: center;\n  padding: 56px 24px;\n}\n.cpm-empty__icon[data-v-23880812] {\n  font-size: 48px !important;\n  width: 48px !important;\n  height: 48px !important;\n  color: #d1d5db;\n  margin-bottom: 12px;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.cpm-empty__title[data-v-23880812] {\n  font-size: 16px;\n  font-weight: 600;\n  color: #374151;\n  margin: 0 0 6px;\n}\n.cpm-empty__sub[data-v-23880812] {\n  font-size: 13px;\n  color: #9ca3af;\n  margin: 0 0 16px;\n  max-width: 400px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -75397,6 +75431,55 @@ var render = function() {
                           _vm._v(" "),
                           _c("el-option", {
                             attrs: { label: "Square", value: "square" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: {
+                              label: "Authorize.net",
+                              value: "authorizenet"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Paystack", value: "paystack" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Payrexx", value: "payrexx" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Moneris", value: "moneris" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Xendit", value: "xendit" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: {
+                              label: "Flutterwave",
+                              value: "flutterwave"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Billplz", value: "billplz" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "SSLCommerz", value: "sslcommerz" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Paddle", value: "paddle" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: {
+                              label: "Offline Payment",
+                              value: "offline"
+                            }
                           })
                         ],
                         1
@@ -75682,7 +75765,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("el-table-column", {
-                        attrs: { width: "52", align: "center" },
+                        attrs: { width: "90", align: "center" },
                         scopedSlots: _vm._u(
                           [
                             {
@@ -75691,32 +75774,71 @@ var render = function() {
                                 var row = ref.row
                                 return [
                                   _c(
-                                    "el-tooltip",
-                                    {
-                                      attrs: {
-                                        content: "Delete",
-                                        placement: "top"
-                                      }
-                                    },
+                                    "span",
+                                    { staticClass: "cpm-actions" },
                                     [
+                                      row.status === "pending"
+                                        ? _c(
+                                            "el-tooltip",
+                                            {
+                                              attrs: {
+                                                content: "Mark as Paid",
+                                                placement: "top"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "cpm-action cpm-action--paid",
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.markAsPaid(row)
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "dashicons dashicons-yes-alt"
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
                                       _c(
-                                        "button",
+                                        "el-tooltip",
                                         {
-                                          staticClass: "cpm-del",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.confirmDelete(row)
-                                            }
+                                          attrs: {
+                                            content: "Delete",
+                                            placement: "top"
                                           }
                                         },
                                         [
-                                          _c("span", {
-                                            staticClass:
-                                              "dashicons dashicons-trash"
-                                          })
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass: "cpm-action cpm-del",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.confirmDelete(row)
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("span", {
+                                                staticClass:
+                                                  "dashicons dashicons-trash"
+                                              })
+                                            ]
+                                          )
                                         ]
                                       )
-                                    ]
+                                    ],
+                                    1
                                   )
                                 ]
                               }
@@ -75724,7 +75846,7 @@ var render = function() {
                           ],
                           null,
                           false,
-                          235071853
+                          1348594591
                         )
                       })
                     ],

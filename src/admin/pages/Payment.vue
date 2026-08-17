@@ -117,11 +117,21 @@
             @change="onFilterChange"
             class="cpm-toolbar__sel"
           >
-            <el-option label="Stripe"   value="stripe" />
-            <el-option label="PayPal"   value="paypal" />
-            <el-option label="Razorpay" value="razorpay" />
-            <el-option label="Mollie"   value="mollie" />
-            <el-option label="Square"   value="square" />
+            <el-option label="Stripe"       value="stripe" />
+            <el-option label="PayPal"       value="paypal" />
+            <el-option label="Razorpay"     value="razorpay" />
+            <el-option label="Mollie"       value="mollie" />
+            <el-option label="Square"       value="square" />
+            <el-option label="Authorize.net" value="authorizenet" />
+            <el-option label="Paystack"     value="paystack" />
+            <el-option label="Payrexx"      value="payrexx" />
+            <el-option label="Moneris"      value="moneris" />
+            <el-option label="Xendit"       value="xendit" />
+            <el-option label="Flutterwave"  value="flutterwave" />
+            <el-option label="Billplz"      value="billplz" />
+            <el-option label="SSLCommerz"   value="sslcommerz" />
+            <el-option label="Paddle"       value="paddle" />
+            <el-option label="Offline Payment" value="offline" />
           </el-select>
         </div>
 
@@ -198,13 +208,20 @@
             </template>
           </el-table-column>
 
-          <el-table-column width="52" align="center">
+          <el-table-column width="90" align="center">
             <template slot-scope="{ row }">
-              <el-tooltip content="Delete" placement="top">
-                <button class="cpm-del" @click="confirmDelete(row)">
-                  <span class="dashicons dashicons-trash"></span>
-                </button>
-              </el-tooltip>
+              <span class="cpm-actions">
+                <el-tooltip v-if="row.status === 'pending'" content="Mark as Paid" placement="top">
+                  <button class="cpm-action cpm-action--paid" @click="markAsPaid(row)">
+                    <span class="dashicons dashicons-yes-alt"></span>
+                  </button>
+                </el-tooltip>
+                <el-tooltip content="Delete" placement="top">
+                  <button class="cpm-action cpm-del" @click="confirmDelete(row)">
+                    <span class="dashicons dashicons-trash"></span>
+                  </button>
+                </el-tooltip>
+              </span>
             </template>
           </el-table-column>
 
@@ -351,6 +368,23 @@ export default {
       this.search        = '';
       this.page          = 1;
       this.fetchPayments();
+    },
+
+    markAsPaid(row) {
+      $.post(cpm.ajaxurl, {
+        action: 'contactum_update_payment_status',
+        nonce:  cpm.nonce,
+        id:     row.id,
+        status: 'completed',
+      }, (res) => {
+        if (res.success) {
+          this.$message.success('Payment marked as paid');
+          this.fetchPayments();
+          this.fetchStats();
+        } else {
+          this.$message.error((res.data && res.data.message) || 'Failed to update payment status');
+        }
+      });
     },
 
     confirmDelete(row) {
@@ -618,6 +652,16 @@ export default {
 .cpm-gw--razorpay { background: #dbeafe; color: #1d4ed8; }
 .cpm-gw--mollie   { background: #fce7f3; color: #9d174d; }
 .cpm-gw--square   { background: #dcfce7; color: #166534; }
+.cpm-gw--authorizenet { background: #e0e7ff; color: #3730a3; }
+.cpm-gw--paystack { background: #cffafe; color: #0e7490; }
+.cpm-gw--payrexx  { background: #ffe4e6; color: #be123c; }
+.cpm-gw--moneris  { background: #e7f5ff; color: #1971c2; }
+.cpm-gw--xendit   { background: #edf2ff; color: #4263eb; }
+.cpm-gw--flutterwave { background: #fff9db; color: #f08c00; }
+.cpm-gw--billplz  { background: #e6fcf5; color: #0ca678; }
+.cpm-gw--sslcommerz { background: #eef2ff; color: #4338ca; }
+.cpm-gw--paddle   { background: #f4f4f5; color: #18181b; }
+.cpm-gw--offline  { background: #f3f4f6; color: #4b5563; }
 
 /* Status pills */
 .cpm-status {
@@ -645,8 +689,13 @@ export default {
 .cpm-status--refunded  { background: #eff6ff; color: #2563eb; }
 .cpm-status--unknown   { background: #f3f4f6; color: #6b7280; }
 
-/* Delete button */
-.cpm-del {
+/* Row actions */
+.cpm-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.cpm-action {
   background: none;
   border: none;
   cursor: pointer;
@@ -655,8 +704,9 @@ export default {
   transition: color .15s;
   line-height: 1;
 }
+.cpm-action .dashicons { font-size: 16px; width: 16px; height: 16px; }
 .cpm-del:hover { color: #dc2626; }
-.cpm-del .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.cpm-action--paid:hover { color: #059669; }
 
 /* ── Empty state ──────────────────────────────────────── */
 .cpm-empty {

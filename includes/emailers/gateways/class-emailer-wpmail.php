@@ -14,11 +14,12 @@ class Contactum_Emailer_WPMail implements Contactum_Mailer_Contract {
      * @param string $to      Email addresses to send message
      * @param string $subject Email subject
      * @param string $body    Message contents
-     * @param array  $headers Optional. Files to attach.
+     * @param array  $headers     Optional. Header directives (from/cc/bcc/replyto).
+     * @param array  $attachments Optional. Absolute file paths to attach.
      *
      * @return bool
      */
-    public function send( $to, $subject, $body, $headers ) {
+    public function send( $to, $subject, $body, $headers, $attachments = [] ) {
         $_headers = [];
 
         if ( isset( $headers['from'] ) ) {
@@ -39,6 +40,6 @@ class Contactum_Emailer_WPMail implements Contactum_Mailer_Contract {
 
         $_headers[] = 'Content-Type: text/html; charset=UTF-8';
 
-        return wp_mail( $to, $subject, $body, $_headers );
+        return wp_mail( $to, $subject, $body, $_headers, $attachments );
     }
 }

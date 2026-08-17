@@ -18,8 +18,13 @@
       </ul>
     </aside>
 
+    <!-- ── Landing Page (full sub-page, not a scrollable section) ── -->
+    <div class="cfs-landing-content" v-if="activeSection === 'landing_page'">
+      <LandingPage :id="id" embedded />
+    </div>
+
     <!-- ── Main content ── -->
-    <div class="cfs-content" ref="content" @scroll="onContentScroll">
+    <div class="cfs-content" ref="content" @scroll="onContentScroll" v-else>
 
       <!-- Confirmation Settings -->
       <section class="cfs-section" id="confirmation">
@@ -378,6 +383,50 @@
         </div>
       </section>
 
+      <section class="cfs-section" id="pdf_submission" v-if="pdfSubmissionEnabled">
+        <h2 class="cfs-section-title">PDF Submission</h2>
+
+        <div class="cfs-field">
+          <label class="cfs-label">
+            PDF Feeds
+            <el-tooltip content="Generate a PDF summary of every submission — add multiple feeds for different documents (e.g. an Invoice and a Packing Slip)." placement="top">
+              <i class="el-icon-info cfs-info"></i>
+            </el-tooltip>
+          </label>
+          <p class="cfs-description">Each feed generates its own PDF for every submission on this form.</p>
+
+          <p v-if="!pdfFeeds.length" class="cfs-description">No PDF feeds added yet.</p>
+
+          <div v-else class="cfs-pdf-feed-list">
+            <div v-for="(feed, index) in pdfFeeds" :key="feed.id" class="cfs-pdf-feed">
+              <div class="cfs-pdf-feed__head">
+                <el-input v-model="feed.name" placeholder="Feed name (e.g. Invoice PDF)" class="cfs-pdf-feed__name" />
+                <el-switch v-model="feed.status" />
+                <i class="el-icon-close cfs-zap-row__remove" title="Remove" @click="removePdfFeed(index)"></i>
+              </div>
+
+              <div class="cfs-pdf-feed__row">
+                <label class="cfs-pdf-feed__label">PDF Title</label>
+                <el-input v-model="feed.title" placeholder="{form_name} — Submission #{entry_id}" />
+              </div>
+
+              <div class="cfs-pdf-feed__row">
+                <label class="cfs-pdf-feed__label">Fields to Include</label>
+                <el-select v-model="feed.field_names" multiple filterable placeholder="All fields" style="width:100%">
+                  <el-option v-for="f in formFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+                </el-select>
+              </div>
+
+              <label class="cfs-pdf-feed__checkbox">
+                <el-checkbox v-model="feed.attach_email" /> Attach to email notifications
+              </label>
+            </div>
+          </div>
+
+          <el-button size="small" icon="el-icon-plus" @click="addPdfFeed">Add PDF Feed</el-button>
+        </div>
+      </section>
+
     </div>
   </div>
 </template>
@@ -386,6 +435,7 @@
 import wp_editor from '../common/wp-editor.vue'
 import AceJSEditor from "../common/ace-editor-js.vue";
 import AceCSSEditor from "../common/ace-editor-css.vue";
+import LandingPage from "../../pages/LandingPage.vue";
 
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -394,7 +444,7 @@ import "ace-builds/src-noconflict/mode-css";
 export default {
   name: "form_settings",
   props: ["id"],
-  components: { wp_editor, AceJSEditor, AceCSSEditor },
+  components: { wp_editor, AceJSEditor, AceCSSEditor, LandingPage },
 
   data() {
     return {
@@ -438,6 +488,14 @@ export default {
       return !!(window.contactum_pro && window.contactum_pro.zapier_enabled);
     },
 
+    landingPageEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.landing_page_enabled);
+    },
+
+    pdfSubmissionEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.pdf_submission_enabled);
+    },
+
     navSections() {
       const sections = [ ...this.baseNavSections ];
 
@@ -447,6 +505,14 @@ export default {
 
       if (this.zapierEnabled) {
         sections.push({ id: 'zapier', label: 'Zapier' });
+      }
+
+      if (this.landingPageEnabled && window.contactum_pro.landing_page_settings_item) {
+        sections.push(window.contactum_pro.landing_page_settings_item);
+      }
+
+      if (this.pdfSubmissionEnabled) {
+        sections.push({ id: 'pdf_submission', label: 'PDF Submission' });
       }
 
       return sections;
@@ -459,6 +525,15 @@ export default {
 
     zapierFeeds() {
       return (this.settings && this.settings.zapier_feeds) || [];
+    },
+
+    pdfFeeds() {
+      return (this.settings && this.settings.pdf_submission_feeds) || [];
+    },
+
+    formFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name).map(f => ({ name: f.name, label: f.label || f.name }));
     },
 
     // Saved as the string 'true' by the Conversational Form template / the
@@ -483,10 +558,15 @@ export default {
 
     goToSection(id) {
       this.activeSection = id;
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      // Switching away from the Landing Page pane swaps a whole element out
+      // of the DOM (v-if/v-else), so wait for that render before looking up
+      // the target section's anchor.
+      this.$nextTick(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     },
 
     onContentScroll() {
@@ -533,6 +613,25 @@ export default {
 
     removeZapierFeed(index) {
       this.settings.zapier_feeds.splice(index, 1);
+    },
+
+    addPdfFeed() {
+      if (!this.settings.pdf_submission_feeds) {
+        this.$set(this.settings, 'pdf_submission_feeds', []);
+      }
+
+      this.settings.pdf_submission_feeds.push({
+        id: `pdf_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        name: '',
+        status: true,
+        title: '{form_name} — Submission #{entry_id}',
+        field_names: [],
+        attach_email: true,
+      });
+    },
+
+    removePdfFeed(index) {
+      this.settings.pdf_submission_feeds.splice(index, 1);
     },
 
     sendZapierTest(feed) {
@@ -597,6 +696,11 @@ export default {
   overflow-y: auto;
   max-height: calc(100vh - 170px);
   padding-right: 4px;
+}
+
+.cfs-landing-content {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ── Sidebar ─────────────────────────────────── */
@@ -864,5 +968,54 @@ export default {
   &:hover {
     color: #ef4444;
   }
+}
+
+/* ── PDF feed list ─────────────────────────────── */
+.cfs-pdf-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cfs-pdf-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #f9fafb;
+}
+
+.cfs-pdf-feed__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cfs-pdf-feed__name {
+  flex: 1;
+}
+
+.cfs-pdf-feed__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cfs-pdf-feed__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.cfs-pdf-feed__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
 }
 </style>

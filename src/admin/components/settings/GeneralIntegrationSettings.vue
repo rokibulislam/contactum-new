@@ -102,7 +102,7 @@
               />
             </el-select>
 
-            <p class="gis-form__tip" v-if="field.tips">{{ field.tips }}</p>
+            <p class="gis-form__tip" v-if="field.desc">{{ field.desc }}</p>
           </el-form-item>
 
           <!-- Validation message -->
@@ -194,6 +194,16 @@ export default {
         (res) => {
           this.saving = false;
           if (res.success) {
+            // OAuth-based integrations (Zoho, Google Drive, …) hand back a
+            // redirect_url instead of a final status — the credentials are
+            // only saved as a pending step, and the real 'status' isn't
+            // known until the provider's callback completes the token
+            // exchange, so navigate there instead of showing a toast.
+            if (res.data.redirect_url) {
+              window.location.href = res.data.redirect_url;
+              return;
+            }
+
             const ok = res.data.status === true || res.data.status === '1' || res.data.status === 'success';
             this.$set(this.integration, 'status', ok);
             this.$notify({

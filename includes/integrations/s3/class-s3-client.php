@@ -11,12 +11,24 @@ class S3Client {
     private $secret_key;
     private $bucket;
     private $region;
+    private $endpoint;
 
-    public function __construct( $access_key, $secret_key, $bucket, $region ) {
+    /**
+     * @param string $endpoint Optional S3-compatible custom endpoint (host,
+     *                         with or without scheme) — e.g. Cloudflare R2's
+     *                         "<account_id>.r2.cloudflarestorage.com". Leave
+     *                         blank for real AWS S3 (virtual-hosted-style,
+     *                         region-based host). When set, requests use
+     *                         path-style addressing instead, since the
+     *                         bucket isn't baked into the hostname the way
+     *                         AWS virtual-hosted buckets are.
+     */
+    public function __construct( $access_key, $secret_key, $bucket, $region, $endpoint = '' ) {
         $this->access_key = $access_key;
         $this->secret_key = $secret_key;
         $this->bucket     = $bucket;
         $this->region     = $region ?: 'us-east-1';
+        $this->endpoint   = $endpoint ? preg_replace( '#^https?://#', '', rtrim( $endpoint, '/' ) ) : '';
     }
 
     // ── Public API ────────────────────────────────────────────────────────────
@@ -27,7 +39,10 @@ class S3Client {
      * @param  string $key          S3 object key (path inside bucket).
      * @param  string $file_path    Absolute path to the local file.
      * @param  string $content_type MIME type.
-     * @param  string $acl          'public-read' or 'private'.
+     * @param  string $acl          'public-read' or 'private' — pass '' to omit
+     *                              the ACL header entirely (Cloudflare R2 and
+     *                              some other S3-compatible providers reject
+     *                              or ignore x-amz-acl on individual objects).
      * @return array|\WP_Error      ['url' => string, 'key' => string] on success.
      */
     public function put_object( $key, $file_path, $content_type = 'application/octet-stream', $acl = 'public-read' ) {
@@ -40,18 +55,30 @@ class S3Client {
         $date_long  = gmdate( 'Ymd\THis\Z' );
         $date_short = gmdate( 'Ymd' );
         $host       = $this->host();
-        $uri        = '/' . $this->encode_key( $key );
+        $uri        = $this->base_path() . '/' . $this->encode_key( $key );
 
         $to_sign = [
             'content-length'       => (string) strlen( $body ),
             'content-type'         => $content_type,
             'host'                 => $host,
-            'x-amz-acl'            => $acl,
             'x-amz-content-sha256' => $body_hash,
             'x-amz-date'           => $date_long,
         ];
 
-        $auth = $this->authorization( 'PUT', $uri, '', $to_sign, $body_hash, $date_short, $date_long );
+        $headers = [
+            'Content-Type'         => $content_type,
+            'Content-Length'       => strlen( $body ),
+            'x-amz-content-sha256' => $body_hash,
+            'x-amz-date'           => $date_long,
+        ];
+
+        if ( $acl ) {
+            $to_sign['x-amz-acl'] = $acl;
+            $headers['x-amz-acl'] = $acl;
+        }
+
+        $auth              = $this->authorization( 'PUT', $uri, '', $to_sign, $body_hash, $date_short, $date_long );
+        $headers['Authorization'] = $auth;
 
         $response = wp_remote_request(
             'https://' . $host . $uri,
@@ -59,14 +86,7 @@ class S3Client {
                 'method'  => 'PUT',
                 'body'    => $body,
                 'timeout' => 60,
-                'headers' => [
-                    'Content-Type'         => $content_type,
-                    'Content-Length'       => strlen( $body ),
-                    'x-amz-acl'            => $acl,
-                    'x-amz-content-sha256' => $body_hash,
-                    'x-amz-date'           => $date_long,
-                    'Authorization'        => $auth,
-                ],
+                'headers' => $headers,
             ]
         );
 
@@ -101,7 +121,7 @@ class S3Client {
         $date_long  = gmdate( 'Ymd\THis\Z' );
         $date_short = gmdate( 'Ymd' );
         $host       = $this->host();
-        $uri        = '/' . $this->encode_key( $key );
+        $uri        = $this->base_path() . '/' . $this->encode_key( $key );
 
         $to_sign = [
             'host'                 => $host,
@@ -137,13 +157,13 @@ class S3Client {
      *
      * @return array  ['success' => bool, 'message' => string]
      */
-    public function test_connection() {
+    public function test_connection( $acl = 'private' ) {
         $test_key  = ltrim( '.contactum-test-' . time(), '/' );
         $test_file = wp_tempnam( 'ctm_s3_test' );
 
         file_put_contents( $test_file, 'contactum-s3-ok' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
-        $result = $this->put_object( $test_key, $test_file, 'text/plain', 'private' );
+        $result = $this->put_object( $test_key, $test_file, 'text/plain', $acl );
 
         @unlink( $test_file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
@@ -163,7 +183,7 @@ class S3Client {
      * @return string
      */
     public function object_url( $key ) {
-        return 'https://' . $this->host() . '/' . $this->encode_key( ltrim( $key, '/' ) );
+        return 'https://' . $this->host() . $this->base_path() . '/' . $this->encode_key( ltrim( $key, '/' ) );
     }
 
     // ── AWS Signature V4 helpers ──────────────────────────────────────────────
@@ -212,7 +232,16 @@ class S3Client {
     }
 
     private function host() {
-        return "{$this->bucket}.s3.{$this->region}.amazonaws.com";
+        return $this->endpoint ?: "{$this->bucket}.s3.{$this->region}.amazonaws.com";
+    }
+
+    /**
+     * Path-style addressing puts the bucket as the first URI segment —
+     * needed for custom endpoints, since the bucket isn't baked into the
+     * hostname the way AWS virtual-hosted-style buckets are.
+     */
+    private function base_path() {
+        return $this->endpoint ? '/' . rawurlencode( $this->bucket ) : '';
     }
 
     /**

@@ -62,6 +62,13 @@
                 @click.prevent="makeActive('styler')"
               >Styler</a>
             </li>
+            <li v-if="landingPageEnabled">
+              <a
+                href="#"
+                :class="[ isActiveTab( 'landing' ) ? 'nav-tab-active' : '']"
+                @click.prevent="makeActive('landing')"
+              >Landing Page</a>
+            </li>
           </ul>
         </div>
 
@@ -216,6 +223,10 @@
           <Styler :id="id" />
         </div>
 
+        <div class="form-builder-landing" v-if="landingPageEnabled && isActiveTab('landing')">
+          <LandingPage :id="id" />
+        </div>
+
         <div class="form-builder-notifications" v-show="isActiveTab('notifications')">
           <form_notifications @save-notification="save_form_builder"/>
         </div>
@@ -243,6 +254,7 @@ import draggable from "vuedraggable";
 import form_notifications from "../form-notifications/index.vue";
 import form_settings from "../form-settings/index.vue";
 import Styler from "../../pages/Styler.vue";
+import LandingPage from "../../pages/LandingPage.vue";
 import Intergrations from "../intergration/index.vue";
 import form_fields from "../form-fields/index.vue";
 import field_options from "../field-options/index.vue";
@@ -306,6 +318,7 @@ export default {
     form_notifications,
     form_settings,
     Styler,
+    LandingPage,
     Intergrations,
     form_text_field,
     form_textarea_field,
@@ -371,6 +384,9 @@ export default {
     };
   },
   computed: {
+    landingPageEnabled: function () {
+      return !!( window.contactum_pro && window.contactum_pro.landing_page_enabled );
+    },
     panel_sections: function () {
       return this.$store.getters.panel_sections;
     },
@@ -586,7 +602,6 @@ export default {
             message: 'Form successfully Save.',
             position: "bottom-right"
           });
-
         }
       );
     },

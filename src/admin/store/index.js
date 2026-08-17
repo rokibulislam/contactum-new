@@ -50,6 +50,7 @@ const store = new Vuex.Store({
 		notifications: null,
 		globalintegrations: null,
 		smarttags: null,
+		landing_page_fields: null,
 	},
 
 	getters: {
@@ -87,7 +88,12 @@ const store = new Vuex.Store({
 
 		smart_tags(state) {
 			return state.smart_tags;
-		}
+		},
+
+		landing_page_fields(state) {
+			return state.landing_page_fields;
+		},
+
 	},
 
 	mutations: {
@@ -105,6 +111,7 @@ const store = new Vuex.Store({
 			state.settings = payload.settings
 			state.notifications = payload.notifications
 			state.smart_tags = payload.smart_tags;
+			state.landing_page_fields = payload.landing_page_fields
 		},
 
 		// add new form field element to column field

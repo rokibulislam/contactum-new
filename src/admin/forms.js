@@ -43,13 +43,17 @@ import {
     Alert,
     ColorPicker,
     Collapse,
-    CollapseItem
+    CollapseItem,
+    Tabs,
+    TabPane
 } from 'element-ui';
 
 Vue.use(Alert);
 Vue.use(ColorPicker);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
+Vue.use(Tabs);
+Vue.use(TabPane);
 Vue.use(Popover);
 Vue.use(Card);
 Vue.use(Tooltip)

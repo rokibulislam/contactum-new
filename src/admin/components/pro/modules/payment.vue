@@ -871,6 +871,109 @@
         </div>
       </div>
 
+      <!-- ── Paddle ────────────────────────────────────────────────────────── -->
+      <div v-show="activeTab === 'paddle'" class="pms-section">
+        <div class="pms-card">
+          <div class="pms-card__head">
+            <div class="pms-card__head-left">
+              <span class="pms-gw-badge pms-gw-badge--paddle">Paddle</span>
+              <span class="pms-status" :class="settings.paddle.enabled ? 'pms-status--on' : 'pms-status--off'">
+                {{ settings.paddle.enabled ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <el-switch v-model="settings.paddle.enabled" />
+          </div>
+          <div class="pms-card__body">
+            <div class="pms-field">
+              <label class="pms-label">Mode</label>
+              <div class="pms-mode-toggle">
+                <button
+                  class="pms-mode-btn"
+                  :class="{ 'pms-mode-btn--active': settings.paddle.test_mode }"
+                  @click="settings.paddle.test_mode = true"
+                >Sandbox</button>
+                <button
+                  class="pms-mode-btn"
+                  :class="{ 'pms-mode-btn--active': !settings.paddle.test_mode }"
+                  @click="settings.paddle.test_mode = false"
+                >Live</button>
+              </div>
+            </div>
+
+            <template v-if="settings.paddle.test_mode">
+              <div class="pms-field">
+                <label class="pms-label">Sandbox API Key</label>
+                <el-input v-model="settings.paddle.test_api_key" type="password" show-password placeholder="Sandbox API Key" />
+                <p class="pms-hint">Paddle sandbox dashboard → Developer Tools → Authentication.</p>
+              </div>
+              <div class="pms-field">
+                <label class="pms-label">Sandbox Client-side Token</label>
+                <el-input v-model="settings.paddle.test_client_token" placeholder="test_..." />
+                <p class="pms-hint">Same Authentication page — safe to expose in the browser, used to open the checkout overlay.</p>
+              </div>
+            </template>
+            <template v-else>
+              <div class="pms-field">
+                <label class="pms-label">Live API Key</label>
+                <el-input v-model="settings.paddle.live_api_key" type="password" show-password placeholder="Live API Key" />
+                <p class="pms-hint">Paddle dashboard → Developer Tools → Authentication.</p>
+              </div>
+              <div class="pms-field">
+                <label class="pms-label">Live Client-side Token</label>
+                <el-input v-model="settings.paddle.live_client_token" placeholder="live_..." />
+                <p class="pms-hint">Same Authentication page — safe to expose in the browser, used to open the checkout overlay.</p>
+              </div>
+            </template>
+
+            <div class="pms-field">
+              <label class="pms-label">Webhook Secret</label>
+              <el-input v-model="settings.paddle.webhook_secret" type="password" show-password placeholder="ntfset_..." />
+              <p class="pms-hint">Create a Notification destination in Paddle pointed at the URL below, then paste its signing secret here.</p>
+            </div>
+
+            <div class="pms-field">
+              <label class="pms-label">Webhook URL</label>
+              <code class="pms-code">{{ ajaxUrl }}?action=contactum_paddle_webhook</code>
+              <p class="pms-hint">Add this as a Notification destination URL in your Paddle dashboard, subscribed to transaction.completed, transaction.payment_failed, and transaction.canceled.</p>
+            </div>
+
+            <div class="pms-field">
+              <p class="pms-hint">
+                Checkout opens as an overlay on your site (Paddle.js) rather than a redirect — no Product/Price
+                needs to be pre-created in the Paddle dashboard, the price is set per-submission from the form.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Offline Payment ───────────────────────────────────────────────── -->
+      <div v-show="activeTab === 'offline'" class="pms-section">
+        <div class="pms-card">
+          <div class="pms-card__head">
+            <div class="pms-card__head-left">
+              <span class="pms-gw-badge pms-gw-badge--offline">Offline Payment</span>
+              <span class="pms-status" :class="settings.offline.enabled ? 'pms-status--on' : 'pms-status--off'">
+                {{ settings.offline.enabled ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <el-switch v-model="settings.offline.enabled" />
+          </div>
+          <div class="pms-card__body">
+            <div class="pms-field">
+              <label class="pms-label">Instructions</label>
+              <el-input
+                v-model="settings.offline.instructions"
+                type="textarea"
+                :rows="5"
+                placeholder="e.g. Please transfer the total to Account #1234-5678, Bank of Example, and reference your order number. Your order will be processed once payment is received."
+              />
+              <p class="pms-hint">Shown to the buyer immediately after submitting the form — no payment is collected online. Mark the entry paid manually from the Payments list once you've received it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </template>
 
       </div>
@@ -904,6 +1007,8 @@ export default {
         { key: 'flutterwave', label: 'Flutterwave', icon: 'dashicons-chart-area' },
         { key: 'billplz', label: 'Billplz', icon: 'dashicons-media-text' },
         { key: 'sslcommerz', label: 'SSLCommerz', icon: 'dashicons-shield-alt' },
+        { key: 'paddle', label: 'Paddle', icon: 'dashicons-money' },
+        { key: 'offline', label: 'Offline Payment', icon: 'dashicons-money-alt' },
       ],
       currencies: [
         { code: 'USD', name: 'US Dollar' },
@@ -935,6 +1040,7 @@ export default {
         flutterwave:  { test: ['test_secret_key'], live: ['live_secret_key'] },
         billplz:      { test: ['test_api_key', 'test_collection_id'], live: ['live_api_key', 'live_collection_id'] },
         sslcommerz:   { test: ['test_store_id', 'test_store_password'], live: ['live_store_id', 'live_store_password'] },
+        paddle:       { test: ['test_api_key', 'test_client_token'], live: ['live_api_key', 'live_client_token'] },
       },
       settings: {
         general: {
@@ -1042,6 +1148,19 @@ export default {
           test_store_password:  '',
           live_store_id:        '',
           live_store_password:  '',
+        },
+        paddle: {
+          enabled:            false,
+          test_mode:          true,
+          test_api_key:       '',
+          test_client_token:  '',
+          live_api_key:       '',
+          live_client_token:  '',
+          webhook_secret:     '',
+        },
+        offline: {
+          enabled:      false,
+          instructions: '',
         },
       },
     };
@@ -1253,6 +1372,8 @@ export default {
 .pms-gw-badge--flutterwave { background: #fff9db; color: #f08c00; }
 .pms-gw-badge--billplz { background: #e6fcf5; color: #0ca678; }
 .pms-gw-badge--sslcommerz { background: #eef2ff; color: #4338ca; }
+.pms-gw-badge--paddle { background: #f4f4f5; color: #18181b; }
+.pms-gw-badge--offline { background: #f3f4f6; color: #4b5563; }
 
 /* Status label */
 .pms-status {

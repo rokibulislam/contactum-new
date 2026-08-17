@@ -110,7 +110,12 @@ class Notification {
 
         // wp_mail( $to, $subject, htmlspecialchars_decode( $email_body ), $headers );
 
-        contactum()->emailer->send( $to, $subject, wp_kses_post( htmlspecialchars_decode( $email_body ) ) , $headers );
+        // Lets add-ons (e.g. PDF Submission) attach generated files to this
+        // specific notification without EmailManager/Notification needing
+        // to know anything about them.
+        $attachments = apply_filters( 'contactum_email_attachments', [], $notification, $this->args );
+
+        contactum()->emailer->send( $to, $subject, wp_kses_post( htmlspecialchars_decode( $email_body ) ) , $headers, $attachments );
     }
 
 
