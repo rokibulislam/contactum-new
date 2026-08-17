@@ -37,6 +37,8 @@ import {
     DatePicker,
     Skeleton,
     SkeletonItem, Dialog, MessageBox, Card,
+    ColorPicker,
+    InputNumber,
 } from 'element-ui';
 
 Vue.use(Card);
@@ -63,6 +65,8 @@ Vue.use(Skeleton);
 Vue.use(SkeletonItem);
 Vue.use(Dialog);
 Vue.use(Loading);
+Vue.use(ColorPicker);
+Vue.use(InputNumber);
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm;
@@ -81,6 +85,8 @@ import CleanTalkSettings from './components/settings/CleanTalkSettings.vue'
 import AbandonmentSettings from './components/settings/AbandonmentSettings.vue'
 import S3Settings from './components/settings/S3Settings.vue'
 import AiFormSettings from './components/settings/AiFormSettings.vue'
+import PdfGlobalSettings from './components/settings/PdfGlobalSettings.vue'
+import LicenseSettings from './components/settings/LicenseSettings.vue'
 import store from './store';
 
 const components = {
@@ -96,6 +102,8 @@ const components = {
     AbandonmentSettings: AbandonmentSettings,
     S3Settings: S3Settings,
     AiFormSettings: AiFormSettings,
+    PdfGlobalSettings: PdfGlobalSettings,
+    LicenseSettings: LicenseSettings,
 };
 
 import { scrollTop, handleSidebarActiveLink, handleSidebarSettingsActiveLink } from './helpers';

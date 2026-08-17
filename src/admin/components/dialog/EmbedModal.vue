@@ -1,56 +1,72 @@
 <template>
-  <el-dialog :visible.sync="visible" :before-close="cancelRename">
-    <h5 slot="title" class="el-dialog__title">Embed  </h5>
+  <el-dialog :visible.sync="visible" :before-close="cancel" custom-class="embed-modal" width="480px">
+    <h5 slot="title" class="el-dialog__title">Embed Form</h5>
 
-     <!-- Toggle buttons -->
-    <div class="mode-switch" v-if="!mode">
-      <el-button :type="mode === 'select' ? 'primary' : 'default'" @click="mode = 'select'">
-        Select Existing Page
-      </el-button>
-      <el-button  class="create-page" :type="mode === 'create' ? 'primary' : 'default'" @click="mode = 'create'">
-        Create New Page
-      </el-button>
+    <!-- Copy shortcode — the fastest path, works anywhere (existing page,
+         page builder, another plugin's content area) without leaving this
+         screen. -->
+    <div class="embed-section">
+      <label class="embed-section__label">Shortcode</label>
+      <div class="embed-copy-row">
+        <el-input :value="shortcode" readonly />
+        <el-button @click="copyShortcode">
+          <i class="el-icon-document-copy"></i> Copy
+        </el-button>
+      </div>
+      <p class="embed-section__hint">Paste this anywhere — a page, post, or widget area.</p>
     </div>
 
+    <div class="embed-divider"><span>or insert into a page automatically</span></div>
 
-    <!-- Existing Pages Dropdown -->
-    <div v-if="mode === 'select'" class="select-wrapper">
-      <el-select v-model="pageId" placeholder="Choose a page" @change="embedForm">
-        <el-option v-for="(page, index) in pages" :key="index" :label="page" :value="index"></el-option>
-      </el-select>
-      <el-button type="warning" class="back-btn" @click="resetMode">Back</el-button>
-    </div>
+    <div class="embed-section">
+      <div class="embed-mode-switch" v-if="!mode">
+        <button type="button" class="embed-mode-card" @click="mode = 'select'">
+          <i class="el-icon-document"></i>
+          <span>Add to Existing Page</span>
+        </button>
+        <button type="button" class="embed-mode-card" @click="mode = 'create'">
+          <i class="el-icon-circle-plus-outline"></i>
+          <span>Create New Page</span>
+        </button>
+      </div>
 
-    <!-- Create New Page Form -->
-    <div v-if="mode === 'create'" class="create-wrapper">
-      <el-input v-model="newPageTitle" placeholder="Enter new page title"></el-input>
-      <div class="btn-group">
-        <el-button type="primary" :loading="loading" @click="createPage">Create & Embed</el-button>
-        <el-button type="warning" class="back-btn" @click="resetMode">Back</el-button>
+      <div v-if="mode === 'select'" class="embed-mode-body">
+        <el-select v-model="pageId" placeholder="Choose a page" class="embed-mode-body__input">
+          <el-option v-for="(page, index) in pages" :key="index" :label="page" :value="index"></el-option>
+        </el-select>
+        <div class="embed-mode-body__actions">
+          <el-button @click="resetMode">Back</el-button>
+          <el-button type="primary" :loading="loading" @click="embedIntoExistingPage">Insert & Edit Page</el-button>
+        </div>
+      </div>
+
+      <div v-if="mode === 'create'" class="embed-mode-body">
+        <el-input v-model="newPageTitle" placeholder="Enter new page title" class="embed-mode-body__input" />
+        <div class="embed-mode-body__actions">
+          <el-button @click="resetMode">Back</el-button>
+          <el-button type="primary" :loading="loading" @click="createPage">Create & Embed</el-button>
+        </div>
       </div>
     </div>
-    <!--
-    <el-button v-if="mode === 'select' || mode==='create' " type="warning" @click="resetButtons">Back</el-button>
-    -->
+
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelRename" type="info" class="el-button--soft"
-      >Cancel</el-button
-      >
+      <el-button @click="cancel" type="info" class="el-button--soft">Cancel</el-button>
     </span>
-</el-dialog>
+  </el-dialog>
 </template>
+
 <script>
 export default {
   name: "EmbedModal",
-    props: {
-      shortcode: {
-        type: Boolean,
-        required: true
-      },
-      visible: {
-        type: Boolean,
-        required: true,
-      },
+  props: {
+    shortcode: {
+      type: String,
+      required: true,
+    },
+    visible: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -58,16 +74,15 @@ export default {
       pageId: "",
       newPageTitle: "",
       pages: window.contactum.pages,
-      loading: false
+      loading: false,
     };
   },
   methods: {
-
-    renameForm() {
-      this.$emit("close");
-      this.mode = '';
+    copyShortcode() {
+      navigator.clipboard.writeText(this.shortcode).then(() => {
+        this.$message.success("Shortcode copied.");
+      });
     },
-
 
     resetMode() {
       this.mode = "";
@@ -76,15 +91,12 @@ export default {
       this.loading = false;
     },
 
-    cancelRename() {
+    cancel() {
       this.$emit("close");
-      this.mode = '';
-      this.pageId = "";
-      this.newPageTitle = "";
+      this.resetMode();
     },
 
-    embedForm() {
-
+    embedIntoExistingPage() {
       if (!this.pageId) {
         this.$message.error("Please select a page");
         return;
@@ -92,24 +104,17 @@ export default {
 
       this.loading = true;
 
-      const url = new URL(window.contactum.admin_url); // e.g. admin.php
-      url.pathname = url.pathname.replace('admin.php', 'post.php'); // Go to post edit page
-      url.searchParams.set('post', this.page_id);
+      const url = new URL(window.contactum.admin_url);
+      url.pathname = url.pathname.replace('admin.php', 'post.php');
+      url.searchParams.set('post', this.pageId);
       url.searchParams.set('action', 'edit');
-      url.searchParams.set('embed_shortcode', this.shortcode); // Example shortcode
+      url.searchParams.set('embed_shortcode', this.shortcode);
       url.searchParams.set('_wpnonce', window.contactum.nonce);
 
-      window.location.href = url.toString(); // Redirect to WP admin edit page
-    },
-
-    goBack() {
-      this.mode = '';
-      this.pageId = '';
-      this.form_name = '';
+      window.location.href = url.toString();
     },
 
     createPage() {
-      
       if (!this.newPageTitle) {
         this.$message.error("Please enter a page title");
         return;
@@ -119,40 +124,33 @@ export default {
 
       this.$emit('embed-form');
 
-      const url = new URL(window.contactum.admin_url); // e.g. admin.php
-      url.pathname = url.pathname.replace('admin.php', 'post.php'); // Go to post edit page
+      const url = new URL(window.contactum.admin_url);
+      url.pathname = url.pathname.replace('admin.php', 'post.php');
       url.searchParams.set("title", this.newPageTitle);
       url.searchParams.set('action', 'edit');
       url.searchParams.set("embed_shortcode", this.shortcode);
       url.searchParams.set("_wpnonce", window.contactum.nonce);
 
       window.location.href = url.toString();
-    }
-
+    },
   }
 }
 </script>
 
-
 <style>
-
-.create-page {
-  margin-top: 10px;
+.embed-modal .el-dialog__body {
+  padding: 0 !important;
 }
 
-.el-dialog__body {
-  padding: 0px !important;
+.embed-modal .el-dialog__header {
+  padding: 0 0 20px !important;
 }
 
-.el-dialog__header {
-  padding: 0 0 24px !important;
-}
-
-.el-dialog {
+.embed-modal.el-dialog {
   padding: 24px 30px;
 }
 
-.el-dialog__headerbtn {
+.embed-modal .el-dialog__headerbtn {
   background-color: #fafafa !important;
   border-radius: 50% !important;
   font-size: 1.25rem !important;
@@ -163,29 +161,111 @@ export default {
   width: 2rem !important;
 }
 
-.el-dialog__title {
+.embed-modal .el-dialog__title {
   margin: 0;
+  font-weight: 700;
 }
 
-.el-form-item__label {
-  align-items: center !important;
-  color: #1e1f21 !important;
-  display: flex !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
+.embed-modal .el-dialog__footer {
+  padding: 20px 0 0 !important;
 }
 
-.el-form-item__label {
-  line-height: 1 !important;
-  padding-bottom: 16px !important;
+.embed-section {
+  margin-bottom: 4px;
 }
 
-.el-dialog__footer {
-  padding: 0 !important;
+.embed-section__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #606266;
+  margin-bottom: 8px;
 }
 
-.btn-group {
-  margin-top: 10px;
+.embed-section__hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #909399;
 }
 
+.embed-copy-row {
+  display: flex;
+  gap: 8px;
+}
+
+.embed-copy-row .el-input {
+  flex: 1;
+}
+
+.embed-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  font-size: 12px;
+  color: #909399;
+}
+
+.embed-divider::before,
+.embed-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ebeef5;
+}
+
+.embed-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.embed-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px;
+  border: 1.5px dashed #d1d5db;
+  border-radius: 8px;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.embed-mode-card i {
+  font-size: 22px;
+  color: #9ca3af;
+  transition: color 0.15s;
+}
+
+.embed-mode-card:hover {
+  border-color: #409eff;
+  border-style: solid;
+  background: #eff6ff;
+  color: #409eff;
+}
+
+.embed-mode-card:hover i {
+  color: #409eff;
+}
+
+.embed-mode-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.embed-mode-body__input {
+  width: 100%;
+}
+
+.embed-mode-body__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
 </style>

@@ -94,24 +94,26 @@
           </div>
         
         </div>
-     
+
       </div>
 
+      <!-- Lives outside any v-show="isActiveTab(...)" container — the
+           clickable form-title span above is always visible regardless of
+           tab, so this popup needs to be too, or clicking the title while
+           on a non-Editor tab sets post_title_editing but the popup renders
+           inside a display:none ancestor and never actually appears. -->
+      <span v-show="post_title_editing">
+        <RenameForm
+            :post="post"
+            :post_title_editing="post_title_editing"
+            :visible.sync="post_title_editing"
+             @rename-form = "save_form_builder"
+             @close="post_title_editing = false"
+        />
+      </span>
 
       <!-- <div class="tab-contents"> -->
         <div class="form-builder-container" v-show="isActiveTab('editor')">
-          <header>
-            <span v-show="post_title_editing">
-              <RenameForm
-                  :post="post"
-                  :post_title_editing="post_title_editing"
-                  :visible.sync="post_title_editing"
-                   @rename-form = "save_form_builder"
-                   @close="post_title_editing = false"
-              />
-            
-            </span>
-          </header>
           <div class="builder-body">
             
             <section class="form-field">
@@ -307,6 +309,24 @@ import form_color_picker from "../form-templates/color.vue";
 import form_subscription_field from "../pro/form-template/subscription.vue";
 import form_coupon_field from "../pro/form-template/coupon.vue";
 
+import form_username_field from "../pro/form-template/username.vue";
+import form_first_name_field from "../pro/form-template/first-name.vue";
+import form_last_name_field from "../pro/form-template/last-name.vue";
+import form_display_name_field from "../pro/form-template/display-name.vue";
+import form_nickname_field from "../pro/form-template/nickname.vue";
+import form_user_url_field from "../pro/form-template/user-url.vue";
+import form_user_bio_field from "../pro/form-template/user-bio.vue";
+
+import form_post_title_field from "../pro/form-template/post-title.vue";
+import form_post_content_field from "../pro/form-template/post-content.vue";
+import form_post_excerpt_field from "../pro/form-template/post-excerpt.vue";
+import form_post_tags_field from "../pro/form-template/post-tags.vue";
+import form_post_taxonomy_field from "../pro/form-template/post-taxonomy.vue";
+// Featured Image reuses the same canvas chip as the core File field —
+// visually identical (a generic "Select Files" upload preview), just
+// registered under its own template key.
+import form_featured_image_field from "../pro/form-template/file.vue";
+
 import RenameForm from "../dialog/RenameForm.vue";
 import EmbedModal from "../dialog/EmbedModal.vue";
 
@@ -368,6 +388,19 @@ export default {
     form_coupon_field,
     form_range_slider_field,
     form_color_picker,
+    form_username_field,
+    form_first_name_field,
+    form_last_name_field,
+    form_display_name_field,
+    form_nickname_field,
+    form_user_url_field,
+    form_user_bio_field,
+    form_post_title_field,
+    form_post_content_field,
+    form_post_excerpt_field,
+    form_post_tags_field,
+    form_post_taxonomy_field,
+    form_featured_image_field,
     RenameForm,
     EmbedModal,
     ProFeature

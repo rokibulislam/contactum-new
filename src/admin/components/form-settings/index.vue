@@ -24,10 +24,10 @@
     </div>
 
     <!-- ── Main content ── -->
-    <div class="cfs-content" ref="content" @scroll="onContentScroll" v-else>
+    <div class="cfs-content" ref="content" v-else>
 
       <!-- Confirmation Settings -->
-      <section class="cfs-section" id="confirmation">
+      <section class="cfs-section" id="confirmation" v-if="activeSection === 'confirmation'">
         <h2 class="cfs-section-title">Confirmation Settings</h2>
 
         <div class="cfs-field">
@@ -109,7 +109,7 @@
       </section>
 
       <!-- Form Layout -->
-      <section class="cfs-section" id="layout">
+      <section class="cfs-section" id="layout" v-if="activeSection === 'layout'">
         <h2 class="cfs-section-title">Form Layout</h2>
 
         <div class="cfs-field">
@@ -162,7 +162,7 @@
       </section>
 
       <!-- Scheduling & Restrictions -->
-      <section class="cfs-section" id="scheduling">
+      <section class="cfs-section" id="scheduling" v-if="activeSection === 'scheduling'">
         <h2 class="cfs-section-title">Scheduling &amp; Restrictions</h2>
 
         <div class="cfs-field">
@@ -244,7 +244,7 @@
       </section>
 
       <!-- Custom CSS/JS -->
-      <section class="cfs-section" id="custom-css-js">
+      <section class="cfs-section" id="custom-css-js" v-if="activeSection === 'custom-css-js'">
         <h2 class="cfs-section-title">Custom CSS &amp; JS</h2>
 
         <div class="cfs-field">
@@ -267,7 +267,7 @@
       </section>
 
       <!-- Quiz Settings -->
-      <section class="cfs-section" id="quiz" v-if="quizEnabled">
+      <section class="cfs-section" id="quiz" v-if="activeSection === 'quiz' && quizEnabled">
         <h2 class="cfs-section-title">Quiz Settings</h2>
 
         <div class="cfs-field">
@@ -341,7 +341,7 @@
       </section>
 
       <!-- Zapier -->
-      <section class="cfs-section" id="zapier" v-if="zapierEnabled">
+      <section class="cfs-section" id="zapier" v-if="activeSection === 'zapier' && zapierEnabled">
         <h2 class="cfs-section-title">Zapier</h2>
 
         <div class="cfs-field">
@@ -383,7 +383,7 @@
         </div>
       </section>
 
-      <section class="cfs-section" id="pdf_submission" v-if="pdfSubmissionEnabled">
+      <section class="cfs-section" id="pdf_submission" v-if="activeSection === 'pdf_submission' && pdfSubmissionEnabled">
         <h2 class="cfs-section-title">PDF Submission</h2>
 
         <div class="cfs-field">
@@ -395,36 +395,312 @@
           </label>
           <p class="cfs-description">Each feed generates its own PDF for every submission on this form.</p>
 
-          <p v-if="!pdfFeeds.length" class="cfs-description">No PDF feeds added yet.</p>
+          <div v-if="!pdfFeeds.length" class="cfs-pdf-empty">
+            <p class="cfs-description">No PDF feeds added yet.</p>
+            <el-button size="small" icon="el-icon-plus" @click="addPdfFeed">Add PDF Feed</el-button>
+          </div>
 
-          <div v-else class="cfs-pdf-feed-list">
-            <div v-for="(feed, index) in pdfFeeds" :key="feed.id" class="cfs-pdf-feed">
-              <div class="cfs-pdf-feed__head">
-                <el-input v-model="feed.name" placeholder="Feed name (e.g. Invoice PDF)" class="cfs-pdf-feed__name" />
-                <el-switch v-model="feed.status" />
-                <i class="el-icon-close cfs-zap-row__remove" title="Remove" @click="removePdfFeed(index)"></i>
+          <el-tabs
+            v-else
+            v-model="activePdfFeedTab"
+            type="card"
+            editable
+            class="cfs-pdf-feed-tabs"
+            @edit="handlePdfFeedTabsEdit"
+          >
+            <el-tab-pane
+              v-for="(feed, index) in pdfFeeds"
+              :key="feed.id"
+              :name="feed.id"
+            >
+              <span slot="label" class="cfs-pdf-feed-tab__label">
+                <i :class="['cfs-pdf-feed-tab__dot', feed.status ? 'is-active' : 'is-inactive']"></i>
+                {{ feed.name || `Feed ${index + 1}` }}
+              </span>
+
+              <div class="cfs-pdf-feed">
+                <div class="cfs-pdf-feed__head">
+                  <el-input v-model="feed.name" placeholder="Feed name (e.g. Invoice PDF)" class="cfs-pdf-feed__name" />
+                  <label class="cfs-pdf-feed__status">
+                    <el-switch v-model="feed.status" />
+                    {{ feed.status ? 'Enabled' : 'Disabled' }}
+                  </label>
+                </div>
+
+                <div class="cfs-pdf-feed__row">
+                  <label class="cfs-pdf-feed__label">PDF Title</label>
+                  <el-input v-model="feed.title" placeholder="{form_name} — Submission #{entry_id}" />
+                </div>
+
+                <div class="cfs-pdf-feed__row">
+                  <label class="cfs-pdf-feed__label">Fields to Include</label>
+                  <el-select v-model="feed.field_names" multiple filterable placeholder="All fields" style="width:100%">
+                    <el-option v-for="f in formFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+                  </el-select>
+                </div>
+
+                <div class="cfs-pdf-feed__row">
+                  <label class="cfs-pdf-feed__label">
+                    PDF Body
+                    <el-tooltip content="Leave blank to auto-generate a table of the selected fields. Use {field:field_name} smart tags, or {all_fields} to insert that auto-generated table inside your own layout." placement="top">
+                      <i class="el-icon-info cfs-info"></i>
+                    </el-tooltip>
+                  </label>
+                  <el-input
+                    v-model="feed.body_template"
+                    type="textarea"
+                    :rows="4"
+                    placeholder="Leave blank for an auto-generated field table, or write your own HTML using {field:field_name} and {all_fields}"
+                  />
+                </div>
+
+                <div class="cfs-pdf-feed__row cfs-pdf-feed__row--split">
+                  <div>
+                    <label class="cfs-pdf-feed__label">Paper Size</label>
+                    <el-select v-model="feed.paper_size" style="width:100%">
+                      <el-option label="Use Global Default" value="" />
+                      <el-option label="Letter" value="LETTER" />
+                      <el-option label="A4" value="A4" />
+                    </el-select>
+                  </div>
+                  <div>
+                    <label class="cfs-pdf-feed__label">Orientation</label>
+                    <el-select v-model="feed.orientation" style="width:100%">
+                      <el-option label="Use Global Default" value="" />
+                      <el-option label="Portrait" value="portrait" />
+                      <el-option label="Landscape" value="landscape" />
+                    </el-select>
+                  </div>
+                </div>
+                <p class="cfs-description">
+                  Leave on "Use Global Default" to follow the site-wide Global PDF Settings — override here only for this feed.
+                </p>
+
+                <label class="cfs-pdf-feed__checkbox">
+                  <el-checkbox v-model="feed.attach_email" /> Attach to email notifications
+                </label>
               </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </section>
 
-              <div class="cfs-pdf-feed__row">
-                <label class="cfs-pdf-feed__label">PDF Title</label>
-                <el-input v-model="feed.title" placeholder="{form_name} — Submission #{entry_id}" />
-              </div>
+      <section class="cfs-section" id="user_registration" v-if="activeSection === 'user_registration' && userRegistrationEnabled">
+        <h2 class="cfs-section-title">User Registration</h2>
 
-              <div class="cfs-pdf-feed__row">
-                <label class="cfs-pdf-feed__label">Fields to Include</label>
-                <el-select v-model="feed.field_names" multiple filterable placeholder="All fields" style="width:100%">
-                  <el-option v-for="f in formFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
-                </el-select>
-              </div>
+        <div class="cfs-field">
+          <label class="cfs-label">
+            <el-checkbox v-model="settings.user_registration_status" />
+            Register a new WordPress user on submission
+            <el-tooltip content="Requires an Email field on this form — submissions from an existing account's email are skipped, not blocked." placement="top">
+              <i class="el-icon-info cfs-info"></i>
+            </el-tooltip>
+          </label>
+        </div>
 
-              <label class="cfs-pdf-feed__checkbox">
-                <el-checkbox v-model="feed.attach_email" /> Attach to email notifications
+        <template v-if="settings.user_registration_status">
+          <div class="cfs-field">
+            <label class="cfs-label">Assign Role</label>
+            <el-select v-model="settings.user_registration_role" style="width:220px">
+              <el-option v-for="r in wpRoles" :key="r.value" :label="r.label" :value="r.value" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              Username Field
+              <el-tooltip content="Which field's answer becomes the username. Leave unset to auto-generate one from the email address." placement="top">
+                <i class="el-icon-info cfs-info"></i>
+              </el-tooltip>
+            </label>
+            <el-select v-model="settings.user_registration_username_field" clearable placeholder="Auto-generate from email" style="width:100%">
+              <el-option v-for="f in textFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              Password Field
+              <el-tooltip content="Which Password field's answer becomes the account password. Leave unset to auto-generate one — the user then sets their own via the password-reset email." placement="top">
+                <i class="el-icon-info cfs-info"></i>
+              </el-tooltip>
+            </label>
+            <el-select v-model="settings.user_registration_password_field" clearable placeholder="Auto-generate" style="width:100%">
+              <el-option v-for="f in passwordFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              <el-checkbox v-model="settings.user_registration_require_approval" />
+              Require admin approval before the account can log in
+            </label>
+          </div>
+
+          <div class="cfs-field" v-if="!settings.user_registration_require_approval">
+            <label class="cfs-label">
+              <el-checkbox v-model="settings.user_registration_auto_login" />
+              Log the user in immediately after registration
+            </label>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              <el-checkbox v-model="settings.user_registration_notify_admin" />
+              Email the site admin about new registrations
+            </label>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">Redirect After Registration</label>
+            <div class="cfs-radio-group">
+              <label
+                v-for="opt in redirects_to"
+                :key="opt.value"
+                class="cfs-radio-pill"
+                :class="{ active: (settings.user_registration_redirect || 'same') === opt.value }"
+              >
+                <input type="radio" v-model="settings.user_registration_redirect" :value="opt.value" />
+                <span class="cfs-radio-dot"></span>
+                {{ opt.label }}
+              </label>
+            </div>
+            <p class="cfs-description">"Same Page" falls through to this form's normal confirmation behavior above.</p>
+          </div>
+
+          <div class="cfs-field" v-show="settings.user_registration_redirect === 'page'">
+            <label class="cfs-label">Page</label>
+            <el-select v-model="settings.user_registration_redirect_page_id" placeholder="Select a page">
+              <el-option
+                v-for="(page, index) in settings.pages"
+                :key="index"
+                :label="index"
+                :value="page"
+              ></el-option>
+            </el-select>
+          </div>
+
+          <div class="cfs-field" v-show="settings.user_registration_redirect === 'url'">
+            <label class="cfs-label">Custom URL</label>
+            <el-input type="url" v-model="settings.user_registration_redirect_url" placeholder="https://example.com/welcome" />
+          </div>
+        </template>
+      </section>
+
+      <section class="cfs-section" id="post_submission" v-if="activeSection === 'post_submission' && postSubmissionEnabled">
+        <h2 class="cfs-section-title">Post Submission</h2>
+
+        <div class="cfs-field">
+          <label class="cfs-label">
+            <el-checkbox v-model="settings.post_submission_status" />
+            Create a WordPress post on submission
+            <el-tooltip content="Requires a Post Title or Post Content field (from the Post Submission Fields group) on this form." placement="top">
+              <i class="el-icon-info cfs-info"></i>
+            </el-tooltip>
+          </label>
+        </div>
+
+        <template v-if="settings.post_submission_status">
+          <div class="cfs-field">
+            <label class="cfs-label">Post Type</label>
+            <el-select v-model="settings.post_submission_post_type" style="width:220px">
+              <el-option v-for="pt in postTypeOptions" :key="pt.value" :label="pt.label" :value="pt.value" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">Post Status</label>
+            <el-select v-model="settings.post_submission_post_status" style="width:220px">
+              <el-option label="Draft" value="draft" />
+              <el-option label="Pending Review" value="pending" />
+              <el-option label="Published" value="publish" />
+              <el-option label="Private" value="private" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              Category Field
+              <el-tooltip content="A Dropdown field on this form whose option values are category IDs. Leave unset to always use the default category below." placement="top">
+                <i class="el-icon-info cfs-info"></i>
+              </el-tooltip>
+            </label>
+            <el-select v-model="settings.post_submission_category_field" clearable placeholder="None — use default category" style="width:100%">
+              <el-option v-for="f in dropdownFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">Default Category ID</label>
+            <el-input v-model="settings.post_submission_default_category_id" placeholder="e.g. 1" style="width:220px" />
+            <p class="cfs-description">Used when there's no Category Field, or the submitter left it blank.</p>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              Featured Image Field
+              <el-tooltip content="A File Upload field on this form to use as the post's featured image." placement="top">
+                <i class="el-icon-info cfs-info"></i>
+              </el-tooltip>
+            </label>
+            <el-select v-model="settings.post_submission_featured_image_field" clearable placeholder="None" style="width:100%">
+              <el-option v-for="f in fileFieldOptions" :key="f.name" :label="f.label" :value="f.name" />
+            </el-select>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              <el-checkbox v-model="settings.post_submission_require_login" />
+              Require the submitter to be logged in
+            </label>
+          </div>
+
+          <div class="cfs-field" v-if="!settings.post_submission_require_login">
+            <label class="cfs-label">Guest Post Author</label>
+            <el-input v-model="settings.post_submission_guest_author_id" placeholder="0 (no author)" style="width:220px" />
+            <p class="cfs-description">WordPress user ID to attribute posts to when the submitter isn't logged in.</p>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">
+              <el-checkbox v-model="settings.post_submission_notify_admin" />
+              Email the site admin about new post submissions
+            </label>
+          </div>
+
+          <div class="cfs-field">
+            <label class="cfs-label">Redirect After Submission</label>
+            <div class="cfs-radio-group">
+              <label
+                v-for="opt in postSubmissionRedirects"
+                :key="opt.value"
+                class="cfs-radio-pill"
+                :class="{ active: (settings.post_submission_redirect || 'same') === opt.value }"
+              >
+                <input type="radio" v-model="settings.post_submission_redirect" :value="opt.value" />
+                <span class="cfs-radio-dot"></span>
+                {{ opt.label }}
               </label>
             </div>
           </div>
 
-          <el-button size="small" icon="el-icon-plus" @click="addPdfFeed">Add PDF Feed</el-button>
-        </div>
+          <div class="cfs-field" v-show="settings.post_submission_redirect === 'page'">
+            <label class="cfs-label">Page</label>
+            <el-select v-model="settings.post_submission_redirect_page_id" placeholder="Select a page">
+              <el-option
+                v-for="(page, index) in settings.pages"
+                :key="index"
+                :label="index"
+                :value="page"
+              ></el-option>
+            </el-select>
+          </div>
+
+          <div class="cfs-field" v-show="settings.post_submission_redirect === 'url'">
+            <label class="cfs-label">Custom URL</label>
+            <el-input type="url" v-model="settings.post_submission_redirect_url" placeholder="https://example.com/thank-you" />
+          </div>
+        </template>
       </section>
 
     </div>
@@ -450,6 +726,7 @@ export default {
     return {
       sidebarOpen: true,
       activeSection: 'confirmation',
+      activePdfFeedTab: '',
 
       baseNavSections: [
         { id: 'confirmation', label: 'Confirmation Settings' },
@@ -496,6 +773,14 @@ export default {
       return !!(window.contactum_pro && window.contactum_pro.pdf_submission_enabled);
     },
 
+    userRegistrationEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.user_registration_enabled);
+    },
+
+    postSubmissionEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.post_submission_enabled);
+    },
+
     navSections() {
       const sections = [ ...this.baseNavSections ];
 
@@ -513,6 +798,14 @@ export default {
 
       if (this.pdfSubmissionEnabled) {
         sections.push({ id: 'pdf_submission', label: 'PDF Submission' });
+      }
+
+      if (this.userRegistrationEnabled) {
+        sections.push({ id: 'user_registration', label: 'User Registration' });
+      }
+
+      if (this.postSubmissionEnabled) {
+        sections.push({ id: 'post_submission', label: 'Post Submission' });
       }
 
       return sections;
@@ -534,6 +827,50 @@ export default {
     formFieldOptions() {
       const fields = this.$store.getters.form_fields || [];
       return fields.filter(f => f.name).map(f => ({ name: f.name, label: f.label || f.name }));
+    },
+
+    textFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name && f.template === 'text_field').map(f => ({ name: f.name, label: f.label || f.name }));
+    },
+
+    passwordFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name && f.template === 'password_field').map(f => ({ name: f.name, label: f.label || f.name }));
+    },
+
+    wpRoles() {
+      return [
+        { value: 'subscriber',   label: 'Subscriber' },
+        { value: 'contributor',  label: 'Contributor' },
+        { value: 'author',       label: 'Author' },
+        { value: 'editor',       label: 'Editor' },
+        { value: 'administrator', label: 'Administrator' },
+      ];
+    },
+
+    dropdownFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name && f.template === 'dropdown_field').map(f => ({ name: f.name, label: f.label || f.name }));
+    },
+
+    fileFieldOptions() {
+      const fields = this.$store.getters.form_fields || [];
+      return fields.filter(f => f.name && f.template === 'file_field').map(f => ({ name: f.name, label: f.label || f.name }));
+    },
+
+    postTypeOptions() {
+      return [
+        { value: 'post', label: 'Post' },
+        { value: 'page', label: 'Page' },
+      ];
+    },
+
+    postSubmissionRedirects() {
+      return [
+        ...this.redirects_to,
+        { value: 'post', label: 'The New Post' },
+      ];
     },
 
     // Saved as the string 'true' by the Conversational Form template / the
@@ -558,29 +895,14 @@ export default {
 
     goToSection(id) {
       this.activeSection = id;
-      // Switching away from the Landing Page pane swaps a whole element out
-      // of the DOM (v-if/v-else), so wait for that render before looking up
-      // the target section's anchor.
+      // Only the active section is rendered now (single-view, like Fluent
+      // Forms' own per-form settings screen), so there's nothing to scroll
+      // to — just reset the pane back to the top for the new section.
       this.$nextTick(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (this.$refs.content) {
+          this.$refs.content.scrollTop = 0;
         }
       });
-    },
-
-    onContentScroll() {
-      const sections = this.navSections.map(s => document.getElementById(s.id)).filter(Boolean);
-      const contentEl = this.$refs.content;
-      const scrollTop = contentEl.scrollTop + 40;
-
-      let current = this.navSections[0].id;
-      for (const el of sections) {
-        if (el.offsetTop <= scrollTop) {
-          current = el.id;
-        }
-      }
-      this.activeSection = current;
     },
 
     ensureQuizQuestionEntries(fields) {
@@ -620,18 +942,47 @@ export default {
         this.$set(this.settings, 'pdf_submission_feeds', []);
       }
 
+      const id = `pdf_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+
       this.settings.pdf_submission_feeds.push({
-        id: `pdf_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        id,
         name: '',
         status: true,
         title: '{form_name} — Submission #{entry_id}',
         field_names: [],
+        body_template: '',
+        paper_size: '',
+        orientation: '',
         attach_email: true,
       });
+
+      this.activePdfFeedTab = id;
     },
 
     removePdfFeed(index) {
       this.settings.pdf_submission_feeds.splice(index, 1);
+    },
+
+    removePdfFeedByTabName(name) {
+      const index = this.pdfFeeds.findIndex(f => f.id === name);
+      if (index === -1) {
+        return;
+      }
+
+      this.removePdfFeed(index);
+
+      if (this.activePdfFeedTab === name) {
+        const remaining = this.pdfFeeds;
+        this.activePdfFeedTab = remaining.length ? remaining[Math.max(0, index - 1)].id : '';
+      }
+    },
+
+    handlePdfFeedTabsEdit(targetName, action) {
+      if (action === 'add') {
+        this.addPdfFeed();
+      } else if (action === 'remove') {
+        this.removePdfFeedByTabName(targetName);
+      }
     },
 
     sendZapierTest(feed) {
@@ -676,6 +1027,15 @@ export default {
       immediate: true,
       handler(fields) {
         this.ensureQuizQuestionEntries(fields);
+      },
+    },
+
+    pdfFeeds: {
+      immediate: true,
+      handler(feeds) {
+        if (feeds.length && !feeds.some(f => f.id === this.activePdfFeedTab)) {
+          this.activePdfFeedTab = feeds[0].id;
+        }
       },
     },
   },
@@ -971,21 +1331,56 @@ export default {
 }
 
 /* ── PDF feed list ─────────────────────────────── */
-.cfs-pdf-feed-list {
+.cfs-pdf-empty {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.cfs-pdf-feed-tabs {
   margin-bottom: 12px;
+
+  .el-tabs__header {
+    margin-bottom: 0;
+  }
+
+  .el-tabs__content {
+    border: 1px solid #e5e7eb;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    background: #f9fafb;
+    padding: 14px;
+  }
+}
+
+.cfs-pdf-feed-tab__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cfs-pdf-feed-tab__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.is-active {
+    background: #22c55e;
+  }
+  &.is-inactive {
+    background: #d1d5db;
+  }
 }
 
 .cfs-pdf-feed {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px 14px;
-  background: #f9fafb;
 }
 
 .cfs-pdf-feed__head {
@@ -998,10 +1393,28 @@ export default {
   flex: 1;
 }
 
+.cfs-pdf-feed__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
 .cfs-pdf-feed__row {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.cfs-pdf-feed__row--split {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.cfs-pdf-feed__row--split > div {
+  flex: 1;
 }
 
 .cfs-pdf-feed__label {
