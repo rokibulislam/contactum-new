@@ -383,6 +383,64 @@
         </div>
       </section>
 
+      <!-- n8n -->
+      <section class="cfs-section" id="n8n" v-if="activeSection === 'n8n' && n8nEnabled">
+        <h2 class="cfs-section-title">n8n</h2>
+
+        <div class="cfs-field">
+          <label class="cfs-label">
+            Workflows
+            <el-tooltip content="Every submission is sent as JSON to each n8n Webhook node URL below" placement="top">
+              <i class="el-icon-info cfs-info"></i>
+            </el-tooltip>
+          </label>
+          <p class="cfs-description">
+            Send every submission on this form to one or more n8n workflow webhooks. Each workflow gets the full entry.
+            Need just one destination? The free Webhook integration on the Integrations page also works with n8n.
+          </p>
+
+          <p v-if="!n8nFeeds.length" class="cfs-description">No workflows added yet.</p>
+
+          <div v-else class="cfs-zap-list">
+            <div v-for="(feed, index) in n8nFeeds" :key="feed.id" class="cfs-zap-row cfs-n8n-row">
+              <el-input
+                v-model="feed.name"
+                placeholder="Workflow name (e.g. Slack notify)"
+                class="cfs-zap-row__name"
+              />
+              <el-input
+                v-model="feed.url"
+                placeholder="https://your-n8n.example.com/webhook/..."
+                class="cfs-zap-row__url"
+              />
+              <el-button
+                size="small"
+                :loading="feed.testing"
+                @click="sendN8nTest(feed)"
+              >Send Test</el-button>
+              <i class="el-icon-close cfs-zap-row__remove" title="Remove" @click="removeN8nFeed(index)"></i>
+
+              <div class="cfs-n8n-row__auth">
+                <el-input
+                  v-model="feed.header_name"
+                  placeholder="Header name (optional, e.g. Authorization)"
+                  class="cfs-n8n-row__header-name"
+                />
+                <el-input
+                  v-model="feed.header_value"
+                  type="password"
+                  show-password
+                  placeholder="Header value (optional)"
+                  class="cfs-n8n-row__header-value"
+                />
+              </div>
+            </div>
+          </div>
+
+          <el-button size="small" icon="el-icon-plus" @click="addN8nFeed">Add Workflow</el-button>
+        </div>
+      </section>
+
       <section class="cfs-section" id="pdf_submission" v-if="activeSection === 'pdf_submission' && pdfSubmissionEnabled">
         <h2 class="cfs-section-title">PDF Submission</h2>
 
@@ -765,6 +823,10 @@ export default {
       return !!(window.contactum_pro && window.contactum_pro.zapier_enabled);
     },
 
+    n8nEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.n8n_enabled);
+    },
+
     landingPageEnabled() {
       return !!(window.contactum_pro && window.contactum_pro.landing_page_enabled);
     },
@@ -790,6 +852,10 @@ export default {
 
       if (this.zapierEnabled) {
         sections.push({ id: 'zapier', label: 'Zapier' });
+      }
+
+      if (this.n8nEnabled) {
+        sections.push({ id: 'n8n', label: 'n8n' });
       }
 
       if (this.landingPageEnabled && window.contactum_pro.landing_page_settings_item) {
@@ -818,6 +884,10 @@ export default {
 
     zapierFeeds() {
       return (this.settings && this.settings.zapier_feeds) || [];
+    },
+
+    n8nFeeds() {
+      return (this.settings && this.settings.n8n_feeds) || [];
     },
 
     pdfFeeds() {
@@ -935,6 +1005,55 @@ export default {
 
     removeZapierFeed(index) {
       this.settings.zapier_feeds.splice(index, 1);
+    },
+
+    addN8nFeed() {
+      if (!this.settings.n8n_feeds) {
+        this.$set(this.settings, 'n8n_feeds', []);
+      }
+
+      this.settings.n8n_feeds.push({
+        id: `n8n_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        name: '',
+        url: '',
+        header_name: '',
+        header_value: '',
+      });
+    },
+
+    removeN8nFeed(index) {
+      this.settings.n8n_feeds.splice(index, 1);
+    },
+
+    sendN8nTest(feed) {
+      if (!feed.url) {
+        this.$notify({
+          title: 'Warning',
+          message: 'Enter a URL before sending a test.',
+          type: 'warning',
+          position: 'bottom-right',
+        });
+        return;
+      }
+
+      this.$set(feed, 'testing', true);
+
+      jQuery.post(window.contactum.ajaxurl, {
+        action: 'contactum_n8n_send_test',
+        _ajax_nonce: window.contactum.nonce,
+        url: feed.url,
+        header_name: feed.header_name,
+        header_value: feed.header_value,
+        form_id: this.id,
+      }, (res) => {
+        this.$set(feed, 'testing', false);
+        this.$notify({
+          title: res.success ? 'Success' : 'Warning',
+          message: res.data.message,
+          type: res.success ? 'success' : 'warning',
+          position: 'bottom-right',
+        });
+      });
     },
 
     addPdfFeed() {
@@ -1328,6 +1447,21 @@ export default {
   &:hover {
     color: #ef4444;
   }
+}
+
+/* ── n8n feed list (extends .cfs-zap-row with an optional auth-header row) ── */
+.cfs-n8n-row__auth {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.cfs-n8n-row__header-name,
+.cfs-n8n-row__header-value {
+  flex: 1;
+  min-width: 160px;
 }
 
 /* ── PDF feed list ─────────────────────────────── */

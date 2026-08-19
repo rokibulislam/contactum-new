@@ -30673,6 +30673,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30748,6 +30806,10 @@ __webpack_require__.r(__webpack_exports__);
       return !!(window.contactum_pro && window.contactum_pro.zapier_enabled);
     },
 
+    n8nEnabled() {
+      return !!(window.contactum_pro && window.contactum_pro.n8n_enabled);
+    },
+
     landingPageEnabled() {
       return !!(window.contactum_pro && window.contactum_pro.landing_page_enabled);
     },
@@ -30778,6 +30840,13 @@ __webpack_require__.r(__webpack_exports__);
         sections.push({
           id: 'zapier',
           label: 'Zapier'
+        });
+      }
+
+      if (this.n8nEnabled) {
+        sections.push({
+          id: 'n8n',
+          label: 'n8n'
         });
       }
 
@@ -30816,6 +30885,10 @@ __webpack_require__.r(__webpack_exports__);
 
     zapierFeeds() {
       return this.settings && this.settings.zapier_feeds || [];
+    },
+
+    n8nFeeds() {
+      return this.settings && this.settings.n8n_feeds || [];
     },
 
     pdfFeeds() {
@@ -30966,6 +31039,54 @@ __webpack_require__.r(__webpack_exports__);
 
     removeZapierFeed(index) {
       this.settings.zapier_feeds.splice(index, 1);
+    },
+
+    addN8nFeed() {
+      if (!this.settings.n8n_feeds) {
+        this.$set(this.settings, 'n8n_feeds', []);
+      }
+
+      this.settings.n8n_feeds.push({
+        id: `n8n_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        name: '',
+        url: '',
+        header_name: '',
+        header_value: ''
+      });
+    },
+
+    removeN8nFeed(index) {
+      this.settings.n8n_feeds.splice(index, 1);
+    },
+
+    sendN8nTest(feed) {
+      if (!feed.url) {
+        this.$notify({
+          title: 'Warning',
+          message: 'Enter a URL before sending a test.',
+          type: 'warning',
+          position: 'bottom-right'
+        });
+        return;
+      }
+
+      this.$set(feed, 'testing', true);
+      jQuery.post(window.contactum.ajaxurl, {
+        action: 'contactum_n8n_send_test',
+        _ajax_nonce: window.contactum.nonce,
+        url: feed.url,
+        header_name: feed.header_name,
+        header_value: feed.header_value,
+        form_id: this.id
+      }, res => {
+        this.$set(feed, 'testing', false);
+        this.$notify({
+          title: res.success ? 'Success' : 'Warning',
+          message: res.data.message,
+          type: res.success ? 'success' : 'warning',
+          position: 'bottom-right'
+        });
+      });
     },
 
     addPdfFeed() {
@@ -42671,7 +42792,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "@charset \"UTF-8\";\n/* ── Layout ──────────────────────────────────── */\n.cfs-wrap {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  min-height: calc(100vh - 170px);\n}\n.cfs-content {\n  flex: 1;\n  overflow-y: auto;\n  max-height: calc(100vh - 170px);\n  padding-right: 4px;\n}\n.cfs-landing-content {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar ─────────────────────────────────── */\n.cfs-sidebar {\n  width: 230px;\n  flex-shrink: 0;\n  position: sticky;\n  top: 0;\n}\n.cfs-sidebar-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: #3c3e42;\n  color: #fff;\n  padding: 12px 16px;\n  border-radius: 6px;\n  font-size: 14px;\n  font-weight: 600;\n  cursor: pointer;\n  user-select: none;\n}\n.cfs-nav {\n  margin: 0;\n  padding: 6px 0;\n  list-style: none;\n}\n.cfs-nav li a {\n  display: block;\n  padding: 9px 16px;\n  font-size: 14px;\n  color: #374151;\n  text-decoration: none;\n  border-radius: 5px;\n  transition: background 0.15s, color 0.15s;\n}\n.cfs-nav li a:hover {\n  background: #f3f4f6;\n  color: var(--primary);\n}\n.cfs-nav li a.active {\n  color: var(--primary);\n  font-weight: 600;\n  background: rgba(99, 102, 241, 0.06);\n}\n\n/* ── Sections ────────────────────────────────── */\n.cfs-section {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  padding: 24px;\n  margin-bottom: 20px;\n}\n.cfs-section-title {\n  margin: 0 0 20px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #111827;\n  padding-bottom: 14px;\n  border-bottom: 1px solid #f3f4f6;\n}\n\n/* ── Field wrapper ───────────────────────────── */\n.cfs-field {\n  margin-bottom: 22px;\n}\n.cfs-field:last-child {\n  margin-bottom: 0;\n}\n.cfs-label {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n  margin-bottom: 8px;\n}\n.cfs-info {\n  font-size: 14px;\n  color: #9ca3af;\n  cursor: default;\n}\n.cfs-info:hover {\n  color: var(--primary);\n}\n.cfs-description {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n\n/* ── Radio pill buttons ──────────────────────── */\n.cfs-radio-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-radio-pill {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 16px;\n  border: 1.5px solid #d1d5db;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 13px;\n  font-weight: 500;\n  color: #374151;\n  background: #fff;\n  transition: border-color 0.15s, color 0.15s;\n  user-select: none;\n}\n.cfs-radio-pill input[type=radio] {\n  display: none;\n}\n.cfs-radio-pill .cfs-radio-dot {\n  width: 15px;\n  height: 15px;\n  border-radius: 50%;\n  border: 2px solid #d1d5db;\n  flex-shrink: 0;\n  position: relative;\n  transition: border-color 0.15s, background 0.15s;\n}\n.cfs-radio-pill.active {\n  border-color: var(--primary);\n  color: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot {\n  border-color: var(--primary);\n  background: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot::after {\n  content: \"\";\n  position: absolute;\n  width: 5px;\n  height: 5px;\n  background: #fff;\n  border-radius: 50%;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n.cfs-radio-pill:hover:not(.active) {\n  border-color: #9ca3af;\n}\n\n/* ── Toggle row ──────────────────────────────── */\n.cfs-toggle {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}\n\n/* ── Date row ────────────────────────────────── */\n.cfs-date-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-date-label {\n  font-size: 13px;\n  color: #6b7280;\n  font-weight: 500;\n}\n\n/* ── Quiz question list ──────────────────────── */\n.cfs-quiz-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-quiz-question {\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 12px 14px;\n  background: #f9fafb;\n}\n.cfs-quiz-question__label {\n  font-size: 13px;\n  font-weight: 600;\n  color: #111827;\n  margin-bottom: 8px;\n}\n.cfs-quiz-question__row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-quiz-question__score {\n  max-width: 110px;\n  flex-shrink: 0;\n}\n.cfs-quiz-question__answer {\n  flex: 1;\n  min-width: 220px;\n}\n\n/* ── Zapier feed list ─────────────────────────── */\n.cfs-zap-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.cfs-zap-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 8px;\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 10px 12px;\n  background: #f9fafb;\n}\n.cfs-zap-row__name {\n  flex: 0 0 220px;\n}\n.cfs-zap-row__url {\n  flex: 1;\n  min-width: 220px;\n}\n.cfs-zap-row__remove {\n  font-size: 16px;\n  color: #9ca3af;\n  cursor: pointer;\n  padding: 4px;\n}\n.cfs-zap-row__remove:hover {\n  color: #ef4444;\n}\n\n/* ── PDF feed list ─────────────────────────────── */\n.cfs-pdf-empty {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  gap: 10px;\n  border: 1px dashed #e5e7eb;\n  border-radius: 6px;\n  padding: 20px;\n}\n.cfs-pdf-feed-tabs {\n  margin-bottom: 12px;\n}\n.cfs-pdf-feed-tabs .el-tabs__header {\n  margin-bottom: 0;\n}\n.cfs-pdf-feed-tabs .el-tabs__content {\n  border: 1px solid #e5e7eb;\n  border-top: none;\n  border-radius: 0 0 6px 6px;\n  background: #f9fafb;\n  padding: 14px;\n}\n.cfs-pdf-feed-tab__label {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n}\n.cfs-pdf-feed-tab__dot {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  flex-shrink: 0;\n}\n.cfs-pdf-feed-tab__dot.is-active {\n  background: #22c55e;\n}\n.cfs-pdf-feed-tab__dot.is-inactive {\n  background: #d1d5db;\n}\n.cfs-pdf-feed {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-pdf-feed__head {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.cfs-pdf-feed__name {\n  flex: 1;\n}\n.cfs-pdf-feed__status {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 13px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cfs-pdf-feed__row {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.cfs-pdf-feed__row--split {\n  flex-direction: row;\n  gap: 12px;\n}\n.cfs-pdf-feed__row--split > div {\n  flex: 1;\n}\n.cfs-pdf-feed__label {\n  font-size: 12px;\n  font-weight: 500;\n  color: #6b7280;\n}\n.cfs-pdf-feed__checkbox {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n/* ── Layout ──────────────────────────────────── */\n.cfs-wrap {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  min-height: calc(100vh - 170px);\n}\n.cfs-content {\n  flex: 1;\n  overflow-y: auto;\n  max-height: calc(100vh - 170px);\n  padding-right: 4px;\n}\n.cfs-landing-content {\n  flex: 1;\n  min-width: 0;\n}\n\n/* ── Sidebar ─────────────────────────────────── */\n.cfs-sidebar {\n  width: 230px;\n  flex-shrink: 0;\n  position: sticky;\n  top: 0;\n}\n.cfs-sidebar-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: #3c3e42;\n  color: #fff;\n  padding: 12px 16px;\n  border-radius: 6px;\n  font-size: 14px;\n  font-weight: 600;\n  cursor: pointer;\n  user-select: none;\n}\n.cfs-nav {\n  margin: 0;\n  padding: 6px 0;\n  list-style: none;\n}\n.cfs-nav li a {\n  display: block;\n  padding: 9px 16px;\n  font-size: 14px;\n  color: #374151;\n  text-decoration: none;\n  border-radius: 5px;\n  transition: background 0.15s, color 0.15s;\n}\n.cfs-nav li a:hover {\n  background: #f3f4f6;\n  color: var(--primary);\n}\n.cfs-nav li a.active {\n  color: var(--primary);\n  font-weight: 600;\n  background: rgba(99, 102, 241, 0.06);\n}\n\n/* ── Sections ────────────────────────────────── */\n.cfs-section {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 8px;\n  padding: 24px;\n  margin-bottom: 20px;\n}\n.cfs-section-title {\n  margin: 0 0 20px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #111827;\n  padding-bottom: 14px;\n  border-bottom: 1px solid #f3f4f6;\n}\n\n/* ── Field wrapper ───────────────────────────── */\n.cfs-field {\n  margin-bottom: 22px;\n}\n.cfs-field:last-child {\n  margin-bottom: 0;\n}\n.cfs-label {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  font-weight: 600;\n  color: #374151;\n  margin-bottom: 8px;\n}\n.cfs-info {\n  font-size: 14px;\n  color: #9ca3af;\n  cursor: default;\n}\n.cfs-info:hover {\n  color: var(--primary);\n}\n.cfs-description {\n  margin: 6px 0 0;\n  font-size: 12px;\n  color: #6b7280;\n  line-height: 1.5;\n}\n\n/* ── Radio pill buttons ──────────────────────── */\n.cfs-radio-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-radio-pill {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 7px 16px;\n  border: 1.5px solid #d1d5db;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 13px;\n  font-weight: 500;\n  color: #374151;\n  background: #fff;\n  transition: border-color 0.15s, color 0.15s;\n  user-select: none;\n}\n.cfs-radio-pill input[type=radio] {\n  display: none;\n}\n.cfs-radio-pill .cfs-radio-dot {\n  width: 15px;\n  height: 15px;\n  border-radius: 50%;\n  border: 2px solid #d1d5db;\n  flex-shrink: 0;\n  position: relative;\n  transition: border-color 0.15s, background 0.15s;\n}\n.cfs-radio-pill.active {\n  border-color: var(--primary);\n  color: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot {\n  border-color: var(--primary);\n  background: var(--primary);\n}\n.cfs-radio-pill.active .cfs-radio-dot::after {\n  content: \"\";\n  position: absolute;\n  width: 5px;\n  height: 5px;\n  background: #fff;\n  border-radius: 50%;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n}\n.cfs-radio-pill:hover:not(.active) {\n  border-color: #9ca3af;\n}\n\n/* ── Toggle row ──────────────────────────────── */\n.cfs-toggle {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}\n\n/* ── Date row ────────────────────────────────── */\n.cfs-date-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-date-label {\n  font-size: 13px;\n  color: #6b7280;\n  font-weight: 500;\n}\n\n/* ── Quiz question list ──────────────────────── */\n.cfs-quiz-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-quiz-question {\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 12px 14px;\n  background: #f9fafb;\n}\n.cfs-quiz-question__label {\n  font-size: 13px;\n  font-weight: 600;\n  color: #111827;\n  margin-bottom: 8px;\n}\n.cfs-quiz-question__row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 10px;\n}\n.cfs-quiz-question__score {\n  max-width: 110px;\n  flex-shrink: 0;\n}\n.cfs-quiz-question__answer {\n  flex: 1;\n  min-width: 220px;\n}\n\n/* ── Zapier feed list ─────────────────────────── */\n.cfs-zap-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.cfs-zap-row {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 8px;\n  border: 1px solid #e5e7eb;\n  border-radius: 6px;\n  padding: 10px 12px;\n  background: #f9fafb;\n}\n.cfs-zap-row__name {\n  flex: 0 0 220px;\n}\n.cfs-zap-row__url {\n  flex: 1;\n  min-width: 220px;\n}\n.cfs-zap-row__remove {\n  font-size: 16px;\n  color: #9ca3af;\n  cursor: pointer;\n  padding: 4px;\n}\n.cfs-zap-row__remove:hover {\n  color: #ef4444;\n}\n\n/* ── n8n feed list (extends .cfs-zap-row with an optional auth-header row) ── */\n.cfs-n8n-row__auth {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  width: 100%;\n  margin-top: 4px;\n}\n.cfs-n8n-row__header-name,\n.cfs-n8n-row__header-value {\n  flex: 1;\n  min-width: 160px;\n}\n\n/* ── PDF feed list ─────────────────────────────── */\n.cfs-pdf-empty {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  gap: 10px;\n  border: 1px dashed #e5e7eb;\n  border-radius: 6px;\n  padding: 20px;\n}\n.cfs-pdf-feed-tabs {\n  margin-bottom: 12px;\n}\n.cfs-pdf-feed-tabs .el-tabs__header {\n  margin-bottom: 0;\n}\n.cfs-pdf-feed-tabs .el-tabs__content {\n  border: 1px solid #e5e7eb;\n  border-top: none;\n  border-radius: 0 0 6px 6px;\n  background: #f9fafb;\n  padding: 14px;\n}\n.cfs-pdf-feed-tab__label {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n}\n.cfs-pdf-feed-tab__dot {\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  flex-shrink: 0;\n}\n.cfs-pdf-feed-tab__dot.is-active {\n  background: #22c55e;\n}\n.cfs-pdf-feed-tab__dot.is-inactive {\n  background: #d1d5db;\n}\n.cfs-pdf-feed {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.cfs-pdf-feed__head {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.cfs-pdf-feed__name {\n  flex: 1;\n}\n.cfs-pdf-feed__status {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 13px;\n  color: #6b7280;\n  white-space: nowrap;\n}\n.cfs-pdf-feed__row {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.cfs-pdf-feed__row--split {\n  flex-direction: row;\n  gap: 12px;\n}\n.cfs-pdf-feed__row--split > div {\n  flex: 1;\n}\n.cfs-pdf-feed__label {\n  font-size: 12px;\n  font-weight: 500;\n  color: #6b7280;\n}\n.cfs-pdf-feed__checkbox {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 13px;\n  color: #374151;\n  cursor: pointer;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -141685,6 +141806,177 @@ var render = function() {
                           on: { click: _vm.addZapierFeed }
                         },
                         [_vm._v("Add Zap")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.activeSection === "n8n" && _vm.n8nEnabled
+            ? _c(
+                "section",
+                { staticClass: "cfs-section", attrs: { id: "n8n" } },
+                [
+                  _c("h2", { staticClass: "cfs-section-title" }, [
+                    _vm._v("n8n")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "cfs-field" },
+                    [
+                      _c(
+                        "label",
+                        { staticClass: "cfs-label" },
+                        [
+                          _vm._v("\n          Workflows\n          "),
+                          _c(
+                            "el-tooltip",
+                            {
+                              attrs: {
+                                content:
+                                  "Every submission is sent as JSON to each n8n Webhook node URL below",
+                                placement: "top"
+                              }
+                            },
+                            [_c("i", { staticClass: "el-icon-info cfs-info" })]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "cfs-description" }, [
+                        _vm._v(
+                          "\n          Send every submission on this form to one or more n8n workflow webhooks. Each workflow gets the full entry.\n          Need just one destination? The free Webhook integration on the Integrations page also works with n8n.\n        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      !_vm.n8nFeeds.length
+                        ? _c("p", { staticClass: "cfs-description" }, [
+                            _vm._v("No workflows added yet.")
+                          ])
+                        : _c(
+                            "div",
+                            { staticClass: "cfs-zap-list" },
+                            _vm._l(_vm.n8nFeeds, function(feed, index) {
+                              return _c(
+                                "div",
+                                {
+                                  key: feed.id,
+                                  staticClass: "cfs-zap-row cfs-n8n-row"
+                                },
+                                [
+                                  _c("el-input", {
+                                    staticClass: "cfs-zap-row__name",
+                                    attrs: {
+                                      placeholder:
+                                        "Workflow name (e.g. Slack notify)"
+                                    },
+                                    model: {
+                                      value: feed.name,
+                                      callback: function($$v) {
+                                        _vm.$set(feed, "name", $$v)
+                                      },
+                                      expression: "feed.name"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("el-input", {
+                                    staticClass: "cfs-zap-row__url",
+                                    attrs: {
+                                      placeholder:
+                                        "https://your-n8n.example.com/webhook/..."
+                                    },
+                                    model: {
+                                      value: feed.url,
+                                      callback: function($$v) {
+                                        _vm.$set(feed, "url", $$v)
+                                      },
+                                      expression: "feed.url"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        size: "small",
+                                        loading: feed.testing
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.sendN8nTest(feed)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Send Test")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("i", {
+                                    staticClass:
+                                      "el-icon-close cfs-zap-row__remove",
+                                    attrs: { title: "Remove" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeN8nFeed(index)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "cfs-n8n-row__auth" },
+                                    [
+                                      _c("el-input", {
+                                        staticClass: "cfs-n8n-row__header-name",
+                                        attrs: {
+                                          placeholder:
+                                            "Header name (optional, e.g. Authorization)"
+                                        },
+                                        model: {
+                                          value: feed.header_name,
+                                          callback: function($$v) {
+                                            _vm.$set(feed, "header_name", $$v)
+                                          },
+                                          expression: "feed.header_name"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("el-input", {
+                                        staticClass:
+                                          "cfs-n8n-row__header-value",
+                                        attrs: {
+                                          type: "password",
+                                          "show-password": "",
+                                          placeholder: "Header value (optional)"
+                                        },
+                                        model: {
+                                          value: feed.header_value,
+                                          callback: function($$v) {
+                                            _vm.$set(feed, "header_value", $$v)
+                                          },
+                                          expression: "feed.header_value"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            }),
+                            0
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { size: "small", icon: "el-icon-plus" },
+                          on: { click: _vm.addN8nFeed }
+                        },
+                        [_vm._v("Add Workflow")]
                       )
                     ],
                     1
