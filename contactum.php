@@ -188,6 +188,8 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-form-styler-generator.php';
         require_once CONTACTUM_INCLUDES . '/class-form-styler.php';
         require_once CONTACTUM_INCLUDES . '/class-installer.php';
+        require_once CONTACTUM_INCLUDES . '/class-logger.php';
+        require_once CONTACTUM_INCLUDES . '/class-api-logger.php';
         require_once CONTACTUM_INCLUDES . '/class-notification.php';
         require_once CONTACTUM_INCLUDES . '/class-smart-tags.php';
         require_once CONTACTUM_INCLUDES . '/functions.php';
@@ -241,6 +243,9 @@ final class Contactum {
         $this->container['settings'] = new Contactum\SettingsManager();
 
         $this->container['emailer']  = new Contactum\EmailManager();
+
+        $this->container['logger'] = new Contactum\Logger();
+        $this->container['api_logger'] = new Contactum\ApiLogger();
 
     }
 

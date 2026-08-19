@@ -19,6 +19,14 @@
           <span slot="label"><i class="el-icon-refresh-right"></i> Migrate from Other Plugins</span>
           <migrator />
         </el-tab-pane>
+        <el-tab-pane name="activity-log">
+          <span slot="label"><i class="el-icon-tickets"></i> Activity Log</span>
+          <activitylog />
+        </el-tab-pane>
+        <el-tab-pane name="api-log">
+          <span slot="label"><i class="el-icon-connection"></i> API Log</span>
+          <apilog />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -28,10 +36,12 @@
 import exportforms from './tools/ExportForms.vue'
 import importforms from './tools/ImportForms.vue'
 import migrator from './tools/Migrator.vue'
+import activitylog from './tools/ActivityLog.vue'
+import apilog from './tools/ApiLog.vue'
 
 export default {
   name: "NewTools",
-  components: { exportforms, importforms, migrator },
+  components: { exportforms, importforms, migrator, activitylog, apilog },
   data() {
     return { activeTab: 'export' };
   }

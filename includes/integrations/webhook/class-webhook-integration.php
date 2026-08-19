@@ -17,6 +17,7 @@ class WebhookIntegration extends Contactum_Integration {
 
         add_action( 'contactum_entry_submission',         [ $this, 'send_webhook' ], 20, 4 );
         add_action( 'wp_ajax_contactum_webhook_send_test', [ $this, 'send_test' ] );
+        add_action( 'contactum_api_log_retry_webhook', [ $this, 'retry_dispatch' ], 10, 3 );
     }
 
     public function getIntegrationDefaults() {
@@ -138,6 +139,63 @@ class WebhookIntegration extends Contactum_Integration {
 
         $payload = $this->build_payload( $entry_id, $form_id );
         $this->dispatch( $url, $payload, $format );
+
+        contactum()->logger->log( [
+            'form_id'     => $form_id,
+            'entry_id'    => $entry_id,
+            'component'   => 'webhook',
+            'status'      => 'info',
+            'title'       => __( 'Webhook queued', 'contactum' ),
+            /* translators: %s destination webhook URL */
+            'description' => sprintf( __( 'Payload dispatched to %s.', 'contactum' ), $url ),
+        ] );
+
+        // Fired non-blocking above so the visitor's submission isn't held up
+        // waiting on a third-party endpoint. Delivery isn't confirmed until
+        // an admin retries it (blocking) from the API Log.
+        contactum()->api_logger->log( [
+            'action'   => 'webhook',
+            'form_id'  => $form_id,
+            'entry_id' => $entry_id,
+            'status'   => 'pending',
+            /* translators: %s destination webhook URL */
+            'note'     => sprintf( __( 'Dispatched to %s. Delivery not confirmed (sent non-blocking).', 'contactum' ), $url ),
+            'data'     => [
+                'url'     => $url,
+                'format'  => $format,
+                'payload' => $payload,
+            ],
+        ] );
+    }
+
+    // ── Retry handler (API Log) ────────────────────────────────────────────────
+
+    public function retry_dispatch( $data, $log_id, $log ) {
+        $url     = isset( $data['url'] ) ? $data['url'] : '';
+        $format  = isset( $data['format'] ) ? $data['format'] : 'json';
+        $payload = isset( $data['payload'] ) ? $data['payload'] : [];
+
+        if ( empty( $url ) ) {
+            contactum()->api_logger->update_status( $log_id, 'failed', __( 'No webhook URL stored for this entry.', 'contactum' ) );
+            return;
+        }
+
+        $response = $this->dispatch( $url, $payload, $format, true );
+
+        if ( is_wp_error( $response ) ) {
+            contactum()->api_logger->update_status( $log_id, 'failed', $response->get_error_message() );
+            return;
+        }
+
+        $code = wp_remote_retrieve_response_code( $response );
+
+        if ( $code >= 200 && $code < 300 ) {
+            /* translators: %d HTTP status code */
+            contactum()->api_logger->update_status( $log_id, 'success', sprintf( __( 'Delivered (HTTP %d).', 'contactum' ), $code ) );
+        } else {
+            /* translators: %d HTTP status code */
+            contactum()->api_logger->update_status( $log_id, 'failed', sprintf( __( 'Server returned HTTP %d.', 'contactum' ), $code ) );
+        }
     }
 
     // ── Test-send AJAX ───────────────────────────────────────────────────────
@@ -225,13 +283,13 @@ class WebhookIntegration extends Contactum_Integration {
         ];
     }
 
-    private function dispatch( $url, $payload, $format = 'json' ) {
+    private function dispatch( $url, $payload, $format = 'json', $blocking = false ) {
         if ( 'json' === $format ) {
             $args = [
                 'body'        => wp_json_encode( $payload ),
                 'headers'     => [ 'Content-Type' => 'application/json' ],
-                'timeout'     => 15,
-                'blocking'    => false,
+                'timeout'     => $blocking ? 15 : 5,
+                'blocking'    => $blocking,
                 'data_format' => 'body',
             ];
         } else {
@@ -247,11 +305,11 @@ class WebhookIntegration extends Contactum_Integration {
             );
             $args = [
                 'body'     => $body,
-                'timeout'  => 15,
-                'blocking' => false,
+                'timeout'  => $blocking ? 15 : 5,
+                'blocking' => $blocking,
             ];
         }
 
-        wp_remote_post( $url, $args );
+        return wp_remote_post( $url, $args );
     }
 }

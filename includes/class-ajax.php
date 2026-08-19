@@ -46,6 +46,15 @@ class Ajax {
         add_action( 'wp_ajax_nopriv_contactum_track_form_view', [ $this, 'track_form_view' ] );
 
         add_action( 'wp_ajax_contactum_get_form_analytics', [ $this, 'get_form_analytics' ] );
+
+        add_action( 'wp_ajax_contactum_get_logs', [ $this, 'contactum_get_logs_ajax' ] );
+        add_action( 'wp_ajax_contactum_get_log_filters', [ $this, 'contactum_get_log_filters_ajax' ] );
+        add_action( 'wp_ajax_contactum_delete_logs', [ $this, 'contactum_delete_logs_ajax' ] );
+
+        add_action( 'wp_ajax_contactum_get_api_logs', [ $this, 'contactum_get_api_logs_ajax' ] );
+        add_action( 'wp_ajax_contactum_get_api_log_filters', [ $this, 'contactum_get_api_log_filters_ajax' ] );
+        add_action( 'wp_ajax_contactum_delete_api_logs', [ $this, 'contactum_delete_api_logs_ajax' ] );
+        add_action( 'wp_ajax_contactum_retry_api_log', [ $this, 'contactum_retry_api_log_ajax' ] );
     }
 
     public function save_contactum_form() {
@@ -331,6 +340,19 @@ class Ajax {
             ] );
         }
 
+        contactum()->logger->log( [
+            'form_id'     => $form_id,
+            'entry_id'    => $entry_id,
+            'component'   => 'form_submission',
+            'status'      => 'success',
+            'title'       => __( 'New form submission received', 'contactum' ),
+            'description' => sprintf(
+                /* translators: %d entry id */
+                __( 'Entry #%d was created.', 'contactum' ),
+                $entry_id
+            ),
+        ] );
+
         // redirect URL
         $show_message = false;
         $redirect_to  = false;
@@ -567,6 +589,137 @@ class Ajax {
             'labels'     => array_keys( $data ),
             'datasets'  =>  array_values( $data )
         ]);
+    }
+
+    public function contactum_get_logs_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $args = [
+            'form_id'   => isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0,
+            'status'    => isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '',
+            'component' => isset( $_POST['component'] ) ? sanitize_text_field( wp_unslash( $_POST['component'] ) ) : '',
+            'search'    => isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '',
+            'date_from' => isset( $_POST['date_from'] ) ? sanitize_text_field( wp_unslash( $_POST['date_from'] ) ) : '',
+            'date_to'   => isset( $_POST['date_to'] ) ? sanitize_text_field( wp_unslash( $_POST['date_to'] ) ) : '',
+            'page'      => isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 1,
+            'per_page'  => isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 20,
+        ];
+
+        wp_send_json_success( contactum()->logger->get_logs( $args ) );
+    }
+
+    public function contactum_get_log_filters_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        wp_send_json_success( contactum()->logger->get_filters() );
+    }
+
+    public function contactum_delete_logs_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $ids = isset( $_POST['log_ids'] ) ? (array) wp_unslash( $_POST['log_ids'] ) : [];
+        $ids = array_filter( array_map( 'absint', $ids ) );
+
+        if ( ! $ids ) {
+            wp_send_json_error( __( 'No selections found', 'contactum' ) );
+        }
+
+        $deleted = contactum()->logger->delete( $ids );
+
+        wp_send_json_success( [
+            /* translators: %d number of deleted log rows */
+            'message' => sprintf( __( '%d log(s) successfully deleted', 'contactum' ), $deleted ),
+        ] );
+    }
+
+    public function contactum_get_api_logs_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $args = [
+            'form_id'   => isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0,
+            'status'    => isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '',
+            'action'    => isset( $_POST['api_action'] ) ? sanitize_text_field( wp_unslash( $_POST['api_action'] ) ) : '',
+            'search'    => isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '',
+            'date_from' => isset( $_POST['date_from'] ) ? sanitize_text_field( wp_unslash( $_POST['date_from'] ) ) : '',
+            'date_to'   => isset( $_POST['date_to'] ) ? sanitize_text_field( wp_unslash( $_POST['date_to'] ) ) : '',
+            'page'      => isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 1,
+            'per_page'  => isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 20,
+        ];
+
+        wp_send_json_success( contactum()->api_logger->get_logs( $args ) );
+    }
+
+    public function contactum_get_api_log_filters_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        wp_send_json_success( contactum()->api_logger->get_filters() );
+    }
+
+    public function contactum_delete_api_logs_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $ids = isset( $_POST['log_ids'] ) ? (array) wp_unslash( $_POST['log_ids'] ) : [];
+        $ids = array_filter( array_map( 'absint', $ids ) );
+
+        if ( ! $ids ) {
+            wp_send_json_error( __( 'No selections found', 'contactum' ) );
+        }
+
+        $deleted = contactum()->api_logger->delete( $ids );
+
+        wp_send_json_success( [
+            /* translators: %d number of deleted API log rows */
+            'message' => sprintf( __( '%d API log(s) successfully deleted', 'contactum' ), $deleted ),
+        ] );
+    }
+
+    public function contactum_retry_api_log_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $log_id = isset( $_POST['log_id'] ) ? absint( $_POST['log_id'] ) : 0;
+
+        if ( ! $log_id ) {
+            wp_send_json_error( __( 'Invalid log id', 'contactum' ) );
+        }
+
+        $result = contactum()->api_logger->retry( $log_id );
+
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( $result->get_error_message() );
+        }
+
+        wp_send_json_success( [
+            'message' => __( 'Retry completed', 'contactum' ),
+            'log'     => $result,
+        ] );
     }
 }
 

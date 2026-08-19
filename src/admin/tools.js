@@ -29,6 +29,8 @@ import {
     SkeletonItem,
     DatePicker, Message, MessageBox,
     Alert,
+    Input,
+    Checkbox,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -50,6 +52,8 @@ Vue.use(Skeleton);
 Vue.use(SkeletonItem);
 Vue.use(DatePicker);
 Vue.use(Alert);
+Vue.use(Input);
+Vue.use(Checkbox);
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm;

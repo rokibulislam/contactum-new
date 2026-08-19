@@ -80,6 +80,40 @@ class Installer {
                 UNIQUE KEY `form_session` (`form_id`, `session_hash`),
                 KEY `converted` (`converted`)
             ) $collate;",
+
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}contactum_logs` (
+                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                `form_id` bigint(20) unsigned DEFAULT NULL,
+                `entry_id` bigint(20) unsigned DEFAULT NULL,
+                `component` varchar(50) DEFAULT NULL,
+                `status` varchar(20) DEFAULT NULL,
+                `title` varchar(255) DEFAULT NULL,
+                `description` longtext,
+                `created_at` datetime DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `form_id` (`form_id`),
+                KEY `entry_id` (`entry_id`),
+                KEY `component` (`component`),
+                KEY `status` (`status`)
+            ) $collate;",
+
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}contactum_scheduled_actions` (
+                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                `action` varchar(50) DEFAULT NULL,
+                `form_id` bigint(20) unsigned DEFAULT NULL,
+                `entry_id` bigint(20) unsigned DEFAULT NULL,
+                `status` varchar(20) DEFAULT NULL,
+                `note` longtext,
+                `retry_count` int(11) unsigned NOT NULL DEFAULT 0,
+                `data` longtext,
+                `created_at` datetime DEFAULT NULL,
+                `updated_at` datetime DEFAULT NULL,
+                PRIMARY KEY (`id`),
+                KEY `form_id` (`form_id`),
+                KEY `entry_id` (`entry_id`),
+                KEY `action` (`action`),
+                KEY `status` (`status`)
+            ) $collate;",
         ];
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
