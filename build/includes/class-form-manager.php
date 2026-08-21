@@ -21,6 +21,43 @@ class FormManager {
         add_action('wp_ajax_contactum_save_form_settings', [ $this, 'contactum_save_form_settings' ]);
 
         add_action('wp_ajax_contactum_get_entries', [ $this, 'contactum_get_entries_ajax' ] );
+
+        add_action('wp_ajax_contactum_get_form_history', [ $this, 'contactum_get_form_history_ajax' ] );
+        add_action('wp_ajax_contactum_clear_form_history', [ $this, 'contactum_clear_form_history_ajax' ] );
+    }
+
+    public function contactum_get_form_history_ajax() {
+        check_ajax_referer('contactum-form-builder-nonce');
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( ! $form_id ) {
+            wp_send_json_error( __( 'Invalid form id', 'contactum' ) );
+        }
+
+        wp_send_json_success( contactum()->form_history->get( $form_id ) );
+    }
+
+    public function contactum_clear_form_history_ajax() {
+        check_ajax_referer('contactum-form-builder-nonce');
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+
+        if ( ! $form_id ) {
+            wp_send_json_error( __( 'Invalid form id', 'contactum' ) );
+        }
+
+        contactum()->form_history->clear( $form_id );
+
+        wp_send_json_success( [ 'message' => __( 'History cleared', 'contactum' ) ] );
     }
 
     public function contactum_get_form_settings() {
@@ -271,6 +308,11 @@ class FormManager {
     public function save( $data ) {
         $saved_fields  = [];
         $new_fields = [];
+
+        // Captured before anything below mutates the field posts, so it's
+        // the true "before" state for the history entry recorded at the end.
+        $old_fields = ( new Form( $data['form_id'] ) )->getFields();
+
         wp_update_post( [ 'ID' => $data['form_id'], 'post_status' => 'publish', 'post_title' => $data['post_title'] ] );
 
         $existing_fields = get_children( [
@@ -317,6 +359,8 @@ class FormManager {
         update_post_meta( $data['form_id'], 'form_settings', $data['form_settings'] );
         update_post_meta( $data['form_id'], 'integrations', $data['integrations'] );
         update_post_meta( $data['form_id'], 'contactum_version', CONTACTUM_VERSION );
+
+        contactum()->form_history->record( $data['form_id'], $old_fields, $saved_fields );
 
         return $saved_fields;
     }

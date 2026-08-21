@@ -69,6 +69,13 @@
                 @click.prevent="makeActive('landing')"
               >Landing Page</a>
             </li>
+            <li>
+              <a
+                href="#"
+                :class="[ isActiveTab( 'history' ) ? 'nav-tab-active' : '']"
+                @click.prevent="makeActive('history')"
+              >History</a>
+            </li>
           </ul>
         </div>
 
@@ -236,6 +243,10 @@
         <div class="form-builder-notifications" v-if="isActiveTab('integrations')">
           <Intergrations @save-integration="save_form_builder" />
         </div>
+
+        <div class="form-builder-history" v-if="isActiveTab('history')">
+          <FormHistory :id="id" />
+        </div>
       <!-- </div> -->
 
       <!-- OTHER MODAL/POPUP COMPONENTS -->
@@ -258,6 +269,7 @@ import form_settings from "../form-settings/index.vue";
 import Styler from "../../pages/Styler.vue";
 import LandingPage from "../../pages/LandingPage.vue";
 import Intergrations from "../intergration/index.vue";
+import FormHistory from "../form-history/index.vue";
 import form_fields from "../form-fields/index.vue";
 import field_options from "../field-options/index.vue";
 
@@ -340,6 +352,7 @@ export default {
     Styler,
     LandingPage,
     Intergrations,
+    FormHistory,
     form_text_field,
     form_textarea_field,
     form_url_field,

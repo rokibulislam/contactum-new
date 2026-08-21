@@ -179,6 +179,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-form.php';
         require_once CONTACTUM_INCLUDES . '/class-form-entry.php';
         require_once CONTACTUM_INCLUDES . '/class-form-manager.php';
+        require_once CONTACTUM_INCLUDES . '/class-form-history.php';
         require_once CONTACTUM_INCLUDES . '/class-form-preview.php';
         require_once CONTACTUM_INCLUDES . '/class-frontend.php';
         require_once CONTACTUM_INCLUDES . '/class-honeypot.php';
@@ -231,6 +232,7 @@ final class Contactum {
         $this->container['fields']    = new Contactum\FieldManager();
         $this->container['templates'] = new Contactum\TemplateManager();
         $this->container['forms']     = new Contactum\FormManager();
+        $this->container['form_history'] = new Contactum\FormHistory();
         $this->container['preview']   = new Contactum\Form_Preview();
         $this->container['frontend']  = new Contactum\Frontend();
         $this->container['honeypot']  = new Contactum\Honeypot();

@@ -83,6 +83,11 @@ Vue.use(SkeletonItem);
 Vue.use(Dialog);
 Vue.use(InputNumber)
 Vue.use(Tag)
+// Loading was imported but never registered, so every component using
+// v-loading (Styler, LandingPage, Payment, Analytics, FormHistory, …) had
+// the directive silently fail to resolve — Vue just warns and ignores it,
+// so no loading state was ever actually shown anywhere in the builder.
+Vue.use(Loading);
 
 
 import VueSweetalert2 from 'vue-sweetalert2';
