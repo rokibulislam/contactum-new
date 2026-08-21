@@ -58,12 +58,14 @@ class TemplateManager {
         return $groups;
     }
 
-    public function create( $name, $settings_overrides = [] ) {
+    public function create( $name, $settings_overrides = [], $title = '', $description = '' ) {
         if ( !$template = $this->exists( $name ) ) {
             return;
         }
 
-        $form_id = contactum()->forms->create( $template->get_title(), $template->get_form_fields() );
+        $form_title = '' !== trim( (string) $title ) ? $title : $template->get_title();
+
+        $form_id = contactum()->forms->create( $form_title, $template->get_form_fields() );
 
         if ( is_wp_error( $form_id ) ) {
             return $form_id;
@@ -78,6 +80,10 @@ class TemplateManager {
 
         foreach ( $meta_updates as $meta_key => $meta_value ) {
             update_post_meta( $form_id, $meta_key, $meta_value );
+        }
+
+        if ( '' !== trim( (string) $description ) ) {
+            update_post_meta( $form_id, 'form_description', $description );
         }
 
         return $form_id;

@@ -102,7 +102,7 @@
       <div class="cnf-grid">
 
         <!-- Blank form card -->
-        <div class="cnf-card cnf-card--blank" @click="goToBlankForm">
+        <div class="cnf-card cnf-card--blank" @click="selectBlank">
           <div class="cnf-card-blank-inner">
             <span class="cnf-card-blank-icon"><i class="el-icon-plus"></i></span>
             <span class="cnf-card-blank-label">Blank Form</span>
@@ -115,11 +115,11 @@
 
         <!-- Template cards -->
         <template v-for="(template, key) in filteredTemplates">
-          <a
+          <div
             :key="key"
-            :href="buildTemplateUrl(key)"
             class="cnf-card"
             :class="{ 'cnf-card--disabled': !template.enabled }"
+            @click="template.enabled && selectTemplate(key, template)"
           >
             <div class="cnf-card-img-wrap">
               <img :src="template.image" :alt="template.title" class="cnf-card-img" />
@@ -133,7 +133,7 @@
               <span class="cnf-card-title">{{ template.title }}</span>
               <span v-if="!template.enabled" class="cnf-card-pro-badge">Pro</span>
             </div>
-          </a>
+          </div>
         </template>
 
       </div>
@@ -143,6 +143,47 @@
         <p>No templates match "<strong>{{ searchQuery }}</strong>"</p>
       </div>
     </div>
+
+    <!-- ── Title / Description dialog, shown after picking a template ── -->
+    <el-dialog
+      :visible.sync="showDetailsModal"
+      title="Name Your Form"
+      width="600px"
+      top="12vh"
+      append-to-body
+      custom-class="cnf-details-dialog"
+      @close="cancelDetailsModal"
+    >
+      <el-form label-position="top" @submit.native.prevent="confirmCreateFromTemplate">
+        <el-form-item label="Form Title">
+          <el-input
+            v-model="newFormTitle"
+            placeholder="e.g. Contact Form"
+            ref="titleInput"
+            size="medium"
+          />
+        </el-form-item>
+        <el-form-item label="Description (optional)">
+          <el-input
+            v-model="newFormDescription"
+            type="textarea"
+            :rows="5"
+            placeholder="What is this form for?"
+          />
+        </el-form-item>
+      </el-form>
+
+      <template slot="footer">
+        <el-button @click="cancelDetailsModal">Cancel</el-button>
+        <el-button
+          type="primary"
+          :disabled="!newFormTitle.trim()"
+          @click="confirmCreateFromTemplate"
+        >
+          Create Form
+        </el-button>
+      </template>
+    </el-dialog>
   </el-dialog>
 </template>
 
@@ -169,6 +210,10 @@ export default {
       aiGenerating: false,
       aiError: '',
       startConversational: false,
+      showDetailsModal: false,
+      pendingTemplateKey: null,
+      newFormTitle: '',
+      newFormDescription: '',
     };
   },
 
@@ -184,16 +229,6 @@ export default {
       );
     },
 
-    blankFormUrl() {
-      const url = new URL(contactum.admin_url);
-      url.searchParams.set('action', 'create_template');
-      url.searchParams.set('template', 'blank');
-      url.searchParams.set('_wpnonce', contactum.nonce);
-      if (this.startConversational) {
-        url.searchParams.set('conversational', '1');
-      }
-      return url.toString();
-    },
   },
 
   methods: {
@@ -202,20 +237,55 @@ export default {
       this.$emit('close');
     },
 
-    goToBlankForm() {
-      window.location.href = this.blankFormUrl;
-    },
-
     updateFormsImported(value) {
       this.formsImported = value;
     },
 
-    buildTemplateUrl(templateSlug) {
+    buildTemplateUrl(templateSlug, title = '', description = '') {
       const url = new URL(contactum.admin_url);
       url.searchParams.set('action', 'create_template');
       url.searchParams.set('template', templateSlug);
       url.searchParams.set('_wpnonce', contactum.nonce);
+      if (title.trim()) {
+        url.searchParams.set('title', title.trim());
+      }
+      if (description.trim()) {
+        url.searchParams.set('description', description.trim());
+      }
+      if (templateSlug === 'blank' && this.startConversational) {
+        url.searchParams.set('conversational', '1');
+      }
       return url.toString();
+    },
+
+    selectTemplate(key, template) {
+      this.pendingTemplateKey = key;
+      this.newFormTitle = template.title || '';
+      this.newFormDescription = '';
+      this.showDetailsModal = true;
+
+      this.$nextTick(() => {
+        this.$refs.titleInput && this.$refs.titleInput.focus();
+      });
+    },
+
+    selectBlank() {
+      this.selectTemplate('blank', { title: 'Blank Form' });
+    },
+
+    cancelDetailsModal() {
+      this.showDetailsModal = false;
+      this.pendingTemplateKey = null;
+    },
+
+    confirmCreateFromTemplate() {
+      if (!this.newFormTitle.trim() || !this.pendingTemplateKey) return;
+
+      window.location.href = this.buildTemplateUrl(
+        this.pendingTemplateKey,
+        this.newFormTitle,
+        this.newFormDescription
+      );
     },
 
     generateWithAi() {

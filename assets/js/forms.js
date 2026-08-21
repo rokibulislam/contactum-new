@@ -27139,6 +27139,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CreateNewFormModal',
@@ -27160,7 +27201,11 @@ __webpack_require__.r(__webpack_exports__);
       aiAdditional: '',
       aiGenerating: false,
       aiError: '',
-      startConversational: false
+      startConversational: false,
+      showDetailsModal: false,
+      pendingTemplateKey: null,
+      newFormTitle: '',
+      newFormDescription: ''
     };
   },
 
@@ -27169,19 +27214,6 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.searchQuery.trim()) return this.templates;
       const q = this.searchQuery.toLowerCase();
       return Object.fromEntries(Object.entries(this.templates).filter(([, t]) => t.title.toLowerCase().includes(q) || t.description && t.description.toLowerCase().includes(q)));
-    },
-
-    blankFormUrl() {
-      const url = new URL(contactum.admin_url);
-      url.searchParams.set('action', 'create_template');
-      url.searchParams.set('template', 'blank');
-      url.searchParams.set('_wpnonce', contactum.nonce);
-
-      if (this.startConversational) {
-        url.searchParams.set('conversational', '1');
-      }
-
-      return url.toString();
     }
 
   },
@@ -27191,20 +27223,55 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('close');
     },
 
-    goToBlankForm() {
-      window.location.href = this.blankFormUrl;
-    },
-
     updateFormsImported(value) {
       this.formsImported = value;
     },
 
-    buildTemplateUrl(templateSlug) {
+    buildTemplateUrl(templateSlug, title = '', description = '') {
       const url = new URL(contactum.admin_url);
       url.searchParams.set('action', 'create_template');
       url.searchParams.set('template', templateSlug);
       url.searchParams.set('_wpnonce', contactum.nonce);
+
+      if (title.trim()) {
+        url.searchParams.set('title', title.trim());
+      }
+
+      if (description.trim()) {
+        url.searchParams.set('description', description.trim());
+      }
+
+      if (templateSlug === 'blank' && this.startConversational) {
+        url.searchParams.set('conversational', '1');
+      }
+
       return url.toString();
+    },
+
+    selectTemplate(key, template) {
+      this.pendingTemplateKey = key;
+      this.newFormTitle = template.title || '';
+      this.newFormDescription = '';
+      this.showDetailsModal = true;
+      this.$nextTick(() => {
+        this.$refs.titleInput && this.$refs.titleInput.focus();
+      });
+    },
+
+    selectBlank() {
+      this.selectTemplate('blank', {
+        title: 'Blank Form'
+      });
+    },
+
+    cancelDetailsModal() {
+      this.showDetailsModal = false;
+      this.pendingTemplateKey = null;
+    },
+
+    confirmCreateFromTemplate() {
+      if (!this.newFormTitle.trim() || !this.pendingTemplateKey) return;
+      window.location.href = this.buildTemplateUrl(this.pendingTemplateKey, this.newFormTitle, this.newFormDescription);
     },
 
     generateWithAi() {
@@ -136599,7 +136666,7 @@ var render = function() {
               "div",
               {
                 staticClass: "cnf-card cnf-card--blank",
-                on: { click: _vm.goToBlankForm }
+                on: { click: _vm.selectBlank }
               },
               [
                 _c("div", { staticClass: "cnf-card-blank-inner" }, [
@@ -136644,12 +136711,16 @@ var render = function() {
             _vm._l(_vm.filteredTemplates, function(template, key) {
               return [
                 _c(
-                  "a",
+                  "div",
                   {
                     key: key,
                     staticClass: "cnf-card",
                     class: { "cnf-card--disabled": !template.enabled },
-                    attrs: { href: _vm.buildTemplateUrl(key) }
+                    on: {
+                      click: function($event) {
+                        template.enabled && _vm.selectTemplate(key, template)
+                      }
+                    }
                   },
                   [
                     _c("div", { staticClass: "cnf-card-img-wrap" }, [
@@ -136696,7 +136767,108 @@ var render = function() {
               ])
             ])
           : _vm._e()
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            visible: _vm.showDetailsModal,
+            title: "Name Your Form",
+            width: "600px",
+            top: "12vh",
+            "append-to-body": "",
+            "custom-class": "cnf-details-dialog"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.showDetailsModal = $event
+            },
+            close: _vm.cancelDetailsModal
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              attrs: { "label-position": "top" },
+              nativeOn: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.confirmCreateFromTemplate($event)
+                }
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "Form Title" } },
+                [
+                  _c("el-input", {
+                    ref: "titleInput",
+                    attrs: { placeholder: "e.g. Contact Form", size: "medium" },
+                    model: {
+                      value: _vm.newFormTitle,
+                      callback: function($$v) {
+                        _vm.newFormTitle = $$v
+                      },
+                      expression: "newFormTitle"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "Description (optional)" } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      type: "textarea",
+                      rows: 5,
+                      placeholder: "What is this form for?"
+                    },
+                    model: {
+                      value: _vm.newFormDescription,
+                      callback: function($$v) {
+                        _vm.newFormDescription = $$v
+                      },
+                      expression: "newFormDescription"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "footer" },
+            [
+              _c("el-button", { on: { click: _vm.cancelDetailsModal } }, [
+                _vm._v("Cancel")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: {
+                    type: "primary",
+                    disabled: !_vm.newFormTitle.trim()
+                  },
+                  on: { click: _vm.confirmCreateFromTemplate }
+                },
+                [_vm._v("\n        Create Form\n      ")]
+              )
+            ],
+            1
+          )
+        ],
+        2
+      )
     ],
     2
   )
