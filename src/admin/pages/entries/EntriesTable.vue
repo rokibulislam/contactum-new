@@ -1,12 +1,34 @@
 <template>
 <div>
+
+  <!-- ── Bulk actions bar ── -->
+  <div class="ctm-bulk-bar" v-if="selectedRows.length">
+    <span class="ctm-bulk-count">{{ selectedRows.length }} selected</span>
+    <el-button size="mini" @click="bulkMarkStatus('read')">
+      <i class="el-icon-view"></i> Mark as Read
+    </el-button>
+    <el-button size="mini" @click="bulkMarkStatus('unread')">
+      <i class="el-icon-message"></i> Mark as Unread
+    </el-button>
+    <el-button size="mini" type="danger" plain @click="bulkDeleteConfirmation">
+      <i class="el-icon-delete"></i> Delete
+    </el-button>
+    <el-button size="mini" class="ctm-bulk-clear" @click="clearSelection">
+      <i class="el-icon-close"></i> Clear
+    </el-button>
+  </div>
+
   <el-table
     :data="paginatedData"
     v-loading="loading"
     stripe
     empty-text="No entries found."
     class="ctm-entries-table"
+    ref="table"
+    @selection-change="onSelectionChange"
   >
+    <el-table-column type="selection" width="44"> </el-table-column>
+
     <el-table-column prop="id" label="#" width="64" align="center"> </el-table-column>
 
     <el-table-column prop="post_title" label="Form" min-width="160" show-overflow-tooltip> </el-table-column>
@@ -90,7 +112,8 @@ export default {
   data() {
     return {
       hasForm: false,
-      admin_url: window.contactum.admin_url
+      admin_url: window.contactum.admin_url,
+      selectedRows: []
     }
   },
   mounted() {
@@ -99,10 +122,24 @@ export default {
       this.hasForm = true;
     }
   },
+  watch: {
+    paginatedData() {
+      this.clearSelection();
+    }
+  },
   methods: {
     statusLabel(status) {
       const map = { publish: 'Published', read: 'Read', unread: 'Unread', trash: 'Trash' };
       return map[status] || (status ? status : 'Published');
+    },
+
+    onSelectionChange(rows) {
+      this.selectedRows = rows;
+    },
+
+    clearSelection() {
+      this.selectedRows = [];
+      this.$refs.table && this.$refs.table.clearSelection();
     },
 
     confirmDelete(row) {
@@ -137,12 +174,111 @@ export default {
           this.$message({ type: 'error', message: 'Request failed.' });
         }
       });
+    },
+
+    bulkMarkStatus(status) {
+      const ids = this.selectedRows.map((row) => row.id);
+      if (!ids.length) return;
+
+      Promise.all(ids.map((id) => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_update_entry_status',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id,
+          status,
+        },
+      }))).then((responses) => {
+        const failed = responses.filter((r) => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+
+        this.$emit('entries-status-changed', { ids: succeededIds, status });
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({ type: 'error', message: `${failed} of ${ids.length} entries could not be updated.` });
+        } else {
+          this.$message({ type: 'success', message: `${ids.length} entrie(s) marked as ${this.statusLabel(status)}.` });
+        }
+      }).catch(() => {
+        this.$message({ type: 'error', message: 'Failed to update the selected entries.' });
+      });
+    },
+
+    bulkDeleteConfirmation() {
+      const ids = this.selectedRows.map((row) => row.id);
+      if (!ids.length) return;
+
+      this.$confirm(`Delete ${ids.length} entrie(s)? This cannot be undone.`, 'Delete Entries', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        confirmButtonClass: 'el-button--danger'
+      }).then(() => {
+        this.bulkDelete(ids);
+      }).catch(() => {});
+    },
+
+    bulkDelete(ids) {
+      Promise.all(ids.map((id) => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_delete_entry',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id,
+        },
+      }))).then((responses) => {
+        const failed = responses.filter((r) => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+
+        this.$emit('entries-deleted', succeededIds);
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({ type: 'error', message: `${failed} of ${ids.length} entries could not be deleted.` });
+        } else {
+          this.$message({ type: 'success', message: `${ids.length} entrie(s) deleted.` });
+        }
+      }).catch(() => {
+        this.$message({ type: 'error', message: 'Failed to delete the selected entries.' });
+      });
     }
   }
 }
 </script>
 
 <style scoped>
+
+/* ── Bulk actions bar ── */
+.ctm-bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #eff6ff;
+}
+
+.ctm-bulk-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-right: 4px;
+}
+
+.ctm-bulk-clear {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+}
+
+.ctm-bulk-clear:hover {
+  color: #374151;
+  background: transparent;
+}
 
 /* ── Actions cell ── */
 .ctm-actions {

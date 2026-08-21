@@ -38001,6 +38001,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#14b8a6'];
@@ -38028,7 +38054,8 @@ const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#
       clearingSearchKeyword: false,
       filter_date_range: [],
       showAddFormModal: false,
-      admin_url: window.contactum.admin_url
+      admin_url: window.contactum.admin_url,
+      selectedForms: []
     };
   },
 
@@ -38110,6 +38137,7 @@ const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#
     goToPage(pageNumber) {
       localStorage.setItem('formItemsCurrentPage', pageNumber);
       this.paginate.current_page = pageNumber;
+      this.clearSelection();
     },
 
     refetchItems() {
@@ -38125,6 +38153,16 @@ const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#
       localStorage.setItem('formItemsPerPage', val);
       this.paginate.per_page = val;
       this.paginate.current_page = 1;
+      this.clearSelection();
+    },
+
+    handleSelectionChange(rows) {
+      this.selectedForms = rows;
+    },
+
+    clearSelection() {
+      this.selectedForms = [];
+      this.$refs.formsTable && this.$refs.formsTable.clearSelection();
     },
 
     removeFormConfirmation(id, index) {
@@ -38155,8 +38193,13 @@ const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#
     },
 
     exportForm(id) {
+      // export_type must be 'selected' (with selected_forms present) or the
+      // handler falls through to its 'all' branch and exports every form on
+      // the site instead of just this one.
       const data = {
         action: 'contactum_export_forms',
+        export_type: 'selected',
+        selected_forms: 1,
         form_id: [id],
         format: 'json',
         nonce: window.contactum.export_nonce
@@ -38221,6 +38264,124 @@ const AVATAR_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#
           }
         }
       });
+    },
+
+    bulkDuplicate() {
+      const ids = this.selectedForms.map(row => row.id);
+      if (!ids.length) return;
+      this.loading = true;
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'duplicate_contactum_form',
+          post_id: id,
+          _ajax_nonce: contactum.nonce
+        }
+      }))).then(responses => {
+        const failed = responses.filter(r => !r.success).length;
+        this.clearSelection();
+        this.fetchItems();
+
+        if (failed) {
+          this.$notify.error({
+            message: `${failed} of ${ids.length} forms could not be duplicated.`,
+            position: 'bottom-right'
+          });
+        } else {
+          this.$notify.success({
+            message: `${ids.length} form(s) duplicated successfully.`,
+            position: 'bottom-right'
+          });
+        }
+      }).catch(() => {
+        this.loading = false;
+        this.$notify.error({
+          message: 'Failed to duplicate the selected forms.',
+          position: 'bottom-right'
+        });
+      });
+    },
+
+    bulkExport() {
+      const ids = this.selectedForms.map(row => row.id);
+      if (!ids.length) return;
+      const data = {
+        action: 'contactum_export_forms',
+        export_type: 'selected',
+        selected_forms: 1,
+        form_id: ids,
+        format: 'json',
+        nonce: window.contactum.export_nonce
+      };
+      location.href = contactum.ajaxurl + '?' + jQuery.param(data);
+    },
+
+    bulkDeleteConfirmation() {
+      const ids = this.selectedForms.map(row => row.id);
+      if (!ids.length) return;
+      this.$confirm(`This will permanently delete ${ids.length} form(s) and all their entries. Continue?`, 'Delete Forms', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        confirmButtonClass: 'el-button--danger'
+      }).then(() => {
+        this.$prompt('Type DELETE to confirm', 'Confirm Deletion', {
+          confirmButtonText: 'Confirm Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'el-button--danger'
+        }).then(({
+          value
+        }) => {
+          if (value === 'DELETE') {
+            this.bulkDelete(ids);
+          } else {
+            this.$notify.error({
+              title: 'Error',
+              message: 'You must type DELETE to confirm',
+              position: 'bottom-right'
+            });
+          }
+        });
+      }).catch(() => {});
+    },
+
+    bulkDelete(ids) {
+      this.loading = true;
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'delete_contactum_form',
+          post_id: id,
+          _ajax_nonce: contactum.nonce
+        }
+      }))).then(responses => {
+        const failedIds = ids.filter((id, index) => !responses[index].success);
+        this.forms = this.forms.filter(form => !ids.includes(form.id) || failedIds.includes(form.id));
+        const lastPage = Math.max(1, Math.ceil(this.forms.length / parseInt(this.paginate.per_page)));
+        if (this.paginate.current_page > lastPage) this.paginate.current_page = lastPage;
+        this.clearSelection();
+        this.loading = false;
+
+        if (failedIds.length) {
+          this.$notify.error({
+            message: `${failedIds.length} of ${ids.length} forms could not be deleted.`,
+            position: 'bottom-right'
+          });
+        } else {
+          this.$notify.success({
+            message: `${ids.length} form(s) deleted successfully.`,
+            position: 'bottom-right'
+          });
+        }
+      }).catch(() => {
+        this.loading = false;
+        this.$notify.error({
+          message: 'Failed to delete the selected forms.',
+          position: 'bottom-right'
+        });
+      });
     }
 
   },
@@ -38264,6 +38425,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var admin_pages_entries_EntriesTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! admin/pages/entries/EntriesTable.vue */ "./src/admin/pages/entries/EntriesTable.vue");
 /* harmony import */ var admin_components_common_filter_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! admin/components/common/filter.vue */ "./src/admin/components/common/filter.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38440,7 +38607,26 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
 
-    exportEntries() {}
+    exportEntries() {},
+
+    onEntryDeleted(entryId) {
+      this.entries = this.entries.filter(e => e.id !== entryId);
+      this.paginate.total = this.entries.length;
+    },
+
+    onEntriesDeleted(entryIds) {
+      this.entries = this.entries.filter(e => !entryIds.includes(e.id));
+      this.paginate.total = this.entries.length;
+    },
+
+    onEntriesStatusChanged({
+      ids,
+      status
+    }) {
+      this.entries.forEach(entry => {
+        if (ids.includes(entry.id)) entry.status = status;
+      });
+    }
 
   },
   watch: {}
@@ -40018,6 +40204,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "EntriesTable",
   props: {
@@ -40039,7 +40247,8 @@ __webpack_require__.r(__webpack_exports__);
   data() {
     return {
       hasForm: false,
-      admin_url: window.contactum.admin_url
+      admin_url: window.contactum.admin_url,
+      selectedRows: []
     };
   },
 
@@ -40051,6 +40260,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
+  watch: {
+    paginatedData() {
+      this.clearSelection();
+    }
+
+  },
   methods: {
     statusLabel(status) {
       const map = {
@@ -40060,6 +40275,15 @@ __webpack_require__.r(__webpack_exports__);
         trash: 'Trash'
       };
       return map[status] || (status ? status : 'Published');
+    },
+
+    onSelectionChange(rows) {
+      this.selectedRows = rows;
+    },
+
+    clearSelection() {
+      this.selectedRows = [];
+      this.$refs.table && this.$refs.table.clearSelection();
     },
 
     confirmDelete(row) {
@@ -40102,6 +40326,93 @@ __webpack_require__.r(__webpack_exports__);
             message: 'Request failed.'
           });
         }
+      });
+    },
+
+    bulkMarkStatus(status) {
+      const ids = this.selectedRows.map(row => row.id);
+      if (!ids.length) return;
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_update_entry_status',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id,
+          status
+        }
+      }))).then(responses => {
+        const failed = responses.filter(r => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+        this.$emit('entries-status-changed', {
+          ids: succeededIds,
+          status
+        });
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({
+            type: 'error',
+            message: `${failed} of ${ids.length} entries could not be updated.`
+          });
+        } else {
+          this.$message({
+            type: 'success',
+            message: `${ids.length} entrie(s) marked as ${this.statusLabel(status)}.`
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: 'Failed to update the selected entries.'
+        });
+      });
+    },
+
+    bulkDeleteConfirmation() {
+      const ids = this.selectedRows.map(row => row.id);
+      if (!ids.length) return;
+      this.$confirm(`Delete ${ids.length} entrie(s)? This cannot be undone.`, 'Delete Entries', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        confirmButtonClass: 'el-button--danger'
+      }).then(() => {
+        this.bulkDelete(ids);
+      }).catch(() => {});
+    },
+
+    bulkDelete(ids) {
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_delete_entry',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id
+        }
+      }))).then(responses => {
+        const failed = responses.filter(r => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+        this.$emit('entries-deleted', succeededIds);
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({
+            type: 'error',
+            message: `${failed} of ${ids.length} entries could not be deleted.`
+          });
+        } else {
+          this.$message({
+            type: 'success',
+            message: `${ids.length} entrie(s) deleted.`
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: 'Failed to delete the selected entries.'
+        });
       });
     }
 
@@ -43370,7 +43681,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "@charset \"UTF-8\";\n/* ── Page ── */\n.cfl-page[data-v-2bec4930] {\n  padding: 24px 28px;\n}\n\n/* ── Toolbar ── */\n.cfl-toolbar[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  gap: 12px;\n  margin-bottom: 20px;\n}\n.cfl-toolbar-left[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.cfl-title[data-v-2bec4930] {\n  margin: 0;\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1;\n}\n.cfl-count[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-width: 24px;\n  height: 20px;\n  padding: 0 7px;\n  background: #e5e7eb;\n  color: #374151;\n  font-size: 11px;\n  font-weight: 700;\n  border-radius: 20px;\n}\n.cfl-toolbar-right[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  flex-wrap: wrap;\n}\n.cfl-search[data-v-2bec4930] {\n  width: 240px;\n}\n.cfl-add-btn[data-v-2bec4930] {\n  white-space: nowrap;\n}\n\n/* ── Table wrapper ── */\n.cfl-table-wrap[data-v-2bec4930] {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 10px;\n  overflow: hidden;\n}\n\n/* Override Element UI table chrome */\n.cfl-table[data-v-2bec4930] {\n  width: 100%;\n  /* Show row actions on hover */\n}\n.cfl-table[data-v-2bec4930]  .el-table__header-wrapper th {\n  background: #f9fafb;\n  color: #6b7280;\n  font-size: 11px;\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n  border-bottom: 1px solid #e5e7eb;\n  padding: 10px 0;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row td {\n  padding: 14px 0;\n  border-bottom: 1px solid #f3f4f6;\n  vertical-align: middle;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:last-child td {\n  border-bottom: none;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:hover td {\n  background: #fafbff;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row .cfl-row-actions {\n  opacity: 0;\n  transition: opacity 0.15s;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:hover .cfl-row-actions {\n  opacity: 1;\n}\n\n/* ── Form cell ── */\n.cfl-form-cell[data-v-2bec4930] {\n  display: flex;\n  align-items: flex-start;\n  gap: 12px;\n}\n.cfl-avatar[data-v-2bec4930] {\n  flex-shrink: 0;\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  color: #fff;\n  font-size: 12px;\n  font-weight: 700;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  letter-spacing: 0.5px;\n}\n.cfl-form-info[data-v-2bec4930] {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  min-width: 0;\n}\n.cfl-form-name[data-v-2bec4930] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #111827;\n  text-decoration: none;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cfl-form-name[data-v-2bec4930]:hover {\n  color: #3b82f6;\n  text-decoration: underline;\n}\n\n/* ── Row quick actions ── */\n.cfl-row-actions[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 4px;\n  margin-top: 2px;\n}\n.cfl-row-actions a[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  gap: 3px;\n  font-size: 12px;\n  color: #4b5563;\n  text-decoration: none;\n  transition: color 0.12s;\n}\n.cfl-row-actions a[data-v-2bec4930]:hover {\n  color: #3b82f6;\n}\n.cfl-row-actions a i[data-v-2bec4930] {\n  font-size: 11px;\n}\n.cfl-row-actions .cfl-danger[data-v-2bec4930]:hover {\n  color: #ef4444 !important;\n}\n.cfl-sep[data-v-2bec4930] {\n  color: #d1d5db;\n  font-size: 11px;\n  user-select: none;\n}\n\n/* ── Shortcode ── */\n.cfl-shortcode[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  background: #f3f4f6;\n  border: 1px solid #e5e7eb;\n  border-radius: 5px;\n  padding: 4px 9px;\n  font-size: 11.5px;\n  color: #374151;\n  cursor: pointer;\n  transition: background 0.12s, border-color 0.12s;\n  white-space: nowrap;\n}\n.cfl-shortcode[data-v-2bec4930]:hover {\n  background: #e0e7ff;\n  border-color: #a5b4fc;\n  color: #4338ca;\n}\n\n/* ── Date ── */\n.cfl-date[data-v-2bec4930] {\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Entries badge ── */\n.cfl-entries-badge[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-width: 28px;\n  height: 22px;\n  padding: 0 8px;\n  border-radius: 20px;\n  font-size: 12px;\n  font-weight: 600;\n  text-decoration: none;\n  background: #f3f4f6;\n  color: #6b7280;\n  transition: background 0.12s, color 0.12s;\n}\n.cfl-entries-badge--has[data-v-2bec4930] {\n  background: #eff6ff;\n  color: #1d4ed8;\n}\n.cfl-entries-badge[data-v-2bec4930]:hover {\n  background: #dbeafe;\n  color: #1d4ed8;\n}\n\n/* ── More button ── */\n.cfl-more-btn[data-v-2bec4930] {\n  border: 1px solid #e5e7eb;\n  background: transparent;\n  color: #6b7280;\n  padding: 5px 8px;\n  border-radius: 6px;\n}\n.cfl-more-btn[data-v-2bec4930]:hover {\n  background: #f3f4f6;\n  border-color: #d1d5db;\n  color: #374151;\n}\n\n/* ── Dropdown delete item ── */\n[data-v-2bec4930] .cfl-dropdown-delete * {\n  color: #ef4444 !important;\n}\n\n/* ── Empty state ── */\n.cfl-empty[data-v-2bec4930] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 60px 20px;\n  color: #9ca3af;\n}\n.cfl-empty a[data-v-2bec4930] {\n  color: #3b82f6;\n}\n.cfl-empty p[data-v-2bec4930] {\n  margin: 12px 0 0;\n  font-size: 14px;\n}\n.cfl-empty-icon[data-v-2bec4930] {\n  font-size: 40px;\n  color: #d1d5db;\n}\n\n/* ── Pagination ── */\n.cfl-pagination[data-v-2bec4930] {\n  margin-top: 16px;\n  display: flex;\n  justify-content: flex-end;\n}", ""]);
+exports.push([module.id, "@charset \"UTF-8\";\n/* ── Page ── */\n.cfl-page[data-v-2bec4930] {\n  padding: 24px 28px;\n}\n\n/* ── Toolbar ── */\n.cfl-toolbar[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  gap: 12px;\n  margin-bottom: 20px;\n}\n.cfl-toolbar-left[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n.cfl-title[data-v-2bec4930] {\n  margin: 0;\n  font-size: 20px;\n  font-weight: 700;\n  color: #111827;\n  line-height: 1;\n}\n.cfl-count[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-width: 24px;\n  height: 20px;\n  padding: 0 7px;\n  background: #e5e7eb;\n  color: #374151;\n  font-size: 11px;\n  font-weight: 700;\n  border-radius: 20px;\n}\n.cfl-toolbar-right[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  flex-wrap: wrap;\n}\n.cfl-search[data-v-2bec4930] {\n  width: 240px;\n}\n.cfl-add-btn[data-v-2bec4930] {\n  white-space: nowrap;\n}\n\n/* ── Bulk actions bar ── */\n.cfl-bulk-bar[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 10px 14px;\n  margin-bottom: 12px;\n  background: #eff6ff;\n  border: 1px solid #bfdbfe;\n  border-radius: 8px;\n}\n.cfl-bulk-count[data-v-2bec4930] {\n  font-size: 13px;\n  font-weight: 600;\n  color: #1d4ed8;\n  margin-right: 4px;\n}\n.cfl-bulk-clear[data-v-2bec4930] {\n  margin-left: auto;\n  border: none;\n  background: transparent;\n  color: #6b7280;\n}\n.cfl-bulk-clear[data-v-2bec4930]:hover {\n  color: #374151;\n  background: transparent;\n}\n\n/* ── Table wrapper ── */\n.cfl-table-wrap[data-v-2bec4930] {\n  background: #fff;\n  border: 1px solid #e5e7eb;\n  border-radius: 10px;\n  overflow: hidden;\n}\n\n/* Override Element UI table chrome */\n.cfl-table[data-v-2bec4930] {\n  width: 100%;\n  /* Show row actions on hover */\n}\n.cfl-table[data-v-2bec4930]  .el-table__header-wrapper th {\n  background: #f9fafb;\n  color: #6b7280;\n  font-size: 11px;\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n  border-bottom: 1px solid #e5e7eb;\n  padding: 10px 0;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row td {\n  padding: 14px 0;\n  border-bottom: 1px solid #f3f4f6;\n  vertical-align: middle;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:last-child td {\n  border-bottom: none;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:hover td {\n  background: #fafbff;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row .cfl-row-actions {\n  opacity: 0;\n  transition: opacity 0.15s;\n}\n.cfl-table[data-v-2bec4930]  .cfl-row:hover .cfl-row-actions {\n  opacity: 1;\n}\n\n/* ── Form cell ── */\n.cfl-form-cell[data-v-2bec4930] {\n  display: flex;\n  align-items: flex-start;\n  gap: 12px;\n}\n.cfl-avatar[data-v-2bec4930] {\n  flex-shrink: 0;\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  color: #fff;\n  font-size: 12px;\n  font-weight: 700;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  letter-spacing: 0.5px;\n}\n.cfl-form-info[data-v-2bec4930] {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  min-width: 0;\n}\n.cfl-form-name[data-v-2bec4930] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #111827;\n  text-decoration: none;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cfl-form-name[data-v-2bec4930]:hover {\n  color: #3b82f6;\n  text-decoration: underline;\n}\n\n/* ── Row quick actions ── */\n.cfl-row-actions[data-v-2bec4930] {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 4px;\n  margin-top: 2px;\n}\n.cfl-row-actions a[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  gap: 3px;\n  font-size: 12px;\n  color: #4b5563;\n  text-decoration: none;\n  transition: color 0.12s;\n}\n.cfl-row-actions a[data-v-2bec4930]:hover {\n  color: #3b82f6;\n}\n.cfl-row-actions a i[data-v-2bec4930] {\n  font-size: 11px;\n}\n.cfl-row-actions .cfl-danger[data-v-2bec4930]:hover {\n  color: #ef4444 !important;\n}\n.cfl-sep[data-v-2bec4930] {\n  color: #d1d5db;\n  font-size: 11px;\n  user-select: none;\n}\n\n/* ── Shortcode ── */\n.cfl-shortcode[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  background: #f3f4f6;\n  border: 1px solid #e5e7eb;\n  border-radius: 5px;\n  padding: 4px 9px;\n  font-size: 11.5px;\n  color: #374151;\n  cursor: pointer;\n  transition: background 0.12s, border-color 0.12s;\n  white-space: nowrap;\n}\n.cfl-shortcode[data-v-2bec4930]:hover {\n  background: #e0e7ff;\n  border-color: #a5b4fc;\n  color: #4338ca;\n}\n\n/* ── Date ── */\n.cfl-date[data-v-2bec4930] {\n  font-size: 13px;\n  color: #6b7280;\n}\n\n/* ── Entries badge ── */\n.cfl-entries-badge[data-v-2bec4930] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-width: 28px;\n  height: 22px;\n  padding: 0 8px;\n  border-radius: 20px;\n  font-size: 12px;\n  font-weight: 600;\n  text-decoration: none;\n  background: #f3f4f6;\n  color: #6b7280;\n  transition: background 0.12s, color 0.12s;\n}\n.cfl-entries-badge--has[data-v-2bec4930] {\n  background: #eff6ff;\n  color: #1d4ed8;\n}\n.cfl-entries-badge[data-v-2bec4930]:hover {\n  background: #dbeafe;\n  color: #1d4ed8;\n}\n\n/* ── More button ── */\n.cfl-more-btn[data-v-2bec4930] {\n  border: 1px solid #e5e7eb;\n  background: transparent;\n  color: #6b7280;\n  padding: 5px 8px;\n  border-radius: 6px;\n}\n.cfl-more-btn[data-v-2bec4930]:hover {\n  background: #f3f4f6;\n  border-color: #d1d5db;\n  color: #374151;\n}\n\n/* ── Dropdown delete item ── */\n[data-v-2bec4930] .cfl-dropdown-delete * {\n  color: #ef4444 !important;\n}\n\n/* ── Empty state ── */\n.cfl-empty[data-v-2bec4930] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 60px 20px;\n  color: #9ca3af;\n}\n.cfl-empty a[data-v-2bec4930] {\n  color: #3b82f6;\n}\n.cfl-empty p[data-v-2bec4930] {\n  margin: 12px 0 0;\n  font-size: 14px;\n}\n.cfl-empty-icon[data-v-2bec4930] {\n  font-size: 40px;\n  color: #d1d5db;\n}\n\n/* ── Pagination ── */\n.cfl-pagination[data-v-2bec4930] {\n  margin-top: 16px;\n  display: flex;\n  justify-content: flex-end;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -44169,7 +44480,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Actions cell ── */\n.ctm-actions[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  justify-content: flex-end;\n  white-space: nowrap;\n}\n\n/* ── Status badge ── */\n.ctm-status[data-v-1c60aa61] {\n  display: inline-block;\n  padding: 3px 10px;\n  border-radius: 12px;\n  font-size: 12px;\n  font-weight: 500;\n  white-space: nowrap;\n}\n.ctm-status--publish[data-v-1c60aa61],\n.ctm-status--read[data-v-1c60aa61] {\n  background: #ecfdf5;\n  color: #059669;\n}\n.ctm-status--unread[data-v-1c60aa61] {\n  background: #eff6ff;\n  color: #2563eb;\n}\n.ctm-status--trash[data-v-1c60aa61] {\n  background: #fef2f2;\n  color: #dc2626;\n}\n\n/* ── Cell helpers ── */\n.ctm-user-cell[data-v-1c60aa61],\n.ctm-date-cell[data-v-1c60aa61] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  color: #374151;\n  font-size: 13px;\n  white-space: nowrap;\n}\n.ctm-user-cell i[data-v-1c60aa61],\n.ctm-date-cell i[data-v-1c60aa61] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Bulk actions bar ── */\n.ctm-bulk-bar[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 10px 16px;\n  border-bottom: 1px solid #f0f0f0;\n  background: #eff6ff;\n}\n.ctm-bulk-count[data-v-1c60aa61] {\n  font-size: 13px;\n  font-weight: 600;\n  color: #1d4ed8;\n  margin-right: 4px;\n}\n.ctm-bulk-clear[data-v-1c60aa61] {\n  margin-left: auto;\n  border: none;\n  background: transparent;\n  color: #6b7280;\n}\n.ctm-bulk-clear[data-v-1c60aa61]:hover {\n  color: #374151;\n  background: transparent;\n}\n\n/* ── Actions cell ── */\n.ctm-actions[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  justify-content: flex-end;\n  white-space: nowrap;\n}\n\n/* ── Status badge ── */\n.ctm-status[data-v-1c60aa61] {\n  display: inline-block;\n  padding: 3px 10px;\n  border-radius: 12px;\n  font-size: 12px;\n  font-weight: 500;\n  white-space: nowrap;\n}\n.ctm-status--publish[data-v-1c60aa61],\n.ctm-status--read[data-v-1c60aa61] {\n  background: #ecfdf5;\n  color: #059669;\n}\n.ctm-status--unread[data-v-1c60aa61] {\n  background: #eff6ff;\n  color: #2563eb;\n}\n.ctm-status--trash[data-v-1c60aa61] {\n  background: #fef2f2;\n  color: #dc2626;\n}\n\n/* ── Cell helpers ── */\n.ctm-user-cell[data-v-1c60aa61],\n.ctm-date-cell[data-v-1c60aa61] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  color: #374151;\n  font-size: 13px;\n  white-space: nowrap;\n}\n.ctm-user-cell i[data-v-1c60aa61],\n.ctm-date-cell i[data-v-1c60aa61] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -152443,6 +152754,62 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm.selectedForms.length
+        ? _c(
+            "div",
+            { staticClass: "cfl-bulk-bar" },
+            [
+              _c("span", { staticClass: "cfl-bulk-count" }, [
+                _vm._v(_vm._s(_vm.selectedForms.length) + " selected")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                { attrs: { size: "mini" }, on: { click: _vm.bulkDuplicate } },
+                [
+                  _c("i", { staticClass: "el-icon-copy-document" }),
+                  _vm._v(" Duplicate\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                { attrs: { size: "mini" }, on: { click: _vm.bulkExport } },
+                [
+                  _c("i", { staticClass: "el-icon-download" }),
+                  _vm._v(" Export\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini", type: "danger", plain: "" },
+                  on: { click: _vm.bulkDeleteConfirmation }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-delete" }),
+                  _vm._v(" Delete\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticClass: "cfl-bulk-clear",
+                  attrs: { size: "mini" },
+                  on: { click: _vm.clearSelection }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-close" }),
+                  _vm._v(" Clear\n    ")
+                ]
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         {
@@ -152461,13 +152828,19 @@ var render = function() {
             ? _c(
                 "el-table",
                 {
+                  ref: "formsTable",
                   staticClass: "cfl-table",
                   attrs: {
                     data: _vm.paginatedData,
                     "row-class-name": "cfl-row"
-                  }
+                  },
+                  on: { "selection-change": _vm.handleSelectionChange }
                 },
                 [
+                  _c("el-table-column", {
+                    attrs: { type: "selection", width: "44" }
+                  }),
+                  _vm._v(" "),
                   _c("el-table-column", {
                     attrs: { label: "Form", "min-width": "260" },
                     scopedSlots: _vm._u(
@@ -152856,7 +153229,12 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("EntriesTable", {
-        attrs: { "paginated-data": _vm.paginatedData, form: _vm.form_id }
+        attrs: { "paginated-data": _vm.paginatedData, form: _vm.form_id },
+        on: {
+          "entry-deleted": _vm.onEntryDeleted,
+          "entries-deleted": _vm.onEntriesDeleted,
+          "entries-status-changed": _vm.onEntriesStatusChanged
+        }
       }),
       _vm._v(" "),
       _c("el-pagination", {
@@ -155727,6 +156105,76 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm.selectedRows.length
+        ? _c(
+            "div",
+            { staticClass: "ctm-bulk-bar" },
+            [
+              _c("span", { staticClass: "ctm-bulk-count" }, [
+                _vm._v(_vm._s(_vm.selectedRows.length) + " selected")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bulkMarkStatus("read")
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-view" }),
+                  _vm._v(" Mark as Read\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bulkMarkStatus("unread")
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-message" }),
+                  _vm._v(" Mark as Unread\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini", type: "danger", plain: "" },
+                  on: { click: _vm.bulkDeleteConfirmation }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-delete" }),
+                  _vm._v(" Delete\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticClass: "ctm-bulk-clear",
+                  attrs: { size: "mini" },
+                  on: { click: _vm.clearSelection }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-close" }),
+                  _vm._v(" Clear\n    ")
+                ]
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "el-table",
         {
@@ -155738,14 +156186,18 @@ var render = function() {
               expression: "loading"
             }
           ],
+          ref: "table",
           staticClass: "ctm-entries-table",
           attrs: {
             data: _vm.paginatedData,
             stripe: "",
             "empty-text": "No entries found."
-          }
+          },
+          on: { "selection-change": _vm.onSelectionChange }
         },
         [
+          _c("el-table-column", { attrs: { type: "selection", width: "44" } }),
+          _vm._v(" "),
           _c("el-table-column", {
             attrs: { prop: "id", label: "#", width: "64", align: "center" }
           }),

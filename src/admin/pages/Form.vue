@@ -26,9 +26,35 @@
       </div>
     </div>
 
+    <!-- ── Bulk actions bar ── -->
+    <div class="cfl-bulk-bar" v-if="selectedForms.length">
+      <span class="cfl-bulk-count">{{ selectedForms.length }} selected</span>
+      <el-button size="mini" @click="bulkDuplicate">
+        <i class="el-icon-copy-document"></i> Duplicate
+      </el-button>
+      <el-button size="mini" @click="bulkExport">
+        <i class="el-icon-download"></i> Export
+      </el-button>
+      <el-button size="mini" type="danger" plain @click="bulkDeleteConfirmation">
+        <i class="el-icon-delete"></i> Delete
+      </el-button>
+      <el-button size="mini" class="cfl-bulk-clear" @click="clearSelection">
+        <i class="el-icon-close"></i> Clear
+      </el-button>
+    </div>
+
     <!-- ── Table ── -->
     <div class="cfl-table-wrap" v-loading="loading">
-      <el-table :data="paginatedData" v-if="forms !== null" class="cfl-table" row-class-name="cfl-row">
+      <el-table
+        :data="paginatedData"
+        v-if="forms !== null"
+        class="cfl-table"
+        row-class-name="cfl-row"
+        ref="formsTable"
+        @selection-change="handleSelectionChange"
+      >
+
+        <el-table-column type="selection" width="44" />
 
         <!-- Form Name -->
         <el-table-column label="Form" min-width="260">
@@ -198,6 +224,7 @@ export default {
       filter_date_range: [],
       showAddFormModal: false,
       admin_url: window.contactum.admin_url,
+      selectedForms: [],
     };
   },
 
@@ -275,6 +302,7 @@ export default {
     goToPage(pageNumber) {
       localStorage.setItem('formItemsCurrentPage', pageNumber);
       this.paginate.current_page = pageNumber;
+      this.clearSelection();
     },
 
     refetchItems() {
@@ -288,6 +316,16 @@ export default {
       localStorage.setItem('formItemsPerPage', val);
       this.paginate.per_page = val;
       this.paginate.current_page = 1;
+      this.clearSelection();
+    },
+
+    handleSelectionChange(rows) {
+      this.selectedForms = rows;
+    },
+
+    clearSelection() {
+      this.selectedForms = [];
+      this.$refs.formsTable && this.$refs.formsTable.clearSelection();
     },
 
     removeFormConfirmation(id, index) {
@@ -312,7 +350,17 @@ export default {
     },
 
     exportForm(id) {
-      const data = { action: 'contactum_export_forms', form_id: [id], format: 'json', nonce: window.contactum.export_nonce };
+      // export_type must be 'selected' (with selected_forms present) or the
+      // handler falls through to its 'all' branch and exports every form on
+      // the site instead of just this one.
+      const data = {
+        action: 'contactum_export_forms',
+        export_type: 'selected',
+        selected_forms: 1,
+        form_id: [id],
+        format: 'json',
+        nonce: window.contactum.export_nonce,
+      };
       location.href = contactum.ajaxurl + '?' + jQuery.param(data);
     },
 
@@ -349,6 +397,100 @@ export default {
             this.$notify.error({ title: 'Error', message: 'Failed to delete form.', position: 'bottom-right' });
           }
         },
+      });
+    },
+
+    bulkDuplicate() {
+      const ids = this.selectedForms.map((row) => row.id);
+      if (!ids.length) return;
+
+      this.loading = true;
+
+      Promise.all(ids.map((id) => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: { action: 'duplicate_contactum_form', post_id: id, _ajax_nonce: contactum.nonce },
+      }))).then((responses) => {
+        const failed = responses.filter((r) => !r.success).length;
+        this.clearSelection();
+        this.fetchItems();
+
+        if (failed) {
+          this.$notify.error({ message: `${failed} of ${ids.length} forms could not be duplicated.`, position: 'bottom-right' });
+        } else {
+          this.$notify.success({ message: `${ids.length} form(s) duplicated successfully.`, position: 'bottom-right' });
+        }
+      }).catch(() => {
+        this.loading = false;
+        this.$notify.error({ message: 'Failed to duplicate the selected forms.', position: 'bottom-right' });
+      });
+    },
+
+    bulkExport() {
+      const ids = this.selectedForms.map((row) => row.id);
+      if (!ids.length) return;
+
+      const data = {
+        action: 'contactum_export_forms',
+        export_type: 'selected',
+        selected_forms: 1,
+        form_id: ids,
+        format: 'json',
+        nonce: window.contactum.export_nonce,
+      };
+      location.href = contactum.ajaxurl + '?' + jQuery.param(data);
+    },
+
+    bulkDeleteConfirmation() {
+      const ids = this.selectedForms.map((row) => row.id);
+      if (!ids.length) return;
+
+      this.$confirm(`This will permanently delete ${ids.length} form(s) and all their entries. Continue?`, 'Delete Forms', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        confirmButtonClass: 'el-button--danger',
+      }).then(() => {
+        this.$prompt('Type DELETE to confirm', 'Confirm Deletion', {
+          confirmButtonText: 'Confirm Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'el-button--danger',
+        }).then(({ value }) => {
+          if (value === 'DELETE') {
+            this.bulkDelete(ids);
+          } else {
+            this.$notify.error({ title: 'Error', message: 'You must type DELETE to confirm', position: 'bottom-right' });
+          }
+        });
+      }).catch(() => {});
+    },
+
+    bulkDelete(ids) {
+      this.loading = true;
+
+      Promise.all(ids.map((id) => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: { action: 'delete_contactum_form', post_id: id, _ajax_nonce: contactum.nonce },
+      }))).then((responses) => {
+        const failedIds = ids.filter((id, index) => !responses[index].success);
+
+        this.forms = this.forms.filter((form) => !ids.includes(form.id) || failedIds.includes(form.id));
+
+        const lastPage = Math.max(1, Math.ceil(this.forms.length / parseInt(this.paginate.per_page)));
+        if (this.paginate.current_page > lastPage) this.paginate.current_page = lastPage;
+
+        this.clearSelection();
+        this.loading = false;
+
+        if (failedIds.length) {
+          this.$notify.error({ message: `${failedIds.length} of ${ids.length} forms could not be deleted.`, position: 'bottom-right' });
+        } else {
+          this.$notify.success({ message: `${ids.length} form(s) deleted successfully.`, position: 'bottom-right' });
+        }
+      }).catch(() => {
+        this.loading = false;
+        this.$notify.error({ message: 'Failed to delete the selected forms.', position: 'bottom-right' });
       });
     },
   },
@@ -431,6 +573,37 @@ export default {
 
 .cfl-add-btn {
   white-space: nowrap;
+}
+
+/* ── Bulk actions bar ── */
+.cfl-bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.cfl-bulk-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-right: 4px;
+}
+
+.cfl-bulk-clear {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+
+  &:hover {
+    color: #374151;
+    background: transparent;
+  }
 }
 
 /* ── Table wrapper ── */

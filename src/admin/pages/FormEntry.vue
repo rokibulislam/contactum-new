@@ -64,7 +64,13 @@
 
     </div>
 
-    <EntriesTable :paginated-data="paginatedData" :form="form_id" />
+    <EntriesTable
+      :paginated-data="paginatedData"
+      :form="form_id"
+      @entry-deleted="onEntryDeleted"
+      @entries-deleted="onEntriesDeleted"
+      @entries-status-changed="onEntriesStatusChanged"
+    />
 
     <el-pagination
         class="contactum_pagination"
@@ -175,7 +181,23 @@ export default{
     },
 
     exportEntries() {
-      
+
+    },
+
+    onEntryDeleted(entryId) {
+      this.entries = this.entries.filter(e => e.id !== entryId);
+      this.paginate.total = this.entries.length;
+    },
+
+    onEntriesDeleted(entryIds) {
+      this.entries = this.entries.filter(e => !entryIds.includes(e.id));
+      this.paginate.total = this.entries.length;
+    },
+
+    onEntriesStatusChanged({ ids, status }) {
+      this.entries.forEach((entry) => {
+        if (ids.includes(entry.id)) entry.status = status;
+      });
     }
   },
   watch: {

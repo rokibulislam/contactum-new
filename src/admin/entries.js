@@ -55,6 +55,11 @@ Vue.use(TableColumn);
 Vue.use(DatePicker);
 Vue.use(Skeleton);
 Vue.use(SkeletonItem);
+// Loading was imported but never registered, so v-loading (used on the
+// entries table) silently failed to resolve — same gap fixed in forms.js;
+// each webpack entry point registers its own Element UI components
+// independently, so it has to be fixed per-bundle.
+Vue.use(Loading);
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
 

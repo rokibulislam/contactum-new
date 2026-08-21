@@ -50,7 +50,13 @@
           </el-input>
         </div>
 
-        <EntriesTable :paginated-data="paginatedData" :loading="loading" @entry-deleted="onEntryDeleted" />
+        <EntriesTable
+          :paginated-data="paginatedData"
+          :loading="loading"
+          @entry-deleted="onEntryDeleted"
+          @entries-deleted="onEntriesDeleted"
+          @entries-status-changed="onEntriesStatusChanged"
+        />
 
         <div class="ctm-table-footer">
           <el-pagination
@@ -184,6 +190,17 @@ export default {
       onEntryDeleted(entryId) {
         this.entries = this.entries.filter(e => e.id !== entryId);
         this.paginate.total = this.entries.length;
+      },
+
+      onEntriesDeleted(entryIds) {
+        this.entries = this.entries.filter(e => !entryIds.includes(e.id));
+        this.paginate.total = this.entries.length;
+      },
+
+      onEntriesStatusChanged({ ids, status }) {
+        this.entries.forEach((entry) => {
+          if (ids.includes(entry.id)) entry.status = status;
+        });
       },
 
       fetchEntries( type = null ) {

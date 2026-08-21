@@ -90630,7 +90630,9 @@ vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Tag);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Skeleton);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.SkeletonItem);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.DatePicker);
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.DatePicker); // Same gap as forms.js/entries.js — Loading imported but never registered.
+
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Loading);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Alert);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Input);
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4__.Checkbox);

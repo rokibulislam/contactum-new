@@ -41,6 +41,7 @@ class Ajax {
         add_action('wp_ajax_contactum_get_entries_report', [ $this, 'contactum_get_entries_details_report_ajax' ]);
 
         add_action('wp_ajax_contactum_delete_entry', [ $this, 'contactum_delete_entry_ajax' ]);
+        add_action('wp_ajax_contactum_update_entry_status', [ $this, 'contactum_update_entry_status_ajax' ]);
 
         add_action( 'wp_ajax_contactum_track_form_view',        [ $this, 'track_form_view' ] );
         add_action( 'wp_ajax_nopriv_contactum_track_form_view', [ $this, 'track_form_view' ] );
@@ -520,6 +521,29 @@ class Ajax {
             wp_send_json_success( __( 'Entry deleted successfully', 'contactum' ) );
         } else {
             wp_send_json_error( __( 'Could not delete entry', 'contactum' ) );
+        }
+    }
+
+    public function contactum_update_entry_status_ajax() {
+        check_ajax_referer( 'contactum-form-builder-nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( __( 'Unauthorized operation', 'contactum' ) );
+        }
+
+        $entry_id = isset( $_POST['entry_id'] ) ? absint( $_POST['entry_id'] ) : 0;
+        $status   = isset( $_POST['status'] ) ? sanitize_key( $_POST['status'] ) : '';
+
+        if ( ! $entry_id || ! in_array( $status, [ 'publish', 'read', 'unread', 'trash' ], true ) ) {
+            wp_send_json_error( __( 'Invalid entry ID or status', 'contactum' ) );
+        }
+
+        $updated = EntryManager::change_entry_status( $entry_id, $status );
+
+        if ( false !== $updated ) {
+            wp_send_json_success( __( 'Entry status updated', 'contactum' ) );
+        } else {
+            wp_send_json_error( __( 'Could not update entry status', 'contactum' ) );
         }
     }
 

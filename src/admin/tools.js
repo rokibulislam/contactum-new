@@ -51,6 +51,8 @@ Vue.use(Tag);
 Vue.use(Skeleton);
 Vue.use(SkeletonItem);
 Vue.use(DatePicker);
+// Same gap as forms.js/entries.js — Loading imported but never registered.
+Vue.use(Loading);
 Vue.use(Alert);
 Vue.use(Input);
 Vue.use(Checkbox);

@@ -1914,6 +1914,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2024,6 +2030,20 @@ __webpack_require__.r(__webpack_exports__);
     onEntryDeleted(entryId) {
       this.entries = this.entries.filter(e => e.id !== entryId);
       this.paginate.total = this.entries.length;
+    },
+
+    onEntriesDeleted(entryIds) {
+      this.entries = this.entries.filter(e => !entryIds.includes(e.id));
+      this.paginate.total = this.entries.length;
+    },
+
+    onEntriesStatusChanged({
+      ids,
+      status
+    }) {
+      this.entries.forEach(entry => {
+        if (ids.includes(entry.id)) entry.status = status;
+      });
     },
 
     fetchEntries(type = null) {
@@ -2393,6 +2413,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "EntriesTable",
   props: {
@@ -2414,7 +2456,8 @@ __webpack_require__.r(__webpack_exports__);
   data() {
     return {
       hasForm: false,
-      admin_url: window.contactum.admin_url
+      admin_url: window.contactum.admin_url,
+      selectedRows: []
     };
   },
 
@@ -2426,6 +2469,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
+  watch: {
+    paginatedData() {
+      this.clearSelection();
+    }
+
+  },
   methods: {
     statusLabel(status) {
       const map = {
@@ -2435,6 +2484,15 @@ __webpack_require__.r(__webpack_exports__);
         trash: 'Trash'
       };
       return map[status] || (status ? status : 'Published');
+    },
+
+    onSelectionChange(rows) {
+      this.selectedRows = rows;
+    },
+
+    clearSelection() {
+      this.selectedRows = [];
+      this.$refs.table && this.$refs.table.clearSelection();
     },
 
     confirmDelete(row) {
@@ -2477,6 +2535,93 @@ __webpack_require__.r(__webpack_exports__);
             message: 'Request failed.'
           });
         }
+      });
+    },
+
+    bulkMarkStatus(status) {
+      const ids = this.selectedRows.map(row => row.id);
+      if (!ids.length) return;
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_update_entry_status',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id,
+          status
+        }
+      }))).then(responses => {
+        const failed = responses.filter(r => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+        this.$emit('entries-status-changed', {
+          ids: succeededIds,
+          status
+        });
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({
+            type: 'error',
+            message: `${failed} of ${ids.length} entries could not be updated.`
+          });
+        } else {
+          this.$message({
+            type: 'success',
+            message: `${ids.length} entrie(s) marked as ${this.statusLabel(status)}.`
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: 'Failed to update the selected entries.'
+        });
+      });
+    },
+
+    bulkDeleteConfirmation() {
+      const ids = this.selectedRows.map(row => row.id);
+      if (!ids.length) return;
+      this.$confirm(`Delete ${ids.length} entrie(s)? This cannot be undone.`, 'Delete Entries', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        confirmButtonClass: 'el-button--danger'
+      }).then(() => {
+        this.bulkDelete(ids);
+      }).catch(() => {});
+    },
+
+    bulkDelete(ids) {
+      Promise.all(ids.map(id => jQuery.ajax({
+        url: contactum.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'contactum_delete_entry',
+          _ajax_nonce: contactum.nonce,
+          entry_id: id
+        }
+      }))).then(responses => {
+        const failed = responses.filter(r => !r.success).length;
+        const succeededIds = ids.filter((id, index) => responses[index].success);
+        this.$emit('entries-deleted', succeededIds);
+        this.clearSelection();
+
+        if (failed) {
+          this.$message({
+            type: 'error',
+            message: `${failed} of ${ids.length} entries could not be deleted.`
+          });
+        } else {
+          this.$message({
+            type: 'success',
+            message: `${ids.length} entrie(s) deleted.`
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: 'Failed to delete the selected entries.'
+        });
       });
     }
 
@@ -4453,7 +4598,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Actions cell ── */\n.ctm-actions[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  justify-content: flex-end;\n  white-space: nowrap;\n}\n\n/* ── Status badge ── */\n.ctm-status[data-v-1c60aa61] {\n  display: inline-block;\n  padding: 3px 10px;\n  border-radius: 12px;\n  font-size: 12px;\n  font-weight: 500;\n  white-space: nowrap;\n}\n.ctm-status--publish[data-v-1c60aa61],\n.ctm-status--read[data-v-1c60aa61] {\n  background: #ecfdf5;\n  color: #059669;\n}\n.ctm-status--unread[data-v-1c60aa61] {\n  background: #eff6ff;\n  color: #2563eb;\n}\n.ctm-status--trash[data-v-1c60aa61] {\n  background: #fef2f2;\n  color: #dc2626;\n}\n\n/* ── Cell helpers ── */\n.ctm-user-cell[data-v-1c60aa61],\n.ctm-date-cell[data-v-1c60aa61] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  color: #374151;\n  font-size: 13px;\n  white-space: nowrap;\n}\n.ctm-user-cell i[data-v-1c60aa61],\n.ctm-date-cell i[data-v-1c60aa61] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ── Bulk actions bar ── */\n.ctm-bulk-bar[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 10px 16px;\n  border-bottom: 1px solid #f0f0f0;\n  background: #eff6ff;\n}\n.ctm-bulk-count[data-v-1c60aa61] {\n  font-size: 13px;\n  font-weight: 600;\n  color: #1d4ed8;\n  margin-right: 4px;\n}\n.ctm-bulk-clear[data-v-1c60aa61] {\n  margin-left: auto;\n  border: none;\n  background: transparent;\n  color: #6b7280;\n}\n.ctm-bulk-clear[data-v-1c60aa61]:hover {\n  color: #374151;\n  background: transparent;\n}\n\n/* ── Actions cell ── */\n.ctm-actions[data-v-1c60aa61] {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  justify-content: flex-end;\n  white-space: nowrap;\n}\n\n/* ── Status badge ── */\n.ctm-status[data-v-1c60aa61] {\n  display: inline-block;\n  padding: 3px 10px;\n  border-radius: 12px;\n  font-size: 12px;\n  font-weight: 500;\n  white-space: nowrap;\n}\n.ctm-status--publish[data-v-1c60aa61],\n.ctm-status--read[data-v-1c60aa61] {\n  background: #ecfdf5;\n  color: #059669;\n}\n.ctm-status--unread[data-v-1c60aa61] {\n  background: #eff6ff;\n  color: #2563eb;\n}\n.ctm-status--trash[data-v-1c60aa61] {\n  background: #fef2f2;\n  color: #dc2626;\n}\n\n/* ── Cell helpers ── */\n.ctm-user-cell[data-v-1c60aa61],\n.ctm-date-cell[data-v-1c60aa61] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  color: #374151;\n  font-size: 13px;\n  white-space: nowrap;\n}\n.ctm-user-cell i[data-v-1c60aa61],\n.ctm-date-cell i[data-v-1c60aa61] {\n  color: #9ca3af;\n  font-size: 13px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -76239,7 +76384,11 @@ var render = function() {
                 "paginated-data": _vm.paginatedData,
                 loading: _vm.loading
               },
-              on: { "entry-deleted": _vm.onEntryDeleted }
+              on: {
+                "entry-deleted": _vm.onEntryDeleted,
+                "entries-deleted": _vm.onEntriesDeleted,
+                "entries-status-changed": _vm.onEntriesStatusChanged
+              }
             }),
             _vm._v(" "),
             _c(
@@ -76535,6 +76684,76 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm.selectedRows.length
+        ? _c(
+            "div",
+            { staticClass: "ctm-bulk-bar" },
+            [
+              _c("span", { staticClass: "ctm-bulk-count" }, [
+                _vm._v(_vm._s(_vm.selectedRows.length) + " selected")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bulkMarkStatus("read")
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-view" }),
+                  _vm._v(" Mark as Read\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bulkMarkStatus("unread")
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-message" }),
+                  _vm._v(" Mark as Unread\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini", type: "danger", plain: "" },
+                  on: { click: _vm.bulkDeleteConfirmation }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-delete" }),
+                  _vm._v(" Delete\n    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticClass: "ctm-bulk-clear",
+                  attrs: { size: "mini" },
+                  on: { click: _vm.clearSelection }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-close" }),
+                  _vm._v(" Clear\n    ")
+                ]
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "el-table",
         {
@@ -76546,14 +76765,18 @@ var render = function() {
               expression: "loading"
             }
           ],
+          ref: "table",
           staticClass: "ctm-entries-table",
           attrs: {
             data: _vm.paginatedData,
             stripe: "",
             "empty-text": "No entries found."
-          }
+          },
+          on: { "selection-change": _vm.onSelectionChange }
         },
         [
+          _c("el-table-column", { attrs: { type: "selection", width: "44" } }),
+          _vm._v(" "),
           _c("el-table-column", {
             attrs: { prop: "id", label: "#", width: "64", align: "center" }
           }),
@@ -107490,7 +107713,12 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MOD
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.TableColumn);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.DatePicker);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.Skeleton);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.SkeletonItem);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.SkeletonItem); // Loading was imported but never registered, so v-loading (used on the
+// entries table) silently failed to resolve — same gap fixed in forms.js;
+// each webpack entry point registers its own Element UI components
+// independently, so it has to be fixed per-bundle.
+
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_6__.Loading);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.$message = element_ui__WEBPACK_IMPORTED_MODULE_6__.Message;
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.$confirm = element_ui__WEBPACK_IMPORTED_MODULE_6__.MessageBox.confirm;
 
