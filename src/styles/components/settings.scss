@@ -4,12 +4,12 @@
   display: flex;
   min-height: calc(100vh - 92px);
   margin: 0;
-  background: var(--background);
 
   // ── Sidebar wrap ─────────────────────────────────────────────────────────
   &__sidebar-wrap {
     width: 220px;
     flex-shrink: 0;
+    margin-left: 20px;
   }
 
   // ── Sidebar panel ────────────────────────────────────────────────────────
@@ -231,7 +231,7 @@
   // ── Content area ─────────────────────────────────────────────────────────
   &__content {
     flex: 1;
-    padding: 24px 28px;
+    padding: 0px 28px;
     min-width: 0;
   }
 }
