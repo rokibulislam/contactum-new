@@ -33,8 +33,8 @@ class EmailManager  {
         }
     }
 
-    public function send( $to, $subject, $body, $headers ) {
-        
-        return $this->gateway->send( $to, $subject, $body, $headers );
+    public function send( $to, $subject, $body, $headers, $attachments = [] ) {
+
+        return $this->gateway->send( $to, $subject, $body, $headers, $attachments );
     }
 }

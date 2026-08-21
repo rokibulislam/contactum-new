@@ -330,8 +330,8 @@ class Admin {
 
         <?php endif; ?>
 
-        <!-- Payments (Contactum Pro only) -->
-        <?php if ( class_exists( 'ContactumPro' ) ) : ?>
+        <!-- Payments (Contactum Pro only, and only once the "Payment" module is enabled) -->
+        <?php if ( class_exists( 'ContactumPro' ) && function_exists( 'contactum_pro_is_module_active' ) && contactum_pro_is_module_active( 'payment/payment.php' ) ) : ?>
         <li class="contactum-settings__menu-item contactum-settings__menu-item--has-submenu">
           <span class="contactum-settings__group-label">
             <span class="dashicons dashicons-money-alt"></span>

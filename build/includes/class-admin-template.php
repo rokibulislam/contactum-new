@@ -28,7 +28,10 @@ class Admin_Template {
             return ;
         }
 
-        $form_id = contactum()->templates->create( $template );
+        $conversational = ! empty( $get_data['conversational'] ) && '1' === $get_data['conversational'];
+        $overrides      = $conversational ? [ 'conversational_mode' => 'true' ] : [];
+
+        $form_id = contactum()->templates->create( $template, $overrides );
         wp_redirect( admin_url( 'admin.php?page=contactum&route=builder#/forms/'. $form_id ) );
         // wp_redirect( admin_url( 'admin.php?page=contactum&action=edit&id='. $form_id . '/forms/' . $form_id ) );
         exit;

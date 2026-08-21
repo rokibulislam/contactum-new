@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/contactum-new\n"
-"POT-Creation-Date: 2026-08-13 04:24:02+00:00\n"
+"POT-Creation-Date: 2026-08-19 21:00:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -213,12 +213,16 @@ msgid ""
 msgstr ""
 
 #: includes/class-abandonment-manager.php:163
-#: includes/class-abandonment-manager.php:173 includes/class-ajax.php:55
-#: includes/class-ajax.php:486 includes/class-ajax.php:521
-#: includes/class-form-styler.php:79 includes/class-generative-form.php:53
+#: includes/class-abandonment-manager.php:173 includes/class-ajax.php:64
+#: includes/class-ajax.php:508 includes/class-ajax.php:543
+#: includes/class-ajax.php:598 includes/class-ajax.php:619
+#: includes/class-ajax.php:629 includes/class-ajax.php:651
+#: includes/class-ajax.php:672 includes/class-ajax.php:682
+#: includes/class-ajax.php:704 includes/class-form-styler.php:79
+#: includes/class-generative-form.php:53
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:122
 #: includes/integrations/s3/class-s3-integration.php:169
-#: includes/integrations/webhook/class-webhook-integration.php:149
+#: includes/integrations/webhook/class-webhook-integration.php:207
 msgid "Unauthorized operation"
 msgstr ""
 
@@ -226,12 +230,12 @@ msgstr ""
 msgid "Form duplicated successfully"
 msgstr ""
 
-#: includes/class-admin-template.php:80 includes/class-notification.php:455
+#: includes/class-admin-template.php:83 includes/class-notification.php:471
 #: includes/class-smart-tags.php:33
 msgid "IP Address"
 msgstr ""
 
-#: includes/class-admin-template.php:81 includes/class-notification.php:446
+#: includes/class-admin-template.php:84 includes/class-notification.php:462
 #: includes/class-smart-tags.php:24 includes/fields/class-field-date.php:9
 msgid "Date"
 msgstr ""
@@ -242,7 +246,7 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/class-admin.php:56 includes/class-notification.php:435
+#: includes/class-admin.php:56 includes/class-notification.php:451
 #: includes/class-smart-tags.php:13 includes/widgets/class-form-widget.php:39
 msgid "Form"
 msgstr ""
@@ -355,48 +359,92 @@ msgstr ""
 msgid "AI Form Generator"
 msgstr ""
 
-#: includes/class-ajax.php:64
+#: includes/class-ajax.php:73
 msgid "Invalid form id"
 msgstr ""
 
-#: includes/class-ajax.php:229
+#: includes/class-ajax.php:238
 msgid "No file found to import."
 msgstr ""
 
-#: includes/class-ajax.php:241
+#: includes/class-ajax.php:250
 msgid "The forms have been imported successfully!"
 msgstr ""
 
-#: includes/class-ajax.php:245
+#: includes/class-ajax.php:254
 msgid "Something went wrong importing the file."
 msgstr ""
 
-#: includes/class-ajax.php:248
+#: includes/class-ajax.php:257
 msgid "Invalid file or file size too big."
 msgstr ""
 
-#: includes/class-ajax.php:266
+#: includes/class-ajax.php:275
 msgid "No form field was found."
 msgstr ""
 
-#: includes/class-ajax.php:282
+#: includes/class-ajax.php:291
 msgid "hCaptcha verification failed, please try again."
 msgstr ""
 
-#: includes/class-ajax.php:300
+#: includes/class-ajax.php:309
 msgid "Turnstile verification failed, please try again."
 msgstr ""
 
-#: includes/class-ajax.php:492
+#: includes/class-ajax.php:348
+msgid "New form submission received"
+msgstr ""
+
+#: includes/class-ajax.php:351
+#. translators: %d entry id
+msgid "Entry #%d was created."
+msgstr ""
+
+#: includes/class-ajax.php:514
 msgid "Invalid entry ID"
 msgstr ""
 
-#: includes/class-ajax.php:498
+#: includes/class-ajax.php:520
 msgid "Entry deleted successfully"
 msgstr ""
 
-#: includes/class-ajax.php:500
+#: includes/class-ajax.php:522
 msgid "Could not delete entry"
+msgstr ""
+
+#: includes/class-ajax.php:636 includes/class-ajax.php:689
+msgid "No selections found"
+msgstr ""
+
+#: includes/class-ajax.php:643
+#. translators: %d number of deleted log rows
+msgid "%d log(s) successfully deleted"
+msgstr ""
+
+#: includes/class-ajax.php:696
+#. translators: %d number of deleted API log rows
+msgid "%d API log(s) successfully deleted"
+msgstr ""
+
+#: includes/class-ajax.php:710
+msgid "Invalid log id"
+msgstr ""
+
+#: includes/class-ajax.php:720
+msgid "Retry completed"
+msgstr ""
+
+#: includes/class-api-logger.php:177 includes/class-api-logger.php:214
+#: includes/class-logger.php:166 includes/class-logger.php:202
+msgid "(unknown form)"
+msgstr ""
+
+#: includes/class-api-logger.php:242
+msgid "API log entry does not exist"
+msgstr ""
+
+#: includes/class-api-logger.php:246
+msgid "This action cannot be retried"
 msgstr ""
 
 #: includes/class-assets.php:31
@@ -737,89 +785,99 @@ msgstr ""
 msgid "Your submission looks automated. Please try again."
 msgstr ""
 
-#: includes/class-notification.php:437 includes/class-smart-tags.php:15
-msgid "Entry ID"
+#: includes/class-notification.php:126
+#. translators: %s notification name
+msgid "Notification \"%s\""
 msgstr ""
 
-#: includes/class-notification.php:438 includes/class-smart-tags.php:16
-msgid "Form ID"
-msgstr ""
-
-#: includes/class-notification.php:439 includes/class-smart-tags.php:17
-msgid "Form Name"
-msgstr ""
-
-#: includes/class-notification.php:443 includes/class-smart-tags.php:21
-msgid "System"
-msgstr ""
-
-#: includes/class-notification.php:445 includes/class-smart-tags.php:23
-msgid "Site Administrator Email"
-msgstr ""
-
-#: includes/class-notification.php:447 includes/class-smart-tags.php:25
-msgid "Site Title"
-msgstr ""
-
-#: includes/class-notification.php:448 includes/class-smart-tags.php:26
-msgid "Site URL"
-msgstr ""
-
-#: includes/class-notification.php:449 includes/class-smart-tags.php:27
-msgid "Embedded Page Title"
-msgstr ""
-
-#: includes/class-notification.php:453 includes/class-smart-tags.php:31
-msgid "User"
-msgstr ""
-
-#: includes/class-notification.php:456 includes/class-smart-tags.php:34
-msgid "User ID"
-msgstr ""
-
-#: includes/class-notification.php:457 includes/class-smart-tags.php:35
-msgid "First Name"
-msgstr ""
-
-#: includes/class-notification.php:458 includes/class-smart-tags.php:36
-msgid "Last Name"
-msgstr ""
-
-#: includes/class-notification.php:459 includes/class-smart-tags.php:37
-msgid "Display Name"
-msgstr ""
-
-#: includes/class-notification.php:460 includes/class-smart-tags.php:38
-#: includes/fields/class-field-email.php:11
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:51
+#: includes/class-notification.php:126 includes/class-notification.php:476
+#: includes/class-smart-tags.php:38 includes/fields/class-field-email.php:11
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:52
 msgid "Email"
 msgstr ""
 
-#: includes/class-notification.php:464 includes/class-smart-tags.php:42
+#: includes/class-notification.php:128
+#. translators: %s recipient email address(es)
+msgid "Sent to: %s"
+msgstr ""
+
+#: includes/class-notification.php:453 includes/class-smart-tags.php:15
+msgid "Entry ID"
+msgstr ""
+
+#: includes/class-notification.php:454 includes/class-smart-tags.php:16
+msgid "Form ID"
+msgstr ""
+
+#: includes/class-notification.php:455 includes/class-smart-tags.php:17
+msgid "Form Name"
+msgstr ""
+
+#: includes/class-notification.php:459 includes/class-smart-tags.php:21
+msgid "System"
+msgstr ""
+
+#: includes/class-notification.php:461 includes/class-smart-tags.php:23
+msgid "Site Administrator Email"
+msgstr ""
+
+#: includes/class-notification.php:463 includes/class-smart-tags.php:25
+msgid "Site Title"
+msgstr ""
+
+#: includes/class-notification.php:464 includes/class-smart-tags.php:26
+msgid "Site URL"
+msgstr ""
+
+#: includes/class-notification.php:465 includes/class-smart-tags.php:27
+msgid "Embedded Page Title"
+msgstr ""
+
+#: includes/class-notification.php:469 includes/class-smart-tags.php:31
+msgid "User"
+msgstr ""
+
+#: includes/class-notification.php:472 includes/class-smart-tags.php:34
+msgid "User ID"
+msgstr ""
+
+#: includes/class-notification.php:473 includes/class-smart-tags.php:35
+msgid "First Name"
+msgstr ""
+
+#: includes/class-notification.php:474 includes/class-smart-tags.php:36
+msgid "Last Name"
+msgstr ""
+
+#: includes/class-notification.php:475 includes/class-smart-tags.php:37
+msgid "Display Name"
+msgstr ""
+
+#: includes/class-notification.php:480 includes/class-smart-tags.php:42
 msgid "URL's"
 msgstr ""
 
-#: includes/class-notification.php:466 includes/class-smart-tags.php:44
+#: includes/class-notification.php:482 includes/class-smart-tags.php:44
 msgid "Embeded Page URL"
 msgstr ""
 
-#: includes/class-notification.php:467 includes/class-smart-tags.php:45
+#: includes/class-notification.php:483 includes/class-smart-tags.php:45
 msgid "Referer URL"
 msgstr ""
 
-#: includes/class-notification.php:468 includes/class-smart-tags.php:46
+#: includes/class-notification.php:484 includes/class-smart-tags.php:46
 msgid "Login URL"
 msgstr ""
 
-#: includes/class-notification.php:469 includes/class-smart-tags.php:47
+#: includes/class-notification.php:485 includes/class-smart-tags.php:47
 msgid "Logout URL"
 msgstr ""
 
-#: includes/class-notification.php:470 includes/class-smart-tags.php:48
+#: includes/class-notification.php:486 includes/class-smart-tags.php:48
 msgid "Register URL"
 msgstr ""
 
-#: includes/class-notification.php:471 includes/class-smart-tags.php:49
+#: includes/class-notification.php:487 includes/class-smart-tags.php:49
 msgid "Lost Password URL"
 msgstr ""
 
@@ -1695,237 +1753,405 @@ msgstr ""
 msgid "Thanks for contact us! We will get in touch with you shortly."
 msgstr ""
 
-#: includes/functions.php:1343
+#: includes/functions.php:1344
 msgid "Images"
 msgstr ""
 
-#: includes/functions.php:1347
+#: includes/functions.php:1348
 msgid "Audio"
 msgstr ""
 
-#: includes/functions.php:1351
+#: includes/functions.php:1352
 msgid "Videos"
 msgstr ""
 
-#: includes/functions.php:1355
+#: includes/functions.php:1356
 msgid "PDF"
 msgstr ""
 
-#: includes/functions.php:1359
+#: includes/functions.php:1360
 msgid "Office Documents"
 msgstr ""
 
-#: includes/functions.php:1363
+#: includes/functions.php:1364
 msgid "Zip Archives"
 msgstr ""
 
-#: includes/functions.php:1367
+#: includes/functions.php:1368
 msgid "Executable Files"
 msgstr ""
 
-#: includes/functions.php:1371
+#: includes/functions.php:1372
 msgid "CSV"
 msgstr ""
 
-#: includes/functions.php:1840
+#: includes/functions.php:1841
 msgid "PayPal"
 msgstr ""
 
-#: includes/functions.php:1841
+#: includes/functions.php:1842
 msgid "Accept Payments via paypal as a part of your form submission"
 msgstr ""
 
-#: includes/functions.php:1848
+#: includes/functions.php:1849
 msgid "Stripe"
 msgstr ""
 
-#: includes/functions.php:1849
+#: includes/functions.php:1850
 msgid "Accept Payments via stripe as a part of your form submission"
 msgstr ""
 
-#: includes/functions.php:1856
+#: includes/functions.php:1857
 msgid "Trello"
 msgstr ""
 
-#: includes/functions.php:1857
+#: includes/functions.php:1858
 msgid ""
 "Trello module lets you create Trello cards automatically whenever a form is "
 "submitted."
 msgstr ""
 
-#: includes/functions.php:1864
+#: includes/functions.php:1865
 msgid "Aweber"
 msgstr ""
 
-#: includes/functions.php:1865
+#: includes/functions.php:1866
 msgid " Subscribe a contact to Aweber when a form is submited"
 msgstr ""
 
-#: includes/functions.php:1872
+#: includes/functions.php:1873
 msgid "ActiveCampaign"
 msgstr ""
 
-#: includes/functions.php:1873
+#: includes/functions.php:1874
 msgid ""
 "Build signup forms in WordPress and integrate ActiveCampaign to "
 "effortlessly grow your email list."
 msgstr ""
 
-#: includes/functions.php:1880
+#: includes/functions.php:1881
 msgid "Campaign Monitor"
 msgstr ""
 
-#: includes/functions.php:1881
+#: includes/functions.php:1882
 msgid ""
 "Build Campaign Monitor newsletter signup forms in WordPress to simplify and "
 "enhance your email marketing efforts."
 msgstr ""
 
-#: includes/functions.php:1888
+#: includes/functions.php:1889
 msgid "Constant Contact"
 msgstr ""
 
-#: includes/functions.php:1889
+#: includes/functions.php:1890
 msgid ""
 "Integrate Constant Contact with Contactum to create subscription forms "
 "directly in WordPress and expand your email list."
 msgstr ""
 
-#: includes/functions.php:1896
+#: includes/functions.php:1897
 msgid "ConvertKit"
 msgstr ""
 
-#: includes/functions.php:1897
+#: includes/functions.php:1898
 msgid ""
 "Integrate ConvertKit with Contactum to create subscription forms directly "
 "in WordPress and expand your email list."
 msgstr ""
 
-#: includes/functions.php:1904
+#: includes/functions.php:1905
 msgid "GetResponse"
 msgstr ""
 
-#: includes/functions.php:1905
+#: includes/functions.php:1906
 msgid ""
 "Grow your email list with Contactum and GetResponse by creating "
 "subscription forms and capturing new leads."
 msgstr ""
 
-#: includes/functions.php:1912
+#: includes/functions.php:1913
 msgid "Hubspot"
 msgstr ""
 
-#: includes/functions.php:1913
+#: includes/functions.php:1914
 msgid ""
 "Integrate HubSpot with Contactum to automatically subscribe contacts "
 "whenever a form is submitted."
 msgstr ""
 
-#: includes/functions.php:1920
+#: includes/functions.php:1921
 msgid "iContact"
 msgstr ""
 
-#: includes/functions.php:1921
+#: includes/functions.php:1922
 msgid ""
 "Integrate iContact with Contactum to automatically add contacts whenever a "
 "form is submitted."
 msgstr ""
 
-#: includes/functions.php:1928
+#: includes/functions.php:1929
 msgid "MooSend"
 msgstr ""
 
-#: includes/functions.php:1929
+#: includes/functions.php:1930
 msgid ""
 "Integrate MooSend with Contactum to automatically add contacts whenever a "
 "form is submitted."
 msgstr ""
 
-#: includes/functions.php:1936
+#: includes/functions.php:1937
 msgid "SendFox"
 msgstr ""
 
-#: includes/functions.php:1937
+#: includes/functions.php:1938
 msgid ""
 "Integrate SendFox with Contactum to automatically add contacts when a form "
 "is submitted."
 msgstr ""
 
-#: includes/functions.php:1944
+#: includes/functions.php:1945
 msgid "MailerLite"
 msgstr ""
 
-#: includes/functions.php:1945
+#: includes/functions.php:1946
 msgid ""
 "MailerLite is an email marketing platform tailored for designers and their "
 "clients. With Contactum, you can easily add subscribers to MailerLite."
 msgstr ""
 
-#: includes/functions.php:1952
+#: includes/functions.php:1953
 msgid "Brevo (formerly SendInBlue)"
 msgstr ""
 
-#: includes/functions.php:1953
+#: includes/functions.php:1954
 msgid "Subscribe a contact to Sendinblue when a form is submited"
 msgstr ""
 
-#: includes/functions.php:1960
+#: includes/functions.php:1961
 msgid "Drip"
 msgstr ""
 
-#: includes/functions.php:1961
+#: includes/functions.php:1962
 msgid ""
 "This module allows you to add Drip subscribers directly from WordPress, "
 "helping you grow your email list."
 msgstr ""
 
-#: includes/functions.php:1969
+#: includes/functions.php:1970
 msgid "Zoho CRM"
 msgstr ""
 
-#: includes/functions.php:1970
+#: includes/functions.php:1971
 msgid ""
 "Zoho CRM is an online sales management platform that centralizes your "
 "sales, marketing, and customer support in a single CRM system."
 msgstr ""
 
-#: includes/functions.php:1978
+#: includes/functions.php:1979
 msgid "Automizy"
 msgstr ""
 
-#: includes/functions.php:1979
+#: includes/functions.php:1980
 msgid ""
 "Connect Automizy with Contactum and subscribe a contact when a form is "
 "submitted."
 msgstr ""
 
-#: includes/functions.php:1986
+#: includes/functions.php:1987
 msgid "Salesforce"
 msgstr ""
 
-#: includes/functions.php:1987
+#: includes/functions.php:1988
 msgid ""
 "Integrate Salesforce with Contactum to keep your contacts and other data "
 "organized and streamlined."
 msgstr ""
 
-#: includes/functions.php:1994
+#: includes/functions.php:1995
 msgid "Airtable"
 msgstr ""
 
-#: includes/functions.php:1995
+#: includes/functions.php:1996
 msgid ""
 "Airtable is a low-code platform for creating collaborative apps. Tailor "
 "your workflows, work seamlessly with your team, and achieve impactful "
 "results."
 msgstr ""
 
-#: includes/functions.php:2002
+#: includes/functions.php:2003
 msgid "Mailjet"
 msgstr ""
 
-#: includes/functions.php:2003
+#: includes/functions.php:2004
 msgid "Mailjet is a user-friendly, all-in-one email marketing platform."
+msgstr ""
+
+#: includes/functions.php:2012
+msgid "Google Analytics"
+msgstr ""
+
+#: includes/functions.php:2013
+msgid "Send a GA4 event for every form submission via the Measurement Protocol."
+msgstr ""
+
+#: includes/functions.php:2020
+msgid "Google Calendar"
+msgstr ""
+
+#: includes/functions.php:2021
+msgid ""
+"Automatically create a Google Calendar event from every form submission — "
+"handy for bookings, appointments, and RSVPs."
+msgstr ""
+
+#: includes/functions.php:2028
+msgid "Google Drive"
+msgstr ""
+
+#: includes/functions.php:2029
+msgid "Automatically upload form file/image submissions to your Google Drive."
+msgstr ""
+
+#: includes/functions.php:2036
+msgid "Google Sheets"
+msgstr ""
+
+#: includes/functions.php:2037
+msgid "Automatically append every form submission as a new row in a Google Sheet."
+msgstr ""
+
+#: includes/functions.php:2044
+msgid "Cloudflare R2"
+msgstr ""
+
+#: includes/functions.php:2045
+msgid ""
+"Store form file and image uploads directly in a Cloudflare R2 bucket "
+"instead of (or alongside) your server."
+msgstr ""
+
+#: includes/functions.php:2052
+msgid "Dropbox"
+msgstr ""
+
+#: includes/functions.php:2053
+msgid "Automatically upload form file/image submissions to your Dropbox."
+msgstr ""
+
+#: includes/functions.php:2060
+msgid "Microsoft OneDrive"
+msgstr ""
+
+#: includes/functions.php:2061
+msgid "Automatically upload form file/image submissions to your Microsoft OneDrive."
+msgstr ""
+
+#: includes/functions.php:2068
+msgid "Landing Page"
+msgstr ""
+
+#: includes/functions.php:2069
+msgid ""
+"Publish any form as its own distraction-free, full-page landing page — no "
+"theme header/footer, with its own background, logo, heading, and an "
+"optional private share link."
+msgstr ""
+
+#: includes/functions.php:2076
+msgid "n8n"
+msgstr ""
+
+#: includes/functions.php:2077
+msgid ""
+"Send every form submission to one or more n8n workflow webhooks, with an "
+"optional custom auth header per workflow."
+msgstr ""
+
+#: includes/functions.php:2084
+msgid "Notion"
+msgstr ""
+
+#: includes/functions.php:2085
+msgid ""
+"Notion is an all-in-one workspace for notes, docs, and databases. Send "
+"every form submission straight into a Notion database as a new page."
+msgstr ""
+
+#: includes/functions.php:2092
+msgid "PDF Form Submission"
+msgstr ""
+
+#: includes/functions.php:2093
+msgid ""
+"Generate a PDF summary of every submission, downloadable from the entry and "
+"optionally attached to email notifications."
+msgstr ""
+
+#: includes/functions.php:2100
+msgid "Payment"
+msgstr ""
+
+#: includes/functions.php:2101
+msgid "Receive payments"
+msgstr ""
+
+#: includes/functions.php:2108
+msgid "Post Submission"
+msgstr ""
+
+#: includes/functions.php:2109
+msgid ""
+"Turn form submissions into new WordPress posts, with "
+"category/featured-image mapping and configurable post status."
+msgstr ""
+
+#: includes/functions.php:2116
+msgid "Quiz Scoring"
+msgstr ""
+
+#: includes/functions.php:2117
+msgid ""
+"Turn Radio, Checkbox, and Select fields into graded quiz questions using "
+"their existing \"Calc\" point values, and save a total score on every entry."
+msgstr ""
+
+#: includes/functions.php:2124
+msgid "Twilio SMS"
+msgstr ""
+
+#: includes/functions.php:2125
+msgid ""
+"Send an SMS via Twilio for every form submission — order confirmations, "
+"appointment reminders, OTP-style alerts, and more."
+msgstr ""
+
+#: includes/functions.php:2132
+msgid "User Registration"
+msgstr ""
+
+#: includes/functions.php:2133
+msgid ""
+"Turn form submissions into new WordPress user accounts, with optional admin "
+"approval and auto-login."
+msgstr ""
+
+#: includes/functions.php:2140
+msgid "WooCommerce Product Addon"
+msgstr ""
+
+#: includes/functions.php:2141
+msgid ""
+"Attach a Contactum form to a WooCommerce product. Field values are captured "
+"into the cart and order; Single/Multiple Product fields on the form add "
+"real priced options to the cart price."
+msgstr ""
+
+#: includes/functions.php:2148
+msgid "Zapier"
+msgstr ""
+
+#: includes/functions.php:2149
+msgid "Send every form submission to one or more named Zapier catch hooks."
 msgstr ""
 
 #: includes/html/entry.php:10
@@ -2051,6 +2277,14 @@ msgstr ""
 msgid "New submission on %s"
 msgstr ""
 
+#: includes/integrations/class-abstract-integration.php:137
+msgid "Retry failed: missing entry context."
+msgstr ""
+
+#: includes/integrations/class-abstract-integration.php:142
+msgid "Retried — see the newest log entry below for the outcome."
+msgstr ""
+
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:13
 #: includes/integrations/cleantalk/class-cleantalk-integration.php:64
 msgid "CleanTalk Spam Protection"
@@ -2126,90 +2360,115 @@ msgstr ""
 msgid "Your submission was identified as spam. Please try again."
 msgstr ""
 
+#: includes/integrations/cleantalk/class-cleantalk-integration.php:221
+msgid "Submission blocked as spam"
+msgstr ""
+
 #: includes/integrations/mailchimp/class-mailchimp-integration.php:23
 msgid "Mailchimp Settings"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:41
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:42
 msgid "Select Your List"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:42
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:43
 msgid "List"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:50
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:51
 msgid "Enter Your Email"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:57
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:58
 msgid "Enter Your First Name"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:58
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:59
 msgid "FirstName"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:64
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:65
 msgid "Enter Your Last Name"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:65
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:66
 msgid "LastName"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:71
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:72
 msgid "Double Opt-in"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:72
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:73
 msgid ""
 "When the double opt-in option is enabled, Mailchimp will send a "
 "confirmation email to the user and will only add them to your <br "
 "/Mailchimp list upon confirmation."
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:74
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:75
 msgid "Enable Double Opt-in"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:89
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:90
 msgid "Mailchimp"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:100
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:101
 msgid "Your Mailchimp API Key is valid"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:101
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:102
 msgid "Your Mailchimp API Key is not valid"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:104
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:105
 msgid "Your mailchimp API integration is up and running"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:105
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:106
 msgid "Disconnect mailchimp"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:116
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:117
 msgid "API Key"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:117
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:118
 msgid "desc"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:156
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:157
 msgid "Your settings has been updated and disconnected"
 msgstr ""
 
-#: includes/integrations/mailchimp/class-mailchimp-integration.php:187
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:188
 msgid "Your mailchimp api key has been verified and successfully set"
 msgstr ""
 
-#: includes/integrations/s3/class-s3-client.php:156
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:250
+msgid "Mailchimp integration is no longer active for this form."
+msgstr ""
+
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:336
+msgid "Subscribed %s to the selected list."
+msgstr ""
+
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:339
+#. translators: 1: subscriber email address, 2: Mailchimp error detail
+msgid "Failed to subscribe %1$s: %2$s"
+msgstr ""
+
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:341
+msgid "Unknown error"
+msgstr ""
+
+#: includes/integrations/mailchimp/class-mailchimp-integration.php:349
+msgid "Mailchimp subscription"
+msgstr ""
+
+#: includes/integrations/s3/class-s3-client.php:176
 msgid "Connection successful. Your bucket is reachable."
 msgstr ""
 
@@ -2323,56 +2582,84 @@ msgid ""
 "Make (Integromat), n8n, and custom endpoints."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:34
+#: includes/integrations/webhook/class-webhook-integration.php:35
 msgid "Enable Webhook"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:36
+#: includes/integrations/webhook/class-webhook-integration.php:37
 msgid "Enable for this form"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:40
+#: includes/integrations/webhook/class-webhook-integration.php:41
 msgid "Webhook URL"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:46
+#: includes/integrations/webhook/class-webhook-integration.php:47
 msgid "Request Format"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:60
+#: includes/integrations/webhook/class-webhook-integration.php:61
 msgid "Webhook"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:68
+#: includes/integrations/webhook/class-webhook-integration.php:69
 msgid "Default webhook URL saved."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:74
+#: includes/integrations/webhook/class-webhook-integration.php:75
 msgid "Default Webhook URL"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:77
+#: includes/integrations/webhook/class-webhook-integration.php:78
 msgid "Optional. Used as a fallback when no per-form URL is configured."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:81
+#: includes/integrations/webhook/class-webhook-integration.php:82
 msgid "Default Request Format"
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:155
+#: includes/integrations/webhook/class-webhook-integration.php:148
+msgid "Webhook queued"
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:150
+#. translators: %s destination webhook URL
+msgid "Payload dispatched to %s."
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:162
+#. translators: %s destination webhook URL
+msgid "Dispatched to %s. Delivery not confirmed (sent non-blocking)."
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:179
+msgid "No webhook URL stored for this entry."
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:194
+#. translators: %d HTTP status code
+msgid "Delivered (HTTP %d)."
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:197
+#. translators: %d HTTP status code
+msgid "Server returned HTTP %d."
+msgstr ""
+
+#: includes/integrations/webhook/class-webhook-integration.php:213
 msgid "Please enter a URL before sending a test."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:161
+#: includes/integrations/webhook/class-webhook-integration.php:219
 msgid "Test payload from Contactum webhook integration."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:186
+#: includes/integrations/webhook/class-webhook-integration.php:244
 #. translators: %d HTTP status code
 msgid "Test delivered (HTTP %d)."
 msgstr ""
 
-#: includes/integrations/webhook/class-webhook-integration.php:190
+#: includes/integrations/webhook/class-webhook-integration.php:248
 #. translators: %d HTTP status code
 msgid "Server returned HTTP %d. Check your URL and try again."
 msgstr ""
@@ -2445,6 +2732,36 @@ msgstr ""
 
 #: includes/templates/class-template-contact.php:39
 msgid "Message"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:14
+msgid "Conversational Form"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:15
+msgid ""
+"One question at a time — visitors answer a single field per screen and move "
+"on automatically."
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:39
+msgid "How can we help?"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:42
+msgid "Sales question"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:43
+msgid "Support request"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:44
+msgid "Something else"
+msgstr ""
+
+#: includes/templates/class-template-conversational.php:49
+msgid "Tell us more"
 msgstr ""
 
 #: includes/templates/class-template-event-registration.php:16

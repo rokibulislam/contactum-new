@@ -213,6 +213,14 @@ class CleanTalkIntegration extends Contactum_Integration {
                 : __( 'Your submission was identified as spam. Please try again.', 'contactum' );
 
             $errors['cleantalk_spam'] = $message;
+
+            contactum()->logger->log( [
+                'form_id'     => $form_id,
+                'component'   => 'cleantalk',
+                'status'      => 'blocked',
+                'title'       => __( 'Submission blocked as spam', 'contactum' ),
+                'description' => $message,
+            ] );
         }
 
         return $errors;

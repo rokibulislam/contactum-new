@@ -47,6 +47,7 @@ module.exports = function(grunt) {
                     '**',
                     '!node_modules/**',
                     '!build/**',
+                    '!docs/**',
                     '!src/**',
                     '!.git/**',
                     '!Gruntfile.js',
@@ -66,6 +67,13 @@ module.exports = function(grunt) {
                     '!.claude/**',
                     '!CLAUDE.md',
                     '!mcp-server/**',
+                    // Source maps and unminified dev-mode JS have no business
+                    // in a distributable — they're only ever present if
+                    // `npm run build` wasn't run (or ran before the NODE_ENV
+                    // fix) before zipping. Excluding them here means a stray
+                    // dev build in assets/js/ can't silently bloat the zip.
+                    '!**/*.js.map',
+                    '!**/*.css.map',
                 ],
                 dest: 'build/'
             }

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Contactum
 Description: WordPress contact form plugin. Use Drag & Drop form builder to create your WordPress forms.
-Version:     4.2.0
+Version:     4.2.2
 Author:      Md Kamrul islam
 Author URI:  https://profiles.wordpress.org/rajib00002/
 License:     GPL2
@@ -17,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 final class Contactum {
 
-    public $version    = '4.2.0';
+    public $version    = '4.2.2';
     private $container = [];
 
     public function __construct() {
@@ -150,6 +150,7 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/templates/class-template-leave-request.php';
         require_once CONTACTUM_INCLUDES . '/templates/class-template-contact.php';
         require_once CONTACTUM_INCLUDES . '/templates/class-template-blank.php';
+        require_once CONTACTUM_INCLUDES . '/templates/class-template-conversational.php';
 
         //widgets
         require_once CONTACTUM_INCLUDES . '/widgets/class-form-widget.php';
@@ -187,6 +188,8 @@ final class Contactum {
         require_once CONTACTUM_INCLUDES . '/class-form-styler-generator.php';
         require_once CONTACTUM_INCLUDES . '/class-form-styler.php';
         require_once CONTACTUM_INCLUDES . '/class-installer.php';
+        require_once CONTACTUM_INCLUDES . '/class-logger.php';
+        require_once CONTACTUM_INCLUDES . '/class-api-logger.php';
         require_once CONTACTUM_INCLUDES . '/class-notification.php';
         require_once CONTACTUM_INCLUDES . '/class-smart-tags.php';
         require_once CONTACTUM_INCLUDES . '/functions.php';
@@ -240,6 +243,9 @@ final class Contactum {
         $this->container['settings'] = new Contactum\SettingsManager();
 
         $this->container['emailer']  = new Contactum\EmailManager();
+
+        $this->container['logger'] = new Contactum\Logger();
+        $this->container['api_logger'] = new Contactum\ApiLogger();
 
     }
 

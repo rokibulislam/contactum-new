@@ -23,7 +23,12 @@ module.exports = [
 
     output: {
       path: path.resolve(__dirname, './assets/js'),
-      filename: devMode ? '[name].js' : '[name].min.js',
+      // PHP (class-assets.php, class-admin.php) enqueues every entry by its
+      // bare `[name].js` — it never conditionally loads a `.min.js` variant —
+      // so the output filename must stay constant across modes. Production
+      // vs. dev is still reflected in the content (minified, no source map)
+      // and in the separate `mode`/`devtool` settings below.
+      filename: '[name].js',
     },
 
     externals: {
@@ -136,7 +141,12 @@ module.exports = [
 
     output: {
       path: path.resolve(__dirname, './assets/js'),
-      filename: devMode ? '[name].js' : '[name].min.js',
+      // PHP (class-assets.php, class-admin.php) enqueues every entry by its
+      // bare `[name].js` — it never conditionally loads a `.min.js` variant —
+      // so the output filename must stay constant across modes. Production
+      // vs. dev is still reflected in the content (minified, no source map)
+      // and in the separate `mode`/`devtool` settings below.
+      filename: '[name].js',
     },
 
     module: {
@@ -176,9 +186,9 @@ module.exports = [
 
     plugins: [
       new MiniCssExtractPlugin({
-        filename: devMode
-          ? '../css/contactum-admin.css'
-          : '../css/contactum-admin.min.css',
+        // Same reasoning as the JS filename above — class-assets.php only
+        // ever enqueues the bare `contactum-admin.css`.
+        filename: '../css/contactum-admin.css',
       }),
     ],
 

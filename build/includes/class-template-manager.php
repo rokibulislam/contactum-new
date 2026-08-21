@@ -41,7 +41,8 @@ class TemplateManager {
             'event'       => new Template_Event_Registration(),
             'leave'       => new Template_Leave_Request(),
             'support'     => new Template_Support(),
-            'volunteer'   => new Template_Volunteer_Application()
+            'volunteer'   => new Template_Volunteer_Application(),
+            'conversational' => new Template_Conversational()
         ];
 
         $this->templates = apply_filters( 'contactum-form-templates', $templates );
@@ -57,7 +58,7 @@ class TemplateManager {
         return $groups;
     }
 
-    public function create( $name ) {
+    public function create( $name, $settings_overrides = [] ) {
         if ( !$template = $this->exists( $name ) ) {
             return;
         }
@@ -69,7 +70,7 @@ class TemplateManager {
         }
 
         $meta_updates = [
-            'form_settings' => $template->get_form_settings(),
+            'form_settings' => array_merge( $template->get_form_settings(), $settings_overrides ),
             'notifications' => $template->get_form_notifications(),
             'integrations'  => [],
             'is_conversion' => method_exists( $template, 'is_conversion' ) ? true : false

@@ -67,9 +67,81 @@ abstract class Contactum_Integration {
      */
     protected $settings_template = null;
 
+    /**
+     * The method (already hooked to `contactum_entry_submission`) that
+     * performs this integration's outbound API call. Set via
+     * enable_api_retry() so retry_api_action() knows what to re-run.
+     *
+     * @var string|null
+     */
+    protected $api_retry_method = null;
+
 
     public function __construct() {
         add_action( 'contactum_save_global_integration_settings_'.$this->id, [ $this, 'saveGlobalSettings' ], 10, 2 );
+    }
+
+    /**
+     * Record the outcome of an outbound API call this integration made, so
+     * it shows up in Contactum → Tools → API Log.
+     *
+     * @param int    $form_id
+     * @param int    $entry_id
+     * @param bool   $success
+     * @param string $note      Human-readable result, e.g. an error message.
+     */
+    protected function log_api_result( $form_id, $entry_id, $success, $note = '' ) {
+        if ( ! function_exists( 'contactum' ) || empty( contactum()->api_logger ) ) {
+            return;
+        }
+
+        contactum()->api_logger->log( [
+            'action'   => $this->id,
+            'form_id'  => $form_id,
+            'entry_id' => $entry_id,
+            'status'   => $success ? 'success' : 'failed',
+            'note'     => $note,
+            'data'     => [
+                'entry_id' => $entry_id,
+                'form_id'  => $form_id,
+            ],
+        ] );
+    }
+
+    /**
+     * Opt this integration into API Log retries.
+     *
+     * @param string $submit_method Name of the method already hooked to
+     *                               `contactum_entry_submission` on this
+     *                               integration. It will be re-invoked as
+     *                               $this->{$submit_method}( $entry_id, $form_id, 0, [] )
+     *                               when an admin clicks "Retry" in the API Log.
+     */
+    protected function enable_api_retry( $submit_method ) {
+        $this->api_retry_method = $submit_method;
+        add_action( 'contactum_api_log_retry_' . $this->id, [ $this, 'retry_api_action' ], 10, 3 );
+    }
+
+    /**
+     * Generic retry handler for `contactum_api_log_retry_{$this->id}`.
+     * Re-runs the integration's own submission handler; that handler is
+     * expected to call log_api_result() again, producing a fresh log row
+     * with the outcome of the retry.
+     */
+    public function retry_api_action( $data, $log_id, $log ) {
+        $entry_id = ! empty( $data['entry_id'] ) ? absint( $data['entry_id'] ) : absint( $log->entry_id );
+        $form_id  = ! empty( $data['form_id'] ) ? absint( $data['form_id'] ) : absint( $log->form_id );
+
+        if ( ! $entry_id || ! $form_id || empty( $this->api_retry_method ) || ! function_exists( 'contactum' ) ) {
+            if ( function_exists( 'contactum' ) && ! empty( contactum()->api_logger ) ) {
+                contactum()->api_logger->update_status( $log_id, 'failed', __( 'Retry failed: missing entry context.', 'contactum' ) );
+            }
+            return;
+        }
+
+        contactum()->api_logger->update_status( $log_id, 'manual_retry', __( 'Retried — see the newest log entry below for the outcome.', 'contactum' ) );
+
+        call_user_func( [ $this, $this->api_retry_method ], $entry_id, $form_id, 0, [] );
     }
 
     /**

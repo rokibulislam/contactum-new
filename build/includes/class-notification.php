@@ -110,7 +110,23 @@ class Notification {
 
         // wp_mail( $to, $subject, htmlspecialchars_decode( $email_body ), $headers );
 
-        contactum()->emailer->send( $to, $subject, wp_kses_post( htmlspecialchars_decode( $email_body ) ) , $headers );
+        // Lets add-ons (e.g. PDF Submission) attach generated files to this
+        // specific notification without EmailManager/Notification needing
+        // to know anything about them.
+        $attachments = apply_filters( 'contactum_email_attachments', [], $notification, $this->args );
+
+        $sent = contactum()->emailer->send( $to, $subject, wp_kses_post( htmlspecialchars_decode( $email_body ) ) , $headers, $attachments );
+
+        contactum()->logger->log( [
+            'form_id'     => $this->args['form_id'],
+            'entry_id'    => $this->args['entry_id'],
+            'component'   => 'email_notification',
+            'status'      => $sent ? 'success' : 'failed',
+            /* translators: %s notification name */
+            'title'       => sprintf( __( 'Notification "%s"', 'contactum' ), $notification['name'] ?? __( 'Email', 'contactum' ) ),
+            /* translators: %s recipient email address(es) */
+            'description' => sprintf( __( 'Sent to: %s', 'contactum' ), $to ),
+        ] );
     }
 
 

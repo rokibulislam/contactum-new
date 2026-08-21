@@ -46,6 +46,27 @@ class Frontend {
     private function render_form( $form, $atts ) {
         $form_fields = $form->getFields();
         $form_settings = $form->getSettings();
+        // The builder's in-page Settings tab saves this as a real JSON boolean
+        // (json_decode of a JSON.stringify()'d payload), while the standalone
+        // Settings page saves it as the string 'true'/'false' — accept either.
+        $conversational   = filter_var( $form_settings['conversational_mode'] ?? false, FILTER_VALIDATE_BOOLEAN );
+        $has_manual_steps = contactum()->fields->hasElement( $form_fields, $form->id, 'step_field' );
+
+        // Conversational mode auto-paginates one field per step, which
+        // FieldManager::render_fields() refuses to do when the form already
+        // has manually-placed Step fields — keep the <form> tag in sync with
+        // that so the frontend JS/CSS don't switch on for a plain multi-step form.
+        if ( $conversational && $has_manual_steps ) {
+            $conversational = false;
+        }
+
+        if ( $conversational ) {
+            $pagination_class = ' is_conversation';
+        } elseif ( $has_manual_steps ) {
+            $pagination_class = ' is_multistep';
+        } else {
+            $pagination_class = '';
+        }
 
         if( isset( $atts['modal'] ) && 'true' == $atts['modal'] ) {
             wp_enqueue_script( 'contactum-modal' );
@@ -72,15 +93,16 @@ class Frontend {
         wp_add_inline_script( 'contactum-frontend', $script );
 
         ?>
-        <form class="contactum-form-add contactum-style <?php echo esc_attr( $modal_class ); ?> contactum_form_<?php echo esc_attr( $form->id ); ?>"
+        <form class="contactum-form-add contactum-style <?php echo esc_attr( $modal_class ); ?> contactum_form_<?php echo esc_attr( $form->id ); ?><?php echo $conversational ? ' contactum-conversational' : ''; ?>"
          action="" method="post" <?php echo esc_attr( $modal_style ); ?>
+         <?php echo $conversational ? 'data-conversational="1"' : ''; ?>
          id="<?php // echo esc_attr($modal_id); ?>contactum_form_<?php echo esc_attr( $form->id ); ?>" >
-            <ul class="contactum-form form-label-<?php echo esc_attr( $form_settings['label_position'] ); ?>">
+            <ul class="contactum-form form-label-<?php echo esc_attr( $form_settings['label_position'] ); ?><?php echo esc_attr( $pagination_class ); ?>">
                <?php
 
                     do_action( 'contactum_form_fields_top', $form, $form_fields );
 
-                    contactum()->fields->render_fields( $form_fields, $form->id, $atts );
+                    contactum()->fields->render_fields( $form_fields, $form->id, $atts, $conversational );
                     if( contactum()->fields->hassubmit_fields( $form_fields, $form->id, $atts ) ) {
 
                     } else {

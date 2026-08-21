@@ -26,7 +26,7 @@ class Field_Column extends Contactum_Field {
                         <?php while ( $i <= $columns ) { ?>
                             <div class="<?php echo 'column-' . esc_attr( $i ) . ' items-of-column-' . esc_attr( $columns ); ?> contactum-column-inner-fields">
                                 <ul class="contactum-column-fields">
-                                    <?php contactum()->fields->render_fields( $inner_fields['column-' . $i], $form_id, $atts, $type, $post_id ); ?>
+                                    <?php contactum()->fields->render_fields( $inner_fields['column-' . $i], $form_id, $atts ); ?>
                                 </ul>
                             </div>
 

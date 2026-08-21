@@ -27,6 +27,7 @@ class MailchimpIntegration extends  Contactum_Integration {
         add_action( 'contactum_save_global_integration_settings_'.$this->id, [ $this, 'saveGlobalSettings' ], 10, 2 );
         add_action( 'wp_ajax_contactum_'.$this->id.'_update_list', [ $this, 'update_list' ] );
         add_action( 'contactum_entry_submission', array( $this, 'subscribe_user' ), 10, 4 );
+        add_action( 'contactum_api_log_retry_mailchimp', array( $this, 'retry_subscribe' ), 10, 3 );
     }
 
 
@@ -218,21 +219,64 @@ class MailchimpIntegration extends  Contactum_Integration {
 
     public function subscribe_user( $entry_id, $form_id, $page_id, $form_settings ) {
 
-        $integration = contactum_is_integration_active( $form_id, $this->id );
+        $result = $this->perform_subscription( $entry_id, $form_id );
 
-        if ( false === $integration ) {
+        if ( null === $result ) {
             return;
         }
 
-        if ( empty( $integration->integration->list_id  ) || empty( $integration->integration->email ) ) {
+        contactum()->api_logger->log( [
+            'action'   => 'mailchimp',
+            'form_id'  => $form_id,
+            'entry_id' => $entry_id,
+            'status'   => $result['success'] ? 'success' : 'failed',
+            'note'     => $result['message'],
+            'data'     => [
+                'entry_id' => $entry_id,
+                'form_id'  => $form_id,
+            ],
+        ] );
+    }
+
+    // ── Retry handler (API Log) ────────────────────────────────────────────────
+
+    public function retry_subscribe( $data, $log_id, $log ) {
+        $entry_id = isset( $data['entry_id'] ) ? absint( $data['entry_id'] ) : absint( $log->entry_id );
+        $form_id  = isset( $data['form_id'] ) ? absint( $data['form_id'] ) : absint( $log->form_id );
+
+        $result = $this->perform_subscription( $entry_id, $form_id );
+
+        if ( null === $result ) {
+            contactum()->api_logger->update_status( $log_id, 'failed', __( 'Mailchimp integration is no longer active for this form.', 'contactum' ) );
             return;
+        }
+
+        contactum()->api_logger->update_status( $log_id, $result['success'] ? 'success' : 'failed', $result['message'] );
+    }
+
+    /**
+     * Subscribe an entry's contact to the configured Mailchimp list.
+     *
+     * @return array{success:bool,message:string}|null Null when the integration
+     *                                                  doesn't apply to this entry.
+     */
+    private function perform_subscription( $entry_id, $form_id ) {
+
+        $integration = contactum_is_integration_active( $form_id, $this->id );
+
+        if ( false === $integration ) {
+            return null;
+        }
+
+        if ( empty( $integration->integration->list_id  ) || empty( $integration->integration->email ) ) {
+            return null;
         }
 
 
         $email = Contactum_Notification::replaceFieldTags( $integration->integration->email, $entry_id );
 
         if ( empty( $email ) ) {
-            return;
+            return null;
         }
 
         $first_name = Contactum_Notification::replaceNameTag( $integration->integration->first_name, $entry_id );
@@ -286,9 +330,30 @@ class MailchimpIntegration extends  Contactum_Integration {
 
         $response = $mailChimp->post( 'lists/' . $integration->integration->list_id . '/members', $mailchimp_args );
 
-        if ( ! isset( $response['status'] ) || $response['status']  != 'subscribed' ) {
-            // contactum()->log('MailChimp: ' . $response);
-        }
+        $subscribed = isset( $response['status'] ) && $response['status'] === 'subscribed';
+
+        $message = $subscribed
+            ? sprintf( __( 'Subscribed %s to the selected list.', 'contactum' ), $email )
+            : sprintf(
+                /* translators: 1: subscriber email address, 2: Mailchimp error detail */
+                __( 'Failed to subscribe %1$s: %2$s', 'contactum' ),
+                $email,
+                isset( $response['detail'] ) ? $response['detail'] : __( 'Unknown error', 'contactum' )
+            );
+
+        contactum()->logger->log( [
+            'form_id'     => $form_id,
+            'entry_id'    => $entry_id,
+            'component'   => 'mailchimp',
+            'status'      => $subscribed ? 'success' : 'failed',
+            'title'       => __( 'Mailchimp subscription', 'contactum' ),
+            'description' => $message,
+        ] );
+
+        return [
+            'success' => $subscribed,
+            'message' => $message,
+        ];
     }
 
 
